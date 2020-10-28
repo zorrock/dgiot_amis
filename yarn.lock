@@ -1091,6 +1091,18 @@
   resolved "https://registry.npm.taobao.org/@types/q/download/@types/q-1.5.4.tgz?cache=0&sync_timestamp=1596840197978&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fq%2Fdownload%2F%40types%2Fq-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha1-FZJUFOCtLNdlv+9YhC9+JqesyyQ=
 
+"@types/react-dom@^15.5.12":
+  version "15.5.12"
+  resolved "https://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-15.5.12.tgz?cache=0&sync_timestamp=1603827914495&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact-dom%2Fdownload%2F%40types%2Freact-dom-15.5.12.tgz#890e144660bb4f811a354cbf9c38e52b3c7f163f"
+  integrity sha1-iQ4URmC7T4EaNUy/nDjlKzx/Fj8=
+  dependencies:
+    "@types/react" "^15"
+
+"@types/react@^15", "@types/react@^15.6.30":
+  version "15.6.30"
+  resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-15.6.30.tgz?cache=0&sync_timestamp=1603827914292&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-15.6.30.tgz#f5a4e3f85088c813b7bc5889c0647f73c0ba7379"
+  integrity sha1-9aTj+FCIyBO3vFiJwGR/c8C6c3k=
+
 "@types/source-list-map@*":
   version "0.1.2"
   resolved "https://registry.npmjs.org/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
