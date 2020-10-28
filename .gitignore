@@ -78,3 +78,14 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# 自定义忽略文件
+.idea
+/dist
+/out
+# server/yarn.lock
+server/node_modules
+server/dist/**
+!server/dist/*.html
+!server/dist/**/*.html
+server/package-lock.json
