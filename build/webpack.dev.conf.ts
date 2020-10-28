@@ -2,6 +2,7 @@ import path from 'path';
 import { Configuration, HotModuleReplacementPlugin } from 'webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import WebpackBar from 'webpackbar';
 // import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 
 // 所有路径配置的前缀(路径配置是相对项目根路径为前提配置的)
@@ -86,6 +87,7 @@ const config: Configuration = {
     ],
   },
   plugins: [
+    new WebpackBar({}),
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: `${srcPath}/pages/index.html`,
@@ -138,6 +140,7 @@ const config: Configuration = {
     disableHostCheck: false,
     // 服务端代理配置
     proxy: {},
+    // open: "chrome",
   }
 };
 
