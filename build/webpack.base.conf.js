@@ -167,7 +167,13 @@ const baseModuleRules = [
         publicPath: ''
       },
     }],
-  }
+  },
+  // ts 支持
+  {
+    test: /\.tsx?$/,
+    use: 'ts-loader',
+    exclude: /node_modules/,
+  },
 ];
 
 // 公用插件
@@ -210,7 +216,7 @@ if (config.needAnalyzer && config.runMode !== config.runModeEnum.dev) {
 }
 
 // resolve.extensions
-const baseResolveExtensions = [' ', '.js', '.json', '.jsx'];
+const baseResolveExtensions = ['.ts', '.tsx', '.js', '.jsx', '.json'];
 // resolve.modules
 const baseResolveModules = [
   config.srcPath,
