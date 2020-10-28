@@ -16,24 +16,20 @@ module.exports = {
       }
     ],
     "@babel/react",
-    "@babel/preset-typescript",
+    // "@babel/preset-typescript",
   ],
   plugins: [
     [
       "@babel/plugin-transform-runtime",
-      {
-        corejs: 2
-      }
+      {corejs: 2}
     ],
-    "@babel/plugin-transform-object-assign",
-    [
-      "@babel/plugin-proposal-decorators",
-      {
-        legacy: true
-      }
-    ],
+    // "@babel/plugin-transform-object-assign",
+    // [
+    //   "@babel/plugin-proposal-decorators",
+    //   {legacy: true}
+    // ],
     "@babel/plugin-proposal-class-properties",
-    "dynamic-import-webpack",
+    // "dynamic-import-webpack",
   ]
 }
 

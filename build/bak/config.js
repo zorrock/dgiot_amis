@@ -1,5 +1,5 @@
 const path = require("path");
-const {pagesConfig} = require("../src/pages-config");
+const {pagesConfig} = require("@/pages-config");
 // 打包模式 production development 默认 production
 let runMode = process.env.NODE_ENV || 'production';
 if (runMode !== 'production' && runMode !== 'development') {
