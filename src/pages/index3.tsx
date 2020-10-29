@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 interface DemoPageProps {
-  match: any;
+  match?: any;
 }
 
 interface DemoPageState {
@@ -27,4 +28,6 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
   }
 }
 
-export default DemoPage;
+ReactDOM.render(<DemoPage/>, document.getElementById('root'));
+
+// export default DemoPage;

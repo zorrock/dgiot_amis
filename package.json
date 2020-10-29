@@ -22,12 +22,11 @@
     "react": "^15.7.0",
     "react-dom": "^15.7.0",
     "copy-to-clipboard": "^3.3.1",
-    "dayjs": "^1.9.4"
-  },
-  "dependencies-bak": {
-    "######1": "--------------------------------------------------------------------- 暂时不用",
+    "dayjs": "^1.9.4",
     "moment-timezone": "^0.5.31",
     "amis": "^1.0.17"
+  },
+  "dependencies-bak": {
   },
   "devDependencies": {
     "ts-node": "^9.0.0",
