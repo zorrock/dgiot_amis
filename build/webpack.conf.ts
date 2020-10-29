@@ -155,7 +155,7 @@ if (settings.mode === "development") {
       // 跳过域名检查
       disableHostCheck: false,
       // 服务端代理配置
-      proxy: {},
+      proxy: settings.devServer.proxy,
       open: settings.devServer.needOpenApp && "chrome",
     },
     plugins: [
