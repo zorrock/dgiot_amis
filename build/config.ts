@@ -1,41 +1,40 @@
-// const path = require("path");
-// const {pagesConfig} = require("@/pages-config");
-// // 打包模式 production development 默认 production
-// let runMode = process.env.NODE_ENV || 'production';
-// if (runMode !== 'production' && runMode !== 'development') {
-//   runMode = 'production';
-// }
-// // 打包模式枚举
-// const runModeEnum = {
-//   dev: 'development',
-//   prod: 'production'
-// };
-//
-// // 所有路径配置的前缀(路径配置是相对项目根路径为前提配置的)
-// const pathPrefix = '..';
-// // 打包版本号
-// const appVersion = new Date().getTime();
-// // 网站图标绝对路径
-// const favicon = path.resolve(__dirname, `${pathPrefix}/public/images/favicon.png`);
-// // 项目根目录绝对路径
-// const rootPath = path.resolve(__dirname, `${pathPrefix}/`);
-// // 打包输出目录绝对路径
-// const distPath = path.resolve(__dirname, `${pathPrefix}/dist`);
-// // node_modules文件夹绝对路径
-// const nodeModulesPath = path.resolve(__dirname, `${pathPrefix}/node_modules`);
-// // public文件夹绝对路径
-// const publicPath = path.resolve(__dirname, `${pathPrefix}/public`);
-// // src文件夹绝对路径
-// const srcPath = path.resolve(__dirname, `${pathPrefix}/src`);
-// // src文件夹绝对路径
-// const pagesPath = path.resolve(__dirname, `${pathPrefix}/src/pages`);
-// // devServer 端口
-// const port = 8000;
-// // dev时是否需要自动打开浏览器
-// const needOpenApp = false;
-// // 需要 Analyzer
-// const needAnalyzer = false;
-//
+import path from "path";
+
+const {NODE_ENV, ANALYZER} = process.env;
+
+interface Settings {
+  /** 打包版本号 */
+  appVersion: string | number;
+  /** 项目根目录绝对路径 */
+  rootPath: string;
+  /** 运行模式 */
+  mode: "development" | "production",
+  /** dev服务配置 */
+  devServer: {
+    /** devServer 端口 */
+    port: number;
+    /** dev时是否需要自动打开浏览器 */
+    needOpenApp: boolean;
+  },
+  /** 需要 Analyzer */
+  needAnalyzer: boolean;
+  /** */
+}
+
+const settings: Settings = {
+  appVersion: new Date().getTime(),
+  rootPath: path.resolve(__dirname, `../`),
+  mode: NODE_ENV === "development" ? "development" : "production",
+  devServer: {
+    port: 8000,
+    needOpenApp: false,
+  },
+  needAnalyzer: !!ANALYZER,
+}
+
+export { settings };
+
+
 // // 代理配置
 // const proxy = {
 //   // '/api': {
@@ -58,23 +57,4 @@
 //   //   // 来设置优先级
 //   //   priority: 0,
 //   // },
-// };
-//
-// module.exports = {
-//   pagesConfig,
-//   runMode,
-//   runModeEnum,
-//   appVersion,
-//   favicon,
-//   rootPath,
-//   distPath,
-//   nodeModulesPath,
-//   publicPath,
-//   srcPath,
-//   pagesPath,
-//   port,
-//   needOpenApp,
-//   needAnalyzer,
-//   proxy,
-//   extCacheGroups,
 // };
