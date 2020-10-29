@@ -1,4 +1,5 @@
 import path from "path";
+import { ProxyConfigMap } from 'webpack-dev-server';
 
 const {NODE_ENV, ANALYZER} = process.env;
 
@@ -15,6 +16,8 @@ interface Settings {
     port: number;
     /** dev时是否需要自动打开浏览器 */
     needOpenApp: boolean;
+    /** 后端接口代理配置 */
+    proxy?: ProxyConfigMap;
   },
   /** 需要 Analyzer */
   needAnalyzer: boolean;
@@ -28,33 +31,15 @@ const settings: Settings = {
   devServer: {
     port: 8000,
     needOpenApp: false,
+    proxy: {
+      '/api/': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        pathRewrite: {'^': ''},
+      }
+    },
   },
   needAnalyzer: !!ANALYZER,
 }
 
 export { settings };
-
-
-// // 代理配置
-// const proxy = {
-//   // '/api': {
-//   //   target: 'http://localhost:3000',
-//   //   pathRewrite: {
-//   //     '^/api': ''
-//   //   }
-//   // }
-// };
-//
-// // webpack.prod.conf 中的 splitChunks.cacheGroups 扩展
-// const extCacheGroups = {
-//   // commons: {
-//   //   name: 'commons',
-//   //   chunks: 'all',
-//   //   // 表示被引用次数，默认为1
-//   //   minChunks: 2,
-//   //   // 表示抽取出来的文件在压缩前的最小大小，默认为 30000
-//   //   minSize: 30000,
-//   //   // 来设置优先级
-//   //   priority: 0,
-//   // },
-// };
