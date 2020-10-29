@@ -26,6 +26,8 @@ const nodeModulesPath = path.resolve(settings.rootPath, './node_modules');
 const distPath = path.resolve(settings.rootPath, './dist');
 // 网站图标绝对路径
 const faviconPath = path.resolve(settings.rootPath, './public/images/favicon.png');
+// 访问地址复制到剪切板(只干一次)
+let copyToClipboard = false;
 
 let config: Configuration = {
   entry: {
@@ -160,6 +162,10 @@ if (settings.mode === "development") {
       new WebpackBar({
         reporter: {
           allDone: context => {
+            if (copyToClipboard) {
+              return;
+            }
+            copyToClipboard = true;
             clipboardy.writeSync(`http://127.0.0.1:${settings.devServer.port}/`);
             const messages = [
               "  App running at:",
