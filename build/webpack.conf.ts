@@ -88,7 +88,7 @@ let config: Configuration = {
   plugins: [
     new HardSourceWebpackPlugin({}),
     new HtmlWebpackPlugin({
-      template: `${srcPath}/pages/index.html`,
+      template: `${srcPath}/pages/index.ejs`,
       filename: `${distPath}/src/pages/index.html`,
       title: "webpack4.x",
       minify: {
@@ -120,7 +120,8 @@ let config: Configuration = {
   },
 };
 
-// 动态扫描入口文件
+// 动态扫描入口文件 entry HtmlWebpackPlugin
+
 
 // postcss-loader 配置
 const postcssOptions = {
