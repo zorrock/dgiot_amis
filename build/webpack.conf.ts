@@ -2,11 +2,12 @@ import path from 'path';
 import chalk from 'chalk';
 import ip from 'ip';
 import clipboardy from 'clipboardy';
-import { Configuration, HotModuleReplacementPlugin } from 'webpack';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import WebpackBar from 'webpackbar';
+import { Configuration, HashedModuleIdsPlugin, HotModuleReplacementPlugin } from 'webpack';
 import WebpackMerge from 'webpack-merge';
+import WebpackBar from 'webpackbar';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
@@ -58,16 +59,6 @@ let config: Configuration = {
       {
         test: /\.(ogg|mpeg4|webm)?$/,
         use: [{loader: "file-loader", options: {limit: 8192, name: "videos/[name].[ext]?[hash:8]", publicPath: ""}}],
-      },
-      // css
-      {
-        test: /\.css$/,
-        use: [
-          {loader: "cache-loader"},
-          {loader: "style-loader"},
-          {loader: "css-loader"},
-          {loader: "postcss-loader", options: { /*plugins: postcss.plugins,*/ sourceMap: true}},
-        ],
       },
       // js、jsx
       {
@@ -142,6 +133,31 @@ if (settings.mode === "development") {
     },
     mode: "development",
     devtool: "eval-source-map",
+    module: {
+      rules: [
+        // css
+        {
+          test: /\.css$/,
+          use: [
+            {loader: "cache-loader"},
+            {loader: "style-loader"},
+            {loader: "css-loader", options: {}},
+            // {loader: "postcss-loader", options: {plugins: postcss.plugins, sourceMap: true}},
+          ],
+        },
+        // 编译less
+        {
+          test: /\.less$/,
+          use: [
+            {loader: "cache-loader"},
+            {loader: 'style-loader'},
+            {loader: "css-loader", options: {importLoaders: 1, modules: {compileType: 'module', localIdentName: '[path][name]_[local]', localIdentContext: srcPath}}},
+            // {loader: 'postcss-loader', options: {plugins: postcss.plugins, parser: 'postcss-less', sourceMap: true}},
+            {loader: 'less-loader', options: {sourceMap: true}},
+          ],
+        },
+      ],
+    },
     devServer: {
       port: settings.devServer.port,
       host: "127.0.0.1",
@@ -173,8 +189,8 @@ if (settings.mode === "development") {
               `  - Network: ${chalk.cyan(`http://${ip.address("public", "ipv4")}:${settings.devServer.port}/`)}`
             ];
             console.log(messages.join("\n"));
-          }
-        }
+          },
+        },
       }),
       new HotModuleReplacementPlugin(),
     ],
@@ -192,10 +208,46 @@ if (settings.mode === "production") {
       publicPath: "/"
     },
     mode: "production",
+    module: {
+      rules: [
+        // css
+        {
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {loader: "cache-loader"},
+            {loader: "style-loader"},
+            {loader: "css-loader", options: {modules: true, localIdentName: "[path]-[name]-[local]-[hash:base64:5]"}},
+            // {loader: "postcss-loader", options: {plugins: postcss.plugins, sourceMap: true}},
+          ],
+        },
+        // 编译less
+        {
+          test: /\.less$/,
+          use: [
+            {loader: "cache-loader"},
+            MiniCssExtractPlugin.loader,
+            {loader: 'style-loader'},
+            {loader: "css-loader", options: {importLoaders: 1, modules: {compileType: 'module', localIdentName: '[path][name]_[local]_[hash:base64:5]', localIdentContext: srcPath}}},
+            // {loader: 'postcss-loader', options: {plugins: postcss.plugins, parser: 'postcss-less', sourceMap: true}},
+            {loader: 'less-loader', options: {sourceMap: true}},
+          ],
+        },
+      ],
+    },
     plugins: [
+      new HashedModuleIdsPlugin(),
+      new MiniCssExtractPlugin({
+        filename: '[name].[hash].css',
+        chunkFilename: '[name].[hash].css',
+      }),
       new CleanWebpackPlugin({}),
     ],
     optimization: {
+      moduleIds: 'hashed',
+      runtimeChunk: {
+        name: 'manifest',
+      },
       minimizer: [
         new TerserPlugin({parallel: true}),
         new OptimizeCSSAssetsPlugin({}),
