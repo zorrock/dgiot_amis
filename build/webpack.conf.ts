@@ -8,7 +8,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import WebpackBar from 'webpackbar';
 import WebpackMerge from 'webpack-merge';
 import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
-// import TerserPlugin from 'terser-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
@@ -191,7 +191,7 @@ if (settings.mode === "production") {
     ],
     optimization: {
       minimizer: [
-        // new TerserPlugin({parallel: true}),
+        new TerserPlugin({parallel: true}),
         new OptimizeCSSAssetsPlugin({}),
       ],
       splitChunks: {
