@@ -16,17 +16,17 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { settings } from './config';
 
 // src文件夹绝对路径
-const srcPath = path.resolve(settings.rootPath, './src');
+const srcPath = path.resolve(settings.rootPath, "./src");
 // src文件夹绝对路径
 // const pagesPath = path.resolve(rootPath, `${pathPrefix}/src/pages`);
 // public文件夹绝对路径
-const publicPath = path.resolve(settings.rootPath, './public');
+const publicPath = path.resolve(settings.rootPath, "./public");
 // node_modules文件夹绝对路径
-const nodeModulesPath = path.resolve(settings.rootPath, './node_modules');
+const nodeModulesPath = path.resolve(settings.rootPath, "./node_modules");
 // 打包输出目录绝对路径
-const distPath = path.resolve(settings.rootPath, './dist');
+const distPath = path.resolve(settings.rootPath, "./dist");
 // 网站图标绝对路径
-const faviconPath = path.resolve(settings.rootPath, './public/images/favicon.png');
+const faviconPath = path.resolve(settings.rootPath, "./public/images/favicon.png");
 // 访问地址复制到剪切板(只干一次)
 let copyToClipboard = false;
 
@@ -122,6 +122,32 @@ let config: Configuration = {
 
 // 动态扫描入口文件
 
+// postcss-loader 配置
+const postcssOptions = {
+  plugins: [
+    ["postcss-preset-env", {}],
+    ["autoprefixer", {}],
+    ["postcss-aspect-ratio-mini", {}],
+    ["postcss-write-svg", {utf8: false}],
+    // ["postcss-px-to-viewport", {
+    //   // 视窗的宽度，对应的是我们设计稿的宽度，一般是750
+    //   viewportWidth: 750,
+    //   // 视窗的高度，根据750设备的宽度来指定，一般指定1334，也可以不配置
+    //   viewportHeight: 1334,
+    //   // 指定`px`转换为视窗单位值的小数位数（很多时候无法整除）
+    //   unitPrecision: 3,
+    //   // 指定需要转换成的视窗单位，建议使用vw
+    //   viewportUnit: 'vw',
+    //   // 指定不转换为视窗单位的类，可以自定义，可以无限添加,建议定义一至两个通用的类名
+    //   selectorBlackList: ['.ignore', '.hairlines'],
+    //   // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值
+    //   minPixelValue: 1,
+    //   // 允许在媒体查询中转换`px`
+    //   mediaQuery: false
+    // }],
+  ],
+};
+
 // 开发模式
 if (settings.mode === "development") {
   const devConfig: Configuration = {
@@ -142,7 +168,7 @@ if (settings.mode === "development") {
             {loader: "cache-loader"},
             {loader: "style-loader"},
             {loader: "css-loader", options: {}},
-            // {loader: "postcss-loader", options: {plugins: postcss.plugins, sourceMap: true}},
+            {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
           ],
         },
         // 编译less
@@ -150,10 +176,10 @@ if (settings.mode === "development") {
           test: /\.less$/,
           use: [
             {loader: "cache-loader"},
-            {loader: 'style-loader'},
-            {loader: "css-loader", options: {importLoaders: 1, modules: {compileType: 'module', localIdentName: '[path][name]_[local]', localIdentContext: srcPath}}},
-            // {loader: 'postcss-loader', options: {plugins: postcss.plugins, parser: 'postcss-less', sourceMap: true}},
-            {loader: 'less-loader', options: {sourceMap: true}},
+            {loader: "style-loader"},
+            {loader: "css-loader", options: {importLoaders: 1, modules: {compileType: "module", localIdentName: "[path][name]_[local]", localIdentContext: srcPath}}},
+            {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
+            {loader: "less-loader", options: {sourceMap: true}},
           ],
         },
       ],
@@ -162,7 +188,7 @@ if (settings.mode === "development") {
       port: settings.devServer.port,
       host: "127.0.0.1",
       contentBase: `${settings.rootPath}/index.html`,
-      // publicPath: '/',
+      // publicPath: "/",
       historyApiFallback: true,
       overlay: true,
       hot: true,
@@ -203,8 +229,8 @@ if (settings.mode === "production") {
   const prodConfig: Configuration = {
     output: {
       path: distPath,
-      filename: '[name].[chunkhash].bundle.js',
-      chunkFilename: '[name].[chunkhash].chunk.js',
+      filename: "[name].[chunkhash].bundle.js",
+      chunkFilename: "[name].[chunkhash].chunk.js",
       publicPath: "/"
     },
     mode: "production",
@@ -218,7 +244,7 @@ if (settings.mode === "production") {
             {loader: "cache-loader"},
             {loader: "style-loader"},
             {loader: "css-loader", options: {modules: true, localIdentName: "[path]-[name]-[local]-[hash:base64:5]"}},
-            // {loader: "postcss-loader", options: {plugins: postcss.plugins, sourceMap: true}},
+            {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
           ],
         },
         // 编译less
@@ -227,10 +253,10 @@ if (settings.mode === "production") {
           use: [
             {loader: "cache-loader"},
             MiniCssExtractPlugin.loader,
-            {loader: 'style-loader'},
-            {loader: "css-loader", options: {importLoaders: 1, modules: {compileType: 'module', localIdentName: '[path][name]_[local]_[hash:base64:5]', localIdentContext: srcPath}}},
-            // {loader: 'postcss-loader', options: {plugins: postcss.plugins, parser: 'postcss-less', sourceMap: true}},
-            {loader: 'less-loader', options: {sourceMap: true}},
+            {loader: "style-loader"},
+            {loader: "css-loader", options: {importLoaders: 1, modules: {compileType: "module", localIdentName: "[path][name]_[local]_[hash:base64:5]", localIdentContext: srcPath}}},
+            {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
+            {loader: "less-loader", options: {sourceMap: true}},
           ],
         },
       ],
@@ -238,15 +264,15 @@ if (settings.mode === "production") {
     plugins: [
       new HashedModuleIdsPlugin(),
       new MiniCssExtractPlugin({
-        filename: '[name].[hash].css',
-        chunkFilename: '[name].[hash].css',
+        filename: "[name].[hash].css",
+        chunkFilename: "[name].[hash].css",
       }),
       new CleanWebpackPlugin({}),
     ],
     optimization: {
-      moduleIds: 'hashed',
+      moduleIds: "hashed",
       runtimeChunk: {
-        name: 'manifest',
+        name: "manifest",
       },
       minimizer: [
         new TerserPlugin({parallel: true}),
@@ -255,8 +281,8 @@ if (settings.mode === "production") {
       splitChunks: {
         cacheGroups: {
           commons: {
-            name: 'commons',
-            chunks: 'all',
+            name: "commons",
+            chunks: "all",
             // 表示被引用次数，默认为1。Math.ceil(pages.length / 3), 当你有多个页面时，获取pages.length，至少被1/3页面的引入才打入common包
             // minChunks: Math.ceil(config.pagesConfig.length / 3),
             // 表示抽取出来的文件在压缩前的最小大小，默认为 30000
@@ -266,9 +292,9 @@ if (settings.mode === "production") {
           },
           // 提取 node_modules 中代码
           vendor: {
-            name: 'vendor',
+            name: "vendor",
             test: /[\\/]node_modules[\\/]/,
-            chunks: 'all',
+            chunks: "all",
             priority: 10,
           },
         },
