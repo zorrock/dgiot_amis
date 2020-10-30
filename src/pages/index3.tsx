@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { render as amisRender } from 'amis';
 import 'amis/lib/themes/default.css';
+// const amis = require('amis');
 
 interface DemoPageProps {
   match?: any;
@@ -20,7 +21,6 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
 
   render() {
     const {loading} = this.state;
-    // eslint-disable-next-line no-console
     return (
       <div>
         <button onClick={event => this.setState({loading: !loading})}>点击</button>
