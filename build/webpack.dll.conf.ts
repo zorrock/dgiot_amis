@@ -29,26 +29,30 @@ const postcssOptions = {
 
 const config: Configuration = {
   entry: {
-    vendor: [
-      // "react-router-dom",
-      // "immer",
-      // "styled-components",
-      // "whatwg-fetch",
-      // "qs",
-      "amis",
-      // "lodash",
-      // "bootstrap/dist/js/bootstrap.bundle.js",
-
-      // "bootstrap/dist/css/bootstrap.css",
-      // "animate.css/animate.css",
-      // "font-awesome/css/font-awesome.css",
-      // "react-datetime/css/react-datetime.css",
-      // "video-react/dist/video-react.css",
-      // "cropperjs/dist/cropper.css",
-      // "tinymce/skins/ui/oxide/skin.css",
-      // "froala-editor/css/froala_style.min.css",
-      // "froala-editor/css/froala_editor.pkgd.min.css",
-    ],
+    // react: ["react"],
+    // "react_dom": ["react-dom"],
+    "amis": ["amis"],
+    // vendor: [
+    //   "react",
+    //   "react-router-dom",
+    //   "immer",
+    //   "styled-components",
+    //   "whatwg-fetch",
+    //   "qs",
+    //   "amis",
+    //   "lodash",
+    //   "bootstrap/dist/js/bootstrap.bundle.js",
+    //
+    //   "bootstrap/dist/css/bootstrap.css",
+    //   "animate.css/animate.css",
+    //   "font-awesome/css/font-awesome.css",
+    //   "react-datetime/css/react-datetime.css",
+    //   "video-react/dist/video-react.css",
+    //   "cropperjs/dist/cropper.css",
+    //   "tinymce/skins/ui/oxide/skin.css",
+    //   "froala-editor/css/froala_style.min.css",
+    //   "froala-editor/css/froala_editor.pkgd.min.css",
+    // ],
   },
   output: {
     pathinfo: false,
@@ -161,10 +165,6 @@ const config: Configuration = {
   ],
   performance: {},
   optimization: {
-    moduleIds: "hashed",
-    runtimeChunk: {
-      name: "manifest",
-    },
     minimizer: [
       new TerserPlugin({parallel: true}),
       new OptimizeCSSAssetsPlugin({}),
