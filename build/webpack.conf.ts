@@ -11,6 +11,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { settings } from './config';
@@ -152,6 +153,7 @@ const postcssOptions = {
 
 // 开发模式
 if (settings.mode === "development") {
+  // @ts-ignore
   const devConfig: Configuration = {
     output: {
       path: distPath,
@@ -221,7 +223,13 @@ if (settings.mode === "development") {
         },
       }),
       new HotModuleReplacementPlugin(),
-      new DllReferencePlugin({context: settings.rootPath, manifest: require(`${dllPath}/vendor-manifest.json`)}),
+      new DllReferencePlugin({
+        context: settings.rootPath,
+        manifest: require(`${dllPath}/vendor-manifest.json`),
+      }),
+      new AddAssetHtmlPlugin([
+        {filepath: `${dllPath}/*.dll.js`},
+      ]),
       new CopyWebpackPlugin({
         patterns: [
           {from: dllPath, to: "./public/dll"},

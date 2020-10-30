@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-// import { render } from 'amis';
+import amis from 'amis';
 import 'amis/lib/themes/default.css';
-
-const amis = require("amis");
-
-console.log("amis ->", amis);
 
 interface DemoPageProps {
   match?: any;

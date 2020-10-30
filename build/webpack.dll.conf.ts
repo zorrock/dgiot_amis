@@ -22,15 +22,16 @@ const postcssOptions = {
 
 const config: Configuration = {
   entry: {
-    vendor: ["lodash", "qs", "react", "react-dom", "amis"],
+    vendor: [
+      "lodash", "qs", "react", "react-dom", "amis",
+    ],
   },
   output: {
     // libraryTarget: "commonjs",
     path: dllPath,
     filename: "[name].dll.js",
-    library: "[name]",
     chunkFilename: "chunk_[name]_[chunkhash:6].js",
-    publicPath: "/",
+    library: "[name]",
   },
   mode: "production",
   module: {
@@ -89,13 +90,14 @@ const config: Configuration = {
       chunkFilename: "chunk_[name]_[chunkhash:6].css",
     }),
     new DllPlugin({
-      path: `${dllPath}/[name]-manifest.json`,
+      context: settings.rootPath,
       name: "[name]",
+      path: `${dllPath}/[name]-manifest.json`,
     }),
     new BundleAnalyzerPlugin({
       analyzerPort: 9528,
       analyzerMode: "static",
-      openAnalyzer: true,
+      openAnalyzer: true && false,
       reportFilename: `${settings.rootPath}/out/report-dll.html`,
     }),
   ],
