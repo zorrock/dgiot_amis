@@ -22,9 +22,7 @@ const postcssOptions = {
 
 const config: Configuration = {
   entry: {
-    "vendors": ["lodash", "qs"],
-    "react": ["react", "react-dom"],
-    "amis": ["amis"],
+    vendor: ["lodash", "qs", "react", "react-dom", "amis"],
   },
   output: {
     pathinfo: false,
@@ -35,7 +33,6 @@ const config: Configuration = {
     publicPath: "/",
   },
   mode: "production",
-  // devtool: "eval-source-map",
   module: {
     rules: [
       // 图片

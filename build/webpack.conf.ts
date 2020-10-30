@@ -2,7 +2,7 @@ import path from 'path';
 import chalk from 'chalk';
 import ip from 'ip';
 import clipboardy from 'clipboardy';
-import { Configuration, HashedModuleIdsPlugin, HotModuleReplacementPlugin } from 'webpack';
+import { Configuration, DllReferencePlugin, HashedModuleIdsPlugin, HotModuleReplacementPlugin } from 'webpack';
 import WebpackMerge from 'webpack-merge';
 import WebpackBar from 'webpackbar';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -27,6 +27,8 @@ const nodeModulesPath = path.resolve(settings.rootPath, "./node_modules");
 const distPath = path.resolve(settings.rootPath, "./dist");
 // 网站图标绝对路径
 const faviconPath = path.resolve(settings.rootPath, "./public/images/favicon.png");
+// dll 输出目录
+const dllPath = path.resolve(settings.rootPath, "./dll");
 // 访问地址复制到剪切板(只干一次)
 let copyToClipboard = false;
 
@@ -219,6 +221,7 @@ if (settings.mode === "development") {
         },
       }),
       new HotModuleReplacementPlugin(),
+      new DllReferencePlugin({context: settings.rootPath, manifest: require(`${dllPath}/vendor-manifest.json`)}),
     ],
   };
   config = WebpackMerge(config, devConfig);
