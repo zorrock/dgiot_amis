@@ -23,9 +23,8 @@ const postcssOptions = {
 const config: Configuration = {
   entry: {
     vendor: [
-      "amis"
-      // "lodash", // "qs", //  // "amis",
-      // "react", "react-dom",
+      // "amis",
+      // "lodash", "qs", "react", "react-dom", "amis",
     ],
   },
   output: {
