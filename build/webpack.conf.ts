@@ -222,6 +222,12 @@ if (settings.mode === "development") {
       }),
       new HotModuleReplacementPlugin(),
       new DllReferencePlugin({context: settings.rootPath, manifest: require(`${dllPath}/vendor-manifest.json`)}),
+      new CopyWebpackPlugin({
+        patterns: [
+          {from: dllPath, to: "./public/dll"},
+        ],
+        options: {concurrency: 64}
+      }),
     ],
   };
   config = WebpackMerge(config, devConfig);

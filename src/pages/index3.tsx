@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { render as amisRender } from 'amis';
+// import { render } from 'amis';
 import 'amis/lib/themes/default.css';
+
+const amis = require("amis");
+
+console.log("amis ->", amis);
 
 interface DemoPageProps {
   match?: any;
@@ -27,7 +31,7 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
         {loading && "加载中..."}
         <br/>
         {
-          amisRender({
+          amis.render({
             type: "page",
             title: "表单页面!!",
             body: {

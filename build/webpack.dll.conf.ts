@@ -25,10 +25,10 @@ const config: Configuration = {
     vendor: ["lodash", "qs", "react", "react-dom", "amis"],
   },
   output: {
-    pathinfo: false,
+    // libraryTarget: "commonjs",
     path: dllPath,
-    filename: "[name]_[hash:6].dll.js",
-    library: "[name]_[hash:6]",
+    filename: "[name].dll.js",
+    library: "[name]",
     chunkFilename: "chunk_[name]_[chunkhash:6].js",
     publicPath: "/",
   },
@@ -85,12 +85,12 @@ const config: Configuration = {
   plugins: [
     new CleanWebpackPlugin({}),
     new MiniCssExtractPlugin({
-      filename: "[name]_[hash:6].css",
+      filename: "[name].css",
       chunkFilename: "chunk_[name]_[chunkhash:6].css",
     }),
     new DllPlugin({
       path: `${dllPath}/[name]-manifest.json`,
-      name: "[name]_[hash:6]",
+      name: "[name]",
     }),
     new BundleAnalyzerPlugin({
       analyzerPort: 9528,
