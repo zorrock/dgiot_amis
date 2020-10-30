@@ -23,8 +23,8 @@ const postcssOptions = {
 const config: Configuration = {
   entry: {
     vendor: [
-      "lodash",
-      // "lodash", "qs", "react", "react-dom", "amis",
+      // "lodash",
+      "lodash", "qs", "react", "react-dom", "amis",
     ],
   },
   output: {
@@ -47,14 +47,14 @@ const config: Configuration = {
         test: /\.(woff|woff2|svg|eot|ttf)$/,
         use: [{loader: "file-loader", options: {limit: 8192, name: "fonts/[name].[ext]?[hash:8]", publicPath: ""}}],
       },
-      // js、jsx
-      {
-        test: /\.jsx?$/,
-        use: [
-          {loader: "thread-loader", options: {workers: 3}},
-          {loader: "babel-loader", options: {cacheDirectory: true}},
-        ],
-      },
+      // // js、jsx
+      // {
+      //   test: /\.jsx?$/,
+      //   use: [
+      //     {loader: "thread-loader", options: {workers: 3}},
+      //     {loader: "babel-loader", options: {cacheDirectory: true}},
+      //   ],
+      // },
       // // ts、tsx
       // {
       //   test: /\.tsx?$/,
