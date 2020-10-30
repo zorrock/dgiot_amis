@@ -23,7 +23,7 @@ const postcssOptions = {
 const config: Configuration = {
   entry: {
     vendor: [
-      // "amis",
+      "lodash",
       // "lodash", "qs", "react", "react-dom", "amis",
     ],
   },
@@ -55,14 +55,14 @@ const config: Configuration = {
           {loader: "babel-loader", options: {cacheDirectory: true}},
         ],
       },
-      // ts、tsx
-      {
-        test: /\.tsx?$/,
-        use: [
-          {loader: "thread-loader", options: {workers: 3}},
-          {loader: "ts-loader", options: {happyPackMode: true, transpileOnly: true}},
-        ],
-      },
+      // // ts、tsx
+      // {
+      //   test: /\.tsx?$/,
+      //   use: [
+      //     {loader: "thread-loader", options: {workers: 3}},
+      //     {loader: "ts-loader", options: {happyPackMode: true, transpileOnly: true}},
+      //   ],
+      // },
       // css
       {
         test: /\.css$/,
