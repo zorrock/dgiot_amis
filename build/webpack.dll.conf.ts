@@ -35,6 +35,7 @@ const config: Configuration = {
     // libraryTarget: "commonjs",
   },
   mode: "development",
+  devtool: "eval-source-map",
   module: {
     rules: [
       // 图片
