@@ -167,7 +167,7 @@ if (settings.mode === "development") {
           test: /\.css$/,
           use: [
             {loader: "cache-loader"},
-            {loader: "style-loader"},
+            // {loader: "style-loader"},
             {loader: "css-loader", options: {}},
             {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
           ],
@@ -177,7 +177,7 @@ if (settings.mode === "development") {
           test: /\.less$/,
           use: [
             {loader: "cache-loader"},
-            {loader: "style-loader"},
+            // {loader: "style-loader"},
             {loader: "css-loader", options: {importLoaders: 1, modules: {compileType: "module", localIdentName: "[path][name]_[local]", localIdentContext: srcPath}}},
             {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
             {loader: "less-loader", options: {sourceMap: true}},
@@ -243,7 +243,7 @@ if (settings.mode === "production") {
           use: [
             {loader: "cache-loader"},
             MiniCssExtractPlugin.loader,
-            {loader: "style-loader"},
+            // {loader: "style-loader"},
             {loader: "css-loader", options: {}},
             {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
           ],
@@ -254,6 +254,7 @@ if (settings.mode === "production") {
           use: [
             {loader: "cache-loader"},
             MiniCssExtractPlugin.loader,
+            // {loader: "style-loader"},
             {loader: "css-loader", options: {importLoaders: 1, modules: {compileType: "module", localIdentName: "[path][name]_[local]_[hash:base64:5]", localIdentContext: srcPath}}},
             {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
             {loader: "less-loader", options: {}},
