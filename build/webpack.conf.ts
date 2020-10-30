@@ -230,12 +230,6 @@ if (settings.mode === "development") {
       new AddAssetHtmlPlugin([
         {filepath: `${dllPath}/*.dll.js`},
       ]),
-      new CopyWebpackPlugin({
-        patterns: [
-          {from: dllPath, to: "./public/dll"},
-        ],
-        options: {concurrency: 64}
-      }),
     ],
   };
   config = WebpackMerge(config, devConfig);
