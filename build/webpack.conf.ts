@@ -244,7 +244,7 @@ if (settings.mode === "production") {
             {loader: "cache-loader"},
             MiniCssExtractPlugin.loader,
             {loader: "style-loader"},
-            {loader: "css-loader", options: {modules: true, localIdentName: "[path]-[name]-[local]-[hash:base64:5]"}},
+            {loader: "css-loader", options: {}},
             {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
           ],
         },
