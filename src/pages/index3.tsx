@@ -29,7 +29,7 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
         {
           amisRender({
             type: "page",
-            title: "表单页面",
+            title: "表单页面!!",
             body: {
               type: "form",
               mode: "horizontal",
@@ -43,7 +43,7 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
                 {
                   label: "Email",
                   type: "email",
-                  name: "email"
+                  name: "emailaaa"
                 }
               ]
             }

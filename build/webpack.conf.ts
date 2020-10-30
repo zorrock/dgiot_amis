@@ -43,7 +43,7 @@ let config: Configuration = {
       // 图片
       {
         test: /\.(png|jp?g|gif|svg|ico)$/,
-        use: [{loader: "url-loader", options: {limit: 8192, name: "images/[name].[hash:8].[ext]", publicPath: ""}}]
+        use: [{loader: "url-loader", options: {limit: 8192, name: "images/[name].[hash:8].[ext]", publicPath: ""}}],
       },
       // 字体图标
       {
@@ -77,7 +77,6 @@ let config: Configuration = {
         use: [
           {loader: "cache-loader"},
           {loader: "thread-loader", options: {workers: 3}},
-          // {loader: "babel-loader", options: {cacheDirectory: true}},
           {loader: "ts-loader", options: {happyPackMode: true, transpileOnly: true}},
         ],
         // include: [srcPath],
