@@ -3,19 +3,12 @@ import { Configuration, DllPlugin } from 'webpack';
 import { settings } from './config';
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import TerserPlugin from "terser-webpack-plugin";
-import OptimizeCSSAssetsPlugin from "optimize-css-assets-webpack-plugin";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import TerserPlugin from 'terser-webpack-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 // dll 输出目录
 const dllPath = path.resolve(settings.rootPath, "./dll");
-
-// export const editorFileReg = /[\\/]amis[\\/]lib[\\/]components[\\/]Editor\.js/
-// export const videoFileReg = /[\\/]amis[\\/]lib[\\/]renderers[\\/]Video\.js/
-// export const froalaEditorReg = /[\\/]amis[\\/]lib[\\/]components[\\/]RichText\.js/
-// export const factoryFileReg = /[\\/]amis[\\/]lib[\\/]factory\.js/
-// export const apiUtilReg = /[\\/]amis[\\/]lib[\\/]utils[\\/]api\.js/
-// export const bootstrapCss = /[\\/]bootstrap[\\/]dist[\\/]css[\\/]bootstrap.css/
 
 // postcss-loader 配置
 const postcssOptions = {
@@ -62,21 +55,35 @@ const config: Configuration = {
     chunkFilename: "chunk_[name]_[chunkhash:6].js",
     publicPath: "/",
   },
-  mode: 'production',
-  devtool: "eval-source-map",
+  mode: "production",
+  // devtool: "eval-source-map",
   module: {
     rules: [
       // 图片
       {
         test: /\.(png|jp?g|gif|svg|ico)$/,
         use: [{loader: "url-loader", options: {limit: 8192, name: "images/[name].[hash:8].[ext]", publicPath: ""}}],
-        // exclude: [/[\\/]qs\//, /[\\/]icons[\\/]/],
       },
       // 字体图标
       {
         test: /\.(woff|woff2|svg|eot|ttf)$/,
         use: [{loader: "file-loader", options: {limit: 8192, name: "fonts/[name].[ext]?[hash:8]", publicPath: ""}}],
-        // exclude: [/[\\/]qs\//, /[\\/]icons[\\/]/],
+      },
+      // js、jsx
+      {
+        test: /\.jsx?$/,
+        use: [
+          {loader: "thread-loader", options: {workers: 3}},
+          {loader: "babel-loader", options: {cacheDirectory: true}},
+        ],
+      },
+      // ts、tsx
+      {
+        test: /\.tsx?$/,
+        use: [
+          {loader: "thread-loader", options: {workers: 3}},
+          {loader: "ts-loader", options: {happyPackMode: true, transpileOnly: true}},
+        ],
       },
       // css
       {
@@ -86,64 +93,17 @@ const config: Configuration = {
           {loader: "css-loader", options: {}},
           {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
         ],
-        // exclude: [bootstrapCss],
       },
-      // {
-      //   test: bootstrapCss,
-      //   use: [
-      //     MiniCssExtractPlugin.loader,
-      //     {loader: "css-loader", options: {}},
-      //     // {
-      //     //   loader: 'string-replace-loader',
-      //     //   options: {
-      //     //     multiple: [
-      //     //       {search: 'a\\:not\\(\\[href\\]\\)', flags: 'gm', replace: '.ignore-anothref'},
-      //     //       {search: 'svg \\{', flags: 'gm', replace: '.ignore-svg {'}],
-      //     //   },
-      //     // },
-      //   ],
-      // },
-      // js、jsx
+      // 编译less
       {
-        test: /\.jsx?$/,
+        test: /\.less$/,
         use: [
-          {loader: "thread-loader", options: {workers: 3}},
-          {loader: "babel-loader", options: {cacheDirectory: true}},
+          MiniCssExtractPlugin.loader,
+          {loader: "css-loader", options: {}},
+          {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
+          {loader: "less-loader", options: {}},
         ],
-        // exclude: [editorFileReg, factoryFileReg, froalaEditorReg, videoFileReg, apiUtilReg],
       },
-      // ts、tsx
-      {
-        test: /\.tsx?$/,
-        use: [
-          {loader: "thread-loader", options: {workers: 3}},
-          {loader: "ts-loader", options: {happyPackMode: true, transpileOnly: true}},
-        ],
-        // exclude: [editorFileReg, factoryFileReg, froalaEditorReg, videoFileReg, apiUtilReg],
-      },
-      // {
-      //   test: editorFileReg,
-      //   use: [
-      //     {loader: "babel-loader", options: {cacheDirectory: true}},
-      //     amis.fixEditorLoader({ publicPath }),
-      //   ],
-      // },
-      // {
-      //   test: factoryFileReg,
-      //   use: [babelLoader, amis.fixFactoryLoader()],
-      // },
-      // {
-      //   test: froalaEditorReg,
-      //   use: [babelLoader, amis.fixFroalaLoader()],
-      // },
-      // {
-      //   test: videoFileReg,
-      //   use: [babelLoader, amis.fixVideoLoader()],
-      // },
-      // {
-      //   test: apiUtilReg,
-      //   use: [babelLoader, amis.fixApiUtilLoader()],
-      // },
     ],
   },
   plugins: [
@@ -161,7 +121,7 @@ const config: Configuration = {
       analyzerMode: "static",
       openAnalyzer: true,
       reportFilename: `${settings.rootPath}/out/report-dll.html`,
-    })
+    }),
   ],
   performance: {},
   optimization: {
@@ -169,6 +129,21 @@ const config: Configuration = {
       new TerserPlugin({parallel: true}),
       new OptimizeCSSAssetsPlugin({}),
     ],
+    splitChunks: {
+      maxInitialRequests: Infinity,
+      automaticNameDelimiter: "_",
+      cacheGroups: {
+        default: false,
+        vendors: false,
+        monacoLanguages: {
+          chunks: "async",
+          name: "monaco_languages",
+          test: /monaco-editor[\\/].*language/,
+          priority: 10,
+          minChunks: 1,
+        },
+      },
+    },
   },
 }
 
