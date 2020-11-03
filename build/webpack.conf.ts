@@ -238,9 +238,8 @@ if (settings.mode === "production") {
         {
           test: /\.css$/,
           use: [
-            {loader: "cache-loader"},
+            {loader: "thread-loader", options: {workers: 3}},
             MiniCssExtractPlugin.loader,
-            // {loader: "style-loader"},
             {loader: "css-loader", options: {}},
             {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
           ],
@@ -249,25 +248,21 @@ if (settings.mode === "production") {
         {
           test: /\.less$/,
           use: [
-            {loader: "cache-loader"},
+            {loader: "thread-loader", options: {workers: 3}},
             MiniCssExtractPlugin.loader,
-            // {loader: "style-loader"},
             {
               loader: "css-loader",
               options: {importLoaders: 1, modules: {compileType: "module", localIdentName: "[path][name]_[local]_[hash:base64:5]", localIdentContext: srcPath}}
             },
             {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
-            {loader: "less-loader", options: {}},
+            {loader: "less-loader", options: {sourceMap: false}},
           ],
         },
       ],
     },
     plugins: [
       new HashedModuleIdsPlugin(),
-      new MiniCssExtractPlugin({
-        filename: "[name].[hash].css",
-        chunkFilename: "[name].[hash].css",
-      }),
+      new MiniCssExtractPlugin({}),
       new CleanWebpackPlugin({}),
     ],
     optimization: {
