@@ -45,9 +45,7 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
         <button onClick={event => this.setState({loading: !loading})}>点击</button>
         {loading && "加载中..."}
         <br/>
-        {
-          amisRender(schema, {}, {})
-        }
+        {amisRender(schema, {}, {})}
       </div>
     );
   }
