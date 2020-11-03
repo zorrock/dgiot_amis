@@ -294,6 +294,54 @@ if (settings.mode === "production") {
             chunks: "all",
             priority: 10,
           },
+          amis: {
+            name: "amis",
+            test: /[\\/]node_modules[\\/]amis[\\/]/,
+            chunks: "all",
+            priority: 20,
+          },
+          // monaco-editor
+          monacoEditor: {
+            name: "monacoEditor",
+            test: /[\\/]node_modules[\\/]monaco-editor[\\/]/,
+            chunks: "all",
+            priority: 30,
+          },
+          // tinymce
+          tinymce: {
+            name: "tinymce",
+            test: /[\\/]node_modules[\\/]tinymce[\\/]/,
+            chunks: "all",
+            priority: 40,
+          },
+          // echarts
+          echarts: {
+            name: "echarts",
+            test: /[\\/]node_modules[\\/]echarts[\\/]/,
+            chunks: "all",
+            priority: 50,
+          },
+          // froalaEditor
+          froalaEditor: {
+            name: "froalaEditor",
+            test: /[\\/]node_modules[\\/]froala-editor[\\/]/,
+            chunks: "all",
+            priority: 60,
+          },
+          // flvJs
+          flvJs: {
+            name: "flvJs",
+            test: /[\\/]node_modules[\\/]flv.js[\\/]/,
+            chunks: "all",
+            priority: 70,
+          },
+          // hlsJs
+          hlsJs: {
+            name: "hlsJs",
+            test: /[\\/]node_modules[\\/]hls.js[\\/]/,
+            chunks: "all",
+            priority: 80,
+          },
         },
       },
     },
