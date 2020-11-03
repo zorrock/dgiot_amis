@@ -1,6 +1,5 @@
 declare module 'antd-dayjs-webpack-plugin';
 declare module 'webpack-aliyun-oss';
-declare module 'slash2';
 declare module '*.css';
 declare module '*.less';
 declare module '*.scss';
