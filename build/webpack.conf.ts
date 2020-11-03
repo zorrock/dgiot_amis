@@ -223,16 +223,18 @@ if (settings.mode === "development") {
         },
       }),
       new HotModuleReplacementPlugin(),
-      new DllReferencePlugin({
-        context: settings.rootPath,
-        manifest: require(`${dllPath}/vendor-manifest.json`),
-        // sourceType: "commonjs",
-      }),
-      new AddAssetHtmlPlugin([
-        {filepath: `${dllPath}/*.dll.js`},
-      ]),
     ],
   };
+  if (settings.devUseDll) {
+    devConfig.plugins!.push(new DllReferencePlugin({
+      context: settings.rootPath,
+      manifest: require(`${dllPath}/vendor-manifest.json`),
+      // sourceType: "commonjs",
+    }));
+    devConfig.plugins!.push(new AddAssetHtmlPlugin([
+      {filepath: `${dllPath}/*.dll.js`},
+    ]));
+  }
   config = WebpackMerge(config, devConfig);
 }
 
@@ -266,7 +268,10 @@ if (settings.mode === "production") {
             {loader: "cache-loader"},
             MiniCssExtractPlugin.loader,
             // {loader: "style-loader"},
-            {loader: "css-loader", options: {importLoaders: 1, modules: {compileType: "module", localIdentName: "[path][name]_[local]_[hash:base64:5]", localIdentContext: srcPath}}},
+            {
+              loader: "css-loader",
+              options: {importLoaders: 1, modules: {compileType: "module", localIdentName: "[path][name]_[local]_[hash:base64:5]", localIdentContext: srcPath}}
+            },
             {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
             {loader: "less-loader", options: {}},
           ],

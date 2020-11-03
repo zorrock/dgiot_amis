@@ -1,7 +1,7 @@
 import path from "path";
 import { ProxyConfigMap } from 'webpack-dev-server';
 
-const {NODE_ENV, ANALYZER} = process.env;
+const {NODE_ENV, ANALYZER, USE_DLL} = process.env;
 
 interface Settings {
   /** 打包版本号 */
@@ -18,7 +18,9 @@ interface Settings {
     needOpenApp: boolean;
     /** 后端接口代理配置 */
     proxy?: ProxyConfigMap;
-  },
+  };
+  /** dev是否使用dll加速编译 */
+  devUseDll: boolean;
   /** 需要 Analyzer */
   needAnalyzer: boolean;
   /** */
@@ -39,6 +41,7 @@ const settings: Settings = {
       }
     },
   },
+  devUseDll: !!USE_DLL,
   needAnalyzer: !!ANALYZER,
 }
 
