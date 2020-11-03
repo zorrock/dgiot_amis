@@ -53,7 +53,8 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
   }
 }
 
-ReactDOM.render(<DemoPage/>, document.getElementById('root'));
+const $mounted = document.getElementById('root') || document.createElement('div')
+ReactDOM.render(<DemoPage/>, $mounted);
 
 // export default DemoPage;
 
