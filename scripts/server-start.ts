@@ -1,4 +1,4 @@
-import * as LiveServer from 'live-server';
+import LiveServer from 'live-server';
 import lodash from 'lodash';
 import { settings } from '../build/config';
 
