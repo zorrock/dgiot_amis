@@ -34,7 +34,9 @@ const dllPath = path.resolve(settings.rootPath, "./dll");
 let copyToClipboard = false;
 
 let config: Configuration = {
-  entry: {},
+  entry: {
+    global: `${srcPath}/app`,
+  },
   module: {
     // noParse: content => {},
     rules: [
@@ -214,7 +216,7 @@ if (settings.mode === "development") {
       // sourceType: "commonjs",
     }));
     devConfig.plugins!.push(new AddAssetHtmlPlugin([
-      {filepath: `${dllPath}/*.dll.js`},
+      {filepath: `${dllPath}/*.dll.js`, typeOfAsset: "js"},
     ]));
   }
   config = WebpackMerge(config, devConfig);

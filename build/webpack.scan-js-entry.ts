@@ -57,7 +57,7 @@ const scanJsEntry = (config: Configuration, srcPath: string, distPath: string, f
       title: "webpack4.x",
       favicon: faviconPath,
       appVersion: settings.appVersion,
-      chunks: ["manifest", "vendor", "commons", entryKey],
+      chunks: ["manifest", "vendor", "commons", "global", entryKey],
     };
     if (settings.mode === "production") {
       options.minify = {
