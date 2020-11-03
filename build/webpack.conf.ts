@@ -238,7 +238,6 @@ if (settings.mode === "production") {
         {
           test: /\.css$/,
           use: [
-            {loader: "thread-loader", options: {workers: 3}},
             MiniCssExtractPlugin.loader,
             {loader: "css-loader", options: {}},
             {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
@@ -248,7 +247,6 @@ if (settings.mode === "production") {
         {
           test: /\.less$/,
           use: [
-            {loader: "thread-loader", options: {workers: 3}},
             MiniCssExtractPlugin.loader,
             {
               loader: "css-loader",
