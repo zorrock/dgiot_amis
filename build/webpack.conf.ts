@@ -1,14 +1,10 @@
 import path from 'path';
-import fs from 'fs';
 import chalk from 'chalk';
 import ip from 'ip';
 import clipboardy from 'clipboardy';
-import glob from 'glob';
-import slash from 'slash';
 import { Configuration, DllReferencePlugin, HashedModuleIdsPlugin, HotModuleReplacementPlugin } from 'webpack';
 import WebpackMerge from 'webpack-merge';
 import WebpackBar from 'webpackbar';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
@@ -18,6 +14,7 @@ import AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { settings } from './config';
+import { scanJsEntry } from './webpack.scan-js-entry';
 
 // src文件夹绝对路径
 const srcPath = path.resolve(settings.rootPath, "./src");
@@ -108,62 +105,7 @@ let config: Configuration = {
 };
 
 // 动态扫描入口文件 entry HtmlWebpackPlugin
-const htmlFiles: string[] = [];
-const jsExtArr: string[] = [".ts", ".tsx", ".js", ".jsx", ".json"];
-glob
-  .sync(slash(`${srcPath}/pages/**/*.ejs`), {matchBase: true})
-  .forEach(file => htmlFiles.push(file));
-glob
-  .sync(slash(`${srcPath}/pages/**/*.html`), {matchBase: true})
-  .forEach(file => htmlFiles.push(file));
-htmlFiles.forEach(htmlFile => {
-  const fileExtName = path.extname(htmlFile);
-  const fileName = htmlFile.substr(0, htmlFile.length - fileExtName.length);
-  let jsFileExists = false;
-  let useJsFile: string | undefined = undefined;
-  jsExtArr.forEach(ext => {
-    const jsFile = `${fileName}${ext}`;
-    if (!fs.existsSync(jsFile)) {
-      return;
-    }
-    // console.log("jsFile -> ", jsFile);
-    if (jsFileExists) {
-      console.warn(`${htmlFile} 对应的js/ts/json文件有多个，将使用文件: ${useJsFile}，当前文件将会被忽略: ${jsFile}`);
-      return;
-    }
-    jsFileExists = true;
-    useJsFile = jsFile;
-  });
-  if (!jsFileExists) {
-    console.warn(`${htmlFile} 对应的js/ts/json文件不存在`);
-    return;
-  }
-  const entryKey = useJsFile!.substr(slash(srcPath).length + 1);
-  console.log("entryKey -> ", entryKey);
-  console.log("useJsFile -> ", useJsFile);
-  const outFileName = `${slash(distPath)}${fileName.substr(slash(srcPath).length)}.html`;
-  console.log("outFileName -> ", outFileName);
-  const options: HtmlWebpackPlugin.Options = {
-    template: htmlFile,
-    filename: outFileName,
-    minify: false,
-    title: "webpack4.x",
-    favicon: faviconPath,
-    appVersion: settings.appVersion,
-    chunks: ["manifest", "vendor", "commons", entryKey!],
-  };
-  if (settings.mode === "production") {
-    options.minify = {
-      removeRedundantAttributes: true,
-      collapseWhitespace: true,
-      removeAttributeQuotes: true,
-      removeComments: true,
-      collapseBooleanAttributes: true
-    };
-  }
-  config.entry![entryKey] = useJsFile;
-  config.plugins!.push(new HtmlWebpackPlugin(options));
-});
+scanJsEntry(config, srcPath, distPath, faviconPath);
 
 // postcss-loader 配置
 const postcssOptions = {
