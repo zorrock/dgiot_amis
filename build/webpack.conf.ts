@@ -260,7 +260,10 @@ if (settings.mode === "production") {
     },
     plugins: [
       new HashedModuleIdsPlugin(),
-      new MiniCssExtractPlugin({}),
+      new MiniCssExtractPlugin({
+        filename: "[name].[hash].css",
+        chunkFilename: "[name].[hash].css",
+      }),
       new CleanWebpackPlugin({}),
     ],
     optimization: {
