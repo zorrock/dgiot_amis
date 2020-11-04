@@ -1,3 +1,5 @@
+import {SchemaObject} from 'amis'
+
 enum ComponentType {
   /** 页面 */
   page = "page",
@@ -37,7 +39,7 @@ interface FormControl {
   name: string;
 }
 
-type Schema = Page | Form;
+type Schema = Page | Form | SchemaObject;
 
 export {
   ComponentType,

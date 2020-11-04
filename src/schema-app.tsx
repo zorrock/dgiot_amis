@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import lodash from 'lodash';
 import { render as amisRender } from 'amis';
+import { ComponentType, Schema } from "@/amis-types";
 
 interface ReactPageProps {
-  schema: any;
+  schema: Schema;
 }
 
 interface ReactPageState {
@@ -15,7 +17,7 @@ interface ReactPageState {
 class ReactPage extends Component<ReactPageProps, ReactPageState> {
   render() {
     const {schema} = this.props;
-    console.log("this.props -> ", this.props);
+    // console.log("this.props -> ", this.props);
     return <div>{amisRender(schema, {}, {})}</div>;
   }
 }
@@ -24,17 +26,37 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
  * 动态加载 amis schema文件
  * @param schemaPath schema文件路径
  */
-const loadSchema = async (schemaPath: string): Promise<any> => {
+const loadSchema = async (schemaPath: string): Promise<ReactPageProps> => {
   return import(
-    /* webpackInclude: /[\\/]src[\\/]pages[\\/].*[\\/]schema\.(ts|tsx|js|jsx|json)$/ */
+    /* webpackInclude: /[\\/]src[\\/]pages[\\/].*[\\/]schema.*\.(ts|tsx|js|jsx|json)$/ */
     /* webpackChunkName: "[request].chunk" */
-    `@/pages/${schemaPath}/schema`
+    `@/pages/${schemaPath}`
     );
 }
 
+const hash = lodash.trim(document.location.hash);
+const schemaPath = hash.startsWith("#") ? hash.substr(1, hash.length) : "01schema/schema";
+const $mounted = document.getElementById('root') || document.createElement('div')
+// console.log("schemaPath --> ", schemaPath, $mounted);
+
 /** 初始化页面 */
-loadSchema("01schema").then(({schema}) => {
-  const $mounted = document.getElementById('root') || document.createElement('div')
-  console.log("schema --> ", schema, $mounted);
-  ReactDOM.render(<ReactPage schema={schema}/>, $mounted);
-});
+loadSchema(schemaPath)
+  .then(props => {
+    // console.log("props --> ", props);
+    ReactDOM.render(<ReactPage {...props}/>, $mounted);
+  })
+  .catch(reason => {
+    // 默认的异常处理
+    const jsonReason = JSON.stringify({schemaPath, reason, msg: lodash.toString(reason)}, null, 2);
+    console.error(reason);
+    console.error(jsonReason);
+    const schema: Schema = {
+      type: ComponentType.page,
+      title: `schema文件加载失败: ${schemaPath}`,
+      body: {
+        type: "html",
+        html: `<pre>${jsonReason}</pre>`
+      },
+    };
+    ReactDOM.render(<ReactPage schema={schema}/>, $mounted);
+  });
