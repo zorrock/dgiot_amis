@@ -217,6 +217,7 @@ if (settings.mode === "development") {
     }));
     devConfig.plugins!.push(new AddAssetHtmlPlugin([
       {filepath: `${dllPath}/*.dll.js`, typeOfAsset: "js"},
+      // {filepath: `${dllPath}/*.css`, typeOfAsset: "css"},
     ]));
   }
   config = WebpackMerge(config, devConfig);
