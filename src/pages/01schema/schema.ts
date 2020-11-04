@@ -20,4 +20,8 @@ const schema: Schema = {
   ],
 }
 
-export { schema };
+const test = (ss: string) => {
+  console.log("test@@@@@@@@@@@@@@@@@@@@@@@@@@@", ss);
+}
+
+export { schema, test };
