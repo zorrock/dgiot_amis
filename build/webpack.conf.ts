@@ -37,7 +37,7 @@ let copyToClipboard = false;
 
 let config: Configuration = {
   entry: {
-    global: `${srcPath}/app`,
+    global: `${srcPath}/global`,
     schemaApp: `${srcPath}/schema-app`,
   },
   module: {
