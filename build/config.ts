@@ -23,8 +23,11 @@ interface Settings {
   devUseDll: boolean;
   /** 需要 Analyzer */
   needAnalyzer: boolean;
+  /** HTML页面默认标题 */
+  defaultTitle: string;
   /** */
 }
+
 
 const settings: Settings = {
   appVersion: new Date().getTime(),
@@ -43,6 +46,7 @@ const settings: Settings = {
   },
   devUseDll: !!USE_DLL,
   needAnalyzer: !!ANALYZER,
+  defaultTitle: "Tab页",
 }
 
 export { settings };

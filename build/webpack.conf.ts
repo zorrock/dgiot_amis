@@ -2,7 +2,8 @@ import path from 'path';
 import chalk from 'chalk';
 import ip from 'ip';
 import clipboardy from 'clipboardy';
-import { Configuration, DllReferencePlugin, HashedModuleIdsPlugin, HotModuleReplacementPlugin } from 'webpack';
+import lodash from 'lodash';
+import { Configuration, DllReferencePlugin, HashedModuleIdsPlugin, HotModuleReplacementPlugin, Options } from 'webpack';
 import WebpackMerge from 'webpack-merge';
 import WebpackBar from 'webpackbar';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -15,6 +16,7 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { settings } from './config';
 import { scanJsEntry } from './webpack.scan-js-entry';
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 // src文件夹绝对路径
 const srcPath = path.resolve(settings.rootPath, "./src");
@@ -36,6 +38,7 @@ let copyToClipboard = false;
 let config: Configuration = {
   entry: {
     global: `${srcPath}/app`,
+    schemaApp: `${srcPath}/schema-app`,
   },
   module: {
     // noParse: content => {},
@@ -105,9 +108,6 @@ let config: Configuration = {
     noEmitOnErrors: true,
   },
 };
-
-// 动态扫描入口文件 entry HtmlWebpackPlugin
-scanJsEntry(config, srcPath, distPath, faviconPath);
 
 // postcss-loader 配置
 const postcssOptions = {
@@ -348,6 +348,38 @@ if (settings.mode === "production") {
   };
   config = WebpackMerge(config, prodConfig);
 }
+
+// 动态扫描入口文件 entry HtmlWebpackPlugin
+const chunks: string[] = [];
+if (config.optimization?.splitChunks && config.optimization?.splitChunks?.cacheGroups) {
+  const cacheGroups = (config.optimization!.splitChunks as Options.SplitChunksOptions).cacheGroups as ({ [key: string]: Options.CacheGroupsOptions });
+  lodash.forEach(cacheGroups, (option) => {
+    chunks.push(option.name as string);
+  });
+  // console.log("chunks -> ", JSON.stringify(chunks));
+}
+scanJsEntry(config, srcPath, distPath, chunks, faviconPath);
+
+// schema-app 支持
+const options: HtmlWebpackPlugin.Options = {
+  template: `${srcPath}/template.ejs`,
+  filename: `${distPath}/schema-app.html`,
+  minify: false,
+  title: settings.defaultTitle ?? "webpack4.x",
+  favicon: faviconPath,
+  appVersion: settings.appVersion,
+  chunks: ["manifest", ...chunks, "global", "schemaApp"],
+};
+if (settings.mode === "production") {
+  options.minify = {
+    removeRedundantAttributes: true,
+    collapseWhitespace: true,
+    removeAttributeQuotes: true,
+    removeComments: true,
+    collapseBooleanAttributes: true
+  };
+}
+config.plugins!.push(new HtmlWebpackPlugin(options));
 
 // 生成代码分析报告
 if (settings.needAnalyzer) {

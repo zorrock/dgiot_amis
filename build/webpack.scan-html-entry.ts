@@ -11,9 +11,10 @@ import { settings } from "./config";
  * @param config      webpack配置
  * @param srcPath     src路径
  * @param distPath    dist路径
+ * @param chunks      文件切割chunks列表
  * @param faviconPath favicon图标路径
  */
-const scanHtmlEntry = (config: Configuration, srcPath: string, distPath: string, faviconPath?: string): void => {
+const scanHtmlEntry = (config: Configuration, srcPath: string, distPath: string, chunks: string[], faviconPath?: string): void => {
   const htmlFiles: string[] = [];
   const jsExtArr: string[] = [".ts", ".tsx", ".js", ".jsx", ".json"];
   glob
@@ -53,10 +54,10 @@ const scanHtmlEntry = (config: Configuration, srcPath: string, distPath: string,
       template: htmlFile,
       filename: outFileName,
       minify: false,
-      title: "webpack4.x",
+      title: settings.defaultTitle ?? "webpack4.x",
       favicon: faviconPath,
       appVersion: settings.appVersion,
-      chunks: ["manifest", "vendor", "commons", "amis", "monacoEditor", "tinymce", "echarts", "froalaEditor", "flvJs", "hlsJs", "global", entryKey!],
+      chunks: ["manifest", ...chunks, "global", entryKey!],
     };
     if (settings.mode === "production") {
       options.minify = {
