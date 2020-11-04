@@ -24,6 +24,7 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
       // env
       // 这些是 amis 需要的一些接口实现
       // 可以参考后面的参数介绍。
+      theme: "default",
 
       jumpTo: (
         location: string /*目标地址*/,
