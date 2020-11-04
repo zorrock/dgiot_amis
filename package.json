@@ -22,6 +22,7 @@
     "ncu-u": "ncu -u"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "dayjs": "^1.9.4",
     "copy-to-clipboard": "^3.3.1",
     "amis": "^1.0.17",
