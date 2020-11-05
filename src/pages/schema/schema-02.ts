@@ -26,7 +26,7 @@ const schema: SchemaObject = {
   ],
   body: {
     type: "crud", draggable: true, api: "get:/api/sample?waitSeconds=1", keepItemSelectionOnPageChange: true, labelTpl: "${id} ${engine}",
-    quickSaveApi: "/api/sample/bulkUpdate", quickSaveItemApi: "/api/sample/$id", filterTogglable: true,
+    quickSaveApi: "/api/sample/bulkUpdate", quickSaveItemApi: "/api/sample/$id", filterTogglable: true, affixHeader: false,
     // 条件过滤表单
     filter: {
       title: "条件搜索", submitText: "",
