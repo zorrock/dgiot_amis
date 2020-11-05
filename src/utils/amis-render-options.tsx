@@ -18,7 +18,7 @@ export interface FetcherConfig {
 
 const amisRenderOptions: RenderOptions = {
   /** 主题配置 */
-  theme: "cxd",
+  theme: "default",
   /** 默认为 "global"，决定 store 是否为全局共用的，如果想单占一个 store，请设置不同的值 */
   session: "global",
   /** 发送http请求 */

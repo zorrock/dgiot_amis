@@ -1,11 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh">
 <head>
     <% var opts = htmlWebpackPlugin.options; %>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title><%= opts.title %></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <link rel="stylesheet" href="<%= opts.urlPrefix %>public/amis/sdk/sdk.css"/>
 </head>
 <body>
 <div id="root"></div>
+<script type="text/javascript" src="<%= opts.urlPrefix %>public/amis/sdk/sdk.js"></script>
 </body>
 </html>

@@ -1,25 +1,27 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import lodash from 'lodash';
-import { render as amisRender, SchemaObject } from 'amis';
+import { SchemaObject } from 'amis';
 import { amisRenderOptions } from "@/utils/amis-render-options";
+import { RenderOptions, RootRenderProps } from "amis/src/factory";
+
+interface Amis {
+  embed(mounted: string, schema: SchemaObject, props: RootRenderProps, options: RenderOptions, pathPrefix?: string): React.ReactNode,
+}
+
+type AmisRequire = (module: string) => Amis;
+declare const amisRequire: AmisRequire;
+
+const amis = amisRequire("amis/embed");
+// console.log("amis -> ", amis);
+const hash = lodash.trim(document.location.hash);
+const schemaPath = hash.startsWith("#") ? hash.substr(1, hash.length) : "01schema/schema";
+const $mounted = document.getElementById('root') || document.createElement('div');
+// console.log("schemaPath --> ", schemaPath, $mounted);
+$mounted.id = "root";
+
 
 interface ReactPageProps {
   schema: SchemaObject;
-}
-
-interface ReactPageState {
-}
-
-/**
- * 页面组件
- */
-class ReactPage extends Component<ReactPageProps, ReactPageState> {
-  render() {
-    const {schema} = this.props;
-    // console.log("this.props -> ", this.props);
-    return <div>{amisRender(schema, {}, {...amisRenderOptions})}</div>;
-  }
 }
 
 /**
@@ -34,16 +36,13 @@ const loadSchema = async (schemaPath: string): Promise<ReactPageProps> => {
     );
 }
 
-const hash = lodash.trim(document.location.hash);
-const schemaPath = hash.startsWith("#") ? hash.substr(1, hash.length) : "01schema/schema";
-const $mounted = document.getElementById('root') || document.createElement('div')
-// console.log("schemaPath --> ", schemaPath, $mounted);
 
 /** 初始化页面 */
 loadSchema(schemaPath)
   .then(props => {
     // console.log("props --> ", props);
-    ReactDOM.render(<ReactPage {...props}/>, $mounted);
+    const {schema, ...resProps} = props;
+    amis.embed("#root", schema, {...resProps}, {...amisRenderOptions});
   })
   .catch(reason => {
     // 默认的异常处理
@@ -58,7 +57,7 @@ loadSchema(schemaPath)
         html: `<pre>${jsonReason}</pre>`
       },
     };
-    ReactDOM.render(<ReactPage schema={schema}/>, $mounted);
+    amis.embed("#root", schema, {}, {...amisRenderOptions});
   });
 
 // window.addEventListener("hashchange", funcRef, false);

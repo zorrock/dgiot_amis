@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import ip from 'ip';
 import clipboardy from 'clipboardy';
 import lodash from 'lodash';
-import { Configuration, DllReferencePlugin, HashedModuleIdsPlugin, HotModuleReplacementPlugin, Options } from 'webpack';
+import { Configuration, HashedModuleIdsPlugin, HotModuleReplacementPlugin, Options } from 'webpack';
 import WebpackMerge from 'webpack-merge';
 import WebpackBar from 'webpackbar';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -11,7 +11,6 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
-import AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { settings } from './config';
@@ -30,8 +29,6 @@ const nodeModulesPath = path.resolve(settings.rootPath, "./node_modules");
 const distPath = path.resolve(settings.rootPath, "./dist");
 // 网站图标绝对路径
 const faviconPath = path.resolve(settings.rootPath, "./public/images/favicon.png");
-// dll 输出目录
-const dllPath = path.resolve(settings.rootPath, "./dll");
 // 访问地址复制到剪切板(只干一次)
 let copyToClipboard = false;
 
@@ -93,6 +90,7 @@ let config: Configuration = {
     new CopyWebpackPlugin({
       patterns: [
         {from: publicPath, to: "./public"},
+        {from: `${nodeModulesPath}/amis/sdk`, to: "./public/amis/sdk"},
       ],
       options: {concurrency: 64}
     }),
@@ -103,6 +101,11 @@ let config: Configuration = {
     alias: {
       "@": srcPath,
     },
+  },
+  externals: {
+    // amis: {commonjs: 'amis', amd: 'amis', root: 'amis'},
+    amis: "amisRequire",
+    // amis: "amis",
   },
   optimization: {
     noEmitOnErrors: true,
@@ -209,17 +212,6 @@ if (settings.mode === "development") {
       new HotModuleReplacementPlugin(),
     ],
   };
-  if (settings.devUseDll) {
-    devConfig.plugins!.push(new DllReferencePlugin({
-      context: settings.rootPath,
-      manifest: require(`${dllPath}/vendor-manifest.json`),
-      // sourceType: "commonjs",
-    }));
-    devConfig.plugins!.push(new AddAssetHtmlPlugin([
-      {filepath: `${dllPath}/*.dll.js`, typeOfAsset: "js"},
-      // {filepath: `${dllPath}/*.css`, typeOfAsset: "css"},
-    ]));
-  }
   config = WebpackMerge(config, devConfig);
 }
 
@@ -370,6 +362,7 @@ const options: HtmlWebpackPlugin.Options = {
   favicon: faviconPath,
   appVersion: settings.appVersion,
   chunks: ["manifest", ...chunks, "global", "schemaApp"],
+  urlPrefix: "/",
 };
 if (settings.mode === "production") {
   options.minify = {

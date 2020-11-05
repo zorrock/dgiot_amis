@@ -58,6 +58,7 @@ const scanHtmlEntry = (config: Configuration, srcPath: string, distPath: string,
       favicon: faviconPath,
       appVersion: settings.appVersion,
       chunks: ["manifest", ...chunks, "global", entryKey!],
+      urlPrefix: "/",
     };
     if (settings.mode === "production") {
       options.minify = {
