@@ -29,14 +29,14 @@ const amisRenderOptions: RenderOptions = {
     if (responseType) config.responseType = responseType;
     if (config.cancelExecutor) config.cancelToken = new axios.CancelToken(config.cancelExecutor);
     config.headers = headers;
-    if (method !== 'post' && method !== 'put' && method !== 'patch') {
+    if (method !== "post" && method !== "put" && method !== "patch") {
       if (data) config.params = data;
       return axios[method](url, config);
     } else if (data && data instanceof FormData) {
-      config.headers['Content-Type'] = 'multipart/form-data';
+      config.headers["Content-Type"] = "multipart/form-data";
     } else if (data && typeof data !== 'string' && !(data instanceof Blob) && !(data instanceof ArrayBuffer)) {
       data = JSON.stringify(data);
-      config.headers['Content-Type'] = 'application/json';
+      config.headers["Content-Type"] = "application/json";
     }
     return axios[method](url, data, config);
   },
@@ -45,10 +45,10 @@ const amisRenderOptions: RenderOptions = {
   /**  */
   notify: (type, msg) => {
     if (!toast[type]) {
-      console.warn('[Notify]', type, msg);
+      console.warn("[Notify]", type, msg);
       return;
     }
-    toast[type](msg, type === 'error' ? "系统错误" : "系统消息");
+    toast[type](msg, type === "error" ? "系统错误" : "系统消息");
   },
   /** 用来实现警告提示 */
   alert: msg => alert(msg),
