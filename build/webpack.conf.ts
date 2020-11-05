@@ -290,7 +290,7 @@ if (settings.mode === "production") {
         name: "manifest",
       },
       minimizer: [
-        new TerserPlugin({parallel: true}),
+        new TerserPlugin({parallel: true, extractComments: false}),
         new OptimizeCSSAssetsPlugin({}),
       ],
       splitChunks: {
