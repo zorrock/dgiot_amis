@@ -1,6 +1,6 @@
 import { RenderOptions } from 'amis/lib/factory';
-import { alert, confirm, toast } from "amis";
-import copy from "copy-to-clipboard";
+// import { alert, confirm, toast } from "amis";
+// import copy from "copy-to-clipboard";
 import axios, { AxiosRequestConfig, Canceler, ResponseType } from "axios";
 
 interface RequestConfig extends AxiosRequestConfig {
@@ -17,7 +17,7 @@ export interface FetcherConfig {
 }
 
 const amisRenderOptions: RenderOptions = {
-  /** 主题配置 */
+  /** 主题配置(default（默认主题）、cxd（云舍）和dark（暗黑）) */
   theme: "default",
   /** 默认为 "global"，决定 store 是否为全局共用的，如果想单占一个 store，请设置不同的值 */
   session: "global",
@@ -42,29 +42,29 @@ const amisRenderOptions: RenderOptions = {
   },
   /** 是否取消http请求 */
   isCancel: value => axios.isCancel(value),
-  /**  */
-  notify: (type, msg) => {
-    if (!toast[type]) {
-      console.warn("[Notify]", type, msg);
-      return;
-    }
-    toast[type](msg, type === "error" ? "系统错误" : "系统消息");
-  },
+  /** 用来实现通知 */
+  // notify: (type, msg) => {
+  //   if (!toast[type]) {
+  //     console.warn("[Notify]", type, msg);
+  //     return;
+  //   }
+  //   toast[type](msg, type === "error" ? "系统错误" : "系统消息");
+  // },
   /** 用来实现警告提示 */
-  alert: msg => alert(msg),
+  // alert: msg => alert(msg),
   /** 用来实现确认框 */
-  confirm: (msg, title) => confirm(msg, title),
+  // confirm: (msg, title) => confirm(msg, title),
   /** 用来实现内容复制 */
-  copy: contents => {
-    copy(contents);
-    toast.success('内容已复制到粘贴板');
-  },
+  // copy: contents => {
+  //   copy(contents);
+  //   toast.success('内容已复制到粘贴板');
+  // },
   /** 用来实现页面跳转 */
-  jumpTo: (to, action, ctx) => {
-  },
+  // jumpTo: (to, action, ctx) => {
+  // },
   /** 地址替换，跟 jumpTo 类似 */
-  updateLocation: (location: string /*目标地址*/, replace: boolean /*是replace，还是push?*/) => {
-  },
+  // updateLocation: (location: string /*目标地址*/, replace: boolean /*是replace，还是push?*/) => {
+  // },
   /** 渲染器解析实现 */
   // rendererResolver:(path, schema, props) => {},
   /** 用来决定弹框容器 */

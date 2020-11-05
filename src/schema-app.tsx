@@ -5,14 +5,16 @@ import { amisRenderOptions } from "@/utils/amis-render-options";
 import { RenderOptions, RootRenderProps } from "amis/src/factory";
 
 interface Amis {
-  embed(mounted: string, schema: SchemaObject, props: RootRenderProps, options: RenderOptions, pathPrefix?: string): React.ReactNode,
+  embed(mounted: string, schema: SchemaObject, props: RootRenderProps, options: RenderOptions, pathPrefix?: string): React.ReactNode;
+
+  [name: string]: any;
 }
 
 type AmisRequire = (module: string) => Amis;
 declare const amisRequire: AmisRequire;
 
 const amis = amisRequire("amis/embed");
-// console.log("amis -> ", amis);
+console.log("amis -> ", amis);
 const hash = lodash.trim(document.location.hash);
 const schemaPath = hash.startsWith("#") ? hash.substr(1, hash.length) : "01schema/schema";
 const $mounted = document.getElementById('root') || document.createElement('div');

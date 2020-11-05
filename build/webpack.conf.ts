@@ -1,5 +1,6 @@
 import path from 'path';
 import chalk from 'chalk';
+import slash from "slash";
 import ip from 'ip';
 import clipboardy from 'clipboardy';
 import lodash from 'lodash';
@@ -90,7 +91,32 @@ let config: Configuration = {
     new CopyWebpackPlugin({
       patterns: [
         {from: publicPath, to: "./public"},
-        {from: `${nodeModulesPath}/amis/sdk`, to: "./public/amis/sdk"},
+        ...[
+          "/amis/sdk/**/*.css",
+          "/amis/sdk/**/*.js",
+          "/amis/sdk/**/*.svg",
+          "/amis/sdk/**/*.eot",
+          "/amis/sdk/**/*.svg",
+          "/amis/sdk/**/*.ttf",
+          "/amis/sdk/**/*.woff",
+          "/amis/sdk/**/*.woff2",
+          "/amis/sdk/**/*.eot",
+          "/amis/sdk/**/*.svg",
+          "/amis/sdk/**/*.ttf",
+          "/amis/sdk/**/*.woff",
+          "/amis/sdk/**/*.woff2",
+          "/amis/lib/**/*.css",
+          "/amis/lib/**/*.svg",
+          "/font-awesome/css",
+          "/font-awesome/fonts",
+        ].map(pathItem => {
+          return {
+            from: `${slash(nodeModulesPath)}${pathItem}`,
+            transformPath: (targetPath: string, absolutePath: string) => {
+              return `./public${slash(absolutePath).substr(slash(nodeModulesPath).length)}`;
+            },
+          };
+        }),
       ],
       options: {concurrency: 64}
     }),
@@ -103,9 +129,8 @@ let config: Configuration = {
     },
   },
   externals: {
-    // amis: {commonjs: 'amis', amd: 'amis', root: 'amis'},
-    amis: "amisRequire",
-    // amis: "amis",
+    amis: {commonjs: 'amisRequire', amd: 'amisRequire', root: 'amisRequire'},
+    // amis: "amisRequire",
   },
   optimization: {
     noEmitOnErrors: true,
