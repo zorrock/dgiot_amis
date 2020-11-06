@@ -50,11 +50,38 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
     amis.embed(`#${this.amisMountedId}`, schema, {...resProps}, {...amisRenderOptions});
   }
 
+  reload() {
+    amis.embed(`#${this.amisMountedId}`, {
+      type: "page",
+      title: "动态变化",
+      body: [
+        {
+          type: "form",
+          mode: "horizontal",
+          api: "https://houtai.baidu.com/api/mock2/form/saveForm",
+          controls: [
+            {
+              label: "Name",
+              type: "text",
+              name: "name"
+            },
+            {label: "Email", type: "email", name: "email"},
+          ],
+        },
+      ],
+    }, {}, {...amisRenderOptions});
+  }
+
   render() {
     const {count} = this.state;
     return (
       <div>
-        <button onClick={() => this.setState({count: count + 1})}>{count}</button>
+        <button onClick={() => {
+          this.setState({count: count + 1});
+          if (count > 3) {
+            this.reload();
+          }
+        }}>{count}</button>
         <div id={this.amisMountedId}/>
       </div>
     );
