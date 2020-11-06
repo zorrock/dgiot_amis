@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import lodash from 'lodash';
 import { SchemaObject } from 'amis';
 import { amisRenderOptions } from "@/utils/amis-render-options";
@@ -17,13 +18,53 @@ const amis = amisRequire("amis/embed");
 // console.log("amis -> ", amis);
 const hash = lodash.trim(document.location.hash);
 const schemaPath = hash.startsWith("#") ? hash.substr(1, hash.length) : "01schema/schema";
-const $mounted = document.getElementById('root') || document.createElement('div');
-// console.log("schemaPath --> ", schemaPath, $mounted);
-$mounted.id = "root";
 
+const rootMountedId = "root";
+const amisMountedId = "amis-root";
+let $rootMounted = document.getElementById(rootMountedId)
+if (!$rootMounted) {
+  $rootMounted = document.createElement('div');
+  $rootMounted.id = rootMountedId;
+  document.appendChild($rootMounted);
+}
 
 interface ReactPageProps {
   schema: SchemaObject;
+}
+
+interface ReactPageState {
+  count: number;
+}
+
+class ReactPage extends Component<ReactPageProps, ReactPageState> {
+
+  constructor(props: ReactPageProps) {
+    super(props);
+    this.state = {count: 0};
+  }
+
+  componentDidMount() {
+    let $amisMounted = document.getElementById(amisMountedId);
+    if (!$amisMounted) {
+      $amisMounted = document.createElement('div');
+      $amisMounted.id = amisMountedId;
+      $rootMounted!.appendChild($amisMounted);
+    }
+    // console.log("$amisMounted -> ", document.getElementById(amisMountedId));
+    const {schema, ...resProps} = this.props;
+    // amis.embed(`#${amisMountedId}`, schema, {...resProps}, {...amisRenderOptions});
+    amis.embed(`#tmp-amis`, schema, {...resProps}, {...amisRenderOptions});
+  }
+
+  render() {
+    const {count} = this.state;
+    return (
+      <div>
+        <button onClick={() => this.setState({count: count + 1})}>{count}</button>
+        <div id="tmp-amis"/>
+      </div>
+    );
+  }
 }
 
 /**
@@ -44,7 +85,7 @@ loadSchema(schemaPath)
   .then(props => {
     // console.log("props --> ", props);
     const {schema, ...resProps} = props;
-    amis.embed("#root", schema, {...resProps}, {...amisRenderOptions});
+    ReactDOM.render(<ReactPage schema={schema} {...resProps}/>, $rootMounted);
   })
   .catch(reason => {
     // 默认的异常处理
@@ -59,7 +100,7 @@ loadSchema(schemaPath)
         html: `<pre>${jsonReason}</pre>`
       },
     };
-    amis.embed("#root", schema, {}, {...amisRenderOptions});
+    amis.embed("#amis-root", schema, {}, {...amisRenderOptions});
   });
 
 // window.addEventListener("hashchange", funcRef, false);
