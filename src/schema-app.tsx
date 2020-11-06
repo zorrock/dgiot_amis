@@ -20,7 +20,6 @@ const hash = lodash.trim(document.location.hash);
 const schemaPath = hash.startsWith("#") ? hash.substr(1, hash.length) : "01schema/schema";
 
 const rootMountedId = "root";
-const amisMountedId = "amis-root";
 let $rootMounted = document.getElementById(rootMountedId)
 if (!$rootMounted) {
   $rootMounted = document.createElement('div');
@@ -37,6 +36,7 @@ interface ReactPageState {
 }
 
 class ReactPage extends Component<ReactPageProps, ReactPageState> {
+  private amisMountedId = "amis-root";
 
   constructor(props: ReactPageProps) {
     super(props);
@@ -44,16 +44,10 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
   }
 
   componentDidMount() {
-    let $amisMounted = document.getElementById(amisMountedId);
-    if (!$amisMounted) {
-      $amisMounted = document.createElement('div');
-      $amisMounted.id = amisMountedId;
-      $rootMounted!.appendChild($amisMounted);
-    }
-    // console.log("$amisMounted -> ", document.getElementById(amisMountedId));
+    console.log("$amisMounted -> ", document.getElementById(this.amisMountedId));
     const {schema, ...resProps} = this.props;
     // amis.embed(`#${amisMountedId}`, schema, {...resProps}, {...amisRenderOptions});
-    amis.embed(`#tmp-amis`, schema, {...resProps}, {...amisRenderOptions});
+    amis.embed(`#${this.amisMountedId}`, schema, {...resProps}, {...amisRenderOptions});
   }
 
   render() {
@@ -61,7 +55,7 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
     return (
       <div>
         <button onClick={() => this.setState({count: count + 1})}>{count}</button>
-        <div id="tmp-amis"/>
+        <div id={this.amisMountedId}/>
       </div>
     );
   }
@@ -100,7 +94,7 @@ loadSchema(schemaPath)
         html: `<pre>${jsonReason}</pre>`
       },
     };
-    amis.embed("#amis-root", schema, {}, {...amisRenderOptions});
+    amis.embed(`#${rootMountedId}`, schema, {}, {...amisRenderOptions});
   });
 
 // window.addEventListener("hashchange", funcRef, false);
