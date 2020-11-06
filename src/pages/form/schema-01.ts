@@ -1,6 +1,6 @@
-import { SchemaObject } from "amis";
+import { PageSchema } from "amis";
 
-const schema: SchemaObject = {
+const schema: PageSchema = {
   type: "page",
   title: "简单表单",
   // @ts-ignore
