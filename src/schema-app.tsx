@@ -14,7 +14,7 @@ type AmisRequire = (module: string) => Amis;
 declare const amisRequire: AmisRequire;
 
 const amis = amisRequire("amis/embed");
-console.log("amis -> ", amis);
+// console.log("amis -> ", amis);
 const hash = lodash.trim(document.location.hash);
 const schemaPath = hash.startsWith("#") ? hash.substr(1, hash.length) : "01schema/schema";
 const $mounted = document.getElementById('root') || document.createElement('div');

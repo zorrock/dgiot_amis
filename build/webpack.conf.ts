@@ -297,13 +297,16 @@ if (settings.mode === "production") {
         cacheGroups: {
           commons: {
             name: "commons",
-            chunks: "all",
-            // 表示被引用次数，默认为1。Math.ceil(pages.length / 3), 当你有多个页面时，获取pages.length，至少被1/3页面的引入才打入common包
-            // minChunks: Math.ceil(config.pagesConfig.length / 3),
-            // 表示抽取出来的文件在压缩前的最小大小，默认为 30000
-            minSize: 30000,
-            // 来设置优先级
+            minSize: 1024 * 1024,
             priority: 0,
+          },
+          schema: {
+            test: /[\\/]pages[\\/]*.[\\/]schema.*(ts|tsx|js|jsx|json)$/,
+            chunks: "async",
+            minSize: 1024 * 256,
+            maxSize: 1024 * 1024,
+            // enforce: true,
+            priority: 1,
           },
           // 提取 node_modules 中代码
           vendor: {
