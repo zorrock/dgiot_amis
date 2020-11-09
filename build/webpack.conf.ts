@@ -66,7 +66,7 @@ let config: Configuration = {
       {
         test: /\.jsx?$/,
         use: [
-          {loader: "cache-loader"},
+          // {loader: "cache-loader"},
           {loader: "thread-loader", options: {workers: 3}},
           {loader: "babel-loader", options: {cacheDirectory: true}},
         ],
@@ -77,7 +77,7 @@ let config: Configuration = {
       {
         test: /\.tsx?$/,
         use: [
-          {loader: "cache-loader"},
+          // {loader: "cache-loader"},
           {loader: "thread-loader", options: {workers: 3}},
           {loader: "ts-loader", options: {happyPackMode: true, transpileOnly: true}},
         ],
