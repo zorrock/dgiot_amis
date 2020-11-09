@@ -9,7 +9,6 @@ import WebpackMerge from 'webpack-merge';
 import WebpackBar from 'webpackbar';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
@@ -66,7 +65,7 @@ let config: Configuration = {
       {
         test: /\.jsx?$/,
         use: [
-          // {loader: "cache-loader"},
+          {loader: "cache-loader"},
           {loader: "thread-loader", options: {workers: 3}},
           {loader: "babel-loader", options: {cacheDirectory: true}},
         ],
@@ -77,7 +76,7 @@ let config: Configuration = {
       {
         test: /\.tsx?$/,
         use: [
-          // {loader: "cache-loader"},
+          {loader: "cache-loader"},
           {loader: "thread-loader", options: {workers: 3}},
           {loader: "ts-loader", options: {happyPackMode: true, transpileOnly: true}},
         ],
@@ -87,7 +86,6 @@ let config: Configuration = {
     ],
   },
   plugins: [
-    new HardSourceWebpackPlugin({}),
     new CopyWebpackPlugin({
       patterns: [
         {from: publicPath, to: "./public"},
