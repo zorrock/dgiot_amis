@@ -25,8 +25,8 @@ const schema: PageSchema = {
       filter: {
         title: "条件搜索", submitText: "查询",
         controls: [
-          {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索"},
-          {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索"},
+          {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true},
+          {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true},
           {
             type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true,
             options: [{label: "已出库", value: "1"}, {label: "已签收", value: "2"}, {label: "已驳回", value: "3"}],
