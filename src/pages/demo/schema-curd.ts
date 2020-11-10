@@ -21,6 +21,18 @@ const schema: PageSchema = {
         //   return payload;
         // },
       },
+      // 条件过滤表单
+      filter: {
+        title: "条件搜索", submitText: "查询",
+        controls: [
+          {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索"},
+          {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索"},
+          {
+            type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true,
+            options: [{label: "已出库", value: "1"}, {label: "已签收", value: "2"}, {label: "已驳回", value: "3"}],
+          },
+        ],
+      },
       // 列定义
       columns: [
         {name: "orderId", label: "订单ID", sortable: true},
@@ -40,6 +52,49 @@ const schema: PageSchema = {
         {name: "payTime", label: "支付时间", sortable: true},
         {name: "payAmount", label: "支付金额", sortable: true},
         {name: "createAt", label: "下单时间", sortable: true},
+        {
+          type: "operation", label: "操作", width: 100, toggled: true,
+          buttons: [
+            {
+              type: "button", icon: "fa fa-eye", actionType: "dialog", tooltip: "查看",
+              dialog: {
+                title: "查看订单 - ${orderId}",
+                body: {
+                  type: "form",
+                  controls: [
+                    {type: "static", name: "orderId", label: "订单ID"},
+                    {type: "static", name: "orderCode", label: "订单编号"},
+                    {
+                      type: "mapping", name: "status", label: "订单状态",
+                      map: {"-3": "待审核", "-2": "待支付", "-1": "待处理", "0": "已接单", "1": "已出库", "2": "已签收", "3": "已驳回", "4": "拒收", "5": "已取消"}
+                    },
+                    {type: "static", name: "shipName", label: "收货人"},
+                    {type: "static", name: "shipMobile", label: "手机号"},
+                    {type: "static", name: "shipAddr", label: "地址"},
+                  ]
+                }
+              }
+            },
+            {
+              type: "button", icon: "fa fa-pencil", tooltip: "编辑", actionType: "drawer",
+              drawer: {
+                position: "left", size: "md", title: "编辑",
+                body: {
+                  type: "form", name: "sample-edit-form", api: "get:/!/mvc/01MvcBase@t01?id=$id",
+                  controls: [
+                    {type: "text", name: "orderId", label: "订单ID"},
+                    {type: "text", name: "orderCode", label: "订单编号"},
+                    {type: "select", name: "status", label: "订单状态", options: [{label: "已出库", value: "1"}, {label: "已签收", value: "2"}, {label: "已驳回", value: "3"}]},
+                    {type: "text", name: "shipName", label: "收货人"},
+                    {type: "text", name: "shipMobile", label: "手机号"},
+                    {type: "text", name: "shipAddr", label: "地址"},
+                  ]
+                }
+              }
+            },
+            {type: "button", icon: "fa fa-times text-danger", actionType: "ajax", tooltip: "删除", confirmText: "您确认要删除订单:${orderId}?", api: "get:/!/mvc/01MvcBase@t01"}
+          ],
+        },
       ],
       perPageAvailable: [10, 20, 50, 100],
       // 表格顶部工具栏
