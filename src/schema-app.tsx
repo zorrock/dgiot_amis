@@ -44,7 +44,7 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
   }
 
   componentDidMount() {
-    console.log("$amisMounted -> ", document.getElementById(this.amisMountedId));
+    // console.log("$amisMounted -> ", document.getElementById(this.amisMountedId));
     const {schema, ...resProps} = this.props;
     // amis.embed(`#${amisMountedId}`, schema, {...resProps}, {...amisRenderOptions});
     amis.embed(`#${this.amisMountedId}`, schema, {...resProps}, {...amisRenderOptions});
@@ -73,15 +73,15 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
   }
 
   render() {
-    const {count} = this.state;
+    // const {count} = this.state;
     return (
       <div>
-        <button onClick={() => {
-          this.setState({count: count + 1});
-          if (count > 3) {
-            this.reload();
-          }
-        }}>{count}</button>
+        {/*<button onClick={() => {*/}
+        {/*  this.setState({count: count + 1});*/}
+        {/*  if (count > 3) {*/}
+        {/*    this.reload();*/}
+        {/*  }*/}
+        {/*}}>{count}</button>*/}
         <div id={this.amisMountedId}/>
       </div>
     );

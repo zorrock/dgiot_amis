@@ -1,6 +1,5 @@
 import { RenderOptions } from 'amis/lib/factory';
-// import { alert, confirm, toast } from "amis";
-// import copy from "copy-to-clipboard";
+import qs from "qs";
 import axios, { AxiosRequestConfig, Canceler, ResponseType } from "axios";
 
 interface RequestConfig extends AxiosRequestConfig {
@@ -15,6 +14,39 @@ export interface FetcherConfig {
   responseType?: ResponseType;
   headers?: any;
 }
+
+const hasValue = (val: any): boolean => val !== null && val !== undefined;
+
+axios.interceptors.request.use(request => {
+  console.log("全局请求拦截 request -> ", request);
+  const path = request.url?.split('?')[0];
+  const querystring = request.url?.split('?')[1];
+  if (!querystring) return request;
+  const params = qs.parse(querystring ?? "");
+  if (!params) return request;
+  if (params.orderDir && params.orderBy && /(asc|desc)/.test(`${params.orderDir}`)) {
+    params.orderField = params.orderBy;
+    params.sort = params.orderDir;
+  }
+  request.url = `${path}?${qs.stringify(params)}`;
+  return request;
+});
+
+axios.interceptors.response.use(response => {
+    console.log("全局响应拦截 response -> ", response);
+    const payload = response.data;
+    if (!payload) return response;
+    const data = payload.data;
+    if (!data) return response;
+    // 全局处理分页查询响应字段问题
+    const {records, total, searchCount, pages, rows, count} = data;
+    if (hasValue(records) && hasValue(total) && hasValue(searchCount) && hasValue(pages) && !hasValue(rows) && !hasValue(count)) {
+      data.rows = data.records;
+      data.count = data.total;
+    }
+    return response;
+  },
+);
 
 const amisRenderOptions: RenderOptions = {
   /** 主题配置(default（默认主题）、cxd（云舍）和dark（暗黑）) */

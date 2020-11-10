@@ -39,7 +39,12 @@ const settings: Settings = {
         target: 'https://houtai.baidu.com',
         changeOrigin: true,
         pathRewrite: {'^': ''},
-      }
+      },
+      '/!/': {
+        target: 'http://127.0.0.1:18081',
+        changeOrigin: true,
+        pathRewrite: {'^': ''},
+      },
     },
   },
   needAnalyzer: !!ANALYZER,
