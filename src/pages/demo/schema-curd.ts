@@ -2,7 +2,7 @@ import { PageSchema } from "amis";
 
 const schema: PageSchema = {
   type: "page",
-  title: "增删查改示例",
+  // title: "增删查改示例",
   toolbar: [],
   body: [
     {
@@ -11,12 +11,12 @@ const schema: PageSchema = {
       api: {method: "get", url: "/!/mvc/05CURD@t04"},
       // 条件过滤表单
       filter: {
-        title: "", submitText: "查询", trimValues: true, // submitOnChange: true,
+        title: "", submitText: "", trimValues: true, // submitOnChange: true,
         controls: [
-          {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true, size: "sm"},
-          {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true, size: "sm"},
+          {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true, size: "md"},
+          {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true, size: "md"},
           {
-            type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true, size: "sm",
+            type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true, size: "md",
             options: [{label: "已出库", value: "1"}, {label: "已签收", value: "2"}, {label: "已驳回", value: "3"}],
           },
         ],
