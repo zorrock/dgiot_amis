@@ -11,7 +11,7 @@ const schema: PageSchema = {
       api: {method: "get", url: "/!/mvc/05CURD@t04"},
       // 条件过滤表单
       filter: {
-        title: "", submitText: "", trimValues: true, // submitOnChange: true,
+        title: "", submitText: "查询", trimValues: true, // submitOnChange: true,
         controls: [
           {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true, size: "md"},
           {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true, size: "md"},
