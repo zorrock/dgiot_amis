@@ -95,8 +95,13 @@ const amisRenderOptions: RenderOptions = {
   // jumpTo: (to, action, ctx) => {
   // },
   /** 地址替换，跟 jumpTo 类似 */
-  // updateLocation: (location: string /*目标地址*/, replace: boolean /*是replace，还是push?*/) => {
-  // },
+  updateLocation: (location: string /*目标地址*/, replace: boolean /*是replace，还是push?*/) => {
+    if (replace) {
+      history.pushState({}, document.title, `${document.location.pathname}${location}${document.location.hash}`);
+    } else {
+      history.replaceState({}, document.title, `${document.location.pathname}${location}${document.location.hash}`);
+    }
+  },
   /** 渲染器解析实现 */
   // rendererResolver:(path, schema, props) => {},
   /** 用来决定弹框容器 */

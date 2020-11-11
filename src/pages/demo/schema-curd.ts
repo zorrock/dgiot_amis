@@ -8,27 +8,15 @@ const schema: PageSchema = {
     {
       type: "crud", defaultParams: {pageNo: 1, pageSize: 20,}, pageField: "pageNo", perPageField: "pageSize", primaryField: "orderId", affixHeader: false,
       // 接口定义
-      api: {
-        method: "get",
-        url: "/!/mvc/05CURD@t04",
-        // adaptor: function (payload: any, response: any) {
-        //   const data = payload.data;
-        //   if (data) {
-        //     data.rows = data.records;
-        //     data.count = data.total;
-        //   }
-        //   console.log("resData", payload);
-        //   return payload;
-        // },
-      },
+      api: {method: "get", url: "/!/mvc/05CURD@t04"},
       // 条件过滤表单
       filter: {
-        title: "条件搜索", submitText: "查询",
+        title: "", submitText: "查询", trimValues: true, // submitOnChange: true,
         controls: [
-          {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true},
-          {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true},
+          {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true, size: "sm"},
+          {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true, size: "sm"},
           {
-            type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true,
+            type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true, size: "sm",
             options: [{label: "已出库", value: "1"}, {label: "已签收", value: "2"}, {label: "已驳回", value: "3"}],
           },
         ],
@@ -53,12 +41,12 @@ const schema: PageSchema = {
         {name: "payAmount", label: "支付金额", sortable: true},
         {name: "createAt", label: "下单时间", sortable: true},
         {
-          type: "operation", label: "操作", width: 100, toggled: true,
+          type: "operation", label: "操作", width: 120, toggled: true,
           buttons: [
             {
-              type: "button", icon: "fa fa-eye", actionType: "dialog", tooltip: "查看",
+              type: "button", label: "查看", level: "info", size: "xs", actionType: "dialog",
               dialog: {
-                title: "查看订单 - ${orderId}",
+                title: "查看订单 - ${orderId}", actions: [{type: "button", label: "关闭", level: "primary", actionType: "close"}],
                 body: {
                   type: "form",
                   controls: [
@@ -76,8 +64,8 @@ const schema: PageSchema = {
               }
             },
             {
-              type: "button", icon: "fa fa-pencil", tooltip: "编辑", actionType: "drawer",
-              drawer: {
+              type: "button", label: "编辑", level: "info", size: "xs", actionType: "dialog", // level: "link",
+              dialog: {
                 position: "left", size: "md", title: "编辑",
                 body: {
                   type: "form", name: "sample-edit-form", api: "get:/!/mvc/01MvcBase@t01?id=$id",
@@ -92,7 +80,7 @@ const schema: PageSchema = {
                 }
               }
             },
-            {type: "button", icon: "fa fa-times text-danger", actionType: "ajax", tooltip: "删除", confirmText: "您确认要删除订单:${orderId}?", api: "get:/!/mvc/01MvcBase@t01"}
+            {type: "button", label: "删除", level: "danger", size: "xs", actionType: "ajax", confirmText: "您确认要删除订单:${orderId}?", api: "get:/!/mvc/01MvcBase@t01"}
           ],
         },
       ],
