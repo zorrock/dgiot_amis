@@ -24,7 +24,10 @@ const schema: PageSchema = {
           {type: "html", html: "<br />"},
           {type: "text", name: "email2", placeholder: "请输入邮箱地址", label: "邮箱", size: "md", labelClassName: styles.labelClassName},
           {type: "text", name: "password2", label: "密码", placeholder: "请输入密码", size: "md", labelClassName: styles.labelClassName},
+          // {type: "html", html: "<br />"},
+          {type: "divider"},
           {label: '查询', level: 'primary', type: 'submit'},
+          {label: '重置', type: 'reset'},
         ],
       },
       // 列定义
@@ -91,8 +94,16 @@ const schema: PageSchema = {
         },
       ],
       perPageAvailable: [10, 20, 50, 100],
+      bulkActions: [
+        {label: "批量删除"},
+        {label: '新增', type: 'button', size: "sm",},
+        {label: '导出', type: 'button', size: "sm",},
+      ],
       // 表格顶部工具栏
-      headerToolbar: [],
+      headerToolbar: [
+
+        {align: 'left', type: "bulkActions"}, {align: 'right', type: 'columns-toggler'}
+      ],
       // 表格页脚
       footerToolbar: ["statistics", "switch-per-page", "pagination"],
     },
