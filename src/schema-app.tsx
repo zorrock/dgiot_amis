@@ -19,7 +19,7 @@ const amis = amisRequire("amis/embed");
 const hash = lodash.trim(document.location.hash);
 const schemaPath = hash.startsWith("#") ? hash.substr(1, hash.length) : "01schema/schema";
 
-const rootMountedId = "root";
+const rootMountedId = "app-root";
 let $rootMounted = document.getElementById(rootMountedId)
 if (!$rootMounted) {
   $rootMounted = document.createElement('div');
