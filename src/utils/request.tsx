@@ -1,20 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { toast } from "amis";
 
-// 全局请求配置
-axios.interceptors.request.use(
-  config => {
-    const baseURL = '/';
-    const timeout = 30000;
-    const validateStatus = (status: number): boolean => (status >= 200 && status < 300);
-    return {...config, baseURL, timeout, validateStatus};
-  },
-  error => {
-    toast.error("发送请求给服务端失败，请检查电脑网络，再重试", "请求发送失败");
-    return Promise.reject(error);
-  }
-);
-
 // HTTP 状态码错误说明
 const errorMsg = {
   200: "服务器成功返回请求的数据。",
@@ -54,6 +40,20 @@ const errorNotice = (error: any): boolean => {
   return false;
 };
 
+// 全局请求拦截
+axios.interceptors.request.use(
+  config => {
+    const baseURL = '/';
+    const timeout = 30000;
+    const validateStatus = (status: number): boolean => (status >= 200 && status < 300);
+    return {...config, baseURL, timeout, validateStatus};
+  },
+  error => {
+    toast.error("发送请求给服务端失败，请检查电脑网络，再重试", "请求发送失败");
+    return Promise.reject(error);
+  }
+);
+
 //  全局拦截配置
 axios.interceptors.response.use(
   response => response,
@@ -66,7 +66,7 @@ axios.interceptors.response.use(
   }
 );
 
-// 处理响应数据
+// 全局响应数据转换处理
 const transformResponse = (response: AxiosResponse): any => {
   if (response.data) {
     return response.data;
