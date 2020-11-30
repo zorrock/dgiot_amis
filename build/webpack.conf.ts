@@ -86,7 +86,8 @@ let config: Configuration = {
     ],
   },
   plugins: [
-    new DefinePlugin({...settings.define}),
+    // new DefinePlugin({...settings.define, aaa: "aaa"}),
+    new DefinePlugin({ aaa: "aaa"}),
     new CopyWebpackPlugin({
       patterns: [
         {from: publicPath, to: "./public"},

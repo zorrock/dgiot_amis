@@ -28,6 +28,14 @@ interface InnerConfig {
 /** Logger配置 */
 type LoggerConfig = Omit<InnerConfig, 'defaultOption'>
 
+// /** 日志级别对应的样式 */
+// const levelStyle = {
+//   log: "color：black;",
+//   info: "color：#1890ff;",
+//   warn: "color：#faad14;",
+//   error: "color：#f5222d;",
+// };
+
 // 内部配置
 let innerConfig: InnerConfig = {
   level: 'log',
@@ -50,6 +58,9 @@ function refreshAllowedLevel(): void {
   const idx = allLevel.findIndex(lvl => lvl === level);
   allowedLevel.push(...allLevel.slice(idx));
 }
+
+// 初始化允许的日志级别
+refreshAllowedLevel();
 
 /**
  * 设置日志配置
@@ -85,16 +96,20 @@ function filterLog(option: Required<Pick<LoggerOption, 'level' | 'moduleName'>>)
 }
 
 // 打印日志 - 实现
-function printLogger(option: LoggerOption, loggerDetail: any[]) {
+function printLogger(option: LoggerOption, message: any[]) {
   // 生产环境不打印日志
   if (isProdEnv()) return;
   const loggerOption: Required<LoggerOption> = {...innerConfig.defaultOption, ...option};
   const {isPrint = true, moduleName, level} = loggerOption;
   if (!isPrint) return;
   if (!filterLog({level, moduleName})) return;
-  const logArgs: any[] = [`[${dayjs(new Date()).format("HH:mm:ss")} ${level.toUpperCase()} ${moduleName}] - `];
+  const logArgs: any[] = [
+    // `%c${lodash.repeat("%s", message.length + 1)}`,
+    // levelStyle[level],
+    `${level === "log" || level === "info" ? "✧"/*✦*/ : ""}[${dayjs(new Date()).format("HH:mm:ss")}] ${lodash.padEnd(level.toLowerCase(), 5)} | ${moduleName} - `,
+  ];
   const log = Function.prototype.bind.call(console[level] || console.log, console);
-  log.apply(console, logArgs.concat(loggerDetail));
+  log.apply(console, logArgs.concat(message));
 }
 
 function time<T = any>(label: string, timeFn: () => T, loggerOption: LoggerOption): T {
@@ -142,13 +157,13 @@ class Logger {
        */
       time: <T = any>(label: string, timeFn: () => T): T => time(label, timeFn, loggerOption),
       /** log日志 */
-      log: (...logDetail: any[]) => printLogger({...loggerOption, level: "log"}, logDetail),
+      log: (...message: any[]) => printLogger({...loggerOption, level: "log"}, message),
       /** info日志 */
-      info: (...logDetail: any[]) => printLogger({...loggerOption, level: "info"}, logDetail),
+      info: (...message: any[]) => printLogger({...loggerOption, level: "info"}, message),
       /** warn日志 */
-      warn: (...logDetail: any[]) => printLogger({...loggerOption, level: "warn"}, logDetail),
+      warn: (...message: any[]) => printLogger({...loggerOption, level: "warn"}, message),
       /** error日志 */
-      error: (...logDetail: any[]) => printLogger({...loggerOption, level: "error"}, logDetail),
+      error: (...message: any[]) => printLogger({...loggerOption, level: "error"}, message),
     }
   }
 }
