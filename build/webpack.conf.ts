@@ -4,7 +4,7 @@ import slash from "slash";
 import ip from 'ip';
 import clipboardy from 'clipboardy';
 import lodash from 'lodash';
-import { Configuration, HashedModuleIdsPlugin, HotModuleReplacementPlugin, Options } from 'webpack';
+import { Configuration, DefinePlugin, HashedModuleIdsPlugin, HotModuleReplacementPlugin, Options } from 'webpack';
 import WebpackMerge from 'webpack-merge';
 import WebpackBar from 'webpackbar';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -86,6 +86,7 @@ let config: Configuration = {
     ],
   },
   plugins: [
+    new DefinePlugin({...settings.define}),
     new CopyWebpackPlugin({
       patterns: [
         {from: publicPath, to: "./public"},

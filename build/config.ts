@@ -23,7 +23,10 @@ interface Settings {
   needAnalyzer: boolean;
   /** HTML页面默认标题 */
   defaultTitle: string;
-  /** */
+  /** 自定义全局变量 */
+  define: {
+    [name: string]: any;
+  },
 }
 
 
@@ -49,6 +52,9 @@ const settings: Settings = {
   },
   needAnalyzer: !!ANALYZER,
   defaultTitle: "Tab页",
+  define: {
+    isProdEnv: NODE_ENV === "production",
+  },
 }
 
 export { settings };

@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.165",
+    "@types/numeral": "^0.0.28",
     "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.9",
     "increase-memory-limit": "^1.0.7",

@@ -10,7 +10,7 @@ const schema: PageSchema = {
     {
       type: "crud", defaultParams: {pageNo: 1, pageSize: 20,}, pageField: "pageNo", perPageField: "pageSize", primaryField: "orderId", affixHeader: false,
       // 接口定义
-      api: {method: "get", url: "/!/mvc/05CURD@t04"},
+      api: {method: "get", url: "http://10.7.1.74:18081/!/mvc/05CURD@t04"},
       // 条件过滤表单
       filter: {
         title: "",

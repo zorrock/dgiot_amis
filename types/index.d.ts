@@ -13,9 +13,11 @@ declare module '*.bmp';
 declare module '*.tiff';
 declare module 'omit.js';
 
-// interface Window {
-//   g_app: {
-//     _store: any;
-//     [propName: string]: any;
-//   };
-// }
+interface Window {
+  /** 是否是生产环境 */
+  isProdEnv: boolean;
+  // g_app: {
+  //   _store: any;
+  //   [propName: string]: any;
+  // };
+}
