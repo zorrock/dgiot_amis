@@ -1,5 +1,5 @@
 import lodash from 'lodash';
-import { parse } from 'qs'
+import {parse} from 'qs'
 
 /**
  * 检查 name 是否是 o 对象的直接或继承属性。
@@ -31,6 +31,14 @@ const hasValue = (value: any): boolean => {
 };
 
 /**
+ * 判断变量是否有值 value === null || value === undefined
+ * @param value 目标变量
+ */
+const noValue = (value: any): boolean => {
+  return value === null || value === undefined;
+};
+
+/**
  * 获取字符串值
  * @param value 变量值
  * @param force undefined、null 强制转换成空字符串
@@ -57,4 +65,4 @@ const getUrlParam = (paramName?: string, url?: string): any => {
   return urlParams
 }
 
-export { hasPropertyIn, getPropOrStateValue, hasValue, getStrValue, getUrlParam, };
+export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, };
