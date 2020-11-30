@@ -5,6 +5,7 @@ const schema: PageSchema = {
   type: "page",
   // title: "增删查改示例",
   toolbar: [],
+  // @ts-ignore
   body: [
     {
       type: "crud", defaultParams: {pageNo: 1, pageSize: 20,}, pageField: "pageNo", perPageField: "pageSize", primaryField: "orderId", affixHeader: false,
