@@ -19,7 +19,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 
 // src文件夹绝对路径
 const srcPath = path.resolve(settings.rootPath, "./src");
-// src文件夹绝对路径
+// pages文件夹绝对路径
 // const pagesPath = path.resolve(rootPath, `${pathPrefix}/src/pages`);
 // public文件夹绝对路径
 const publicPath = path.resolve(settings.rootPath, "./public");
@@ -86,8 +86,7 @@ let config: Configuration = {
     ],
   },
   plugins: [
-    // new DefinePlugin({...settings.define, aaa: "aaa"}),
-    new DefinePlugin({ aaa: "aaa"}),
+    new DefinePlugin({...settings.define}),
     new CopyWebpackPlugin({
       patterns: [
         {from: publicPath, to: "./public"},

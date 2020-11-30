@@ -57,7 +57,4 @@ const getUrlParam = (paramName?: string, url?: string): any => {
   return urlParams
 }
 
-/** 当前是否是生产环境 */
-const isProdEnv = () => window.isProdEnv;
-
-export { hasPropertyIn, getPropOrStateValue, hasValue, getStrValue, getUrlParam, isProdEnv, };
+export { hasPropertyIn, getPropOrStateValue, hasValue, getStrValue, getUrlParam, };

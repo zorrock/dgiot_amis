@@ -1,6 +1,6 @@
 import lodash from 'lodash';
 import dayjs from 'dayjs';
-import { getUrlParam, isProdEnv } from './utils';
+import { getUrlParam } from './utils';
 
 /** 日志级别 */
 type Level = 'log' | 'info' | 'warn' | 'error';
@@ -68,7 +68,7 @@ refreshAllowedLevel();
  */
 function setConfig(conf: Partial<InnerConfig>): void {
   innerConfig = {...innerConfig, ...conf};
-  if (isProdEnv()) return;
+  if (isProdEnv) return;
   logger.info('lib:logger:config', innerConfig);
   refreshAllowedLevel();
 }
@@ -87,7 +87,7 @@ function initLogger(defConf: any = {}): void {
 // 过滤日志打印信息
 function filterLog(option: Required<Pick<LoggerOption, 'level' | 'moduleName'>>): boolean {
   // 打包环境不打印LOG
-  if (isProdEnv()) return false;
+  if (isProdEnv) return false;
   // 过滤不同级别的 LOG
   if (!allowedLevel.find((l) => l === option.level)) return false;
   // 根据传入的 moduleName 过滤日志
@@ -98,7 +98,7 @@ function filterLog(option: Required<Pick<LoggerOption, 'level' | 'moduleName'>>)
 // 打印日志 - 实现
 function printLogger(option: LoggerOption, message: any[]) {
   // 生产环境不打印日志
-  if (isProdEnv()) return;
+  if (isProdEnv) return;
   const loggerOption: Required<LoggerOption> = {...innerConfig.defaultOption, ...option};
   const {isPrint = true, moduleName, level} = loggerOption;
   if (!isPrint) return;

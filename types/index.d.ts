@@ -14,10 +14,12 @@ declare module '*.tiff';
 declare module 'omit.js';
 
 interface Window {
-  /** 是否是生产环境 */
-  isProdEnv: boolean;
   // g_app: {
   //   _store: any;
   //   [propName: string]: any;
   // };
 }
+
+/** 是否是生产环境 */
+declare const isProdEnv: boolean;
+
