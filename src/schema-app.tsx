@@ -100,7 +100,6 @@ const loadSchema = async (schemaPath: string): Promise<ReactPageProps> => {
     );
 }
 
-
 /** 初始化页面 */
 loadSchema(schemaPath)
   .then(props => {
