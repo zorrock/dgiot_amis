@@ -44,7 +44,7 @@ const settings: Settings = {
         pathRewrite: {'^': ''},
       },
       '/!/': {
-        target: 'http://127.0.0.1:18081',
+        target: 'http://api-dev.msvc.top',
         changeOrigin: true,
         pathRewrite: {'^': ''},
       },
