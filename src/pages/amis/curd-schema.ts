@@ -154,9 +154,15 @@ const schema = {
         controls: [
           {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true, size: "md", labelClassName: styles.labelClassName},
           {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true, size: "md", labelClassName: styles.labelClassName},
-          {type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true, size: "md", labelClassName: styles.labelClassName, options: statusMapper},
+          {
+            type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true, size: "md",
+            labelClassName: styles.labelClassName, options: statusMapper, submitOnChange: true,
+          },
           {type: "html", html: "<br />"},
-          {type: "select", label: "支付状态", name: "payType", placeholder: "请选择", clearable: true, size: "md", labelClassName: styles.labelClassName, options: payStatusMapper},
+          {
+            type: "select", label: "支付状态", name: "payType", placeholder: "请选择", clearable: true, size: "md",
+            labelClassName: styles.labelClassName, options: payStatusMapper, submitOnChange: true,
+          },
           {type: "datetime", label: "开始时间", name: "createAtStart", placeholder: "选择时间", format: "x", clearable: true, size: "md", labelClassName: styles.labelClassName},
           {type: "datetime", label: "结束时间", name: "createAtEnd", placeholder: "选择时间", format: "x", clearable: true, size: "md", labelClassName: styles.labelClassName},
           // {type: "divider"},
