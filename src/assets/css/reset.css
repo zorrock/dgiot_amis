@@ -1,0 +1,13 @@
+.amis-scope .a-Crud-pageSwitch .a-Select {
+  height: 1.875rem;
+  min-height: 1.875rem;;
+  line-height: 1.4285714286;
+}
+
+.amis-scope .a-Crud-pageSwitch .a-Select .a-Select-valueWrap {
+  top: -0.0625rem;
+}
+
+.amis-scope .a-Crud-pageSwitch .a-Select .a-Select-arrow > svg {
+  top: 0.125em;
+}

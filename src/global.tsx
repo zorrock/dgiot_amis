@@ -1,6 +1,7 @@
 // import 'font-awesome/css/font-awesome.css';
 // import 'amis/lib/themes/default.css';
 // import 'amis/lib/themes/cxd.css';
+import '@/assets/css/reset.css';
 import {logger} from './utils/logger';
 import {observeStore} from './utils/message-observe';
 
