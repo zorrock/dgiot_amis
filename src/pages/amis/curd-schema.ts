@@ -49,6 +49,10 @@ function detailsDialog() {
       actions: [{type: "button", label: "关闭", level: "primary", actionType: "close"}],
       body: {
         type: "form",
+        initApi: {
+          method: "get",
+          url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,
+        },
         controls: [
           {type: "static", name: "orderId", label: "订单ID"},
           {type: "static", name: "orderCode", label: "订单编号"},
@@ -74,9 +78,13 @@ function editDialog() {
       position: "left", size: "md", title: "编辑",
       body: {
         type: "form",
-        api: {
+        initApi: {
           method: "get",
-          url: `${serverHost}/!/mvc/01MvcBase@t01?id=$id`,
+          url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,
+        },
+        api: {
+          method: "put",
+          url: `${serverHost}/!/amis-api/curd-page@mockUpdate?orderId=$orderId`,
         },
         controls: [
           {type: "text", name: "orderId", label: "订单ID"},
@@ -100,8 +108,8 @@ function deleteDialog() {
     size: "xs",
     actionType: "ajax",
     api: {
-      method: "get",
-      url: `${serverHost}/!/mvc/01MvcBase@t01`,
+      method: "delete",
+      url: `${serverHost}/!/amis-api/curd-page@mockDelete?orderId=$orderId`,
     },
     confirmText: "您确认要删除订单:${orderCode}?",
   };
