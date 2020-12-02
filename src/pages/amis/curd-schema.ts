@@ -1,6 +1,6 @@
 // import { PageSchema } from "amis";
 import { serverHost } from "@/server-api";
-import { EnumArray, enumArray2mapperObject } from "@/utils/enum";
+import { enum2object, EnumArray } from "@/utils/enum";
 import styles from "./curd-schema.less";
 
 const statusMapper: EnumArray = [
@@ -34,7 +34,7 @@ const payTypeMapper: EnumArray = [
 const payStatusMapper: EnumArray = [
   {label: "未支付", value: "1"},
   {label: "已支付", value: "2"},
-]
+];
 
 // 详情对话框
 function detailsDialog() {
@@ -56,7 +56,7 @@ function detailsDialog() {
         controls: [
           {type: "static", name: "orderId", label: "订单ID"},
           {type: "static", name: "orderCode", label: "订单编号"},
-          {type: "mapping", name: "status", label: "订单状态", map: enumArray2mapperObject(statusMapper)},
+          {type: "mapping", name: "status", label: "订单状态", map: enum2object(statusMapper)},
           {type: "static", name: "shipName", label: "收货人"},
           {type: "static", name: "shipMobile", label: "手机号"},
           {type: "static", name: "shipAddr", label: "地址"},
@@ -147,20 +147,20 @@ const schema = {
       // 条件过滤表单
       filterTogglable: true,
       filter: {
-        title: "",
-        // submitText: "查询", trimValues: true, // submitOnChange: true,
+        title: "查询条件",
+        trimValues: true,
+        submitOnChange: false,
+        // submitText: "查询",
         controls: [
           {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true, size: "md", labelClassName: styles.labelClassName},
           {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true, size: "md", labelClassName: styles.labelClassName},
-          {
-            type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true, size: "md", labelClassName: styles.labelClassName,
-            options: [{label: "已出库", value: "1"}, {label: "已签收", value: "2"}, {label: "已驳回", value: "3"}],
-          },
+          {type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true, size: "md", labelClassName: styles.labelClassName, options: statusMapper},
           {type: "html", html: "<br />"},
-          {type: "text", name: "email2", placeholder: "请输入邮箱地址", label: "邮箱", size: "md", labelClassName: styles.labelClassName},
-          {type: "text", name: "password2", label: "密码", placeholder: "请输入密码", size: "md", labelClassName: styles.labelClassName},
+          {type: "select", label: "支付状态", name: "payType", placeholder: "请选择", clearable: true, size: "md", labelClassName: styles.labelClassName, options: payStatusMapper},
+          {type: "datetime", label: "开始时间", name: "createAtStart", placeholder: "选择时间", format: "x", clearable: true, size: "md", labelClassName: styles.labelClassName},
+          {type: "datetime", label: "结束时间", name: "createAtEnd", placeholder: "选择时间", format: "x", clearable: true, size: "md", labelClassName: styles.labelClassName},
           // {type: "html", html: "<br />"},
-          {type: "divider"},
+          // {type: "divider"},
           {label: "查询", level: "primary", type: "submit"},
           {label: "重置", type: "reset"},
         ],
@@ -169,12 +169,12 @@ const schema = {
       primaryField: "orderId",
       columns: [
         {name: "orderCode", label: "订单编号", sortable: true},
-        {name: "status", label: "订单状态", sortable: true, type: "mapping", map: enumArray2mapperObject(statusMapper),},
+        {name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper),},
         {name: "shipName", label: "收货人姓名", sortable: true},
         {name: "shipMobile", label: "手机号", sortable: true},
-        {name: "orderType", label: "订单类型", sortable: true, type: "mapping", map: enumArray2mapperObject(orderTypeMapper)},
-        {name: "payType", label: "支付方式", sortable: true, type: "mapping", map: enumArray2mapperObject(payTypeMapper)},
-        {name: "payStatus", label: "支付状态", sortable: true, type: "mapping", map: enumArray2mapperObject(payStatusMapper)},
+        {name: "orderType", label: "订单类型", sortable: true, type: "mapping", map: enum2object(orderTypeMapper)},
+        {name: "payStatus", label: "支付方式", sortable: true, type: "mapping", map: enum2object(payTypeMapper)},
+        {name: "payType", label: "支付状态", sortable: true, type: "mapping", map: enum2object(payStatusMapper)},
         {name: "payTime", label: "支付时间", sortable: true},
         {name: "payAmount", label: "支付金额", sortable: true},
         {name: "createAt", label: "下单时间", sortable: true},
@@ -189,11 +189,11 @@ const schema = {
         {label: "批量操作2"},
       ],
       headerToolbar: [
-        {align: "left", type: "filter-toggler"},
         {align: "left", type: 'button', label: '主操作', level: 'primary', size: "sm"},
         {align: "left", type: 'button', label: '次操作', size: "sm"},
         {align: "left", type: "bulkActions"},
         {align: "right", type: "columns-toggler"},
+        {align: "right", type: "filter-toggler"},
         {align: "right", type: "drag-toggler"},
         {align: "right", type: "export-csv"},
         {align: "right", type: "export-excel"},

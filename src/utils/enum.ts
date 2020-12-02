@@ -63,7 +63,7 @@ const getMapperDataItem = (mapperArray: MapperData, value: EnumItemValue, defaul
 };
 
 /** 枚举数组转成枚举对象 */
-const enumArray2mapperObject = (enumArray: EnumArrayItem[]): { [key: string]: any } => {
+const enum2object = (enumArray: EnumArrayItem[]): { [key: string]: any } => {
   const mapperObject: { [key: string]: any } = {};
   if (enumArray) {
     enumArray.forEach(item => {
@@ -79,4 +79,4 @@ const SorterOrderArray: MapperData = [
   {value: 'ascend', label: 'ASC'},
 ];
 
-export { EnumItemValue, EnumItemLabel, EnumArrayItem, EnumArray, MapperData, getMapperDataLabel, getMapperDataItem, enumArray2mapperObject, SorterOrderArray };
+export { EnumItemValue, EnumItemLabel, EnumArrayItem, EnumArray, MapperData, getMapperDataLabel, getMapperDataItem, enum2object, SorterOrderArray };
