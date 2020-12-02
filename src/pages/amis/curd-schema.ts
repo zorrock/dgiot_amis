@@ -159,7 +159,6 @@ const schema = {
           {type: "select", label: "支付状态", name: "payType", placeholder: "请选择", clearable: true, size: "md", labelClassName: styles.labelClassName, options: payStatusMapper},
           {type: "datetime", label: "开始时间", name: "createAtStart", placeholder: "选择时间", format: "x", clearable: true, size: "md", labelClassName: styles.labelClassName},
           {type: "datetime", label: "结束时间", name: "createAtEnd", placeholder: "选择时间", format: "x", clearable: true, size: "md", labelClassName: styles.labelClassName},
-          // {type: "html", html: "<br />"},
           // {type: "divider"},
           {label: "查询", level: "primary", type: "submit"},
           {label: "重置", type: "reset"},
