@@ -16,6 +16,8 @@ interface EnumArrayItem {
   [key: string]: any;
 }
 
+type EnumArray = EnumArrayItem[];
+
 type MapperData = EnumArrayItem[] | { [key: string]: any };
 
 /**
@@ -45,7 +47,7 @@ const getMapperDataLabel = (mapperData: MapperData, value: EnumItemValue, defaul
  * @param value         value值
  * @param defaultObject 默认的label
  */
-const getMapperDataItem = (mapperArray: MapperData, value: EnumItemValue, defaultObject: EnumArrayItem = { value, label: '未知' }): EnumArrayItem => {
+const getMapperDataItem = (mapperArray: MapperData, value: EnumItemValue, defaultObject: EnumArrayItem = {value, label: '未知'}): EnumArrayItem => {
   const strValue = `${value}`;
   let label = defaultObject;
   if (mapperArray instanceof Array) {
@@ -60,10 +62,21 @@ const getMapperDataItem = (mapperArray: MapperData, value: EnumItemValue, defaul
   return label;
 };
 
+/** 枚举数组转成枚举对象 */
+const enumArray2mapperObject = (enumArray: EnumArrayItem[]): { [key: string]: any } => {
+  const mapperObject: { [key: string]: any } = {};
+  if (enumArray) {
+    enumArray.forEach(item => {
+      mapperObject[`${item.value}`] = item.label;
+    });
+  }
+  return mapperObject;
+}
+
 /** 排序 */
 const SorterOrderArray: MapperData = [
-  { value: 'descend', label: 'DESC' },
-  { value: 'ascend', label: 'ASC' },
+  {value: 'descend', label: 'DESC'},
+  {value: 'ascend', label: 'ASC'},
 ];
 
-export { EnumItemValue, EnumItemLabel, EnumArrayItem, MapperData, getMapperDataLabel, getMapperDataItem, SorterOrderArray };
+export { EnumItemValue, EnumItemLabel, EnumArrayItem, EnumArray, MapperData, getMapperDataLabel, getMapperDataItem, enumArray2mapperObject, SorterOrderArray };

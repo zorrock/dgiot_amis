@@ -93,8 +93,18 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
  * @param schemaPath schema文件路径
  */
 const loadSchema = async (schemaPath: string): Promise<ReactPageProps> => {
+  const fileExtArr = [".ts", ".tsx", ".js", ".json"];
+  let flag = false;
+  fileExtArr.forEach(fileExt => {
+    if(flag) return;
+    if (schemaPath.endsWith(fileExt)) {
+      schemaPath = schemaPath.substr(0, schemaPath.length - fileExt.length);
+      flag = true;
+    }
+  });
+  // webpack.conf.ts(splitChunks.schema.test) ---> /[\\/]src[\\/]pages[\\/]*.schema\.(ts|tsx|js|jsx|json)$/
   return import(
-    /* webpackInclude: /[\\/]src[\\/]pages[\\/].*[\\/]schema.*\.(ts|tsx|js|jsx|json)$/ */
+    /* webpackInclude: /[\\/]src[\\/]pages[\\/].*schema\.(ts|tsx|js|jsx|json)$/ */
     /* webpackChunkName: "[request].chunk" */
     `@/pages/${schemaPath}`
     );

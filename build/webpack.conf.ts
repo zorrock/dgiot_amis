@@ -300,7 +300,7 @@ if (settings.mode === "production") {
             priority: 0,
           },
           schema: {
-            test: /[\\/]pages[\\/]*.[\\/]schema.*(ts|tsx|js|jsx|json)$/,
+            test: /[\\/]src[\\/]pages[\\/]*.schema\.(ts|tsx|js|jsx|json)$/,
             chunks: "async",
             minSize: 1024 * 256,
             maxSize: 1024 * 1024,
