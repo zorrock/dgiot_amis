@@ -75,7 +75,7 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
   render() {
     // const {count} = this.state;
     return (
-      <div>
+      <div style={{height: "100%"}}>
         {/*<button onClick={() => {*/}
         {/*  this.setState({count: count + 1});*/}
         {/*  if (count > 3) {*/}
@@ -96,7 +96,7 @@ const loadSchema = async (schemaPath: string): Promise<ReactPageProps> => {
   const fileExtArr = [".ts", ".tsx", ".js", ".json"];
   let flag = false;
   fileExtArr.forEach(fileExt => {
-    if(flag) return;
+    if (flag) return;
     if (schemaPath.endsWith(fileExt)) {
       schemaPath = schemaPath.substr(0, schemaPath.length - fileExt.length);
       flag = true;

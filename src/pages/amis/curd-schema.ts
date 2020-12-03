@@ -1,7 +1,9 @@
 // import { PageSchema } from "amis";
+import classnames from "classnames";
+import { FormClassName } from "@/amis-types";
 import { serverHost } from "@/server-api";
 import { enum2object, EnumArray } from "@/utils/enum";
-import styles from "./curd-schema.less";
+// import styles from "./curd-schema.less";
 
 const statusMapper: EnumArray = [
   {label: "待审核", value: "-3"},
@@ -119,6 +121,7 @@ const schema = {
   type: "page",
   title: "简单的CURD操作",
   toolbar: [],
+  bodyClassName: "aaa",
   body: [
     {
       type: "crud",
@@ -148,25 +151,26 @@ const schema = {
       filterTogglable: true,
       filter: {
         title: "查询条件",
+        className: classnames(FormClassName.label4x, FormClassName.input14x),
         trimValues: true,
         submitOnChange: false,
         // submitText: "查询",
         controls: [
-          {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true, size: "md", labelClassName: styles.labelClassName},
-          {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true, size: "md", labelClassName: styles.labelClassName},
+          {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true, size: "md"},
+          {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true, size: "md"},
           {
             type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true, size: "md",
-            labelClassName: styles.labelClassName, options: statusMapper, submitOnChange: true,
+            options: statusMapper, submitOnChange: true,
           },
           {type: "html", html: "<br />"},
           {
             type: "select", label: "支付状态", name: "payType", placeholder: "请选择", clearable: true, size: "md",
-            labelClassName: styles.labelClassName, options: payStatusMapper, submitOnChange: true,
+            options: payStatusMapper, submitOnChange: true,
           },
-          {type: "datetime", label: "开始时间", name: "createAtStart", placeholder: "选择时间", format: "x", clearable: true, size: "md", labelClassName: styles.labelClassName},
-          {type: "datetime", label: "结束时间", name: "createAtEnd", placeholder: "选择时间", format: "x", clearable: true, size: "md", labelClassName: styles.labelClassName},
+          {type: "datetime", label: "开始时间", name: "createAtStart", placeholder: "选择时间", format: "x", clearable: true, size: "md"},
+          {type: "datetime", label: "结束时间", name: "createAtEnd", placeholder: "选择时间", format: "x", clearable: true, size: "md"},
           // {type: "divider"},
-          {label: "查询", level: "primary", type: "submit"},
+          {label: "查询", level: "primary", type: "submit", size: "md"},
           {label: "重置", type: "reset"},
         ],
       },

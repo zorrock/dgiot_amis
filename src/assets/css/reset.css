@@ -1,3 +1,4 @@
+/* --------------------------------------------------------------------------------------------------------------------- CURD选择分页下拉框 */
 .amis-scope .a-Crud-pageSwitch .a-Select {
   height: 1.875rem;
   min-height: 1.875rem;;
@@ -10,4 +11,96 @@
 
 .amis-scope .a-Crud-pageSwitch .a-Select .a-Select-arrow > svg {
   top: 0.125em;
+}
+
+/* --------------------------------------------------------------------------------------------------------------------- Page页面输入组件样式 */
+
+
+/* --------------------------------------------------------------------------------------------------------------------- Form表单输入组件样式 */
+
+/*-- label宽度为2rem --*/
+.form-label-2x.a-Form .a-Form-item .a-Form-label {
+  width: 4rem;
+  text-align: right;
+}
+
+/*-- label宽度为4rem --*/
+.form-label-4x.a-Form .a-Form-item .a-Form-label {
+  width: 4rem;
+  text-align: right;
+}
+
+/*-- label宽度为6rem --*/
+.form-label-6x.a-Form .a-Form-item .a-Form-label {
+  width: 4rem;
+  text-align: right;
+}
+
+/*-- label宽度为8rem --*/
+.form-label-8x.a-Form .a-Form-item .a-Form-label {
+  width: 4rem;
+  text-align: right;
+}
+
+/*-- input宽度为10rem --*/
+.form-input-10x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  min-width: 10rem;
+  width: 10rem;
+}
+
+/*-- input宽度为12rem --*/
+.form-input-12x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  min-width: 10rem;
+  width: 12rem;
+}
+
+/*-- input宽度为10rem --*/
+.form-input-14x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  min-width: 14rem;
+  width: 14rem;
+}
+
+/*-- input宽度为16rem --*/
+.form-input-16x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  width: 16rem;
+}
+
+/*-- input宽度为18rem --*/
+.form-input-18x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  width: 18rem;
+}
+
+/*-- input宽度为20rem --*/
+.form-input-20x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  width: 20rem;
+}
+
+/*-- input宽度为22rem --*/
+.form-input-22x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  width: 22rem;
+}
+
+/*-- input宽度为24rem --*/
+.form-input-24x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  width: 24rem;
+}
+
+/*-- input宽度为26rem --*/
+.form-input-26x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  width: 26rem;
+}
+
+/*-- input宽度为28rem --*/
+.form-input-28x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  width: 28rem;
+}
+
+/*-- input宽度为30rem --*/
+.form-input-30x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  width: 30rem;
+}
+
+/*-- input宽度为32rem --*/
+.form-input-32x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
+  width: 32rem;
 }
