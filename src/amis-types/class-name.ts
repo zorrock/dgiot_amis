@@ -39,24 +39,49 @@ enum FormClassName {
   /** input宽度为32rem */
   input32x = "form-input-32x",
 
-  /** dialog label宽度为2rem */
-  dialog_label2x = "dialog-form-label-2x",
-  /** dialog label宽度为3rem */
-  dialog_label3x = "dialog-form-label-3x",
-  /** dialog label宽度为4rem */
-  dialog_label4x = "dialog-form-label-4x",
-  /** dialog label宽度为5rem */
-  dialog_label5x = "dialog-form-label-5x",
-  /** dialog label宽度为6rem */
-  dialog_label6x = "dialog-form-label-6x",
-  /** dialog label宽度为7rem */
-  dialog_label7x = "dialog-form-label-7x",
-  /** dialog label宽度为8rem */
-  dialog_label8x = "dialog-form-label-8x",
-  /** dialog label宽度为9rem */
-  dialog_label9x = "dialog-form-label-9x",
-  /** dialog label宽度为10rem */
-  dialog_label10x = "dialog-form-label-10x",
+  /** flex label宽度为2rem */
+  flex_label2x = "flex-form-label-2x",
+  /** flex label宽度为3rem */
+  flex_label3x = "flex-form-label-3x",
+  /** flex label宽度为4rem */
+  flex_label4x = "flex-form-label-4x",
+  /** flex label宽度为5rem */
+  flex_label5x = "flex-form-label-5x",
+  /** flex label宽度为6rem */
+  flex_label6x = "flex-form-label-6x",
+  /** flex label宽度为7rem */
+  flex_label7x = "flex-form-label-7x",
+  /** flex label宽度为8rem */
+  flex_label8x = "flex-form-label-8x",
+  /** flex label宽度为9rem */
+  flex_label9x = "flex-form-label-9x",
+  /** flex label宽度为10rem */
+  flex_label10x = "flex-form-label-10x",
+
+  /** flex input宽度为10rem */
+  flex_input10x = "flex-form-input-10x",
+  /** flex input宽度为12rem */
+  flex_input12x = "flex-form-input-12x",
+  /** flex input宽度为14rem */
+  flex_input14x = "flex-form-input-14x",
+  /** flex input宽度为16rem */
+  flex_input16x = "flex-form-input-16x",
+  /** flex input宽度为18rem */
+  flex_input18x = "flex-form-input-18x",
+  /** flex input宽度为20rem */
+  flex_input20x = "flex-form-input-20x",
+  /** flex input宽度为22rem */
+  flex_input22x = "flex-form-input-22x",
+  /** flex input宽度为24rem */
+  flex_input24x = "flex-form-input-24x",
+  /** flex input宽度为26rem */
+  flex_input26x = "flex-form-input-26x",
+  /** flex input宽度为28rem */
+  flex_input28x = "flex-form-input-28x",
+  /** flex input宽度为30rem */
+  flex_input30x = "flex-form-input-30x",
+  /** flex input宽度为32rem */
+  flex_input32x = "flex-form-input-32x",
 }
 
 enum DialogClassName {
