@@ -11,6 +11,8 @@ enum FormClassName {
   label6x = "form-label-6x",
   /** label宽度为8rem */
   label8x = "form-label-8x",
+  /** label宽度为10rem */
+  label10x = "form-label-10x",
 
   /** input宽度为10rem */
   input10x = "form-input-10x",
@@ -36,6 +38,25 @@ enum FormClassName {
   input30x = "form-input-30x",
   /** input宽度为32rem */
   input32x = "form-input-32x",
+
+  /** dialog label宽度为2rem */
+  dialog_label2x = "dialog-form-label-2x",
+  /** dialog label宽度为3rem */
+  dialog_label3x = "dialog-form-label-3x",
+  /** dialog label宽度为4rem */
+  dialog_label4x = "dialog-form-label-4x",
+  /** dialog label宽度为5rem */
+  dialog_label5x = "dialog-form-label-5x",
+  /** dialog label宽度为6rem */
+  dialog_label6x = "dialog-form-label-6x",
+  /** dialog label宽度为7rem */
+  dialog_label7x = "dialog-form-label-7x",
+  /** dialog label宽度为8rem */
+  dialog_label8x = "dialog-form-label-8x",
+  /** dialog label宽度为9rem */
+  dialog_label9x = "dialog-form-label-9x",
+  /** dialog label宽度为10rem */
+  dialog_label10x = "dialog-form-label-10x",
 }
 
 export { PageClassName, FormClassName };

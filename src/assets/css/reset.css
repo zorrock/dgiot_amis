@@ -20,7 +20,7 @@
 
 /*-- label宽度为2rem --*/
 .form-label-2x.a-Form .a-Form-item .a-Form-label {
-  width: 4rem;
+  width: 2rem;
   text-align: right;
 }
 
@@ -32,13 +32,19 @@
 
 /*-- label宽度为6rem --*/
 .form-label-6x.a-Form .a-Form-item .a-Form-label {
-  width: 4rem;
+  width: 6rem;
   text-align: right;
 }
 
 /*-- label宽度为8rem --*/
 .form-label-8x.a-Form .a-Form-item .a-Form-label {
-  width: 4rem;
+  width: 8rem;
+  text-align: right;
+}
+
+/*-- label宽度为10rem --*/
+.form-label-10x.a-Form .a-Form-item .a-Form-label {
+  width: 10rem;
   text-align: right;
 }
 
@@ -50,7 +56,7 @@
 
 /*-- input宽度为12rem --*/
 .form-input-12x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
-  min-width: 10rem;
+  min-width: 12rem;
   width: 12rem;
 }
 
@@ -103,4 +109,60 @@
 /*-- input宽度为32rem --*/
 .form-input-32x.a-Form .a-Form-item .a-Form-value .a-Form-control.a-Form-control--withSize {
   width: 32rem;
+}
+
+/* --------------------------------------------------------------------------------------------------------------------- Dialog Form表单输入组件样式 */
+
+/*-- dialog label宽度为2rem --*/
+.dialog-form-label-2x.a-Form .a-Form-item .a-Form-label {
+  flex-basis: 2rem;
+  max-width: 2rem;
+}
+
+/*-- dialog label宽度为3rem --*/
+.dialog-form-label-3x.a-Form .a-Form-item .a-Form-label {
+  flex-basis: 3rem;
+  max-width: 3rem;
+}
+
+/*-- dialog label宽度为4rem --*/
+.dialog-form-label-4x.a-Form .a-Form-item .a-Form-label {
+  flex-basis: 4rem;
+  max-width: 4rem;
+}
+
+/*-- dialog label宽度为5rem --*/
+.dialog-form-label-5x.a-Form .a-Form-item .a-Form-label {
+  flex-basis: 5rem;
+  max-width: 5rem;
+}
+
+/*-- dialog label宽度为6rem --*/
+.dialog-form-label-6x.a-Form .a-Form-item .a-Form-label {
+  flex-basis: 6rem;
+  max-width: 6rem;
+}
+
+/*-- dialog label宽度为7rem --*/
+.dialog-form-label-6x.a-Form .a-Form-item .a-Form-label {
+  flex-basis: 7rem;
+  max-width: 7rem;
+}
+
+/*-- dialog label宽度为8rem --*/
+.dialog-form-label-8x.a-Form .a-Form-item .a-Form-label {
+  flex-basis: 8rem;
+  max-width: 8rem;
+}
+
+/*-- dialog label宽度为9rem --*/
+.dialog-form-label-9x.a-Form .a-Form-item .a-Form-label {
+  flex-basis: 9rem;
+  max-width: 9rem;
+}
+
+/*-- dialog label宽度为10rem --*/
+.dialog-form-label-10x.a-Form .a-Form-item .a-Form-label {
+  flex-basis: 10rem;
+  max-width: 10rem;
 }

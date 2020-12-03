@@ -18,10 +18,7 @@ function detailsDialog() {
       actions: [{type: "button", label: "关闭", level: "primary", actionType: "close"}],
       body: {
         type: "form",
-        initApi: {
-          method: "get",
-          url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,
-        },
+        className: classnames(FormClassName.dialog_label5x),
         controls: [
           {type: "static", name: "orderId", label: "订单ID"},
           {type: "static", name: "orderCode", label: "订单编号"},
@@ -44,24 +41,21 @@ function editDialog() {
     size: "xs",
     actionType: "dialog",
     dialog: {
-      position: "left", size: "md", title: "编辑",
+      title: "编辑",
       body: {
         type: "form",
-        initApi: {
-          method: "get",
-          url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,
-        },
+        className: classnames(FormClassName.dialog_label5x),
         api: {
           method: "put",
           url: `${serverHost}/!/amis-api/curd-page@mockUpdate?orderId=$orderId`,
         },
         controls: [
-          {type: "text", name: "orderId", label: "订单ID"},
-          {type: "text", name: "orderCode", label: "订单编号"},
+          {type: "text", name: "orderId", label: "订单ID", disabled: true},
+          {type: "text", name: "orderCode", label: "订单编号", readOnly: true},
           {type: "select", name: "status", label: "订单状态", options: statusMapper},
           {type: "text", name: "shipName", label: "收货人"},
           {type: "text", name: "shipMobile", label: "手机号"},
-          {type: "text", name: "shipAddr", label: "地址"},
+          {type: "textarea", name: "shipAddr", label: "地址"},
         ]
       }
     }
@@ -80,13 +74,13 @@ function deleteDialog() {
       method: "delete",
       url: `${serverHost}/!/amis-api/curd-page@mockDelete?orderId=$orderId`,
     },
-    confirmText: "您确认要删除订单:${orderCode}?",
+    confirmText: "确认要删除订单:${orderCode}?",
   };
 }
 
 const schema = {
   type: "page",
-  title: "简单的CURD操作",
+  title: "常规的CURD操作",
   toolbar: [],
   body: [
     {
@@ -94,10 +88,10 @@ const schema = {
       // --------------------------------------------------------------- 常规配置
       perPageAvailable: [10, 20, 50, 100],
       syncLocation: false,
-      keepItemSelectionOnPageChange: true,
-      multiple: true,
-      labelTpl: "${orderCode}",
-      draggable: true,
+      // keepItemSelectionOnPageChange: true,
+      // multiple: true,
+      // labelTpl: "${orderCode}",
+      draggable: false,
       hideQuickSaveBtn: false,
       autoJumpToTopOnPagerChange: false,
       affixHeader: false,
@@ -124,15 +118,9 @@ const schema = {
         controls: [
           {type: "text", label: "订单编号", name: "orderCode", placeholder: "通过关键字搜索", clearable: true, size: "md"},
           {type: "text", label: "手机号", name: "shipMobile", placeholder: "通过关键字搜索", clearable: true, size: "md"},
-          {
-            type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true, size: "md",
-            options: statusMapper, submitOnChange: true,
-          },
+          {type: "select", label: "订单状态", name: "status", placeholder: "通过关键字搜索", clearable: true, size: "md", options: statusMapper},
           {type: "html", html: "<br />"},
-          {
-            type: "select", label: "支付状态", name: "payType", placeholder: "请选择", clearable: true, size: "md",
-            options: payStatusMapper, submitOnChange: true,
-          },
+          {type: "select", label: "支付状态", name: "payType", placeholder: "请选择", clearable: true, size: "md", options: payStatusMapper},
           {type: "datetime", label: "开始时间", name: "createAtStart", placeholder: "选择时间", format: "x", clearable: true, size: "md"},
           {type: "datetime", label: "结束时间", name: "createAtEnd", placeholder: "选择时间", format: "x", clearable: true, size: "md"},
           // {type: "divider"},
@@ -153,25 +141,19 @@ const schema = {
         {name: "payTime", label: "支付时间", sortable: true},
         {name: "payAmount", label: "支付金额", sortable: true},
         {name: "createAt", label: "下单时间", sortable: true},
-        {
-          type: "operation", label: "操作", width: 120, toggled: true,
-          buttons: [detailsDialog(), editDialog(), deleteDialog()],
-        },
+        {type: "operation", label: "操作", width: 120, toggled: true, buttons: [detailsDialog(), editDialog(), deleteDialog()]},
       ],
       // --------------------------------------------------------------- 表格工具栏配置
-      bulkActions: [
-        {label: "批量操作1"},
-        {label: "批量操作2"},
-      ],
+      // bulkActions: [{label: "批量操作1"}, {label: "批量操作2"}],
       headerToolbar: [
         {align: "left", type: 'button', label: '主操作', level: 'primary', size: "sm"},
         {align: "left", type: 'button', label: '次操作', size: "sm"},
-        {align: "left", type: "bulkActions"},
+        // {align: "left", type: "bulkActions"},
         {align: "right", type: "columns-toggler"},
         {align: "right", type: "filter-toggler"},
         {align: "right", type: "drag-toggler"},
-        {align: "right", type: "export-csv"},
-        {align: "right", type: "export-excel"},
+        // {align: "right", type: "export-csv"},
+        // {align: "right", type: "export-excel"},
       ],
       footerToolbar: [
         // {align: "right", type: "load-more"},
