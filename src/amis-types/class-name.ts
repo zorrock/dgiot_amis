@@ -59,4 +59,8 @@ enum FormClassName {
   dialog_label10x = "dialog-form-label-10x",
 }
 
-export { PageClassName, FormClassName };
+enum DialogClassName {
+
+}
+
+export { PageClassName, FormClassName, DialogClassName };

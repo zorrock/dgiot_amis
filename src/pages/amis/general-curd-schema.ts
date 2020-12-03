@@ -15,6 +15,7 @@ function detailsDialog() {
     actionType: "dialog",
     dialog: {
       title: "查看订单 - ${orderCode}",
+      closeOnEsc: true,
       actions: [{type: "button", label: "关闭", level: "primary", actionType: "close"}],
       body: {
         type: "form",
@@ -88,9 +89,6 @@ const schema = {
       // --------------------------------------------------------------- 常规配置
       perPageAvailable: [10, 20, 50, 100],
       syncLocation: false,
-      // keepItemSelectionOnPageChange: true,
-      // multiple: true,
-      // labelTpl: "${orderCode}",
       draggable: false,
       hideQuickSaveBtn: false,
       autoJumpToTopOnPagerChange: false,
@@ -104,8 +102,6 @@ const schema = {
       defaultParams: {pageNo: 1, pageSize: 10},
       pageField: "pageNo",
       perPageField: "pageSize",
-      // interval: 3000,
-      // silentPolling: true,
       // --------------------------------------------------------------- 查询条件表单配置
       // 条件过滤表单
       filterTogglable: true,
@@ -123,7 +119,6 @@ const schema = {
           {type: "select", label: "支付状态", name: "payType", placeholder: "请选择", clearable: true, size: "md", options: payStatusMapper},
           {type: "datetime", label: "开始时间", name: "createAtStart", placeholder: "选择时间", format: "x", clearable: true, size: "md"},
           {type: "datetime", label: "结束时间", name: "createAtEnd", placeholder: "选择时间", format: "x", clearable: true, size: "md"},
-          // {type: "divider"},
           {label: "查询", level: "primary", type: "submit", size: "md"},
           {label: "重置", type: "reset"},
         ],
@@ -144,19 +139,12 @@ const schema = {
         {type: "operation", label: "操作", width: 120, toggled: true, buttons: [detailsDialog(), editDialog(), deleteDialog()]},
       ],
       // --------------------------------------------------------------- 表格工具栏配置
-      // bulkActions: [{label: "批量操作1"}, {label: "批量操作2"}],
       headerToolbar: [
         {align: "left", type: 'button', label: '主操作', level: 'primary', size: "sm"},
         {align: "left", type: 'button', label: '次操作', size: "sm"},
-        // {align: "left", type: "bulkActions"},
         {align: "right", type: "columns-toggler"},
-        {align: "right", type: "filter-toggler"},
-        {align: "right", type: "drag-toggler"},
-        // {align: "right", type: "export-csv"},
-        // {align: "right", type: "export-excel"},
       ],
       footerToolbar: [
-        // {align: "right", type: "load-more"},
         {align: "right", type: "pagination"},
         {align: "right", type: "switch-per-page"},
         {align: "right", type: "statistics"},

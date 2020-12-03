@@ -15,6 +15,7 @@ function detailsDialog() {
     actionType: "dialog",
     dialog: {
       title: "查看订单 - ${orderCode}",
+      closeOnEsc: true,
       actions: [{type: "button", label: "关闭", level: "primary", actionType: "close"}],
       body: {
         type: "form",
