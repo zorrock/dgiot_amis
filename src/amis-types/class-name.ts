@@ -1,3 +1,58 @@
+enum GeneralClassName {
+  Inline_Block = "global-inline-block",
+}
+
+enum WidthClassName {
+  width1x = "global-width-1x",
+  width2x = "global-width-2x",
+  width3x = "global-width-3x",
+  width4x = "global-width-4x",
+  width5x = "global-width-5x",
+  width6x = "global-width-6x",
+  width7x = "global-width-7x",
+  width8x = "global-width-8x",
+  width9x = "global-width-9x",
+  width10x = "global-width-10x",
+  width11x = "global-width-11x",
+  width12x = "global-width-12x",
+  width13x = "global-width-13x",
+  width14x = "global-width-14x",
+  width15x = "global-width-15x",
+  width16x = "global-width-16x",
+  width17x = "global-width-17x",
+  width18x = "global-width-18x",
+  width19x = "global-width-19x",
+  width20x = "global-width-20x",
+  width21x = "global-width-21x",
+  width22x = "global-width-22x",
+  width23x = "global-width-23x",
+  width24x = "global-width-24x",
+  width25x = "global-width-25x",
+  width26x = "global-width-26x",
+  width27x = "global-width-27x",
+  width28x = "global-width-28x",
+  width29x = "global-width-29x",
+  width30x = "global-width-30x",
+  width31x = "global-width-31x",
+  width32x = "global-width-32x",
+  width33x = "global-width-33x",
+  width34x = "global-width-34x",
+  width35x = "global-width-35x",
+  width36x = "global-width-36x",
+  width37x = "global-width-37x",
+  width38x = "global-width-38x",
+  width39x = "global-width-39x",
+  width40x = "global-width-40x",
+  width41x = "global-width-41x",
+  width42x = "global-width-42x",
+  width43x = "global-width-43x",
+  width44x = "global-width-44x",
+  width45x = "global-width-45x",
+  width46x = "global-width-46x",
+  width47x = "global-width-47x",
+  width48x = "global-width-48x",
+}
+
 enum PageClassName {
 
 }
@@ -88,4 +143,4 @@ enum DialogClassName {
 
 }
 
-export { PageClassName, FormClassName, DialogClassName };
+export { GeneralClassName, WidthClassName, PageClassName, FormClassName, DialogClassName };
