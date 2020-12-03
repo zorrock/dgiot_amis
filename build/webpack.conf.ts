@@ -200,8 +200,8 @@ if (settings.mode === "development") {
       ],
     },
     devServer: {
+      host: settings.devServer.host,
       port: settings.devServer.port,
-      host: "127.0.0.1",
       contentBase: `${settings.rootPath}/index.html`,
       // publicPath: "/",
       historyApiFallback: true,

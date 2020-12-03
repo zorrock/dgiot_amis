@@ -12,6 +12,8 @@ interface Settings {
   mode: "development" | "production",
   /** dev服务配置 */
   devServer: {
+    /** 绑定IP */
+    host: "127.0.0.1" | "0.0.0.0",
     /** devServer 端口 */
     port: number;
     /** dev时是否需要自动打开浏览器 */
@@ -35,6 +37,7 @@ const settings: Settings = {
   rootPath: path.resolve(__dirname, `../`),
   mode: NODE_ENV === "development" ? "development" : "production",
   devServer: {
+    host: "0.0.0.0",
     port: 8000,
     needOpenApp: false,
     proxy: {
