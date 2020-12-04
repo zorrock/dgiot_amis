@@ -14,6 +14,7 @@ const schema = {
       mode: "horizontal",
       className: classnames(FormClassName.flex_label6x, FormClassName.flex_input26x),
       // submitText: "提交",
+      trimValues: true,
       controls: [
         {type: "text", name: "f1", label: "供应商名称", required: false, placeholder: "请输入", clearable: true},
         {type: "text", name: "f2", label: "登录账号", required: false, placeholder: "请输入", clearable: true},
@@ -35,6 +36,7 @@ const schema = {
       mode: "inline",
       className: classnames(FormClassName.label6x, FormClassName.input26x),
       submitText: "",
+      trimValues: true,
       controls: [
         {type: "text", name: "f1", label: "供应商名称", required: false, placeholder: "请输入", clearable: true},
         {type: "html", html: "<br />"},
@@ -63,6 +65,7 @@ const schema = {
       mode: "inline",
       className: classnames(FormClassName.label6x, FormClassName.input26x),
       submitText: "",
+      trimValues: true,
       controls: [
         {type: "text", name: "f5", label: "供货范围", required: false, placeholder: "请输入", clearable: true},
         {type: "button", label: "查看供货公司"},
@@ -96,6 +99,7 @@ const schema = {
       mode: "inline",
       className: classnames(FormClassName.label6x, FormClassName.input26x),
       submitText: "",
+      trimValues: true,
       controls: [
         {
           type: "fieldSet",
@@ -132,7 +136,6 @@ const schema = {
         url: `${serverHost}/!/amis-api/curd-page@mockSubmit`,
       },
     },
-    // --------------------------------------------------------------- 表单校验
     {type: "divider"},
   ],
 };

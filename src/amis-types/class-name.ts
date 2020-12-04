@@ -3,6 +3,7 @@ enum GeneralClassName {
 }
 
 enum WidthClassName {
+  width_unset = "global-width-unset",
   width1x = "global-width-1x",
   width2x = "global-width-2x",
   width3x = "global-width-3x",
@@ -51,6 +52,34 @@ enum WidthClassName {
   width46x = "global-width-46x",
   width47x = "global-width-47x",
   width48x = "global-width-48x",
+}
+
+enum HeightClassName {
+  height_unset = "global-height-unset",
+  height1x = "global-height-1x",
+  height2x = "global-height-2x",
+  height3x = "global-height-3x",
+  height4x = "global-height-4x",
+  height5x = "global-height-5x",
+  height6x = "global-height-6x",
+  height7x = "global-height-7x",
+  height8x = "global-height-8x",
+  height9x = "global-height-9x",
+  height10x = "global-height-10x",
+  height11x = "global-height-11x",
+  height12x = "global-height-12x",
+  height13x = "global-height-13x",
+  height14x = "global-height-14x",
+  height15x = "global-height-15x",
+  height16x = "global-height-16x",
+  height17x = "global-height-17x",
+  height18x = "global-height-18x",
+  height19x = "global-height-19x",
+  height20x = "global-height-20x",
+  height21x = "global-height-21x",
+  height22x = "global-height-22x",
+  height23x = "global-height-23x",
+  height24x = "global-height-24x",
 }
 
 enum PageClassName {
@@ -137,10 +166,12 @@ enum FormClassName {
   flex_input30x = "flex-form-input-30x",
   /** flex input宽度为32rem */
   flex_input32x = "flex-form-input-32x",
+
+  item_height3_5x = "form-item-height-3_5x",
 }
 
 enum DialogClassName {
 
 }
 
-export { GeneralClassName, WidthClassName, PageClassName, FormClassName, DialogClassName };
+export { GeneralClassName, WidthClassName, HeightClassName, PageClassName, FormClassName, DialogClassName };

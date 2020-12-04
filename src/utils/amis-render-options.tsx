@@ -35,6 +35,7 @@ axios.interceptors.request.use(request => {
 axios.interceptors.response.use(response => {
     console.log("全局响应拦截 response -> ", response);
     const payload = response.data;
+    // console.log("payload -> ", payload);
     if (!payload) return response;
     const data = payload.data;
     if (!data) return response;
@@ -44,6 +45,17 @@ axios.interceptors.response.use(response => {
       data.rows = data.records;
       data.count = data.total;
     }
+    // 数据校验适配
+    if (data instanceof Array && data.length > 0 && data[0] && data[0].code && data[0].entityName && data[0].errorMessage) {
+      payload.data = {};
+      payload.status = 422;
+      payload.errors = {};
+      (data as Array<any>).forEach(value => {
+        payload.errors[value.filed] = value.errorMessage;
+      });
+      payload.msg = "服务端数据校验失败";
+    }
+    // console.log("payload -> ", payload);
     return response;
   },
 );

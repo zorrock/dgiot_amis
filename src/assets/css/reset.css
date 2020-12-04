@@ -20,6 +20,10 @@
 }
 
 /* --------------------------------------------------------------------------------------------------------------------- 固定宽度 */
+.global-width-unset {
+  width: unset !important;
+}
+
 .global-width-1x {
   width: 1rem !important;
 }
@@ -210,6 +214,107 @@
 
 .global-width-48x {
   width: 48rem !important;
+}
+
+/* --------------------------------------------------------------------------------------------------------------------- 固定高度 */
+.global-height-unset {
+  height: unset !important;
+}
+
+.global-height-1x {
+  height: 1rem !important;
+}
+
+.global-height-2x {
+  height: 2rem !important;
+}
+
+.global-height-3x {
+  height: 3rem !important;
+}
+
+.global-height-4x {
+  height: 4rem !important;
+}
+
+.global-height-5x {
+  height: 5rem !important;
+}
+
+.global-height-6x {
+  height: 6rem !important;
+}
+
+.global-height-7x {
+  height: 7rem !important;
+}
+
+.global-height-8x {
+  height: 8rem !important;
+}
+
+.global-height-9x {
+  height: 9rem !important;
+}
+
+.global-height-10x {
+  height: 10rem !important;
+}
+
+.global-height-11x {
+  height: 11rem !important;
+}
+
+.global-height-12x {
+  height: 12rem !important;
+}
+
+.global-height-13x {
+  height: 13rem !important;
+}
+
+.global-height-14x {
+  height: 14rem !important;
+}
+
+.global-height-15x {
+  height: 15rem !important;
+}
+
+.global-height-16x {
+  height: 16rem !important;
+}
+
+.global-height-17x {
+  height: 17rem !important;
+}
+
+.global-height-18x {
+  height: 18rem !important;
+}
+
+.global-height-19x {
+  height: 19rem !important;
+}
+
+.global-height-20x {
+  height: 20rem !important;
+}
+
+.global-height-21x {
+  height: 21rem !important;
+}
+
+.global-height-22x {
+  height: 22rem !important;
+}
+
+.global-height-23x {
+  height: 23rem !important;
+}
+
+.global-height-24x {
+  height: 24rem !important;
 }
 
 /* --------------------------------------------------------------------------------------------------------------------- Page页面输入组件样式 */
@@ -424,5 +529,8 @@
   width: 32rem;
 }
 
+.form-item-height-3_5x .a-Form-item {
+  height: 3.5rem;
+}
 
 
