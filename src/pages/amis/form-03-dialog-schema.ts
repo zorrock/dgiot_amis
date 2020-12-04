@@ -24,7 +24,7 @@ const schema = {
           className: classnames(FormClassName.flex_label6x),
           controls: [
             {
-              type: "picker", name: "f1", label: "对话框选择", size: "lg",
+              type: "picker", name: "f0", label: "对话框选择", size: "lg",
               source: {
                 method: "get",
                 url: `${serverHost}/!/amis-api/curd-page@curdQuery`,
