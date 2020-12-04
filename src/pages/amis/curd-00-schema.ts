@@ -45,7 +45,8 @@ function editDialog() {
     size: "xs",
     actionType: "dialog",
     dialog: {
-      position: "left", size: "md", title: "编辑",
+      size: "md",
+      title: "编辑",
       body: {
         type: "form",
         initApi: {
