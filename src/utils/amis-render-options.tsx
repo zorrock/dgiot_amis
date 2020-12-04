@@ -34,7 +34,7 @@ axios.interceptors.request.use(request => {
 
 axios.interceptors.response.use(response => {
     console.log("全局响应拦截 response -> ", response);
-    // if (!hasValue(response.data.msg) || !hasValue(response.data.status)) {
+    // if (response.data && !hasValue(response.data.msg) && !hasValue(response.data.status) && !hasValue(response.data.data)) {
     //   response.data = {status: response.status === 200 ? 0 : -1, msg: "", data: response.data};
     // }
     const payload = response.data;
