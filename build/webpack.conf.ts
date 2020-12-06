@@ -79,6 +79,7 @@ let config: Configuration = {
           {loader: "cache-loader"},
           {loader: "thread-loader", options: {workers: 3}},
           {loader: "ts-loader", options: {happyPackMode: true, transpileOnly: true}},
+          {loader: "babel-loader", options: {cacheDirectory: true}},
         ],
         include: [srcPath],
         exclude: /node_modules/,
