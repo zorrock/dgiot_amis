@@ -3,6 +3,7 @@ enum GeneralClassName {
 }
 
 enum WidthClassName {
+  width_full = "global-width-full",
   width_unset = "global-width-unset",
   width1x = "global-width-1x",
   width2x = "global-width-2x",
@@ -55,6 +56,7 @@ enum WidthClassName {
 }
 
 enum HeightClassName {
+  height_full = "global-height-full",
   height_unset = "global-height-unset",
   height1x = "global-height-1x",
   height2x = "global-height-2x",
@@ -167,6 +169,7 @@ enum FormClassName {
   /** flex input宽度为32rem */
   flex_input32x = "flex-form-input-32x",
 
+  item_height2_5x = "form-item-height-2_5x",
   item_height3_5x = "form-item-height-3_5x",
 }
 

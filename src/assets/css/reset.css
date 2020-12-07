@@ -20,6 +20,10 @@
 }
 
 /* --------------------------------------------------------------------------------------------------------------------- 固定宽度 */
+.global-width-full {
+  width: 100% !important;
+}
+
 .global-width-unset {
   width: unset !important;
 }
@@ -217,6 +221,10 @@
 }
 
 /* --------------------------------------------------------------------------------------------------------------------- 固定高度 */
+.global-height-full {
+  height: 100% !important;
+}
+
 .global-height-unset {
   height: unset !important;
 }
@@ -527,6 +535,10 @@
 /*-- input宽度为32rem --*/
 .flex-form-input-32x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
   width: 32rem;
+}
+
+.form-item-height-2_5x .a-Form-item {
+  height: 2.5rem;
 }
 
 .form-item-height-3_5x .a-Form-item {
