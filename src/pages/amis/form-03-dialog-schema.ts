@@ -25,12 +25,13 @@ const schema = {
           className: classnames(FormClassName.flex_label6x),
           controls: [
             {
-              type: "picker", name: "f0", label: "对话框选择", size: "lg",
+              type: "picker", name: "f0111", label: "对话框选择", size: "lg",
               source: {
                 method: "get",
                 url: `${serverHost}/!/amis-api/curd-page@curdQuery`,
               },
-              multiple: true, valueField: "orderId", labelField: "orderCode", pickerSchema: getPickerSchema(),
+              multiple: true, valueField: "orderCode", labelField: "orderCode", labelTpl: "${shipName} - ${shipMobile}",
+              pickerSchema: getPickerSchema(),
             },
             {type: "text", name: "f1", label: "简单文本"},
             {type: "textarea", name: "f2", label: "多行文本"},
@@ -210,12 +211,12 @@ function getPickerSchema() {
   return {
     mode: "table",
     name: "picker-table",
-    // labelTpl: "${shipName} - ${shipMobile}",
+    labelTpl: "${shipName} - ${shipMobile}",
     perPageAvailable: [10, 20, 50, 100],
     defaultParams: {pageNo: 1, pageSize: 10},
     pageField: "pageNo",
     perPageField: "pageSize",
-    primaryField: "orderId",
+    primaryField: "orderCode",
     columns: [
       {name: "orderCode", label: "订单编号", sortable: true},
       {name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper),},
@@ -225,6 +226,7 @@ function getPickerSchema() {
       {name: "payType", label: "支付状态", sortable: true, type: "mapping", map: enum2object(payStatusMapper)},
       {name: "payAmount", label: "支付金额", sortable: true},
       {name: "createAt", label: "下单时间", sortable: true},
+      // {name: "labelField", label: "下单时间", type: "tpl", tpl: "${shipName} - ${shipMobile}", sortable: true, visible: false},
     ],
     headerToolbar: [
       {
