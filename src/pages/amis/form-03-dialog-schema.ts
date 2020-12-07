@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { FormClassName, WidthClassName } from "@/amis-types";
+import { DialogClassName, FormClassName, WidthClassName } from "@/amis-types";
 import { payStatusMapper, payTypeMapper, statusMapper } from "./enum-data";
 import { enum2object } from "@/utils/enum";
 import { serverHost } from "@/server-api";
@@ -9,17 +9,17 @@ const schema = {
   title: "对话框表单",
   toolbar: [],
   body: [
+    // --------------------------------------------------------------- 简单对话框表单
     {
       type: "button",
-      label: "对话框表单",
+      label: "简单对话框表单",
       actionType: "dialog",
       dialog: {
         // size: "md",
-        title: "对话框表单",
+        title: "简单对话框表单",
         closeOnEsc: true,
         body: {
           type: "form",
-          title: "输入框类型",
           mode: "horizontal",
           className: classnames(FormClassName.flex_label6x),
           controls: [
@@ -34,9 +34,44 @@ const schema = {
             {type: "text", name: "f1", label: "简单文本"},
             {type: "textarea", name: "f2", label: "多行文本"},
             {type: "number", name: "f3", label: "数字"},
-            {type: "checkbox", name: "f6", label: "多选框"},
-            {type: "checkboxes", name: "f7", label: "多选组", columnsCount: 3, options: statusMapper},
+            {type: "checkboxes", name: "f4", label: "多选组", columnsCount: 3, options: statusMapper},
+            {type: "datetime", name: "f5", label: "日期时间"},
           ],
+          api: {
+            method: "post",
+            url: `${serverHost}/!/amis-api/curd-page@mockSubmit`,
+          },
+        },
+      },
+    },
+    // --------------------------------------------------------------- 对话框表单布局
+    {
+      type: "button",
+      label: "对话框表单布局",
+      actionType: "dialog",
+      dialog: {
+        // size: "sm",
+        title: "对话框表单布局",
+        closeOnEsc: true,
+        className: classnames(DialogClassName.width35x),
+        body: {
+          type: "form",
+          mode: "inline",
+          className: classnames(FormClassName.label6x, FormClassName.input18x, FormClassName.item_height3_5x),
+          controls: [
+            {type: "text", name: "f1", label: "供应商名称", required: false, placeholder: "请输入", clearable: true},
+            {type: "html", html: "<br />"},
+            {type: "text", name: "f3", label: "联系人", required: false, placeholder: "请输入", clearable: true},
+            {type: "html", html: "<br />"},
+            {type: "text", name: "f4", label: "联系人手机号", required: false, placeholder: "请输入", clearable: true},
+            {type: "html", html: "<br />"},
+            {type: "text", name: "f5", label: "供货范围", required: false, placeholder: "请输入", clearable: true},
+            {type: "button", label: "查看供货公司"},
+          ],
+          api: {
+            method: "post",
+            url: `${serverHost}/!/amis-api/curd-page@mockSubmit`,
+          },
         },
       },
     },

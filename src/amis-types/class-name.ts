@@ -171,7 +171,35 @@ enum FormClassName {
 }
 
 enum DialogClassName {
-
+  width10x = "dialog-width-10x",
+  width15x = "dialog-width-15x",
+  width20x = "dialog-width-20x",
+  width25x = "dialog-width-25x",
+  width30x = "dialog-width-30x",
+  width35x = "dialog-width-35x",
+  width40x = "dialog-width-40x",
+  width45x = "dialog-width-45x",
+  width50x = "dialog-width-50x",
+  width55x = "dialog-width-55x",
+  width60x = "dialog-width-60x",
+  width65x = "dialog-width-65x",
+  width70x = "dialog-width-70x",
+  width75x = "dialog-width-75x",
+  width80x = "dialog-width-80x",
+  width85x = "dialog-width-85x",
+  width90x = "dialog-width-90x",
+  width95x = "dialog-width-95x",
+  width100x = "dialog-width-100x",
+  width105x = "dialog-width-105x",
+  width110x = "dialog-width-110x",
+  width115x = "dialog-width-115x",
+  width120x = "dialog-width-120x",
+  width125x = "dialog-width-125x",
+  width130x = "dialog-width-130x",
+  width135x = "dialog-width-135x",
+  width140x = "dialog-width-140x",
+  width145x = "dialog-width-145x",
+  width150x = "dialog-width-150x",
 }
 
 export { GeneralClassName, WidthClassName, HeightClassName, PageClassName, FormClassName, DialogClassName };
