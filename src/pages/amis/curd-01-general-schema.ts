@@ -134,8 +134,8 @@ const schema = {
         {name: "payStatus", label: "支付方式", sortable: true, type: "mapping", map: enum2object(payTypeMapper)},
         {name: "payType", label: "支付状态", sortable: true, type: "mapping", map: enum2object(payStatusMapper)},
         {name: "payTime", label: "支付时间", sortable: true},
-        {name: "payAmount", label: "支付金额", sortable: true},
-        {name: "createAt", label: "下单时间", sortable: true},
+        {name: "payAmount", label: "支付金额", type: "tpl", tpl: "${payAmount|round:2}", sortable: true},
+        {name: "createAt", label: "下单时间", type: "tpl", tpl: "${createAt|date:YYYY-MM-DD}", sortable: true},
         {type: "operation", label: "操作", width: 120, toggled: true, buttons: [detailsDialog(), editDialog(), deleteDialog()]},
       ],
       // --------------------------------------------------------------- 表格工具栏配置
