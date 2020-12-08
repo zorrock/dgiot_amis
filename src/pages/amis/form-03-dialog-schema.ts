@@ -19,17 +19,21 @@ const schema = {
         // size: "md",
         title: "简单对话框表单",
         closeOnEsc: true,
+        data: {
+          f0: "220180723160152530001",
+        },
         body: {
           type: "form",
           mode: "horizontal",
           className: classnames(FormClassName.flex_label6x),
           controls: [
             {
-              type: "picker", name: "f0111", label: "对话框选择", size: "lg",
+              type: "picker", name: "f0", label: "对话框选择", size: "lg",
               source: {
                 method: "get",
                 url: `${serverHost}/!/amis-api/curd-page@curdQuery`,
               },
+              // options: [{orderCode: "220180723160152530001", shipName: "黄婷", shipMobile: "15527807874"}],
               multiple: true, valueField: "orderCode", labelField: "orderCode", labelTpl: "${shipName} - ${shipMobile}",
               pickerSchema: getPickerSchema(),
             },
