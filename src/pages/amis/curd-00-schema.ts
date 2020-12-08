@@ -47,12 +47,17 @@ function editDialog() {
     dialog: {
       size: "md",
       title: "编辑",
+      data: {
+        "&": "$$",
+        shipName: "${shipName}",
+        shipName2: "${shipName}",
+      },
       body: {
         type: "form",
-        initApi: {
-          method: "get",
-          url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,
-        },
+        // initApi: {
+        //   method: "get",
+        //   url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,
+        // },
         api: {
           method: "put",
           url: `${serverHost}/!/amis-api/curd-page@mockUpdate?orderId=$orderId`,
@@ -62,6 +67,7 @@ function editDialog() {
           {type: "text", name: "orderCode", label: "订单编号"},
           {type: "select", name: "status", label: "订单状态", options: statusMapper},
           {type: "text", name: "shipName", label: "收货人"},
+          {type: "text", name: "shipName2", label: "收货人2"},
           {type: "text", name: "shipMobile", label: "手机号"},
           {type: "text", name: "shipAddr", label: "地址"},
         ]
