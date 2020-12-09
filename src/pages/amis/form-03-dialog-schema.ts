@@ -20,7 +20,7 @@ const schema = {
         title: "简单对话框表单",
         closeOnEsc: true,
         data: {
-          f0: "220180723160152530001",
+          f0: "120180727093513020001",
         },
         body: {
           type: "form",
