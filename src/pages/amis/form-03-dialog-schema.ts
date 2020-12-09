@@ -216,6 +216,7 @@ function getPickerSchema() {
     mode: "table",
     name: "picker-table",
     labelTpl: "${shipName} - ${shipMobile}",
+    affixHeader: false,
     perPageAvailable: [10, 20, 50, 100],
     defaultParams: {pageNo: 1, pageSize: 10},
     pageField: "pageNo",
