@@ -1,31 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import lodash from 'lodash';
-import { SchemaObject } from 'amis';
-import { amisRenderOptions } from "@/utils/amis-render-options";
-import { RenderOptions, RootRenderProps } from "amis/src/factory";
+import { SchemaObject } from "amis";
+import { $rootMounted, amisRender, rootMountedId } from '@/utils/amis-utils';
 
-interface Amis {
-  embed(mounted: string, schema: SchemaObject, props: RootRenderProps, options: RenderOptions, pathPrefix?: string): React.ReactNode;
-
-  [name: string]: any;
-}
-
-type AmisRequire = (module: string) => Amis;
-declare const amisRequire: AmisRequire;
-
-const amis = amisRequire("amis/embed");
-// console.log("amis -> ", amis);
 const hash = lodash.trim(document.location.hash);
 const schemaPath = hash.startsWith("#") ? hash.substr(1, hash.length) : "01schema/schema";
-
-const rootMountedId = "app-root";
-let $rootMounted = document.getElementById(rootMountedId)
-if (!$rootMounted) {
-  $rootMounted = document.createElement('div');
-  $rootMounted.id = rootMountedId;
-  document.appendChild($rootMounted);
-}
 
 interface ReactPageProps {
   schema: SchemaObject;
@@ -47,11 +27,12 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
     // console.log("$amisMounted -> ", document.getElementById(this.amisMountedId));
     const {schema, ...resProps} = this.props;
     // amis.embed(`#${amisMountedId}`, schema, {...resProps}, {...amisRenderOptions});
-    amis.embed(`#${this.amisMountedId}`, schema, {...resProps}, {...amisRenderOptions});
+    amisRender(this.amisMountedId, schema, resProps);
   }
 
   reload() {
-    amis.embed(`#${this.amisMountedId}`, {
+    const {schema, ...resProps} = this.props;
+    amisRender(this.amisMountedId, {
       type: "page",
       title: "动态变化",
       body: [
@@ -69,7 +50,7 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
           ],
         },
       ],
-    }, {}, {...amisRenderOptions});
+    }, resProps);
   }
 
   render() {
@@ -130,7 +111,7 @@ loadSchema(schemaPath)
         html: `<pre>${jsonReason}</pre>`
       },
     };
-    amis.embed(`#${rootMountedId}`, schema, {}, {...amisRenderOptions});
+    amisRender(rootMountedId, schema);
   });
 
 // window.addEventListener("hashchange", funcRef, false);
