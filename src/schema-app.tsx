@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
-import { $rootMounted, initAppPage } from '@/utils/amis-utils';
+import { $rootMounted, initAppPage, loadPageByPath } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { NestSideLayout } from '@/layouts/NestSideLayout';
 
@@ -13,20 +13,24 @@ interface ReactPageState {
 }
 
 class ReactPage extends Component<ReactPageProps, ReactPageState> {
-  // private amisMountedId = "amis-root";
+  private amisMountedId = "amis-root";
 
   constructor(props: ReactPageProps) {
     super(props);
     // this.state = {count: 0};
   }
 
-  // async componentDidMount() {
-  //   const {schemaPath, ...resProps} = this.props;
-  //   await loadPageByPath(this.amisMountedId, schemaPath!, resProps);
-  // }
+  async componentDidMount() {
+    const {schemaPath, ...resProps} = this.props;
+    await loadPageByPath(this.amisMountedId, schemaPath!, resProps);
+  }
 
   render() {
-    return <NestSideLayout/>;
+    return (
+      <NestSideLayout>
+        <div id={this.amisMountedId}/>
+      </NestSideLayout>
+    );
   }
 }
 

@@ -411,7 +411,6 @@ class NestSideMenuLayout extends React.Component<NestSideMenuLayoutProps, NestSi
 
   /** 页面布局内容 */
   protected getLayoutPage() {
-    // const { layoutMenuData } = this;
     const {
       layoutClassName,
       layoutStyle,
@@ -429,29 +428,28 @@ class NestSideMenuLayout extends React.Component<NestSideMenuLayoutProps, NestSi
       contentStyle,
       footerClassName,
       footerStyle,
+      children,
     } = this.props;
-    // console.log('layoutMenuData --> ', layoutMenuData);
-    // const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
     return (
       <section className={classNames(styles.layout, layoutClassName)} style={layoutStyle}>
         <aside className={classNames(styles.firstSideMenuLayout, globalSideClassName)} style={globalSideStyle}>
           {/* TODO 全局侧边栏 - 一级菜单 */}
-          一级<br/>菜单
+          <div>一级<br/>菜单</div>
         </aside>
         <section className={classNames(styles.nestLayout, nestLayoutClassName)} style={nestLayoutStyle}>
           <aside className={classNames(styles.layoutSide, sideClassName)} style={sideStyle}>
             {/* TODO 二级侧边栏 - 二级级菜单 */}
-            二级级菜单
+            <div>二级级菜单</div>
           </aside>
           <section className={classNames(styles.twoLevelNestLayout, twoLevelNestLayoutClassName)} style={twoLevelNestLayoutStyle}>
             <header className={classNames(styles.header, headerClassName)} style={headerStyle}>
-              页头
+              <div>页头</div>
             </header>
             <main className={classNames(styles.content, contentClassName)} style={contentStyle}>
-              页面内容
+              {children}
             </main>
             <footer className={classNames(styles.footer, footerClassName)} style={footerStyle}>
-              页尾
+              <div>页尾</div>
             </footer>
           </section>
         </section>

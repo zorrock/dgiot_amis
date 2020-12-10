@@ -1,3 +1,11 @@
+html {
+  font-size: 0.925rem;
+}
+
+.a-Button.a-Button--xs {
+  font-size: 0.6rem;
+}
+
 /* --------------------------------------------------------------------------------------------------------------------- CURD选择分页下拉框 */
 .amis-scope .a-Crud-pageSwitch .a-Select {
   height: 1.875rem;
