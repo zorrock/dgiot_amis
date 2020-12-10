@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import classNames from 'classnames';
 // import { injectIntl } from 'umi';
 // import { Layout } from 'antd';
@@ -66,40 +66,40 @@ export interface NestSideMenuLayoutProps extends LayoutPageComponentProps {
   // /** 自定义 BreadcrumbRoutes 数据处理 */
   // breadcrumbRoutesInterceptor?: (layoutMenuData: LayoutMenuData, routes: BreadcrumbRoute[]) => BreadcrumbRoute[];
   // // ----------------------------------------------------------------------------------- NestSideMenuLayout 扩展配置
-  // /** 最外层Layout容器class样式 */
-  // layoutClassName?: string;
-  // /** 最外层Layout容器样式 */
-  // layoutStyle?: CSSProperties;
-  // /** GlobalSide容器class样式 */
-  // globalSideClassName?: string;
-  // /** GlobalSide容器样式 */
-  // globalSideStyle?: CSSProperties;
-  // /** 嵌套的Layout容器class样式 */
-  // nestLayoutClassName?: string;
-  // /** 嵌套的Layout容器样式 */
-  // nestLayoutStyle?: CSSProperties;
-  // /** 侧边栏二级菜单容器class样式 */
-  // sideClassName?: string;
-  // /** 侧边栏二级菜单容器样式 */
-  // sideStyle?: CSSProperties;
+  /** 最外层Layout容器class样式 */
+  layoutClassName?: string;
+  /** 最外层Layout容器样式 */
+  layoutStyle?: CSSProperties;
+  /** GlobalSide容器class样式 */
+  globalSideClassName?: string;
+  /** GlobalSide容器样式 */
+  globalSideStyle?: CSSProperties;
+  /** 嵌套的Layout容器class样式 */
+  nestLayoutClassName?: string;
+  /** 嵌套的Layout容器样式 */
+  nestLayoutStyle?: CSSProperties;
+  /** 侧边栏二级菜单容器class样式 */
+  sideClassName?: string;
+  /** 侧边栏二级菜单容器样式 */
+  sideStyle?: CSSProperties;
   // /** 侧边栏二级菜单容器自定义SideProps */
   // sideProps?: AntdSiderProps;
-  // /** 二级嵌套的Layout容器class样式 */
-  // twoLevelNestLayoutClassName?: string;
-  // /** 二级嵌套的Layout容器样式 */
-  // twoLevelNestLayoutStyle?: CSSProperties;
-  // /** Header容器class样式 */
-  // headerClassName?: string;
-  // /** Header容器样式 */
-  // headerStyle?: CSSProperties;
-  // /** Content容器class样式 */
-  // contentClassName?: string;
-  // /** Content容器样式 */
-  // contentStyle?: CSSProperties;
-  // /** Footer容器class样式 */
-  // footerClassName?: string;
-  // /** Footer容器样式 */
-  // footerStyle?: CSSProperties;
+  /** 二级嵌套的Layout容器class样式 */
+  twoLevelNestLayoutClassName?: string;
+  /** 二级嵌套的Layout容器样式 */
+  twoLevelNestLayoutStyle?: CSSProperties;
+  /** Header容器class样式 */
+  headerClassName?: string;
+  /** Header容器样式 */
+  headerStyle?: CSSProperties;
+  /** Content容器class样式 */
+  contentClassName?: string;
+  /** Content容器样式 */
+  contentStyle?: CSSProperties;
+  /** Footer容器class样式 */
+  footerClassName?: string;
+  /** Footer容器样式 */
+  footerStyle?: CSSProperties;
   // // ----------------------------------------------------------------------------------- GlobalSide 配置
   // /** 系统logo图片(32 x 32) */
   // globalSideLogo?: React.ReactNode | false;
@@ -412,19 +412,49 @@ class NestSideMenuLayout extends React.Component<NestSideMenuLayoutProps, NestSi
   /** 页面布局内容 */
   protected getLayoutPage() {
     // const { layoutMenuData } = this;
-    // const {
-    //
-    // } = this.props;
+    const {
+      layoutClassName,
+      layoutStyle,
+      globalSideClassName,
+      globalSideStyle,
+      nestLayoutClassName,
+      nestLayoutStyle,
+      sideClassName,
+      sideStyle,
+      twoLevelNestLayoutClassName,
+      twoLevelNestLayoutStyle,
+      headerClassName,
+      headerStyle,
+      contentClassName,
+      contentStyle,
+      footerClassName,
+      footerStyle,
+    } = this.props;
     // console.log('layoutMenuData --> ', layoutMenuData);
     // const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
     return (
-      <section className={classNames(styles.layout, "")} style={{}}>
-        <aside
-          className={classNames(styles.firstSideMenuLayout, "")}
-          // style={{...(globalSideMenuMode === SideFirstMenuMode.CustomMenu ? {width: globalSideMenuWidth} : {}), ...globalSideStyle}}
-        >
+      <section className={classNames(styles.layout, layoutClassName)} style={layoutStyle}>
+        <aside className={classNames(styles.firstSideMenuLayout, globalSideClassName)} style={globalSideStyle}>
+          {/* TODO 全局侧边栏 - 一级菜单 */}
+          一级<br/>菜单
         </aside>
-
+        <section className={classNames(styles.nestLayout, nestLayoutClassName)} style={nestLayoutStyle}>
+          <aside className={classNames(styles.layoutSide, sideClassName)} style={sideStyle}>
+            {/* TODO 二级侧边栏 - 二级级菜单 */}
+            二级级菜单
+          </aside>
+          <section className={classNames(styles.twoLevelNestLayout, twoLevelNestLayoutClassName)} style={twoLevelNestLayoutStyle}>
+            <header className={classNames(styles.header, headerClassName)} style={headerStyle}>
+              页头
+            </header>
+            <main className={classNames(styles.content, contentClassName)} style={contentStyle}>
+              页面内容
+            </main>
+            <footer className={classNames(styles.footer, footerClassName)} style={footerStyle}>
+              页尾
+            </footer>
+          </section>
+        </section>
       </section>
     );
   }

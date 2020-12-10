@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh" style="height: 100%;">
+<html lang="zh">
 <head>
     <% var opts = htmlWebpackPlugin.options; %>
     <meta charset="UTF-8"/>
@@ -11,10 +11,15 @@
     <!--<link rel="stylesheet" href="<%= opts.urlPrefix %>public/font-awesome/css/font-awesome.css"/>-->
     <!--<link rel="stylesheet" href="<%= opts.urlPrefix %>public/amis/lib/themes/cxd.css"/>-->
     <!--<link rel="stylesheet" href="<%= opts.urlPrefix %>public/amis/lib/themes/dark.css"/>-->
+    <style>
+        html, body, #app-root {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
 </head>
-<body style="height: 100%;margin: 0;">
-<div id="app-root" style="height: 100%;">
-    <div id="amis-root" style="height: 100%;"></div>
+<body>
+<div id="app-root">
 </div>
 <script type="text/javascript" src="<%= opts.urlPrefix %>public/amis/sdk/sdk.js"></script>
 </body>

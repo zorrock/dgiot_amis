@@ -1,82 +1,95 @@
-////@import '~antd/es/style/themes/default.less';
-//
-//// 最外层Layout容器
-//.layout {
-//  display: flex;
-//  flex-direction: row;
-//  width: 100%;
-//  height: 100%;
-//}
-//
-//// 一级菜单容器
-//.firstSideMenuLayout {
-//  display: flex;
-//  flex-direction: column;
-//  flex-grow: 0;
-//  flex-shrink: 0;
-//  justify-items: center;
-//  width: 56px;
-//  min-width: 32px;
-//  max-width: 200px;
-//  color: rgba(255, 255, 255, 0.65);
-//  background: #001529;
-//}
-//
-//// 嵌套的Layout容器
-//.nestLayout {
-//  width: 100%;
-//  overflow: hidden;
-//}
-//
-//// 侧边栏菜单
-//.layoutSide {
-//  background-color: #fff;
-//  border-right: 1px solid #e8e8e8;
-//  user-select: none;
-//
-//  :global {
-//    .ant-layout-sider-children {
-//      display: flex;
-//      flex-direction: column;
-//    }
-//  }
-//}
-//
-//// 二级嵌套的Layout容器
-//.twoLevelNestLayout {
-//  width: 100%;
-//}
-//
-//// 全局页头 - Header容器
-//.header {
-//  display: flex;
-//  flex-direction: row;
-//  align-items: center;
-//  justify-content: flex-start;
-//  padding: 0;
-//  overflow: hidden;
-//  background-color: #fff;
-//  border-bottom: 1px solid #e8e8e8;
-//  user-select: none;
-//}
-//
-//// Content容器
-//.content {
-//  display: flex;
-//  flex-direction: column;
-//  width: 100%;
-//  height: 100%;
-//  padding: 0;
-//  overflow: auto;
-//}
-//
-//// 全局页脚 - Footer容器
-//.footer {
-//  padding: 6px 3px 3px 3px;
-//  text-align: center;
-//  // border-top: 1px solid #e8e8e8;
-//  // background-color: #fafafa;
-//}
+@import 'src/assets/css/themes-default';
+
+// 最外层Layout容器
+.layout {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+// 一级菜单容器
+.firstSideMenuLayout {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-items: center;
+  width: 56px;
+  min-width: 32px;
+  max-width: 200px;
+  color: rgba(255, 255, 255, 0.65);
+  background: #001529;
+}
+
+// 嵌套的Layout容器
+.nestLayout {
+  flex-direction: row;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  height: 100%;
+}
+
+// 侧边栏菜单
+.layoutSide {
+  flex: 0 0 160px;
+  width: 160px;
+  background-color: #fff;
+  border-right: 1px solid #e8e8e8;
+  user-select: none;
+
+  :global {
+    .ant-layout-sider-children {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+// 二级嵌套的Layout容器
+.twoLevelNestLayout {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-height: 0;
+  background: #f0f2f5;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+// 全局页头 - Header容器
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  overflow: hidden;
+  background-color: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  user-select: none;
+  flex: 0 0 auto;
+}
+
+// Content容器
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: auto;
+  flex: 1 1 auto;
+}
+
+// 全局页脚 - Footer容器
+.footer {
+  padding: 6px 3px 3px 3px;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
 //
 //// 展开/折叠 侧边栏菜单
 //.sideMenuCollapse {

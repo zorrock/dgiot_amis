@@ -3,11 +3,11 @@ import React from 'react';
 // import { PageHeaderModel, SideFirstMenuMode } from '@/components/Layout';
 import NestSideMenuLayout from './NestSideMenuLayout';
 
-export interface NestSideLayoutProps extends LayoutPageComponentProps {
+interface NestSideLayoutProps extends LayoutPageComponentProps {
 
 }
 
-export interface NestSideLayoutState {
+interface NestSideLayoutState {
 
 }
 
@@ -60,4 +60,4 @@ class NestSideLayout extends React.Component<NestSideLayoutProps, NestSideLayout
   }
 }
 
-export default NestSideLayout;
+export { NestSideLayoutProps, NestSideLayoutState, NestSideLayout };
