@@ -1,5 +1,5 @@
 import lodash from 'lodash';
-import {parse} from 'qs'
+import { parse } from 'qs'
 
 /**
  * 检查 name 是否是 o 对象的直接或继承属性。
@@ -65,4 +65,12 @@ const getUrlParam = (paramName?: string, url?: string): any => {
   return urlParams
 }
 
-export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, };
+/**
+ * 获取Location的Hash值
+ */
+const getLocationHash = (): string | undefined => {
+  const hash = lodash.trim(document.location.hash);
+  return hash.startsWith("#") ? hash.substr(1, hash.length) : undefined;
+}
+
+export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, getLocationHash };

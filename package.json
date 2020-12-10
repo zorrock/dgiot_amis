@@ -37,7 +37,10 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-helmet": "^6.1.0",
+    "rc-util": "^5.5.1",
+    "@ant-design/icons": "^4.3.0",
     "rc-menu": "^8.10.1",
+    "rc-tabs": "^11.7.2",
     "simplebar": "^5.3.0",
     "simplebar-react": "^2.3.0"
   },
