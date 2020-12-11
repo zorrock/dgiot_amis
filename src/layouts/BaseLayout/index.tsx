@@ -1,7 +1,12 @@
 import React from 'react';
 // import lodash from 'lodash';
+import classNames from "classnames";
+import Tabs, { TabPane } from 'rc-tabs';
+import 'rc-tabs/assets/index.css';
+import SimpleBarReact from 'simplebar-react';
+import 'simplebar/src/simplebar.css';
 import { PageContent } from "@/components/Layout/PageContent";
-// import styles from './index.less';
+import styles from './index.less';
 
 interface BaseLayoutProps extends LayoutPageComponentProps {
   // // ----------------------------------------------------------------------------------- 主配置
@@ -256,7 +261,19 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     const {children} = this.props;
     return (
       <PageContent>
-        {children}
+        <Tabs className={styles.tabs} animated={{inkBar: false, tabPane: false}}>
+          <TabPane forceRender={true} tab="tab 1" key="1">
+            first
+          </TabPane>
+          <TabPane forceRender={true} tab="tab 2" key="2">
+            second
+          </TabPane>
+          <TabPane forceRender={true} tab="tab 3" key="3">
+            <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
+              {children}
+            </SimpleBarReact>
+          </TabPane>
+        </Tabs>
       </PageContent>
     );
   }
