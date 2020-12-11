@@ -1,42 +1,6 @@
 import React, { CSSProperties } from 'react';
 import classNames from 'classnames';
-// import { injectIntl } from 'umi';
-// import { Layout } from 'antd';
-// import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-// import { GlobalConfigContext } from '@/components/Layout/utils/menu-data';
-// import { getCurrentFirstMenu, getCurrentFirstMenuKey, getHtmlTitle } from '@/components/Layout/utils/layouts-utils';
-// import { BreadcrumbRoute } from '@/components/Layout/utils/breadcrumb';
-// import {
-//   AntdBreadcrumbProps,
-//   AntdInputSearchProps,
-//   AntdMenuClickParam,
-//   AntdMenuProps,
-//   AntdMenuTheme,
-//   AntdPageHeaderProps,
-//   AntdSiderProps,
-//   AntdTagType,
-//   FormatMessage,
-//   IntlShape,
-// } from '@/components/Layout/layout-types';
-// import {
-//   GlobalFooterLink,
-//   GlobalFooterProps,
-//   GlobalHeader,
-//   GlobalHeaderProps,
-//   GlobalSide,
-//   GlobalSideProps,
-//   MoreButtonEventKey,
-//   MultiTabNavProps,
-//   PageHeaderModel,
-//   SideFirstMenuClickParam,
-//   SideFirstMenuMode,
-//   SideFirstMenuSelectParam,
-//   SideMenuProps,
-//   SideSecondMenuClickParam,
-//   SideSecondMenuOpenChangeParam,
-//   SideSecondMenuSelectParam,
-// } from '@/components/Layout';
-// import { BaseLayout, DefaultSideMenuTopRender } from '@/layouts/BaseLayout';
+import { BaseLayout } from "@/layouts/BaseLayout";
 import styles from './index.less';
 
 export interface NestSideMenuLayoutProps extends LayoutPageComponentProps {
@@ -385,29 +349,14 @@ export interface NestSideMenuLayoutState {
   // sideMenuSearchValueMap: Immutable.Map<string, string>;
 }
 
-class NestSideMenuLayout extends React.Component<NestSideMenuLayoutProps, NestSideMenuLayoutState> {
+class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMenuLayoutState> {
   /** props的默认值 */
-  static defaultProps: Readonly<Partial<NestSideMenuLayoutProps>> = {
-    // sideMenuWidth: 160,
-    // sideMenuTheme: 'light',
-    // defaultOpen: true,
-    // globalSideMenuWidth: 96,
-    // sideMenuEnableSearchMenu: false,
-    // sideMenuBeautifyScrollbar: true,
-    // sideMenuAutoHideScrollbar: true,
-    // pageContentPageHeaderModel: PageHeaderModel.AntPageHeader,
-    // pageContentEnablePageHeader: false,
-  };
+  static defaultProps: Readonly<Partial<NestSideMenuLayoutProps>> = {};
 
   constructor(props: NestSideMenuLayoutProps) {
     super(props);
-    this.state = {
-      // menuCollapsed: false,
-      // sideMenuOpenKeysMap: Immutable.Map<string, string[]>(),
-      // sideMenuSearchValueMap: Immutable.Map<string, string>(),
-    };
+    this.state = {};
   }
-
 
   /** 页面布局内容 */
   protected getLayoutPage() {
@@ -428,7 +377,6 @@ class NestSideMenuLayout extends React.Component<NestSideMenuLayoutProps, NestSi
       contentStyle,
       footerClassName,
       footerStyle,
-      children,
     } = this.props;
     return (
       <section className={classNames(styles.layout, layoutClassName)} style={layoutStyle}>
@@ -446,7 +394,7 @@ class NestSideMenuLayout extends React.Component<NestSideMenuLayoutProps, NestSi
               <div>页头</div>
             </header>
             <main className={classNames(styles.content, contentClassName)} style={contentStyle}>
-              {children}
+              {this.getPageContent()}
             </main>
             <footer className={classNames(styles.footer, footerClassName)} style={footerStyle}>
               <div>页尾</div>
@@ -458,9 +406,6 @@ class NestSideMenuLayout extends React.Component<NestSideMenuLayoutProps, NestSi
   }
 
   render() {
-    // const { layoutMenuData } = this;
-    // const { htmlTitleSuffix } = this.props;
-    // console.log("index layoutMenuData -> ", layoutMenuData);
     return (
       <>
         {/*<Helmet>*/}

@@ -9,7 +9,7 @@ interface ReactPageProps {
 }
 
 interface ReactPageState {
-
+  count: number;
 }
 
 class ReactPage extends Component<ReactPageProps, ReactPageState> {
@@ -17,7 +17,7 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
 
   constructor(props: ReactPageProps) {
     super(props);
-    // this.state = {count: 0};
+    this.state = {count: 0};
   }
 
   async componentDidMount() {
@@ -26,9 +26,11 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
   }
 
   render() {
+    const {count} = this.state;
     return (
       <NestSideLayout>
-        <div id={this.amisMountedId}/>
+        <button onClick={() => this.setState({count: count + 1})}>{count}</button>
+        <div key={"aaaa"} data-a={count} id={this.amisMountedId}/>
       </NestSideLayout>
     );
   }
