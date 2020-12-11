@@ -29,7 +29,7 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
     const {count} = this.state;
     return (
       <NestSideLayout>
-        <button onClick={() => this.setState({count: count + 1})}>{count}</button>
+        {/*<button onClick={() => this.setState({count: count + 1})}>{count}</button>*/}
         <div key={"aaaa"} data-a={count} id={this.amisMountedId}/>
       </NestSideLayout>
     );

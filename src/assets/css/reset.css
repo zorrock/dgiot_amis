@@ -4,7 +4,11 @@ html {
   font-size: 0.925rem;
 }
 
-.a-Button.a-Button--xs {
+.amis-scope .a-Button {
+  line-height: 1.5;
+}
+
+.amis-scope .a-Button.a-Button--xs {
   font-size: 0.6rem;
 }
 
