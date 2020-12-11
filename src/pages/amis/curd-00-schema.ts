@@ -103,7 +103,7 @@ const schema = {
       perPageAvailable: [10, 20, 50, 100],
       syncLocation: false,
       keepItemSelectionOnPageChange: true,
-      multiple: true,
+      // multiple: true,
       labelTpl: "${orderCode}",
       draggable: true,
       hideQuickSaveBtn: false,
