@@ -44,11 +44,9 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   }
 
   render() {
+    const {initLocationHash} = this.props;
     return (
-      <NestSideLayout>
-        {/*<button onClick={() => this.setState({count: count + 1})}>{count}</button>*/}
-        {/*<div data-a={count} id={this.amisMountedId}/>*/}
-      </NestSideLayout>
+      <NestSideLayout initLocationHash={initLocationHash}/>
     );
   }
 }
@@ -59,4 +57,4 @@ const initLocationHash = getLocationHash();
 log.info("initLocationHash ->", initLocationHash);
 log.info("layoutSettings ->", layoutSettings);
 log.info("routerConfigs ->", routerConfigs);
-ReactDOM.render(<ReactAppPage initLocationHash={initLocationHash} layoutSettings={layoutSettings} routerConfigs={routerConfigs}/>, $rootMounted);
+ReactDOM.render(<ReactAppPage initLocationHash={initLocationHash} layoutSettings={layoutSettings} routerConfigs={routerConfigs}/>, $rootMounted)

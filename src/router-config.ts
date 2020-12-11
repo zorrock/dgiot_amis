@@ -16,8 +16,7 @@ interface NestSideLayoutConfig extends BaseLayoutConfig {
   /** 页面布局类型 */
   layout: LayoutType.NestSide;
   /** 页面布局配置 */
-  layoutProps: NestSideLayoutProps;
-  // layoutProps: Omit<NestSideLayoutProps, "">;
+  layoutProps: Omit<NestSideLayoutProps, "initLocationHash" | "layoutSettings" | "routerConfig">;
 }
 
 interface TopSideLayoutConfig extends BaseLayoutConfig {

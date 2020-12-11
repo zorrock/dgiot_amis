@@ -4,7 +4,12 @@ import React from 'react';
 import NestSideMenuLayout from './NestSideMenuLayout';
 
 interface NestSideLayoutProps extends LayoutPageComponentProps {
-
+  /** 初始化的Location Hash值 */
+  initLocationHash?: string;
+  /** 布局全局设置 */
+  layoutSettings?: LayoutSettings;
+  /** 路由配置 */
+  routerConfig?: BaseLayoutConfig;
 }
 
 interface NestSideLayoutState {
@@ -53,9 +58,7 @@ class NestSideLayout extends React.Component<NestSideLayoutProps, NestSideLayout
         //     Copyright <CopyrightCircleOutlined /> 2019 武汉XX科技有限公司 鄂ICP备19029XXX号
         //   </>
         // }
-      >
-        {children}
-      </NestSideMenuLayout>
+      />
     );
   }
 }
