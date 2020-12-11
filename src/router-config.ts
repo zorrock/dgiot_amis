@@ -1,6 +1,8 @@
+import { NestSideLayoutProps } from '@/layouts/NestSideLayout'
+
 /** 布局类型 */
 enum LayoutType {
-  /** 侧边栏二级路由布局(内嵌的侧边栏) */
+  /** 侧边栏二级路由布局(内嵌的侧边栏 - NestSideLayout) */
   NestSide = "NestSide",
   /** 顶部和侧边栏二级路由布局(顶部和侧边栏) */
   TopSide = "TopSide",
@@ -13,8 +15,9 @@ enum LayoutType {
 interface NestSideLayoutConfig extends BaseLayoutConfig {
   /** 页面布局类型 */
   layout: LayoutType.NestSide;
-  /** TODO 页面布局配置 */
-  layoutProps: object;
+  /** 页面布局配置 */
+  layoutProps: NestSideLayoutProps;
+  // layoutProps: Omit<NestSideLayoutProps, "">;
 }
 
 interface TopSideLayoutConfig extends BaseLayoutConfig {
@@ -41,7 +44,11 @@ interface BlankLayoutConfig extends BaseLayoutConfig {
 /** 布局配置 */
 type LayoutConfig = NestSideLayoutConfig | TopSideLayoutConfig | AmisBlankLayoutConfig | BlankLayoutConfig;
 
-const routerConfig: LayoutConfig[] = [
+const layoutSettings: LayoutSettings = {
+  menu: {defaultOpen: true},
+};
+
+const routerConfigs: LayoutConfig[] = [
   {
     path: "",                     // 匹配路径(支持path-to-regexp)
     layout: LayoutType.Blank,     // 页面布局类型
@@ -72,6 +79,14 @@ const routerConfig: LayoutConfig[] = [
     403: "",                      // 403无权访问页面
     404: "",                      // 404页面不存在
   },
+  {
+    path: "/nest-side",
+    layout: LayoutType.NestSide,
+    layoutProps: {},
+    routes: [
+      {path: "/curd-00", pagePath: "/curd-00-schema.ts", name: "简单CURD"},
+    ],
+  }
 ];
 
-export default routerConfig;
+export { layoutSettings, routerConfigs, LayoutConfig };
