@@ -1,6 +1,7 @@
 import React from 'react';
 // import lodash from 'lodash';
 import classNames from "classnames";
+import { CloseOutlined } from '@ant-design/icons';
 import Tabs, { TabPane } from 'rc-tabs';
 import 'rc-tabs/assets/index.css';
 import SimpleBarReact from 'simplebar-react';
@@ -261,14 +262,20 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     const {children} = this.props;
     return (
       <PageContent>
-        <Tabs className={styles.tabs} animated={{inkBar: false, tabPane: false}}>
-          <TabPane forceRender={true} tab="tab 1" key="1">
-            first
+        <Tabs className={styles.tabs} animated={{inkBar: false, tabPane: false}} editable={{
+          onEdit: (type, info) => {
+
+          },
+          showAdd: false,
+          removeIcon: <CloseOutlined/>,
+        }}>
+          <TabPane forceRender={true} closable={true} tab="tab 1" key="1">
+            first <CloseOutlined/>
           </TabPane>
-          <TabPane forceRender={true} tab="tab 2" key="2">
+          <TabPane forceRender={true} closable={true} tab="tab 2" key="2">
             second
           </TabPane>
-          <TabPane forceRender={true} tab="tab 3" key="3">
+          <TabPane forceRender={true} closable={true} tab="tab 3" key="3">
             <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
               {children}
             </SimpleBarReact>
