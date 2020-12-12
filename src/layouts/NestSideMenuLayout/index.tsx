@@ -57,8 +57,8 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
   constructor(props: NestSideMenuLayoutProps) {
     super(props);
     this.state = {
-      tabPanes: [],
-      activeTabPane: undefined,
+      tabPages: [],
+      activePageKey: undefined,
     };
   }
 

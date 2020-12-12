@@ -20,9 +20,9 @@ interface BaseLayoutState {
    *   Map<一级菜单key, 过滤值>
    * </pre>
    */
-  tabPanes: Array<React.ReactElement>;
+  tabPages: Array<React.ReactElement>;
   /** 当前活动的页签 */
-  activeTabPane?: string;
+  activePageKey?: string;
 }
 
 class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends React.Component<P, S> {
@@ -33,7 +33,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 页面内容 */
   protected getPageContent() {
-    const {tabPanes, activeTabPane} = this.state;
+    const {tabPages, activePageKey} = this.state;
     return (
       <PageContent>
         <Tabs
@@ -41,30 +41,31 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           animated={false}
           tabPosition={"top"}
           tabBarGutter={8}
-          activeKey={activeTabPane}
+          activeKey={activePageKey}
           tabBarExtraContent={<div>更多</div>}
+          onTabClick={activeKey => this.setState({activePageKey: activeKey})}
           editable={{
             onEdit: (type, info) => {
               if (!info.key) return;
               if (type === "remove") {
-                const newTabPanes = tabPanes.filter(item => info.key !== item.key);
-                this.setState({tabPanes: newTabPanes});
+                const newTabPanes = tabPages.filter(item => info.key !== item.key);
+                this.setState({tabPages: newTabPanes});
               }
             },
             showAdd: false,
             removeIcon: <CloseOutlined/>,
           }}
         >
-          {tabPanes}
+          {tabPages}
         </Tabs>
       </PageContent>
     );
   }
 
   protected addTabPage(id: string, path: string) {
-    const {tabPanes} = this.state;
-    if (tabPanes.findIndex(item => item.key === `TabPaneKey-${id}`) === -1) {
-      tabPanes.push((
+    const {tabPages} = this.state;
+    if (tabPages.findIndex(item => item.key === `TabPaneKey-${id}`) === -1) {
+      tabPages.push((
         <TabPane key={`TabPaneKey-${id}`} tab={`TabPane-${id}`} forceRender={true} closable={true}>
           <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
             <div id={`AmisId-${id}`} key={`AmisKey-${id}`}/>
@@ -73,7 +74,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       ));
     }
     this.setState(
-      {tabPanes, activeTabPane: `TabPaneKey-${id}`},
+      {tabPages, activePageKey: `TabPaneKey-${id}`},
       async () => await loadPageByPath(`AmisId-${id}`, path, {})
     );
   }
