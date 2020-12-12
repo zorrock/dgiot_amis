@@ -81,6 +81,13 @@ const schema = {
       className: classnames(FormClassName.label4x, FormClassName.input26x, FormClassName.item_height3_5x),
       // submitText: "提交",
       trimValues: false,
+      onChange: (values: any, diff: any, props: any) => {
+        // console.log("form--->", values, diff);
+        if (values.f1 !== diff.__prev.f1) {
+          values.f3 = "AAAAAAAAAAA";
+          props.store.updateData(values);
+        }
+      },
       controls: [
         {type: "text", name: "f1", label: "随意填1", placeholder: "只能填“aaa”"},
         {type: "html", html: "<br />"},
