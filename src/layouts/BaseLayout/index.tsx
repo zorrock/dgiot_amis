@@ -3,9 +3,9 @@ import React from 'react';
 import classNames from "classnames";
 import { CloseOutlined } from '@ant-design/icons';
 import Tabs, { TabPane } from 'rc-tabs';
-import 'rc-tabs/assets/index.css';
+
 import SimpleBarReact from 'simplebar-react';
-import 'simplebar/src/simplebar.css';
+
 import { PageContent } from "@/components/Layout/PageContent";
 import { loadPageByPath } from "@/utils/amis-utils";
 import styles from './index.less';
@@ -21,6 +21,8 @@ interface BaseLayoutState {
    * </pre>
    */
   tabPanes: Array<React.ReactElement>;
+  /** 当前活动的页签 */
+  activeTabPane?: string;
 }
 
 class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends React.Component<P, S> {
@@ -31,13 +33,15 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 页面内容 */
   protected getPageContent() {
-    const {tabPanes} = this.state;
+    const {tabPanes, activeTabPane} = this.state;
     return (
       <PageContent>
         <Tabs
           className={styles.tabs}
           animated={false}
+          tabPosition={"top"}
           tabBarGutter={8}
+          activeKey={activeTabPane}
           tabBarExtraContent={<div>更多</div>}
           editable={{
             onEdit: (type, info) => {
@@ -59,16 +63,19 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   protected addTabPage(id: string, path: string) {
     const {tabPanes} = this.state;
-    tabPanes.push((
-      <TabPane key={`TabPaneKey-${id}`} tab={`TabPane-${id}`} forceRender={true} closable={true}>
-        <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-          <div id={`AmisId-${id}`} key={`AmisKey-${id}`}/>
-        </SimpleBarReact>
-      </TabPane>
-    ));
-    this.forceUpdate(async () => {
-      await loadPageByPath(`AmisId-${id}`, path, {});
-    });
+    if (tabPanes.findIndex(item => item.key === `TabPaneKey-${id}`) === -1) {
+      tabPanes.push((
+        <TabPane key={`TabPaneKey-${id}`} tab={`TabPane-${id}`} forceRender={true} closable={true}>
+          <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
+            <div id={`AmisId-${id}`} key={`AmisKey-${id}`}/>
+          </SimpleBarReact>
+        </TabPane>
+      ));
+    }
+    this.setState(
+      {tabPanes, activeTabPane: `TabPaneKey-${id}`},
+      async () => await loadPageByPath(`AmisId-${id}`, path, {})
+    );
   }
 }
 

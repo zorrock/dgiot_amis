@@ -1,6 +1,12 @@
 import { RenderOptions } from 'amis/lib/factory';
 import qs from "qs";
 import axios, { AxiosRequestConfig, Canceler, ResponseType } from "axios";
+import { notification } from 'antd';
+import { logger } from "@/utils/logger";
+import { hasValue } from "@/utils/utils";
+import { CSSProperties } from "react";
+
+const log = logger.getLogger("/src/utils/amis-render-options.tsx");
 
 interface RequestConfig extends AxiosRequestConfig {
   cancelExecutor?: (cancel: Canceler) => void;
@@ -15,10 +21,8 @@ export interface FetcherConfig {
   headers?: any;
 }
 
-const hasValue = (val: any): boolean => val !== null && val !== undefined;
-
 axios.interceptors.request.use(request => {
-  console.log("全局请求拦截 request -> ", request);
+  log.info("全局请求拦截 request -> ", request);
   const path = request.url?.split('?')[0];
   const querystring = request.url?.split('?')[1];
   if (!querystring) return request;
@@ -33,7 +37,7 @@ axios.interceptors.request.use(request => {
 });
 
 axios.interceptors.response.use(response => {
-    console.log("全局响应拦截 response -> ", response);
+    log.info("全局响应拦截 response -> ", response);
     // if (response.data && !hasValue(response.data.msg) && !hasValue(response.data.status) && !hasValue(response.data.data)) {
     //   response.data = {status: response.status === 200 ? 0 : -1, msg: "", data: response.data};
     // }
@@ -42,7 +46,7 @@ axios.interceptors.response.use(response => {
     //   response.data = {data: response.data.validMessageList};
     // }
     const payload = response.data;
-    // console.log("payload -> ", payload);
+    // log.info("payload -> ", payload);
     if (!payload) return response;
     const data = payload.data;
     if (!data) return response;
@@ -62,7 +66,7 @@ axios.interceptors.response.use(response => {
       });
       payload.msg = "服务端数据校验失败";
     }
-    // console.log("payload -> ", payload);
+    // log.info("payload -> ", payload);
     return response;
   },
 );
@@ -94,13 +98,20 @@ const amisRenderOptions: RenderOptions = {
   /** 是否取消http请求 */
   isCancel: value => axios.isCancel(value),
   /** 用来实现通知 */
-  // notify: (type, msg) => {
-  //   if (!toast[type]) {
-  //     console.warn("[Notify]", type, msg);
-  //     return;
-  //   }
-  //   toast[type](msg, type === "error" ? "系统错误" : "系统消息");
-  // },
+  notify: (type, msg) => {
+    if (!type) {
+      log.warn("[Notify]", type, msg);
+      return;
+    }
+    const style: CSSProperties = {width: 296};
+    if (type === "error") {
+      notification.error({message: "系统错误", description: msg, style});
+    } else if (type === "success") {
+      notification.success({message: "系统消息", description: msg, style});
+    } else {
+      log.warn("[Notify]", type, msg);
+    }
+  },
   /** 用来实现警告提示 */
   // alert: msg => alert(msg),
   /** 用来实现确认框 */

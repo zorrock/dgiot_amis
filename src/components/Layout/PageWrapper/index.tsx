@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 import SimpleBarReact from 'simplebar-react';
-import 'simplebar/src/simplebar.css';
 import { PageContext, PageContextProps } from '../PageContext';
 import styles from './index.less';
 

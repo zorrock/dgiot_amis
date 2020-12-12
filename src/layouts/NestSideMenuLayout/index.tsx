@@ -58,6 +58,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
     super(props);
     this.state = {
       tabPanes: [],
+      activeTabPane: undefined,
     };
   }
 
@@ -84,7 +85,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
             <br/>
             <a onClick={() => this.addTabPage("1", "amis/curd-00-schema.ts")}>简单CURD</a>
             <br/>
-            <a onClick={() => this.addTabPage("2", "amis/form-00-schema.ts")}>简单表单</a>
+            <a onClick={() => this.addTabPage("2", "amis/form-02-verify-schema.ts")}>简单表单</a>
           </aside>
           <section className={classNames(styles.twoLevelNestLayout, twoLevelNestLayoutClassName)} style={twoLevelNestLayoutStyle}>
             <header className={classNames(styles.header, headerClassName)} style={headerStyle}>
