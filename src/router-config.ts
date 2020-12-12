@@ -45,6 +45,7 @@ type LayoutConfig = NestSideLayoutConfig | TopSideLayoutConfig | AmisBlankLayout
 
 const layoutSettings: LayoutSettings = {
   menu: {defaultOpen: true},
+  iconScriptUrl: "//at.alicdn.com/t/font_1326886_bbehrpsvyl.js",
 };
 
 const routerConfigs: LayoutConfig[] = [
@@ -83,8 +84,8 @@ const routerConfigs: LayoutConfig[] = [
     layout: LayoutType.NestSide,
     layoutProps: {},
     routes: [
-      {path: "/curd-00", pagePath: "/curd-00-schema.ts", name: "简单CURD"},
-      {path: "/form-00", pagePath: "/form-00-schema.ts", name: "简单表单"},
+      {path: "/curd-00", pagePath: "/amis/curd-00-schema.ts", name: "简单CURD"},
+      {path: "/form-00", pagePath: "/amis/form-00-schema.ts", name: "简单表单"},
     ],
   }
 ];

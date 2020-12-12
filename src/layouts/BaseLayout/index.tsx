@@ -7,6 +7,7 @@ import 'rc-tabs/assets/index.css';
 import SimpleBarReact from 'simplebar-react';
 import 'simplebar/src/simplebar.css';
 import { PageContent } from "@/components/Layout/PageContent";
+import { loadPageByPath } from "@/utils/amis-utils";
 import styles from './index.less';
 
 interface BaseLayoutProps extends LayoutPageComponentProps {
@@ -26,28 +27,6 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   constructor(props: P) {
     super(props);
-  }
-
-  protected initTabPaneMap() {
-    const {children} = this.props;
-    const {tabPanes} = this.state;
-    tabPanes.push((
-      <TabPane forceRender={true} closable={true} tab="tab 1" key="1">
-        first
-      </TabPane>
-    ));
-    tabPanes.push((
-      <TabPane forceRender={true} closable={true} tab="tab 2" key="2">
-        second
-      </TabPane>
-    ));
-    tabPanes.push((
-      <TabPane forceRender={true} closable={true} tab="tab 3" key="3">
-        <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-          {children}
-        </SimpleBarReact>
-      </TabPane>
-    ));
   }
 
   /** 页面内容 */
@@ -76,6 +55,20 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         </Tabs>
       </PageContent>
     );
+  }
+
+  protected addTabPage(id: string, path: string) {
+    const {tabPanes} = this.state;
+    tabPanes.push((
+      <TabPane key={`TabPaneKey-${id}`} tab={`TabPane-${id}`} forceRender={true} closable={true}>
+        <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
+          <div id={`AmisId-${id}`} key={`AmisKey-${id}`}/>
+        </SimpleBarReact>
+      </TabPane>
+    ));
+    this.forceUpdate(async () => {
+      await loadPageByPath(`AmisId-${id}`, path, {});
+    });
   }
 }
 

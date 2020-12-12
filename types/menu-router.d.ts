@@ -177,6 +177,8 @@ interface RouterMenuSettings {
 interface LayoutSettings {
   /** 菜单配置 */
   menu: RouterMenuSettings;
+  /** 自定义菜单图标字体 - iconfont.cn项目在线生成的js(地址: https://www.iconfont.cn/) */
+  iconScriptUrl: string;
 }
 
 // ----------------------------------------------------------------------------------- 页面布局配置

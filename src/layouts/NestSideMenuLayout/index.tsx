@@ -62,7 +62,6 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
   }
 
   componentDidMount() {
-    this.initTabPaneMap();
   }
 
   /** 页面布局内容 */
@@ -82,6 +81,10 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
           <aside className={classNames(styles.layoutSide, sideClassName)} style={sideStyle}>
             {/* TODO 二级侧边栏 - 二级级菜单 */}
             <div>二级级菜单</div>
+            <br/>
+            <a onClick={() => this.addTabPage("1", "amis/curd-00-schema.ts")}>简单CURD</a>
+            <br/>
+            <a onClick={() => this.addTabPage("2", "amis/form-00-schema.ts")}>简单表单</a>
           </aside>
           <section className={classNames(styles.twoLevelNestLayout, twoLevelNestLayoutClassName)} style={twoLevelNestLayoutStyle}>
             <header className={classNames(styles.header, headerClassName)} style={headerStyle}>
