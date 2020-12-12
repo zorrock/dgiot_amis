@@ -58,6 +58,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         <Tabs
           className={styles.tabs}
           animated={false}
+          tabBarGutter={8}
+          tabBarExtraContent={<div>更多</div>}
           editable={{
             onEdit: (type, info) => {
               if (!info.key) return;

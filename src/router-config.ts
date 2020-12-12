@@ -84,6 +84,7 @@ const routerConfigs: LayoutConfig[] = [
     layoutProps: {},
     routes: [
       {path: "/curd-00", pagePath: "/curd-00-schema.ts", name: "简单CURD"},
+      {path: "/form-00", pagePath: "/form-00-schema.ts", name: "简单表单"},
     ],
   }
 ];

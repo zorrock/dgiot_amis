@@ -34,13 +34,13 @@ axios.interceptors.request.use(request => {
 
 axios.interceptors.response.use(response => {
     console.log("全局响应拦截 response -> ", response);
-    if (response.data && !hasValue(response.data.msg) && !hasValue(response.data.status) && !hasValue(response.data.data)) {
-      response.data = {status: response.status === 200 ? 0 : -1, msg: "", data: response.data};
-    }
-    if (response.status !== 200) response.status = 200;
-    if (response.data && response.data.validMessageList instanceof Array) {
-      response.data = {data: response.data.validMessageList};
-    }
+    // if (response.data && !hasValue(response.data.msg) && !hasValue(response.data.status) && !hasValue(response.data.data)) {
+    //   response.data = {status: response.status === 200 ? 0 : -1, msg: "", data: response.data};
+    // }
+    // if (response.status !== 200) response.status = 200;
+    // if (response.data && response.data.validMessageList instanceof Array) {
+    //   response.data = {data: response.data.validMessageList};
+    // }
     const payload = response.data;
     // console.log("payload -> ", payload);
     if (!payload) return response;
