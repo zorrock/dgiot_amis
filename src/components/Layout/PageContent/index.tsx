@@ -1,5 +1,4 @@
 import React from 'react';
-// import { hasPropertyIn } from '@/common';
 import { PageContext, PageContextProps } from '../PageContext';
 
 interface PageContentProps extends PageContextProps {
@@ -19,8 +18,6 @@ class PageContent extends React.Component<PageContentProps, PageContentState> {
   // };
 
   public render() {
-    // console.log('PageContent -> render');
-    // const { multiTabNavHasScroll, multiTabNavMultiTabScrollLeft } = this.state;
     const {children, ...globalContextProps} = this.props;
     const customContextProps: Partial<PageContextProps> = {};
     return (

@@ -2,7 +2,10 @@ import React from "react";
 import lodash from "lodash";
 import { SchemaObject } from "amis";
 import { RenderOptions, RootRenderProps } from "amis/src/factory";
-import { amisRenderOptions } from '@/utils/amis-render-options';
+import { amisRenderOptions } from './amis-render-options';
+import { logger } from './logger';
+
+const log = logger.getLogger("src/utils/amis-utils.tsx");
 
 /** amis组件 */
 interface Amis {
@@ -82,8 +85,8 @@ const loadPageByPath = async function (mountedId: string, schemaPath: string, pr
     .catch(reason => {
       // 默认的异常处理
       const jsonReason = JSON.stringify({schemaPath, reason, msg: lodash.toString(reason)}, null, 2);
-      console.error(reason);
-      console.error(jsonReason);
+      log.error(reason);
+      log.error(jsonReason);
       const schema: SchemaObject = {
         type: "page",
         title: `schema文件加载失败: ${schemaPath}`,

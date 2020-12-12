@@ -1,5 +1,9 @@
-const { userAgent } = navigator;
-// console.log("浏览器信息 -> ", userAgent);
+import { logger } from './logger';
+
+const log = logger.getLogger("src/utils/browser.ts");
+const {userAgent} = navigator;
+log.info("浏览器信息 -> ", userAgent);
+
 /**
  * 浏览器类型
  */

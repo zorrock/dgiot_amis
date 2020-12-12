@@ -6,7 +6,7 @@ import { logger } from '@/utils/logger';
 import { NestSideLayout } from '@/layouts/NestSideLayout';
 import { LayoutConfig, layoutSettings, routerConfigs } from './router-config';
 
-const log = logger.getLogger(__filename);
+const log = logger.getLogger("src/schema-app.tsx");
 
 interface ReactAppPageProps {
   /** 初始化的Location Hash值 */

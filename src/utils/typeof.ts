@@ -1,3 +1,7 @@
+import { logger } from './logger';
+
+const log = logger.getLogger("src/utils/typeof.ts");
+
 /** 所有变量类型 */
 enum TypeEnum {
   string = 'string',
@@ -80,8 +84,7 @@ const variableTypeOf = (object?: any): TypeEnum => {
       if (object === undefined) {
         return TypeEnum.undefined;
       }
-      // eslint-disable-next-line no-console
-      console.log('varTypeOf -> ', object, ' | -> ', typeStr, ' | ', `${typeStr}`.toLowerCase());
+      log.info('varTypeOf -> ', object, ' | -> ', typeStr, ' | ', `${typeStr}`.toLowerCase());
       typeName = TypeEnum.object;
   }
   return typeName;

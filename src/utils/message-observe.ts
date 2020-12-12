@@ -1,4 +1,7 @@
-import {noValue} from './utils';
+import { noValue } from './utils';
+import { logger } from './logger';
+
+const log = logger.getLogger("src/utils/message-observe.ts");
 
 /** 订阅消息key类型 */
 type SubscribeKey = string | string[];
@@ -51,7 +54,7 @@ class ObserveStore {
             try {
               handler(value, key);
             } catch (err) {
-              console.error("消息通知函数执行失败,messageKey=", key, " | messageValue=", value);
+              log.error("消息通知函数执行失败,messageKey=", key, " | messageValue=", value);
             }
           });
           return true;
@@ -137,7 +140,7 @@ class ObserveStore {
       try {
         handler(data, key);
       } catch (err) {
-        console.error("消息通知函数执行失败,messageKey=", key, " | value=", data);
+        log.error("消息通知函数执行失败,messageKey=", key, " | value=", data);
       }
       cancelSubscribe.cancel();
     });
@@ -159,4 +162,4 @@ class ObserveStore {
 
 const observeStore = new ObserveStore();
 
-export {Handler, CancelSubscribe, ObserveStore, observeStore,}
+export { Handler, CancelSubscribe, ObserveStore, observeStore, }

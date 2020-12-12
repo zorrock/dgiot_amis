@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { logger } from '@/utils/logger';
+
+const log = logger.getLogger("src/pages/tmp/index.tsx");
 
 interface DemoPageProps {
   match?: any;
@@ -9,7 +12,7 @@ interface DemoPageState {
   loading: boolean;
 }
 
-console.log('react --> ###');
+log.info('react --> ###');
 
 class DemoPage extends Component<DemoPageProps, DemoPageState> {
   state: DemoPageState = {
