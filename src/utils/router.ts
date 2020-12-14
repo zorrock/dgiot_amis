@@ -214,5 +214,4 @@ function aa(routerConfigs: LayoutConfig[]): LayoutConfig {
   return routerConfigs[0];
 }
 
-
 export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, aa };
