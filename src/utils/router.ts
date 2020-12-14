@@ -62,15 +62,85 @@ class RouterHistory {
 /** 路由跳转工具 */
 const routerHistory = new RouterHistory();
 
+// 连接url path
+const joinPath = (path: string, childPath: string): string => {
+  path = lodash.trim(path);
+  childPath = lodash.trim(childPath);
+  if (path.endsWith("/")) path = path.substring(0, path.length - 1);
+  if (childPath.startsWith("/")) childPath = childPath.substring(0, path.length - 1);
+  if (lodash.trim(path).length <= 0) {
+    if (lodash.trim(childPath).length <= 0) {
+      return "/";
+    } else {
+      return `/${childPath}`;
+    }
+  } else {
+    if (lodash.trim(childPath).length <= 0) {
+      return `/${path}`;
+    } else {
+      return `${path}/${childPath}`;
+    }
+  }
+}
+
 /**
  *
  * @param routerConfigs
  */
 const routerToRuntime = (routerConfigs: LayoutConfig[]): LayoutConfig[] => {
   if (!routerConfigs || routerConfigs.length <= 0) return routerConfigs;
+  routerConfigs.forEach(routerConfig => {
+    const {path: rootPath, routes} = routerConfig;
+    if (!routes || routes.length <= 0) return;
 
+    const runtimeRouters: RuntimeRouter[] = [];
+    routes.forEach(currentRoute => {
+      const {
+        path, pathVariable, querystring, exact, pagePath, redirect, icon, name, pageTitle, defaultOpen, breadcrumbName,
+        hideBreadcrumb, groupName, hideMenu, hideChildrenMenu, state, authority, routes: childRoutes, ...props
+      } = currentRoute;
+      // 默认值处理
+      currentRoute.path = joinPath(rootPath, path);
+      currentRoute.pathVariable = pathVariable ?? {};
+      currentRoute.querystring = querystring ?? {};
+      currentRoute.exact = exact ?? false;
+      currentRoute.name = name ?? "新页面";
+      currentRoute.pageTitle = pageTitle ?? currentRoute.name;
+      currentRoute.breadcrumbName = breadcrumbName ?? currentRoute.name;
+      currentRoute.hideBreadcrumb = hideBreadcrumb ?? false;
+      currentRoute.hideMenu = hideMenu ?? false;
+      currentRoute.hideChildrenMenu = hideChildrenMenu ?? false;
+      currentRoute.state = state ?? {};
+      // 创建运行时对象
+      const runtimeRouter: RuntimeRouter = {
+        path: currentRoute.path,
+        pathVariable: currentRoute.pathVariable,
+        querystring: currentRoute.querystring,
+        exact: currentRoute.exact,
+        pagePath,
+        redirect,
+        icon,
+        name,
+        pageTitle: currentRoute.pageTitle,
+        defaultOpen,
+        breadcrumbName: currentRoute.breadcrumbName,
+        hideBreadcrumb: currentRoute.hideBreadcrumb,
+        groupName,
+        hideMenu: currentRoute.hideMenu,
+        hideChildrenMenu: currentRoute.hideChildrenMenu,
+        state: currentRoute.state,
+        authority,
+        routes: [],
+        ...props,
+      };
+      runtimeRouters.push(runtimeRouter);
+      // 递归调用
+      if (childRoutes && childRoutes.length > 0) {
 
-
+      }
+    });
+    routerConfig.routes = runtimeRouters;
+  });
   return routerConfigs;
 }
 

@@ -89,9 +89,14 @@ const schema = {
       //   }
       // },
       controls: [
-        {type: "text", name: "f1", label: "随意填1", placeholder: "只能填“aaa”"},
+        {type: "text", name: "f1", label: "随意填1", placeholder: "只能填“aaa”",},
         {type: "html", html: "<br />"},
-        {type: "text", name: "f2", label: "随意填2", placeholder: "只能填“bbb”"},
+        {
+          type: "text", name: "f2", label: "随意填2", placeholder: "只能填“bbb”",
+          // onChange: function (value: any, oldValue: any, model: any, form: any) {
+          //   form.setValueByName('f3', 'CCC');
+          // }
+        },
         {type: "html", html: "<br />"},
         {type: "text", name: "f3", label: "随意填3", placeholder: "只能填“ccc”"},
         {type: "html", html: "<br />"},
