@@ -195,9 +195,7 @@ const routerToRuntime = (rootPath: string, current: RouterConfig, parent?: Runti
   return runtimeRouter;
 };
 
-/**
- * 把布局配置转换成运行时
- */
+/** 把Layout配置转换成运行时Layout */
 const layoutToRuntime = (routerConfigs: LayoutConfig[]): RuntimeLayoutConfig[] => {
   if (!routerConfigs || routerConfigs.length <= 0) return routerConfigs as RuntimeLayoutConfig[];
   routerConfigs.forEach(routerConfig => {
@@ -210,8 +208,11 @@ const layoutToRuntime = (routerConfigs: LayoutConfig[]): RuntimeLayoutConfig[] =
   return routerConfigs as RuntimeLayoutConfig[];
 }
 
-function aa(routerConfigs: LayoutConfig[]): LayoutConfig {
-  return routerConfigs[0];
+// TODO 匹配路径找出对应的 RuntimeLayoutConfig
+
+/** 把Router转换成Menu */
+function routerToMenu(runtimeRouter: RuntimeRouter): RuntimeMenuItem {
+  return "a" as any as RuntimeMenuItem;
 }
 
-export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, aa };
+export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu };

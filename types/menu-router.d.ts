@@ -117,25 +117,25 @@ interface RuntimeMenuItem {
   // [property: string]: any;
 }
 
-/** 多页签项(多页签项) */
-interface MultiTabItem {
-  /** 路由菜单项 */
-  menuItem: RuntimeMenuItem;
-  /** 路由页签项唯一Key */
-  multiTabKey: string;
-  /** 当前url路径 */
-  currentPath: string;
-  /** 当前页面location状态 */
-  location: RouterLocation;
-  /** 是否是首页 */
-  isHomePage: boolean;
-  /** 当前页签是否是选中状态 */
-  active: boolean;
-  /** 最后一次活动时间(时间戳) */
-  lastActiveTime: number;
-  /** 是否显示关闭按钮 */
-  showClose: boolean;
-}
+// /** 多页签项(多页签项) */
+// interface MultiTabItem {
+//   /** 路由菜单项 */
+//   menuItem: RuntimeMenuItem;
+//   /** 路由页签项唯一Key */
+//   multiTabKey: string;
+//   /** 当前url路径 */
+//   currentPath: string;
+//   /** 当前页面location状态 */
+//   location: RouterLocation;
+//   /** 是否是首页 */
+//   isHomePage: boolean;
+//   /** 当前页签是否是选中状态 */
+//   active: boolean;
+//   /** 最后一次活动时间(时间戳) */
+//   lastActiveTime: number;
+//   /** 是否显示关闭按钮 */
+//   showClose: boolean;
+// }
 
 /** 全局Layout菜单数据 */
 interface LayoutMenuData {
