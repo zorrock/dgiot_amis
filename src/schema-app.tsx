@@ -18,6 +18,7 @@ interface ReactAppPageProps {
 }
 
 interface ReactAppPageState {
+  // RouterLocation
 }
 
 class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {

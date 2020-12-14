@@ -81,13 +81,13 @@ const schema = {
       className: classnames(FormClassName.label4x, FormClassName.input26x, FormClassName.item_height3_5x),
       // submitText: "提交",
       trimValues: false,
-      onChange: (values: any, diff: any, props: any) => {
-        // console.log("form--->", values, diff);
-        if (values.f1 !== diff.__prev.f1) {
-          values.f3 = "AAAAAAAAAAA";
-          props.store.updateData(values);
-        }
-      },
+      // onChange: (values: any, diff: any, props: any) => {
+      //   // console.log("form--->", values, diff);
+      //   if (values.f1 !== diff.__prev.f1) {
+      //     values.f3 = "AAA";
+      //     props.store.updateData(values);
+      //   }
+      // },
       controls: [
         {type: "text", name: "f1", label: "随意填1", placeholder: "只能填“aaa”"},
         {type: "html", html: "<br />"},
@@ -95,6 +95,7 @@ const schema = {
         {type: "html", html: "<br />"},
         {type: "text", name: "f3", label: "随意填3", placeholder: "只能填“ccc”"},
         {type: "html", html: "<br />"},
+        {type: "formula", name: "f3", value: "", formula: "'BBB'", condition: "${f1}", initSet: false},
         {type: "submit", label: "提交", level: "primary", className: HeightClassName.height_unset},
       ],
       api: {
