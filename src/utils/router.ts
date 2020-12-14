@@ -196,8 +196,7 @@ const routerToRuntime = (rootPath: string, current: RouterConfig, parent?: Runti
 };
 
 /**
- *
- * @param routerConfigs
+ * 把布局配置转换成运行时
  */
 const layoutToRuntime = (routerConfigs: LayoutConfig[]): RuntimeLayoutConfig[] => {
   if (!routerConfigs || routerConfigs.length <= 0) return routerConfigs as RuntimeLayoutConfig[];
@@ -210,7 +209,6 @@ const layoutToRuntime = (routerConfigs: LayoutConfig[]): RuntimeLayoutConfig[] =
   });
   return routerConfigs as RuntimeLayoutConfig[];
 }
-
 
 function aa(routerConfigs: LayoutConfig[]): LayoutConfig {
   return routerConfigs[0];
