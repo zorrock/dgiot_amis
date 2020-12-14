@@ -136,6 +136,7 @@ const amisRenderOptions: RenderOptions = {
   // rendererResolver:(path, schema, props) => {},
   /** 用来决定弹框容器 */
   // getModalContainer: () => {
+  //   log.info("getModalContainer");
   //   return document.querySelectorAll<HTMLElement>("body main")[0]!;
   // },
   /** 用于懒加载自定义组件 */
