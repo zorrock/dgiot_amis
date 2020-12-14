@@ -61,6 +61,8 @@ const loadSchema = async function (schemaPath: string): Promise<AmisSchemaPagePr
       flag = true;
     }
   });
+  if (schemaPath.startsWith("/") || schemaPath.startsWith(".")) schemaPath = schemaPath.substring(1);
+  if (schemaPath.startsWith("./")) schemaPath = schemaPath.substring(2);
   // webpack.conf.ts(splitChunks.schema.test) ---> /[\\/]src[\\/]pages[\\/]*.schema\.(ts|tsx|js|jsx|json)$/
   return import(
     /* webpackInclude: /[\\/]src[\\/]pages[\\/].*schema\.(ts|tsx|js|jsx|json)$/ */

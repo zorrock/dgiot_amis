@@ -4,7 +4,9 @@
 import '@/assets/css/reset.css';
 import 'rc-tabs/assets/index.css';
 import 'simplebar/src/simplebar.css';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
+// import '~antd/dist/antd.dark.css';
+import 'antd/dist/antd.compact.css';
 import { logger } from './utils/logger';
 
 const log = logger.getLogger("src/global.tsx");

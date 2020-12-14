@@ -87,6 +87,9 @@ const routerConfigs: LayoutConfig[] = [
       {path: "/curd-00", pagePath: "/amis/curd-00-schema.ts", name: "简单CURD"},
       {path: "/form-00", pagePath: "/amis/form-00-schema.ts", name: "简单表单"},
     ],
+    401: "",
+    403: "",
+    404: "",
   }
 ];
 
