@@ -204,3 +204,17 @@ interface GenericLayoutConfig extends BaseLayoutConfig {
   /** 页面布局配置 */
   layoutProps: object;
 }
+
+/** 页面布局配置基础属性 */
+interface RuntimeBaseLayoutConfig extends BaseLayoutConfig {
+  /** 当前布局下的路由 */
+  routes: RuntimeRouter[];
+}
+
+/** 通用页面布局配置 */
+interface RuntimeGenericLayoutConfig extends RuntimeBaseLayoutConfig {
+  /** 页面布局类型 */
+  layout: string;
+  /** 页面布局配置 */
+  layoutProps: object;
+}

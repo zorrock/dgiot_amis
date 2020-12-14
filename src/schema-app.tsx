@@ -3,8 +3,9 @@ import ReactDOM from "react-dom";
 import { $rootMounted, initAppPage } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
+import { layoutToRuntime, RuntimeLayoutConfig } from "@/utils/router";
 import { NestSideLayout } from '@/layouts/NestSideLayout';
-import { LayoutConfig, layoutSettings, routerConfigs } from './router-config';
+import { layoutSettings, routerConfigs } from './router-config';
 
 const log = logger.getLogger("src/schema-app.tsx");
 
@@ -13,8 +14,8 @@ interface ReactAppPageProps {
   initLocationHash?: string;
   /** 布局全局设置 */
   layoutSettings: LayoutSettings;
-  /** 路由配置 */
-  routerConfigs: LayoutConfig[];
+  /** 运行时路由 */
+  runtimeLayouts: RuntimeLayoutConfig[];
 }
 
 interface ReactAppPageState {
@@ -55,7 +56,8 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 // ----------------------------------------------------------------------------------- 开始初始化应用
 initAppPage();
 const initLocationHash = getLocationHash();
+const runtimeLayouts = layoutToRuntime(routerConfigs);
 log.info("initLocationHash ->", initLocationHash);
 log.info("layoutSettings ->", layoutSettings);
-log.info("routerConfigs ->", routerConfigs);
-ReactDOM.render(<ReactAppPage initLocationHash={initLocationHash} layoutSettings={layoutSettings} routerConfigs={routerConfigs}/>, $rootMounted)
+log.info("runtimeLayouts ->", runtimeLayouts);
+ReactDOM.render(<ReactAppPage initLocationHash={initLocationHash} layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted)

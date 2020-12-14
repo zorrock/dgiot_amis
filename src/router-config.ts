@@ -1,47 +1,4 @@
-import { NestSideLayoutProps } from '@/layouts/NestSideLayout'
-
-/** 布局类型 */
-enum LayoutType {
-  /** 侧边栏二级路由布局(内嵌的侧边栏 - NestSideLayout) */
-  NestSide = "NestSide",
-  /** 顶部和侧边栏二级路由布局(顶部和侧边栏) */
-  TopSide = "TopSide",
-  /** 空布局，使用amis-schema开发页面 */
-  AmisBlank = "AmisBlank",
-  /** 空布局，不支持amis-schema开发页面 */
-  Blank = "HtmlBlank",
-}
-
-interface NestSideLayoutConfig extends BaseLayoutConfig {
-  /** 页面布局类型 */
-  layout: LayoutType.NestSide;
-  /** 页面布局配置 */
-  layoutProps: Omit<NestSideLayoutProps, "initLocationHash" | "layoutSettings" | "routerConfig">;
-}
-
-interface TopSideLayoutConfig extends BaseLayoutConfig {
-  /** 页面布局类型 */
-  layout: LayoutType.TopSide;
-  /** TODO 页面布局配置 */
-  layoutProps: object;
-}
-
-interface AmisBlankLayoutConfig extends BaseLayoutConfig {
-  /** 页面布局类型 */
-  layout: LayoutType.AmisBlank;
-  /** TODO 页面布局配置 */
-  layoutProps: object;
-}
-
-interface BlankLayoutConfig extends BaseLayoutConfig {
-  /** 页面布局类型 */
-  layout: LayoutType.Blank;
-  /** TODO 页面布局配置 */
-  layoutProps: object;
-}
-
-/** 布局配置 */
-type LayoutConfig = NestSideLayoutConfig | TopSideLayoutConfig | AmisBlankLayoutConfig | BlankLayoutConfig;
+import { LayoutConfig, LayoutType } from '@/utils/router';
 
 const layoutSettings: LayoutSettings = {
   menu: {defaultOpen: true},
