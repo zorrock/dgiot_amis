@@ -1,6 +1,8 @@
 import lodash from 'lodash';
+import { pathToRegexp } from 'path-to-regexp';
 import stableStringify from "fast-json-stable-stringify";
-import { NestSideLayoutProps } from "@/layouts/NestSideLayout";
+import { NestSideMenuLayoutProps } from "@/layouts/NestSideMenuLayout";
+import { noValue } from "@/utils/utils";
 
 /** 布局类型 */
 enum LayoutType {
@@ -18,14 +20,14 @@ interface NestSideLayoutConfig extends BaseLayoutConfig {
   /** 页面布局类型 */
   layout: LayoutType.NestSide;
   /** 页面布局配置 */
-  layoutProps: Omit<NestSideLayoutProps, "route" | "location" | "initLocationHash" | "layoutSettings" | "routerConfig">;
+  layoutProps: Partial<NestSideMenuLayoutProps>;
 }
 
 interface RuntimeNestSideLayoutConfig extends RuntimeBaseLayoutConfig {
   /** 页面布局类型 */
   layout: LayoutType.NestSide;
   /** 页面布局配置 */
-  layoutProps: Omit<NestSideLayoutProps, "route" | "location" | "initLocationHash" | "layoutSettings" | "routerConfig">;
+  layoutProps: Partial<NestSideMenuLayoutProps>;
 }
 
 // interface TopSideLayoutConfig extends BaseLayoutConfig {
@@ -229,7 +231,49 @@ const routerToMenu = (runtimeRouter: RuntimeRouter, parent?: RuntimeMenuItem): R
   return runtimeMenuItem;
 }
 
-// TODO 匹配路径找出对应的 RuntimeLayoutConfig
-// const
+// 路由匹配
+const routerMatch = (locationHash: string, runtimeRouter: RuntimeRouter): RuntimeRouter | undefined => {
+  if (noValue(locationHash) || noValue(runtimeRouter)) return;
+  // 存在子路由 - 递归匹配
+  if (runtimeRouter.routes && runtimeRouter.routes.length > 0) {
+    let matchRuntimeRouter: RuntimeRouter | undefined = undefined;
+    runtimeRouter.routes.forEach(route => {
+      if (matchRuntimeRouter) return;
+      // 递归匹配
+      matchRuntimeRouter = routerMatch(locationHash, route);
+    });
+    if (matchRuntimeRouter) return matchRuntimeRouter;
+  }
+  // 路径匹配
+  if (pathToRegexp(runtimeRouter.path).test(locationHash)) {
+    return runtimeRouter;
+  }
+  return;
+}
 
-export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu };
+/** Layout匹配 */
+const layoutMatch = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): RuntimeLayoutConfig | undefined => {
+  if (!runtimeLayouts || noValue(locationHash) || runtimeLayouts.length <= 0) return;
+  let runtimeLayoutConfig: RuntimeLayoutConfig | undefined = undefined;
+  runtimeLayouts.forEach(runtimeLayout => {
+    if (runtimeLayoutConfig) return;
+    const {path, routes} = runtimeLayout;
+    if (!pathToRegexp(path, undefined, {end: false}).test(locationHash)) {
+      return;
+    }
+    if (!routes || routes.length <= 0) {
+      return;
+    }
+    let runtimeRouter: RuntimeRouter | undefined = undefined;
+    routes.forEach(route => {
+      if (runtimeRouter) return;
+      runtimeRouter = routerMatch(locationHash, route);
+    });
+    if (runtimeRouter) {
+      runtimeLayoutConfig = runtimeLayout;
+    }
+  });
+  return runtimeLayoutConfig;
+}
+
+export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu, layoutMatch };

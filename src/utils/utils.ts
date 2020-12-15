@@ -68,9 +68,9 @@ const getUrlParam = (paramName?: string, url?: string): any => {
 /**
  * 获取Location的Hash值
  */
-const getLocationHash = (): string | undefined => {
+const getLocationHash = (): string => {
   const hash = lodash.trim(document.location.hash);
-  return hash.startsWith("#") ? hash.substr(1, hash.length) : undefined;
+  return hash.startsWith("#") ? hash.substr(1, hash.length) : "";
 }
 
 export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, getLocationHash };
