@@ -65,6 +65,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
   /** props的默认值 */
   static defaultProps: Readonly<Partial<NestSideMenuLayoutProps>> = {
     headerHeight: 40,
+
   };
 
   constructor(props: NestSideMenuLayoutProps) {

@@ -48,8 +48,19 @@ const routerConfigs: LayoutConfig[] = [
       globalFooterCopyright: <>Copyright <CopyrightCircleOutlined/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>
     },
     routes: [
-      {path: "/curd-00", pagePath: "/amis/curd-00-schema.ts", name: "简单CURD"},
-      {path: "/form-00", pagePath: "/amis/form-00-schema.ts", name: "简单表单"},
+      {
+        path: "/curd", name: "增删查改",
+        routes: [
+          {path: "/00", name: "简单CURD", pagePath: "/amis/curd-00-schema.ts"},
+        ],
+      },
+      {
+        path: "/form",
+        name: "表单",
+        routes: [
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+        ],
+      },
     ],
     401: "",
     403: "",

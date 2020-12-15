@@ -44,7 +44,7 @@ interface RouterConfig {
   /** 表示是否严格匹配，即location是否和path完全一致 */
   exact?: boolean;
   /** 页面路径(根路径为“/src/pages”) */
-  pagePath: string;
+  pagePath?: string;
   /** 重定向到其它路由或url(支持http(s)://路径) */
   redirect?: string;
   /** 路由图标 */
