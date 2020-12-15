@@ -6,8 +6,8 @@ import { CloseOutlined } from '@ant-design/icons';
 import Tabs, { TabPane } from 'rc-tabs';
 import SimpleBarReact from 'simplebar-react';
 import { PageContent } from "@/components/Layout/PageContent";
+import { getHtmlTitle } from "@/components/Layout/utils/layouts-utils";
 import { loadPageByPath } from "@/utils/amis-utils";
-import { getHtmlTitle } from "../utils/layouts-utils";
 import styles from './index.less';
 
 interface BaseLayoutProps extends LayoutPageComponentProps {

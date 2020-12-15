@@ -80,7 +80,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   }
 
   protected getNestSideLayout() {
-    const {currentLayout, currentRouter, currentMenu, rootMenus, location, match} = this.state;
+    const {currentLayout, currentRouter, /* currentMenu, rootMenus, */ location, match} = this.state;
     return (
       <NestSideMenuLayout
         route={currentRouter}

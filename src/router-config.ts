@@ -51,4 +51,4 @@ const routerConfigs: LayoutConfig[] = [
   }
 ];
 
-export { layoutSettings, routerConfigs, LayoutConfig };
+export { layoutSettings, routerConfigs };
