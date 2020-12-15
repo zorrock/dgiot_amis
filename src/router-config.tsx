@@ -1,6 +1,7 @@
 import React from 'react';
 import { CopyrightCircleOutlined } from "@ant-design/icons";
 import { LayoutConfig, LayoutType } from '@/utils/router';
+import { SideFirstMenuMode } from "@/components/Layout/GlobalSide";
 
 const layoutSettings: LayoutSettings = {
   menu: {defaultOpen: true},
@@ -45,11 +46,14 @@ const routerConfigs: LayoutConfig[] = [
     layoutProps: {
       hideGlobalHeader: false,
       hideGlobalFooter: false,
-      globalFooterCopyright: <>Copyright <CopyrightCircleOutlined/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>
+      globalFooterCopyright: <>Copyright <CopyrightCircleOutlined/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>,
+      globalSideMenuMode: SideFirstMenuMode.AntdMenu,
     },
     routes: [
       {
-        path: "/curd", name: "增删查改",
+        path: "/curd",
+        name: "增删查改",
+        icon: "ProfileOutlined",
         routes: [
           {path: "/00", name: "简单CURD", pagePath: "/amis/curd-00-schema.ts"},
         ],
@@ -57,6 +61,7 @@ const routerConfigs: LayoutConfig[] = [
       {
         path: "/form",
         name: "表单",
+        icon: "ProfileOutlined",
         routes: [
           {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
         ],
