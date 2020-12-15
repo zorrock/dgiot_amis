@@ -1,10 +1,10 @@
 import lodash from 'lodash';
-import { match, pathToRegexp } from 'path-to-regexp';
+import {match, pathToRegexp} from 'path-to-regexp';
 import stableStringify from "fast-json-stable-stringify";
 import memoizeOne from "memoize-one";
 import isEqual from "lodash.isequal";
-import { NestSideMenuLayoutProps } from "@/layouts/NestSideMenuLayout";
-import { getUrlParam, hasValue, noValue } from "@/utils/utils";
+import {NestSideMenuLayoutProps} from "@/layouts/NestSideMenuLayout";
+import {getUrlParam, hasValue, noValue} from "@/utils/utils";
 
 /** 布局类型 */
 enum LayoutType {
@@ -220,7 +220,7 @@ const getMenuKey = (runtimeRouter: RuntimeRouter): string => {
 }
 
 /** 把Router转换成Menu(递归) */
-const routerToMenuInner = (menuSettings: RouterMenuSettings, runtimeRouter: RuntimeRouter, parent?: RuntimeMenuItem): RuntimeMenuItem => {
+const routerToMenu = (menuSettings: RouterMenuSettings, runtimeRouter: RuntimeRouter, parent?: RuntimeMenuItem): RuntimeMenuItem => {
   const currentMenu: RuntimeMenuItem = {runtimeRouter, menuKey: getMenuKey(runtimeRouter), parentKeys: [], children: [], isHide: false};
   if (parent) {
     currentMenu.parentKeys = [...parent.parentKeys, parent.menuKey];
@@ -243,15 +243,15 @@ const routerToMenuInner = (menuSettings: RouterMenuSettings, runtimeRouter: Runt
   currentMenu.isOpen = hasValue(runtimeRouter.defaultOpen) ? runtimeRouter.defaultOpen : (menuSettings.defaultOpen ?? true);
   // 递归调用
   if (runtimeRouter.routes && runtimeRouter.routes.length > 0) {
-    runtimeRouter.routes.forEach(child => routerToMenuInner(menuSettings, child, currentMenu));
+    runtimeRouter.routes.forEach(child => routerToMenu(menuSettings, child, currentMenu));
   }
   return currentMenu;
 }
 
-/**
- * 把Router转换成Menu(递归) - 使用memoizeOne优化性能
- */
-const routerToMenu = memoizeOne(routerToMenuInner, isEqual);
+// /**
+//  * 把Router转换成Menu(递归) - 使用memoizeOne优化性能
+//  */
+// const routerToMenu = memoizeOne(routerToMenuInner, isEqual);
 
 // 路由匹配
 const routerMatch = (locationHash: string, runtimeRouter: RuntimeRouter): RuntimeRouter | undefined => {
@@ -312,6 +312,22 @@ const layoutMatchInner = (locationHash: string, runtimeLayouts: RuntimeLayoutCon
  */
 const layoutMatch = memoizeOne(layoutMatchInner, isEqual);
 
+// 查找菜单
+const findMenu = (router: RuntimeRouter, menu: RuntimeMenuItem): RuntimeMenuItem | undefined => {
+  if (menu.runtimeRouter === router) return menu;
+  if (menu.runtimeRouter.path === router.path) return menu;
+  if (!menu.children || menu.children.length <= 0) {
+    return;
+  }
+  // 递归查找
+  let result: RuntimeMenuItem | undefined = undefined;
+  menu.children.forEach(childMenu => {
+    if (result) return;
+    result = findMenu(router, childMenu);
+  });
+  return result;
+}
+
 interface LocationHashMatchResult {
   /** 当前Layout */
   currentLayout?: RuntimeLayoutConfig;
@@ -331,9 +347,13 @@ interface LocationHashMatchResult {
 const locationHashMatchInner = (menuSettings: RouterMenuSettings, locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LocationHashMatchResult | undefined => {
   const matched = layoutMatch(locationHash, runtimeLayouts);
   if (!matched) return;
-  const currentMenu = routerToMenu(menuSettings, matched.matchedRouter);
   const rootMenus: RuntimeMenuItem[] = [];
   matched.matchedLayout.routes.forEach(route => rootMenus.push(routerToMenu(menuSettings, route)));
+  let currentMenu: RuntimeMenuItem | undefined = undefined;
+  rootMenus.forEach(rootMenu => {
+    if (currentMenu) return;
+    currentMenu = findMenu(matched.matchedRouter, rootMenu);
+  })
   const location: RouterLocation = {
     state: routerHistory.getLocationState(locationHash),
     hash: locationHash,
@@ -357,4 +377,4 @@ const locationHashMatchInner = (menuSettings: RouterMenuSettings, locationHash: 
  */
 const locationHashMatch = memoizeOne(locationHashMatchInner, isEqual);
 
-export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu, layoutMatch, locationHashMatch };
+export {LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu, layoutMatch, locationHashMatch};

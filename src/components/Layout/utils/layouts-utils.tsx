@@ -45,9 +45,9 @@ const getCurrentFirstMenuKey = (currentMenu?: RuntimeMenuItem): string | undefin
   if (!currentMenu) return;
   let currentFirstMenuKey: string | undefined;
   if (currentMenu.parentKeys) {
-    if (currentMenu.parentKeys.length >= 2) {
-      currentFirstMenuKey = currentMenu.parentKeys[1];
-    } else if (currentMenu.parentKeys.length === 1) {
+    if (currentMenu.parentKeys.length >= 1) {
+      currentFirstMenuKey = currentMenu.parentKeys[0];
+    } else if (currentMenu.parentKeys.length === 0) {
       currentFirstMenuKey = currentMenu.menuKey;
     }
   }

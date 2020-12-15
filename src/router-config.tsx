@@ -47,13 +47,13 @@ const routerConfigs: LayoutConfig[] = [
       hideGlobalHeader: false,
       hideGlobalFooter: false,
       globalFooterCopyright: <>Copyright <CopyrightCircleOutlined/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>,
-      globalSideMenuWidth: 120,
+      globalSideMenuWidth: 100,
       globalSideMenuMode: SideFirstMenuMode.AntdMenu,
     },
     routes: [
       {
         path: "/curd",
-        name: "增删查改",
+        name: "CURD",
         icon: "ProfileOutlined",
         routes: [
           {path: "/00", name: "简单CURD", pagePath: "/amis/curd-00-schema.ts"},
@@ -67,123 +67,123 @@ const routerConfigs: LayoutConfig[] = [
           {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
         ],
       },
-      {
-        path: "/form1",
-        name: "表单1",
-        icon: "TableOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form2",
-        name: "表单2",
-        icon: "LayoutOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form3",
-        name: "表单3",
-        icon: "SmileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form4",
-        name: "表单4",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form5",
-        name: "表单5",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form6",
-        name: "表单6",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      }, {
-        path: "/form7",
-        name: "表单7",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      }, {
-        path: "/form8",
-        name: "表单8",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form9",
-        name: "表单9",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form10",
-        name: "表单10",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form11",
-        name: "表单11",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form12",
-        name: "表单12",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      }, {
-        path: "/form13",
-        name: "表单13",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form14",
-        name: "表单14",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
-      {
-        path: "/form15",
-        name: "表单15",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-        ],
-      },
+      // {
+      //   path: "/form1",
+      //   name: "表单1",
+      //   icon: "TableOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form2",
+      //   name: "表单2",
+      //   icon: "LayoutOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form3",
+      //   name: "表单3",
+      //   icon: "SmileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form4",
+      //   name: "表单4",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form5",
+      //   name: "表单5",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form6",
+      //   name: "表单6",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // }, {
+      //   path: "/form7",
+      //   name: "表单7",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // }, {
+      //   path: "/form8",
+      //   name: "表单8",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form9",
+      //   name: "表单9",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form10",
+      //   name: "表单10",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form11",
+      //   name: "表单11",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form12",
+      //   name: "表单12",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // }, {
+      //   path: "/form13",
+      //   name: "表单13",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form14",
+      //   name: "表单14",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
+      // {
+      //   path: "/form15",
+      //   name: "表单15",
+      //   icon: "ProfileOutlined",
+      //   routes: [
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //   ],
+      // },
     ],
     401: "",
     403: "",

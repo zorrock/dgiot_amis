@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ReactDOM from "react-dom";
-import { $rootMounted, initAppPage } from '@/utils/amis-utils';
-import { getLocationHash } from '@/utils/utils';
-import { logger } from '@/utils/logger';
-import { layoutToRuntime, LayoutType, locationHashMatch, RuntimeLayoutConfig } from "@/utils/router";
-import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
-import { layoutSettings, routerConfigs } from './router-config';
-import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
+import {$rootMounted, initAppPage} from '@/utils/amis-utils';
+import {getLocationHash} from '@/utils/utils';
+import {logger} from '@/utils/logger';
+import {layoutToRuntime, LayoutType, locationHashMatch, RuntimeLayoutConfig} from "@/utils/router";
+import {NestSideMenuLayout} from '@/layouts/NestSideMenuLayout';
+import {layoutSettings, routerConfigs} from './router-config';
+import {getLayoutMenuData} from "@/components/Layout/utils/menu-data";
 
 const log = logger.getLogger("src/schema-app.tsx");
 
@@ -79,6 +79,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   protected getNestSideLayout() {
     const {currentLayout, currentRouter, currentMenu, rootMenus, location, match} = this.state;
     const layoutMenuData: LayoutMenuData = getLayoutMenuData({location: location!, rootMenus: rootMenus!, currentMenu: currentMenu!});
+    log.info("layoutMenuData ->", layoutMenuData);
     return (
       <NestSideMenuLayout
         route={currentRouter}
@@ -110,3 +111,4 @@ const runtimeLayouts = layoutToRuntime(routerConfigs);
 log.info("layoutSettings ->", layoutSettings);
 log.info("runtimeLayouts ->", runtimeLayouts);
 ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted)
+log.info("ReactDOM.render完成!");
