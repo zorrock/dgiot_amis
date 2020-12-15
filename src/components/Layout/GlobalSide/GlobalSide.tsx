@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
 import classNames from 'classnames';
 import SimpleBarReact from 'simplebar-react';
-import antdLogo from '@/assets/logo.svg';
+import antdLogo from '@/assets/logo.png';
 import { AntdMenuProps } from '../layout-types';
 import { getBottomNode, getCenterNode, getTopNode } from '../utils/flex-vertical-layouts';
 import { SideFirstMenu, SideFirstMenuClickParam, SideFirstMenuMode, SideFirstMenuSelectParam } from './SideFirstMenu';
