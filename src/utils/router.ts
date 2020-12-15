@@ -344,7 +344,7 @@ const locationHashMatchInner = (menuSettings: RouterMenuSettings, locationHash: 
   const matchFuc = match<RouteMatchParams["params"]>(matched.matchedRouter.path);
   const matchParams = matchFuc(locationHash);
   const matchInfo: RouteMatchParams = {
-    isExact: matched.matchedRouter.exact ?? false,
+    isExact: matched.matchedRouter.path === locationHash,
     path: window.location.pathname,
     url: window.location.href,
     params: (matchParams ? (matchParams.params ?? {}) : {}),
