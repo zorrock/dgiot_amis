@@ -1,4 +1,5 @@
 import lodash from 'lodash';
+import stableStringify from "fast-json-stable-stringify";
 import { NestSideLayoutProps } from "@/layouts/NestSideLayout";
 
 /** 布局类型 */
@@ -17,14 +18,14 @@ interface NestSideLayoutConfig extends BaseLayoutConfig {
   /** 页面布局类型 */
   layout: LayoutType.NestSide;
   /** 页面布局配置 */
-  layoutProps: Omit<NestSideLayoutProps, "initLocationHash" | "layoutSettings" | "routerConfig">;
+  layoutProps: Omit<NestSideLayoutProps, "route" | "location" | "initLocationHash" | "layoutSettings" | "routerConfig">;
 }
 
 interface RuntimeNestSideLayoutConfig extends RuntimeBaseLayoutConfig {
   /** 页面布局类型 */
   layout: LayoutType.NestSide;
   /** 页面布局配置 */
-  layoutProps: Omit<NestSideLayoutProps, "initLocationHash" | "layoutSettings" | "routerConfig">;
+  layoutProps: Omit<NestSideLayoutProps, "route" | "location" | "initLocationHash" | "layoutSettings" | "routerConfig">;
 }
 
 // interface TopSideLayoutConfig extends BaseLayoutConfig {
@@ -208,11 +209,27 @@ const layoutToRuntime = (routerConfigs: LayoutConfig[]): RuntimeLayoutConfig[] =
   return routerConfigs as RuntimeLayoutConfig[];
 }
 
-// TODO 匹配路径找出对应的 RuntimeLayoutConfig
+// 获取菜单key(唯一不重复)
+const getMenuKey = (runtimeRouter: RuntimeRouter): string => {
+  const {path, exact, redirect, pathVariable, querystring, name} = runtimeRouter;
+  return `${path}|${exact}|${stableStringify(pathVariable ?? {})}|${stableStringify(querystring ?? {})}|${name}|${redirect}`;
+}
 
 /** 把Router转换成Menu */
-function routerToMenu(runtimeRouter: RuntimeRouter): RuntimeMenuItem {
-  return "a" as any as RuntimeMenuItem;
+const routerToMenu = (runtimeRouter: RuntimeRouter, parent?: RuntimeMenuItem): RuntimeMenuItem => {
+  const runtimeMenuItem: RuntimeMenuItem = {runtimeRouter, menuKey: getMenuKey(runtimeRouter), parentKeys: [], children: [], isHide: false};
+  if (parent) {
+    runtimeMenuItem.parentKeys = [...parent.parentKeys, parent.menuKey];
+    parent.children.push(runtimeMenuItem);
+  }
+  // 递归调用
+  if (runtimeRouter.routes && runtimeRouter.routes.length > 0) {
+    runtimeRouter.routes.forEach(child => routerToMenu(child, runtimeMenuItem));
+  }
+  return runtimeMenuItem;
 }
+
+// TODO 匹配路径找出对应的 RuntimeLayoutConfig
+// const
 
 export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu };

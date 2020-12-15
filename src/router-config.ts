@@ -3,6 +3,7 @@ import { LayoutConfig, LayoutType } from '@/utils/router';
 const layoutSettings: LayoutSettings = {
   menu: {defaultOpen: true},
   iconScriptUrl: "//at.alicdn.com/t/font_1326886_bbehrpsvyl.js",
+  htmlTitleSuffix: "",
 };
 
 const routerConfigs: LayoutConfig[] = [

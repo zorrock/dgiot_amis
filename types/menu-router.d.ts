@@ -104,7 +104,7 @@ interface RuntimeRouter extends RouterConfig {
 /** 运行时菜单项 */
 interface RuntimeMenuItem {
   /** 路由配置 */
-  routerConfig: RuntimeRouter;
+  runtimeRouter: RuntimeRouter;
   /** 当前菜单唯一Key */
   menuKey: string;
   /** 当前菜单的所有上级菜单的Key数组 */
@@ -179,6 +179,8 @@ interface LayoutSettings {
   menu: RouterMenuSettings;
   /** 自定义菜单图标字体 - iconfont.cn项目在线生成的js(地址: https://www.iconfont.cn/) */
   iconScriptUrl: string;
+  /** html页面title后缀 */
+  htmlTitleSuffix: string;
 }
 
 // ----------------------------------------------------------------------------------- 页面布局配置

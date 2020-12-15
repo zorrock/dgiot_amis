@@ -1,9 +1,9 @@
 /** 布局页面组件基础属性 */
 interface LayoutPageComponentProps {
-  // /** 路由信息 */
-  // route: RuntimeRouter;
-  // /** 组件的RouterLocation信息 */
-  // location: RouterLocation;
+  /** 当前路由信息 */
+  route: RuntimeRouter;
+  /** 组件的RouterLocation信息 */
+  location: RouterLocation;
   // /** 路由匹配信息 */
   // match: {
   //   /** 匹配参数 */

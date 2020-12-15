@@ -5,6 +5,22 @@ import styles from './index.less';
 
 export interface NestSideMenuLayoutProps extends LayoutPageComponentProps {
   // ----------------------------------------------------------------------------------- NestSideMenuLayout 主配置
+  /** html页面title后缀 */
+  htmlTitleSuffix?: string;
+  /** 页面加载状态 */
+  loading?: boolean;
+  /** 是否隐藏全局页头 */
+  hideGlobalHeader?: boolean;
+  /** 是否隐藏全局页脚 */
+  hideGlobalFooter?: boolean;
+  /** Header高度(建议 32 ~ 64) */
+  headerHeight: number;
+  /** 侧边栏宽度(二级菜单宽度，建议 160 ~ 256) */
+  sideMenuWidth: number;
+  /** 菜单-默认展开子菜单 */
+  defaultOpen?: boolean;
+  /** 自定义菜单图标字体 - iconfont.cn项目在线生成的js(地址: https://www.iconfont.cn/) */
+  menuIconScriptUrl?: string;
   // ----------------------------------------------------------------------------------- NestSideMenuLayout 扩展配置
   /** 最外层Layout容器class样式 */
   layoutClassName?: string;
