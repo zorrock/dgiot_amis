@@ -77,6 +77,8 @@ interface RouterConfig {
 
 /** 运行时路由 */
 interface RuntimeRouter extends RouterConfig {
+  /** 当前路由全路径 */
+  path: string;
   /** 路由 路径中有变量时，配置的路径变量对象 */
   pathVariable: PathVariable;
   /** 设置路由路径的queryString部分 */
@@ -113,6 +115,8 @@ interface RuntimeMenuItem {
   children: RuntimeMenuItem[];
   /** 根据配置规则，当前菜单是否隐藏 */
   isHide: boolean;
+  /** 是否展开子菜单 */
+  isOpen?: boolean;
   // /** 扩展属性 */
   // [property: string]: any;
 }
@@ -139,21 +143,21 @@ interface RuntimeMenuItem {
 
 /** 全局Layout菜单数据 */
 interface LayoutMenuData {
-  /** 根菜单 */
-  rootMenu: RuntimeMenuItem;
-  /** 根菜单(过滤隐藏的菜单) */
-  showRootMenu?: RuntimeMenuItem;
+  /** 所有一级菜单 */
+  rootMenus: RuntimeMenuItem[];
+  /** 需要显示的一级菜单 */
+  showRootMenus: RuntimeMenuItem[];
   /**
    * 拍平的菜单数据
    * <pre>
-   *   Map<RuntimeMenuItem.routerConfig.path, RuntimeMenuItem>
+   *   Map<RuntimeMenuItem.runtimeRouter.path, RuntimeMenuItem>
    * </pre>
    */
   flattenMenuMap: Map<String, RuntimeMenuItem>;
   /**
-   * 提供外部用户使用
+   * 拍平的菜单数据(提供外部用户使用)
    * <pre>
-   *   { path: MenuDataItem }
+   *   { RuntimeMenuItem.runtimeRouter.path: MenuDataItem }
    * </pre>
    */
   flattenMenu: { [path: string]: RuntimeMenuItem };
@@ -161,8 +165,6 @@ interface LayoutMenuData {
   currentPath: string;
   /** 当前访问页面对应的菜单 */
   currentMenu?: RuntimeMenuItem;
-  /** 当前访问页面对应的显示菜单(显示逻辑对应关系) */
-  showCurrentMenu?: RuntimeMenuItem;
 }
 
 /** 路由菜单设置 */

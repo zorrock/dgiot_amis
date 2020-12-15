@@ -1,8 +1,10 @@
 import lodash from 'lodash';
 import { match, pathToRegexp } from 'path-to-regexp';
 import stableStringify from "fast-json-stable-stringify";
+import memoizeOne from "memoize-one";
+import isEqual from "lodash.isequal";
 import { NestSideMenuLayoutProps } from "@/layouts/NestSideMenuLayout";
-import { getUrlParam, noValue } from "@/utils/utils";
+import { getUrlParam, hasValue, noValue } from "@/utils/utils";
 
 /** 布局类型 */
 enum LayoutType {
@@ -218,18 +220,38 @@ const getMenuKey = (runtimeRouter: RuntimeRouter): string => {
 }
 
 /** 把Router转换成Menu(递归) */
-const routerToMenu = (runtimeRouter: RuntimeRouter, parent?: RuntimeMenuItem): RuntimeMenuItem => {
-  const runtimeMenuItem: RuntimeMenuItem = {runtimeRouter, menuKey: getMenuKey(runtimeRouter), parentKeys: [], children: [], isHide: false};
+const routerToMenuInner = (menuSettings: RouterMenuSettings, runtimeRouter: RuntimeRouter, parent?: RuntimeMenuItem): RuntimeMenuItem => {
+  const currentMenu: RuntimeMenuItem = {runtimeRouter, menuKey: getMenuKey(runtimeRouter), parentKeys: [], children: [], isHide: false};
   if (parent) {
-    runtimeMenuItem.parentKeys = [...parent.parentKeys, parent.menuKey];
-    parent.children.push(runtimeMenuItem);
+    currentMenu.parentKeys = [...parent.parentKeys, parent.menuKey];
+    parent.children.push(currentMenu);
   }
+  // 根据配置规则，当前菜单是否隐藏
+  let isHide = false;
+  if (parent && parent.isHide) {
+    // 上级菜单隐藏-子菜单一定隐藏
+    isHide = true;
+  } else if (runtimeRouter.hideMenu) {
+    // 需要隐藏当前菜单
+    isHide = true;
+  } else if (parent && parent.runtimeRouter.hideChildrenMenu) {
+    // 上级菜单设置要隐藏子菜单
+    isHide = true;
+  }
+  currentMenu.isHide = isHide;
+  // 根据配置规则，当前菜单是否展开状态
+  currentMenu.isOpen = hasValue(runtimeRouter.defaultOpen) ? runtimeRouter.defaultOpen : (menuSettings.defaultOpen ?? true);
   // 递归调用
   if (runtimeRouter.routes && runtimeRouter.routes.length > 0) {
-    runtimeRouter.routes.forEach(child => routerToMenu(child, runtimeMenuItem));
+    runtimeRouter.routes.forEach(child => routerToMenuInner(menuSettings, child, currentMenu));
   }
-  return runtimeMenuItem;
+  return currentMenu;
 }
+
+/**
+ * 把Router转换成Menu(递归) - 使用memoizeOne优化性能
+ */
+const routerToMenu = memoizeOne(routerToMenuInner, isEqual);
 
 // 路由匹配
 const routerMatch = (locationHash: string, runtimeRouter: RuntimeRouter): RuntimeRouter | undefined => {
@@ -259,7 +281,7 @@ interface LayoutMatchResult {
 }
 
 /** Layout匹配(递归) */
-const layoutMatch = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LayoutMatchResult | undefined => {
+const layoutMatchInner = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LayoutMatchResult | undefined => {
   if (!runtimeLayouts || noValue(locationHash) || runtimeLayouts.length <= 0) return;
   let matchedLayout: RuntimeLayoutConfig | undefined = undefined;
   let matchedRouter: RuntimeRouter | undefined = undefined;
@@ -285,6 +307,10 @@ const layoutMatch = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]
   }
   return;
 }
+/**
+ * Layout匹配(递归) - 使用memoizeOne优化性能
+ */
+const layoutMatch = memoizeOne(layoutMatchInner, isEqual);
 
 interface LocationHashMatchResult {
   /** 当前Layout */
@@ -302,12 +328,12 @@ interface LocationHashMatchResult {
 }
 
 /** 页面路径匹配路由菜单等信息 */
-const locationHashMatch = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LocationHashMatchResult | undefined => {
+const locationHashMatchInner = (menuSettings: RouterMenuSettings, locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LocationHashMatchResult | undefined => {
   const matched = layoutMatch(locationHash, runtimeLayouts);
   if (!matched) return;
-  const currentMenu = routerToMenu(matched.matchedRouter);
+  const currentMenu = routerToMenu(menuSettings, matched.matchedRouter);
   const rootMenus: RuntimeMenuItem[] = [];
-  matched.matchedLayout.routes.forEach(route => rootMenus.push(routerToMenu(route)));
+  matched.matchedLayout.routes.forEach(route => rootMenus.push(routerToMenu(menuSettings, route)));
   const location: RouterLocation = {
     state: routerHistory.getLocationState(locationHash),
     hash: locationHash,
@@ -325,5 +351,10 @@ const locationHashMatch = (locationHash: string, runtimeLayouts: RuntimeLayoutCo
   };
   return {currentLayout: matched.matchedLayout, currentRouter: matched.matchedRouter, currentMenu, rootMenus, location, match: matchInfo};
 }
+
+/**
+ * 页面路径匹配路由菜单等信息 - 使用memoizeOne优化性能
+ */
+const locationHashMatch = memoizeOne(locationHashMatchInner, isEqual);
 
 export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu, layoutMatch, locationHashMatch };

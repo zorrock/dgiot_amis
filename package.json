@@ -23,6 +23,7 @@
     "classnames": "^2.2.6",
     "qs": "^6.9.4",
     "lodash": "^4.17.20",
+    "lodash.isequal": "^4.5.0",
     "dayjs": "^1.9.7",
     "path-to-regexp": "^6.2.0",
     "copy-to-clipboard": "^3.3.1",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "@types/classnames": "^2.2.11",
     "@types/lodash": "^4.14.165",
+    "@types/lodash.isequal": "^4.5.5",
     "@types/numeral": "^0.0.28",
     "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.9",

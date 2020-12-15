@@ -85,7 +85,7 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
       selectedProps.selectedKeys = selectedKeys;
     }
     // 菜单项
-    const menuNodes = getAntdMenuItems({showRootMenu: layoutMenuData.showRootMenu!, menuIconScriptUrl, menuItemRender, menuItemClassName, menuItemStyle});
+    const menuNodes = getAntdMenuItems({showRootMenus: layoutMenuData.showRootMenus!, menuIconScriptUrl, menuItemRender, menuItemClassName, menuItemStyle});
     return (
       <Menu
         className={classNames(styles.menu, menuClassName)}
@@ -129,7 +129,7 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
 
   protected getCustomMenuNode(): React.ReactNode[] {
     const {layoutMenuData, menuIconScriptUrl, defaultSelectedKeys, selectedKeys, onMenuSelect, onMenuClick, menuItemRender, menuItemClassName, menuItemStyle = {}} = this.props;
-    const {showRootMenu} = layoutMenuData;
+    const {showRootMenus} = layoutMenuData;
     // 选中的菜单项 key 数组
     const selectedProps: AntdMenuProps = {};
     if (defaultSelectedKeys) {
@@ -139,8 +139,8 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
       selectedProps.selectedKeys = selectedKeys;
     }
     const nodes: React.ReactNode[] = [];
-    if (showRootMenu && showRootMenu.children.length >= 0) {
-      showRootMenu.children.forEach((menu) => {
+    if (showRootMenus && showRootMenus.length >= 0) {
+      showRootMenus.forEach((menu) => {
         // 菜单图标
         const icon = getMenuIcon(menu.runtimeRouter.icon, menuIconScriptUrl);
         let active = false;

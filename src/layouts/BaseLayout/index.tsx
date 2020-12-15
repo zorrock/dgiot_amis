@@ -14,6 +14,8 @@ import { GlobalHeader, GlobalHeaderProps } from "@/components/Layout/GlobalHeade
 
 interface BaseLayoutProps extends LayoutPageComponentProps {
   // ----------------------------------------------------------------------------------- 基础配置
+  /** 当前Layout菜单数据 */
+  layoutMenuData: LayoutMenuData;
   /** html页面title后缀 */
   htmlTitleSuffix?: string;
   /** 页面加载状态 */
@@ -22,6 +24,9 @@ interface BaseLayoutProps extends LayoutPageComponentProps {
   hideGlobalHeader?: boolean;
   /** 是否隐藏全局页脚 */
   hideGlobalFooter?: boolean;
+  /** 菜单-默认展开子菜单 */
+  defaultOpen?: boolean;
+  /** 自定义 LayoutMenuData 数据处理 */
   // ----------------------------------------------------------------------------------- GlobalHeader 配置
   /** 左侧区域class样式 */
   globalHeaderLeftClassName?: string;
@@ -87,16 +92,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   /** 全局页头 */
   protected getGlobalHeader() {
     const {
-      globalHeaderLeftClassName,
-      globalHeaderLeftStyle,
-      globalHeaderCentreClassName,
-      globalHeaderCentreStyle,
-      globalHeaderRightClassName,
-      globalHeaderRightStyle,
-      globalHeaderLeftRender,
-      globalHeaderCentreRender,
-      globalHeaderRightRender,
-      globalHeaderRender,
+      globalHeaderLeftClassName, globalHeaderLeftStyle, globalHeaderCentreClassName, globalHeaderCentreStyle, globalHeaderRightClassName,
+      globalHeaderRightStyle, globalHeaderLeftRender, globalHeaderCentreRender, globalHeaderRightRender, globalHeaderRender,
     } = this.props;
     return (
       <GlobalHeader
@@ -116,7 +113,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 全局页脚 */
   protected getGlobalFooter() {
-    const { globalFooterLinks, globalFooterCopyright, globalFooterStyle = {}, globalFooterClassName, globalFooterRender } = this.props;
+    const {globalFooterLinks, globalFooterCopyright, globalFooterStyle = {}, globalFooterClassName, globalFooterRender} = this.props;
     return (
       <GlobalFooter
         links={globalFooterLinks}
@@ -130,14 +127,9 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 是否存在页脚(Footer容器) */
   public existsFooter() {
-    const { globalFooterLinks, globalFooterCopyright } = this.props;
+    const {globalFooterLinks, globalFooterCopyright} = this.props;
     return (globalFooterLinks && Array.isArray(globalFooterLinks) && globalFooterLinks.length > 0) || globalFooterCopyright;
   }
-
-
-
-
-
 
 
   /** 页面内容 */
@@ -170,6 +162,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       </PageContent>
     );
   }
+
+  // -----------------------------------------------------------------------------------
 
   protected addTabPage(id: string, path: string) {
     const {tabPages} = this.state;

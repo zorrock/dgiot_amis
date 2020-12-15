@@ -6,6 +6,7 @@ import { logger } from '@/utils/logger';
 import { layoutToRuntime, LayoutType, locationHashMatch, RuntimeLayoutConfig } from "@/utils/router";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { layoutSettings, routerConfigs } from './router-config';
+import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 
 const log = logger.getLogger("src/schema-app.tsx");
 
@@ -38,17 +39,15 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   constructor(props: ReactAppPageProps) {
     super(props);
     const initLocationHash = getLocationHash();
-    const matched = locationHashMatch(initLocationHash, props.runtimeLayouts);
+    const matched = locationHashMatch(props.layoutSettings.menu, initLocationHash, props.runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
     const currentMenu = matched?.currentMenu;
     const rootMenus = matched?.rootMenus;
-    log.info("initLocationHash ->", initLocationHash);
-    log.info("currentLayout ->", currentLayout);
-    log.info("currentRouter ->", currentRouter);
-    log.info("currentMenu ->", currentMenu);
-    log.info("rootMenus ->", rootMenus);
-    this.state = {locationHash: initLocationHash, currentLayout, currentRouter, currentMenu, rootMenus};
+    const location = matched?.location;
+    const match = matched?.match;
+    this.state = {locationHash: initLocationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match};
+    log.info("initState ->", this.state);
   }
 
   /** APP挂载之后的操作 */
@@ -63,31 +62,30 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
   /** Location Hash更新事件 */
   onLocationHashChange = (event: HashChangeEvent) => {
-    const {runtimeLayouts} = this.props;
+    log.info("event ->", event.newURL);
+    const {runtimeLayouts, layoutSettings} = this.props;
     const locationHash = getLocationHash();
-    const matched = locationHashMatch(locationHash, runtimeLayouts);
+    const matched = locationHashMatch(layoutSettings.menu, locationHash, runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
     const currentMenu = matched?.currentMenu;
     const rootMenus = matched?.rootMenus;
-    log.info("event ->", event.newURL);
-    log.info("locationHash ->", locationHash);
-    log.info("currentLayout ->", currentLayout);
-    log.info("currentRouter ->", currentRouter);
-    log.info("currentMenu ->", currentMenu);
-    log.info("rootMenus ->", rootMenus);
-    this.setState({locationHash, currentLayout, currentRouter, currentMenu, rootMenus})
+    const location = matched?.location;
+    const match = matched?.match;
+    this.setState({locationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match})
+    log.info("newState ->", this.state);
   }
 
   protected getNestSideLayout() {
-    const {currentLayout, currentRouter, /* currentMenu, rootMenus, */ location, match} = this.state;
+    const {currentLayout, currentRouter, currentMenu, rootMenus, location, match} = this.state;
+    const layoutMenuData: LayoutMenuData = getLayoutMenuData({location: location!, rootMenus: rootMenus!, currentMenu: currentMenu!});
     return (
       <NestSideMenuLayout
         route={currentRouter}
         location={location}
         match={match}
         rootRoutes={currentLayout?.routes}
-
+        layoutMenuData={layoutMenuData}
         {...currentLayout?.layoutProps}
       />
     );
