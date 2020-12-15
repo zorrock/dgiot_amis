@@ -1,22 +1,19 @@
-import React, { CSSProperties } from 'react';
+import React, {CSSProperties} from 'react';
+import Immutable from 'immutable';
 import classNames from 'classnames';
-import { BaseLayout, BaseLayoutProps, BaseLayoutState } from "@/layouts/BaseLayout";
+import {MenuFoldOutlined, MenuUnfoldOutlined} from "@ant-design/icons";
+import {logger} from "@/utils/logger";
+import {BaseLayout, BaseLayoutProps, BaseLayoutState, DefaultSideMenuTopRender} from "@/layouts/BaseLayout";
+import {AntdMenuProps} from "@/components/Layout/layout-types";
+import {GlobalSide, GlobalSideProps, SideFirstMenuClickParam, SideFirstMenuMode, SideFirstMenuSelectParam} from "@/components/Layout/GlobalSide";
+import {getCurrentFirstMenu, getCurrentFirstMenuKey} from "@/components/Layout/utils/layouts-utils";
 import styles from './index.less';
-import { GlobalSide, GlobalSideProps, SideFirstMenuClickParam, SideFirstMenuMode, SideFirstMenuSelectParam } from "@/components/Layout/GlobalSide";
-import { AntdMenuProps } from "@/components/Layout/layout-types";
-import { logger } from "@/utils/logger";
-import { getCurrentFirstMenuKey } from "@/components/Layout/utils/layouts-utils";
 
 const log = logger.getLogger("src/layouts/NestSideMenuLayout/index.tsx");
 
 interface NestSideMenuLayoutProps extends BaseLayoutProps {
-  // ----------------------------------------------------------------------------------- NestSideMenuLayout 主配置
-  /** Header高度(建议 32 ~ 64) */
-  headerHeight: number;
-  /** 侧边栏宽度(二级菜单宽度，建议 160 ~ 256) */
-  sideMenuWidth: number;
-  /** 自定义菜单图标字体 - iconfont.cn项目在线生成的js(地址: https://www.iconfont.cn/) */
-  menuIconScriptUrl?: string;
+  // ----------------------------------------------------------------------------------- 基础配置
+
   // ----------------------------------------------------------------------------------- NestSideMenuLayout 扩展配置
   /** 最外层Layout容器class样式 */
   layoutClassName?: string;
@@ -125,12 +122,24 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
   /** props的默认值 */
   static defaultProps: Readonly<Partial<NestSideMenuLayoutProps>> = {
     headerHeight: 40,
-
+    sideMenuWidth: 160,
+    sideMenuTheme: 'light',
+    defaultOpen: true,
+    globalSideMenuWidth: 96,
+    sideMenuEnableSearchMenu: false,
+    sideMenuBeautifyScrollbar: true,
+    sideMenuAutoHideScrollbar: true,
+    // pageContentPageHeaderModel: PageHeaderModel.AntPageHeader,
+    // pageContentEnablePageHeader: false,
   };
 
   constructor(props: NestSideMenuLayoutProps) {
     super(props);
     this.state = {
+      menuCollapsed: false,
+      sideMenuSelectedKeysMap: new Map<string, { menuKey: string; location: RouterLocation }>(),
+      sideMenuOpenKeysMap: Immutable.Map<string, string[]>(),
+      sideMenuSearchValueMap: Immutable.Map<string, string>(),
       tabPages: [],
       activePageKey: undefined,
     };
@@ -201,14 +210,40 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
     );
   }
 
+  /** 二级菜单自定义侧边栏顶部部区域渲染逻辑 */
+  protected sideMenuTopRender: DefaultSideMenuTopRender = (props, className, elementMap, currentFirstMenu) => {
+    const {topClassName, topStyle} = props;
+    const {sideMenuWidth} = this.props;
+    const menuCollapsed = this.getMenuCollapsed();
+    const CollapseCursor = menuCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined;
+    return (
+      <div className={classNames(className, topClassName)} style={topStyle}>
+        <div className={styles.sideMenuCollapse}>
+          <div className={styles.sideMenuCollapseFill}>
+            {!this.getMenuCollapsed() && (
+              <span className={styles.sideMenuCollapseTitle} style={{width: sideMenuWidth - 16 - 48}}>
+                {currentFirstMenu.runtimeRouter.name}
+              </span>
+            )}
+          </div>
+          <CollapseCursor onClick={() => this.setState({menuCollapsed: !menuCollapsed})} className={styles.sideMenuCollapseCursor}/>
+          <div className={styles.sideMenuCollapseEmpty}/>
+        </div>
+        {[...elementMap.values()]}
+      </div>
+    );
+  };
+
   /** 页面布局内容 */
   protected getLayoutPage() {
     const {
-      hideGlobalHeader, hideGlobalFooter, headerHeight, globalSideMenuMode, globalSideMenuWidth,
+      layoutMenuData, hideGlobalHeader, hideGlobalFooter, headerHeight, globalSideMenuMode, globalSideMenuWidth,
       layoutClassName, layoutStyle, globalSideClassName, globalSideStyle, nestLayoutClassName, nestLayoutStyle,
+      sideMenuWidth,
       sideClassName, sideStyle, twoLevelNestLayoutClassName, twoLevelNestLayoutStyle, headerClassName, headerStyle,
       contentClassName, contentStyle, footerClassName, footerStyle,
     } = this.props;
+    const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
     return (
       <section className={classNames(styles.layout, layoutClassName)} style={layoutStyle}>
         <aside
@@ -219,18 +254,13 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
           {this.getGlobalSide()}
         </aside>
         <section className={classNames(styles.nestLayout, nestLayoutClassName)} style={nestLayoutStyle}>
-          <aside className={classNames(styles.layoutSide, sideClassName)} style={sideStyle}>
-            {/* TODO 二级侧边栏 - 二级级菜单 */}
-            <div>二级级菜单</div>
-            <br/>
-            <a onClick={() => this.addTabPage("1", "/amis/curd-00-schema.ts")}>简单CURD</a>
-            <br/>
-            <a onClick={() => this.addTabPage("2", "/amis/form-02-verify-schema.ts")}>简单表单</a>
-            <br/>
-            <a onClick={() => {
-              window.location.hash = "#aaaa";
-            }}>简单表单</a>
-          </aside>
+          {/* 二级侧边栏 - 二级级菜单 */}
+          {
+            currentFirstMenu && currentFirstMenu.children && currentFirstMenu.children.length > 0 &&
+            <aside className={classNames(styles.layoutSide, sideClassName)} style={{...sideStyle, width: sideMenuWidth}}>
+              {this.getSideMenu(undefined, this.sideMenuTopRender)}
+            </aside>
+          }
           <section className={classNames(styles.twoLevelNestLayout, twoLevelNestLayoutClassName)} style={twoLevelNestLayoutStyle}>
             {/* 全局页头 */}
             {
@@ -269,4 +299,4 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
   }
 }
 
-export { NestSideMenuLayoutProps, NestSideMenuLayoutState, NestSideMenuLayout };
+export {NestSideMenuLayoutProps, NestSideMenuLayoutState, NestSideMenuLayout};

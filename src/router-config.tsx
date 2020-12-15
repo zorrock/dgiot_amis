@@ -1,7 +1,7 @@
 import React from 'react';
-import { CopyrightCircleOutlined } from "@ant-design/icons";
-import { LayoutConfig, LayoutType } from '@/utils/router';
-import { SideFirstMenuMode } from "@/components/Layout/GlobalSide";
+import {CopyrightCircleOutlined} from "@ant-design/icons";
+import {LayoutConfig, LayoutType} from '@/utils/router';
+import {SideFirstMenuMode} from "@/components/Layout/GlobalSide";
 
 const layoutSettings: LayoutSettings = {
   menu: {defaultOpen: true},
@@ -56,7 +56,7 @@ const routerConfigs: LayoutConfig[] = [
         name: "CURD",
         icon: "ProfileOutlined",
         routes: [
-          {path: "/00", name: "简单CURD", pagePath: "/amis/curd-00-schema.ts"},
+          {path: "/00", name: "简单CURD", icon: "TableOutlined", pagePath: "/amis/curd-00-schema.ts"},
         ],
       },
       {
@@ -64,7 +64,7 @@ const routerConfigs: LayoutConfig[] = [
         name: "表单",
         icon: "ContainerOutlined",
         routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+          {path: "/00", name: "简单表单", icon: "LayoutOutlined", pagePath: "/amis/form-00-schema.ts"},
         ],
       },
       // {
@@ -191,4 +191,4 @@ const routerConfigs: LayoutConfig[] = [
   }
 ];
 
-export { layoutSettings, routerConfigs };
+export {layoutSettings, routerConfigs};

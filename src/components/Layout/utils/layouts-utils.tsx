@@ -1,41 +1,9 @@
-import React, { CSSProperties } from 'react';
+import React, {CSSProperties} from 'react';
+import lodash from "lodash";
 import classNames from 'classnames';
-import { pathToRegexp } from "path-to-regexp";
-import { Menu } from 'antd';
-import AntdIcon, { AntdIconFont, createIconFontCN } from '@/components/AntdIcon';
+import {Menu} from 'antd';
+import AntdIcon, {AntdIconFont, createIconFontCN} from '@/components/AntdIcon';
 import styles from '../GlobalSide/SideFirstMenu.less';
-
-const urlReg = /(((^https?:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
-/** 判断字符串是完整url */
-const isUrl = (path: string): boolean => urlReg.test(path);
-
-/**
- * 把path转换成数组
- * /userInfo/2144/id => ['/userInfo','/userInfo/2144,'/userInfo/2144/id']
- * @param path URL路径
- */
-const pathToList = (path?: string): string[] => {
-  if (!path || path === '/') return ['/'];
-  const pathList = path.split('/').filter((i) => i);
-  return pathList.map((_, index) => `/${pathList.slice(0, index + 1).join('/')}`);
-};
-
-/**
- * 根据url path匹配到对应的RuntimeMenuItem
- * @param flattenMenuMap  拍平的菜单数据 Map&lt;RuntimeMenuItem.routerConfig.path, RuntimeMenuItem&gt;
- * @param path            url path
- */
-const pathMatchMenu = (flattenMenuMap: Map<String, RuntimeMenuItem>, path: string): RuntimeMenuItem | undefined => {
-  let currentMenu: RuntimeMenuItem | undefined = flattenMenuMap.get(path);
-  if (currentMenu) return currentMenu;
-  flattenMenuMap.forEach((menu, varPath) => {
-    if (currentMenu) return;
-    if (pathToRegexp(varPath.replace('?', '')).test(path)) {
-      currentMenu = menu;
-    }
-  });
-  return currentMenu;
-};
 
 /**
  * 获取当前一级菜单的Key
@@ -53,6 +21,107 @@ const getCurrentFirstMenuKey = (currentMenu?: RuntimeMenuItem): string | undefin
   }
   return currentFirstMenuKey;
 };
+
+/**
+ * 获取当前一级菜单
+ * @param layoutMenuData  全局Layout菜单数据
+ */
+const getCurrentFirstMenu = (layoutMenuData: LayoutMenuData): RuntimeMenuItem | undefined => {
+  const {flattenMenuMap} = layoutMenuData;
+  const currentFirstMenuKey = getCurrentFirstMenuKey(layoutMenuData.currentMenu);
+  if (!currentFirstMenuKey) return undefined;
+  let currentFirstMenu: RuntimeMenuItem | undefined = undefined;
+  flattenMenuMap.forEach((menu) => {
+    if (currentFirstMenu) return;
+    if (menu.menuKey === currentFirstMenuKey) currentFirstMenu = menu;
+  });
+  return currentFirstMenu;
+};
+
+/**
+ * 获取默认展开的菜单 - 默认实现
+ * @param menuDefaultOpen 是否默认展开菜单
+ * @param rootMenu        根菜单
+ * @param currentMenu     当前菜单
+ */
+const getDefaultOpenKeys = (menuDefaultOpen: boolean, rootMenu: RuntimeMenuItem, currentMenu: RuntimeMenuItem): string[] => {
+  const defaultOpenKeys: string[] = [];
+  const setOpenKeys = (menu: RuntimeMenuItem): void => {
+    if (!menu || !menu.children || menu.children.length <= 0 || menu.isHide) return;
+    const isOpen = menu.runtimeRouter.defaultOpen ?? menuDefaultOpen;
+    if (isOpen && menu.menuKey !== rootMenu.menuKey) {
+      defaultOpenKeys.push(menu.menuKey);
+    }
+    if (isOpen || menu.menuKey === rootMenu.menuKey) {
+      menu.children.forEach((childrenMenu) => setOpenKeys(childrenMenu));
+    }
+  };
+  setOpenKeys(rootMenu);
+  // 保证当前页面对应的父菜单都是展开状态
+  if (currentMenu && currentMenu.parentKeys && currentMenu.parentKeys.length > 0) {
+    let breakFlag = true;
+    currentMenu.parentKeys.forEach((key) => {
+      if (rootMenu.menuKey === key) {
+        breakFlag = false;
+        return;
+      }
+      if (breakFlag) return;
+      if (defaultOpenKeys.indexOf(key) === -1) {
+        defaultOpenKeys.push(key);
+      }
+    });
+  }
+  // console.log("getDefaultOpenKeys -> ", defaultOpenKeys);
+  return defaultOpenKeys;
+};
+
+/**
+ * 过滤菜单数据
+ * @param menuData    菜单数据
+ * @param searchValue 过滤关键字
+ */
+const getSideMenuData = (menuData: RuntimeMenuItem, searchValue: string): RuntimeMenuItem | undefined => {
+  // console.log("getSideMenuData ", menuData, searchValue);
+  if (searchValue === undefined || searchValue === null || lodash.trim(searchValue).length <= 0) return menuData;
+  const searchKey = searchValue.toLocaleLowerCase();
+  const showMenuKeys: Set<string> = new Set<string>([menuData.menuKey]);
+  // 过滤 - 收集匹配的 menu.key
+  const filterSearch = (menu: RuntimeMenuItem): void => {
+    if (menu.runtimeRouter.name && menu.runtimeRouter.name.toLocaleLowerCase().includes(searchKey)) {
+      showMenuKeys.add(menu.menuKey);
+      if (menu.parentKeys) {
+        menu.parentKeys.forEach((item) => showMenuKeys.add(item));
+      }
+    }
+    if (menu.children && menu.children.length > 0) {
+      menu.children.forEach((item) => filterSearch(item));
+    }
+  };
+  filterSearch(menuData);
+  if (showMenuKeys.size <= 1) return undefined;
+  const resMenu: RuntimeMenuItem = {...menuData, children: []};
+  const filterKey = (oldMenu: RuntimeMenuItem, newParentMenu: RuntimeMenuItem): void => {
+    let menu: RuntimeMenuItem | undefined;
+    if (showMenuKeys.has(oldMenu.menuKey)) {
+      // 构造子菜单
+      menu = {...oldMenu, children: []};
+      // if (!oldMenu.children) delete menu.children;
+      // 加入子菜单
+      if (!newParentMenu.children) newParentMenu.children = [];
+      newParentMenu.children.push(menu);
+    }
+    if (menu && oldMenu.children && oldMenu.children.length > 0) {
+      const parentMenu: RuntimeMenuItem = menu;
+      oldMenu.children.forEach((item) => filterKey(item, parentMenu));
+    }
+  };
+  if (menuData.children && menuData.children.length > 0) {
+    menuData.children.forEach((oldMenu) => filterKey(oldMenu, resMenu));
+  }
+  // console.log("getSideMenuData -> ", showMenuKeys, resMenu);
+  return resMenu;
+};
+
 
 /**
  * 获取页面标题
@@ -163,4 +232,14 @@ const getAntdMenuItems = (param: GetMenuNodeParam): React.ReactNode[] => {
   return nodes;
 };
 
-export { isUrl, pathToList, pathMatchMenu, getCurrentFirstMenuKey, getHtmlTitle, defaultCustomMenuItemRender, defaultMenuItemRender, getMenuIcon, getAntdMenuItems }
+export {
+  getCurrentFirstMenuKey,
+  getCurrentFirstMenu,
+  getDefaultOpenKeys,
+  getSideMenuData,
+  getHtmlTitle,
+  defaultCustomMenuItemRender,
+  defaultMenuItemRender,
+  getMenuIcon,
+  getAntdMenuItems
+}
