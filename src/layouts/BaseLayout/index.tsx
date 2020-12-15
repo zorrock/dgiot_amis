@@ -4,14 +4,21 @@ import classNames from "classnames";
 import { Helmet } from 'react-helmet';
 import { CloseOutlined } from '@ant-design/icons';
 import Tabs, { TabPane } from 'rc-tabs';
-
 import SimpleBarReact from 'simplebar-react';
-
 import { PageContent } from "@/components/Layout/PageContent";
 import { loadPageByPath } from "@/utils/amis-utils";
+import { getHtmlTitle } from "../utils/layouts-utils";
 import styles from './index.less';
 
 interface BaseLayoutProps extends LayoutPageComponentProps {
+  /** html页面title后缀 */
+  htmlTitleSuffix?: string;
+  /** 页面加载状态 */
+  loading?: boolean;
+  /** 是否隐藏全局页头 */
+  hideGlobalHeader?: boolean;
+  /** 是否隐藏全局页脚 */
+  hideGlobalFooter?: boolean;
 }
 
 interface BaseLayoutState {
@@ -34,9 +41,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 页面标题 */
   protected getHtmlTitle() {
+    const {route, htmlTitleSuffix} = this.props;
     return (
       <Helmet>
-        {/*<title>{getHtmlTitle(layoutMenuData, htmlTitleSuffix)}</title>*/}
+        <title>{getHtmlTitle(route, htmlTitleSuffix)}</title>
       </Helmet>
     );
   }

@@ -1,18 +1,10 @@
 import React, { CSSProperties } from 'react';
 import classNames from 'classnames';
-import { BaseLayout, BaseLayoutState } from "@/layouts/BaseLayout";
+import { BaseLayout, BaseLayoutProps, BaseLayoutState } from "@/layouts/BaseLayout";
 import styles from './index.less';
 
-interface NestSideMenuLayoutProps extends LayoutPageComponentProps {
+interface NestSideMenuLayoutProps extends BaseLayoutProps {
   // ----------------------------------------------------------------------------------- NestSideMenuLayout 主配置
-  /** html页面title后缀 */
-  htmlTitleSuffix?: string;
-  /** 页面加载状态 */
-  loading?: boolean;
-  /** 是否隐藏全局页头 */
-  hideGlobalHeader?: boolean;
-  /** 是否隐藏全局页脚 */
-  hideGlobalFooter?: boolean;
   /** Header高度(建议 32 ~ 64) */
   headerHeight: number;
   /** 侧边栏宽度(二级菜单宽度，建议 160 ~ 256) */

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { $rootMounted, initAppPage } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
-import { layoutToRuntime, locationHashMatch, RuntimeLayoutConfig } from "@/utils/router";
+import { layoutToRuntime, LayoutType, locationHashMatch, RuntimeLayoutConfig } from "@/utils/router";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { layoutSettings, routerConfigs } from './router-config';
 
@@ -27,6 +27,10 @@ interface ReactAppPageState {
   currentMenu?: RuntimeMenuItem;
   /** 当前根菜单(一级菜单) */
   rootMenus?: RuntimeMenuItem[];
+  /** location */
+  location?: RouterLocation;
+  /** 路由匹配参数 */
+  match?: RouteMatchParams;
 }
 
 class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
@@ -76,15 +80,28 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   }
 
   protected getNestSideLayout() {
-    // const {currentLayout} = this.state;
+    const {currentLayout, currentRouter, currentMenu, rootMenus, location, match} = this.state;
     return (
-      <NestSideMenuLayout/>
+      <NestSideMenuLayout
+        route={currentRouter}
+        location={location}
+        match={match}
+        rootRoutes={currentLayout?.routes}
+
+      />
     );
   }
 
   render() {
-    // const {initLocationHash} = this.props;
-    return this.getNestSideLayout();
+    const {currentLayout} = this.state;
+    if (!currentLayout) return "404";
+    if (currentLayout.layout === LayoutType.Blank) {
+      return "空白页 LayoutType.Blank";
+    }
+    if (currentLayout.layout === LayoutType.NestSide) {
+      return this.getNestSideLayout();
+    }
+    return "不支持的Layout";
   }
 }
 

@@ -54,7 +54,7 @@ const settings: Settings = {
     },
   },
   needAnalyzer: !!ANALYZER,
-  defaultTitle: "Tab页",
+  defaultTitle: "Amis Admin",
   define: {
     isProdEnv: NODE_ENV === "production",
   },

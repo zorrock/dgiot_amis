@@ -1,8 +1,8 @@
 import lodash from 'lodash';
-import { pathToRegexp } from 'path-to-regexp';
+import { match, pathToRegexp } from 'path-to-regexp';
 import stableStringify from "fast-json-stable-stringify";
 import { NestSideMenuLayoutProps } from "@/layouts/NestSideMenuLayout";
-import { noValue } from "@/utils/utils";
+import { getUrlParam, noValue } from "@/utils/utils";
 
 /** 布局类型 */
 enum LayoutType {
@@ -245,7 +245,9 @@ const routerMatch = (locationHash: string, runtimeRouter: RuntimeRouter): Runtim
     if (matchRuntimeRouter) return matchRuntimeRouter;
   }
   // 路径匹配
-  if (pathToRegexp(runtimeRouter.path).test(locationHash)) {
+  if (runtimeRouter.exact && runtimeRouter.path === locationHash) {
+    return runtimeRouter;
+  } else if (pathToRegexp(runtimeRouter.path).test(locationHash)) {
     return runtimeRouter;
   }
   return;
@@ -293,6 +295,10 @@ interface LocationHashMatchResult {
   currentMenu?: RuntimeMenuItem;
   /** 当前根菜单(一级菜单) */
   rootMenus?: RuntimeMenuItem[];
+  /** location */
+  location?: RouterLocation;
+  /** 路由匹配参数 */
+  match?: RouteMatchParams;
 }
 
 /** 页面路径匹配路由菜单等信息 */
@@ -302,7 +308,22 @@ const locationHashMatch = (locationHash: string, runtimeLayouts: RuntimeLayoutCo
   const currentMenu = routerToMenu(matched.matchedRouter);
   const rootMenus: RuntimeMenuItem[] = [];
   matched.matchedLayout.routes.forEach(route => rootMenus.push(routerToMenu(route)));
-  return {currentLayout: matched.matchedLayout, currentRouter: matched.matchedRouter, currentMenu, rootMenus};
+  const location: RouterLocation = {
+    state: routerHistory.getLocationState(locationHash),
+    hash: locationHash,
+    pathname: window.location.pathname,
+    search: window.location.search ?? "",
+    query: getUrlParam(),
+  };
+  const matchFuc = match<RouteMatchParams["params"]>(matched.matchedRouter.path);
+  const matchParams = matchFuc(locationHash);
+  const matchInfo: RouteMatchParams = {
+    isExact: matched.matchedRouter.exact ?? false,
+    path: window.location.pathname,
+    url: window.location.href,
+    params: (matchParams ? (matchParams.params ?? {}) : {}),
+  };
+  return {currentLayout: matched.matchedLayout, currentRouter: matched.matchedRouter, currentMenu, rootMenus, location, match: matchInfo};
 }
 
 export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu, layoutMatch, locationHashMatch };
