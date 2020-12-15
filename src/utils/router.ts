@@ -196,7 +196,7 @@ const routerToRuntime = (rootPath: string, current: RouterConfig, parent?: Runti
     });
   }
   return runtimeRouter;
-};
+}
 
 /** 把Layout配置转换成运行时Layout */
 const layoutToRuntime = (routerConfigs: LayoutConfig[]): RuntimeLayoutConfig[] => {
@@ -217,7 +217,7 @@ const getMenuKey = (runtimeRouter: RuntimeRouter): string => {
   return `${path}|${exact}|${stableStringify(pathVariable ?? {})}|${stableStringify(querystring ?? {})}|${name}|${redirect}`;
 }
 
-/** 把Router转换成Menu */
+/** 把Router转换成Menu(递归) */
 const routerToMenu = (runtimeRouter: RuntimeRouter, parent?: RuntimeMenuItem): RuntimeMenuItem => {
   const runtimeMenuItem: RuntimeMenuItem = {runtimeRouter, menuKey: getMenuKey(runtimeRouter), parentKeys: [], children: [], isHide: false};
   if (parent) {
@@ -251,12 +251,18 @@ const routerMatch = (locationHash: string, runtimeRouter: RuntimeRouter): Runtim
   return;
 }
 
-/** Layout匹配 */
-const layoutMatch = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): RuntimeLayoutConfig | undefined => {
+interface LayoutMatchResult {
+  matchedLayout: RuntimeLayoutConfig;
+  matchedRouter: RuntimeRouter;
+}
+
+/** Layout匹配(递归) */
+const layoutMatch = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LayoutMatchResult | undefined => {
   if (!runtimeLayouts || noValue(locationHash) || runtimeLayouts.length <= 0) return;
-  let runtimeLayoutConfig: RuntimeLayoutConfig | undefined = undefined;
+  let matchedLayout: RuntimeLayoutConfig | undefined = undefined;
+  let matchedRouter: RuntimeRouter | undefined = undefined;
   runtimeLayouts.forEach(runtimeLayout => {
-    if (runtimeLayoutConfig) return;
+    if (matchedLayout) return;
     const {path, routes} = runtimeLayout;
     if (!pathToRegexp(path, undefined, {end: false}).test(locationHash)) {
       return;
@@ -264,16 +270,39 @@ const layoutMatch = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]
     if (!routes || routes.length <= 0) {
       return;
     }
-    let runtimeRouter: RuntimeRouter | undefined = undefined;
     routes.forEach(route => {
-      if (runtimeRouter) return;
-      runtimeRouter = routerMatch(locationHash, route);
+      if (matchedRouter) return;
+      matchedRouter = routerMatch(locationHash, route);
     });
-    if (runtimeRouter) {
-      runtimeLayoutConfig = runtimeLayout;
+    if (matchedRouter) {
+      matchedLayout = runtimeLayout;
     }
   });
-  return runtimeLayoutConfig;
+  if (matchedLayout && matchedRouter) {
+    return {matchedLayout, matchedRouter}
+  }
+  return;
 }
 
-export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu, layoutMatch };
+interface LocationHashMatchResult {
+  /** 当前Layout */
+  currentLayout?: RuntimeLayoutConfig;
+  /** 当前Router */
+  currentRouter?: RuntimeRouter;
+  /** 当前Menu */
+  currentMenu?: RuntimeMenuItem;
+  /** 当前根菜单(一级菜单) */
+  rootMenus?: RuntimeMenuItem[];
+}
+
+/** 页面路径匹配路由菜单等信息 */
+const locationHashMatch = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LocationHashMatchResult | undefined => {
+  const matched = layoutMatch(locationHash, runtimeLayouts);
+  if (!matched) return;
+  const currentMenu = routerToMenu(matched.matchedRouter);
+  const rootMenus: RuntimeMenuItem[] = [];
+  matched.matchedLayout.routes.forEach(route => rootMenus.push(routerToMenu(route)));
+  return {currentLayout: matched.matchedLayout, currentRouter: matched.matchedRouter, currentMenu, rootMenus};
+}
+
+export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu, layoutMatch, locationHashMatch };

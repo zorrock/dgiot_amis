@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { $rootMounted, initAppPage } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
-import { layoutMatch, layoutToRuntime, RuntimeLayoutConfig } from "@/utils/router";
+import { layoutToRuntime, locationHashMatch, RuntimeLayoutConfig } from "@/utils/router";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { layoutSettings, routerConfigs } from './router-config';
 
@@ -17,9 +17,16 @@ interface ReactAppPageProps {
 }
 
 interface ReactAppPageState {
+  /** 页面路径 */
   locationHash: string;
-  /** 运行时路由配置 */
-  runtimeLayout?: RuntimeLayoutConfig;
+  /** 当前Layout */
+  currentLayout?: RuntimeLayoutConfig;
+  /** 当前Router */
+  currentRouter?: RuntimeRouter;
+  /** 当前Menu */
+  currentMenu?: RuntimeMenuItem;
+  /** 当前根菜单(一级菜单) */
+  rootMenus?: RuntimeMenuItem[];
 }
 
 class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
@@ -27,11 +34,17 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   constructor(props: ReactAppPageProps) {
     super(props);
     const initLocationHash = getLocationHash();
+    const matched = locationHashMatch(initLocationHash, props.runtimeLayouts);
+    const currentLayout = matched?.currentLayout;
+    const currentRouter = matched?.currentRouter;
+    const currentMenu = matched?.currentMenu;
+    const rootMenus = matched?.rootMenus;
     log.info("initLocationHash ->", initLocationHash);
-    this.state = {
-      locationHash: initLocationHash,
-      runtimeLayout: layoutMatch(initLocationHash, props.runtimeLayouts),
-    };
+    log.info("currentLayout ->", currentLayout);
+    log.info("currentRouter ->", currentRouter);
+    log.info("currentMenu ->", currentMenu);
+    log.info("rootMenus ->", rootMenus);
+    this.state = {locationHash: initLocationHash, currentLayout, currentRouter, currentMenu, rootMenus};
   }
 
   /** APP挂载之后的操作 */
@@ -48,14 +61,22 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   onLocationHashChange = (event: HashChangeEvent) => {
     const {runtimeLayouts} = this.props;
     const locationHash = getLocationHash();
+    const matched = locationHashMatch(locationHash, runtimeLayouts);
+    const currentLayout = matched?.currentLayout;
+    const currentRouter = matched?.currentRouter;
+    const currentMenu = matched?.currentMenu;
+    const rootMenus = matched?.rootMenus;
     log.info("event ->", event.newURL);
     log.info("locationHash ->", locationHash);
-    this.setState({locationHash, runtimeLayout: layoutMatch(locationHash, runtimeLayouts)})
+    log.info("currentLayout ->", currentLayout);
+    log.info("currentRouter ->", currentRouter);
+    log.info("currentMenu ->", currentMenu);
+    log.info("rootMenus ->", rootMenus);
+    this.setState({locationHash, currentLayout, currentRouter, currentMenu, rootMenus})
   }
 
   protected getNestSideLayout() {
-    const {runtimeLayout} = this.state;
-    log.info("runtimeLayout ->", runtimeLayout);
+    // const {currentLayout} = this.state;
     return (
       <NestSideMenuLayout/>
     );
