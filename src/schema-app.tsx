@@ -4,7 +4,7 @@ import { $rootMounted, initAppPage } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
 import { layoutToRuntime, RuntimeLayoutConfig } from "@/utils/router";
-import { NestSideLayout } from '@/layouts/NestSideLayout';
+import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { layoutSettings, routerConfigs } from './router-config';
 
 const log = logger.getLogger("src/schema-app.tsx");
@@ -45,11 +45,15 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     log.info("initLocationHash ->", getLocationHash());
   }
 
-  render() {
-    const {initLocationHash} = this.props;
+  protected getNestSideLayout() {
     return (
-      <NestSideLayout initLocationHash={initLocationHash}/>
+      <NestSideMenuLayout/>
     );
+  }
+
+  render() {
+    // const {initLocationHash} = this.props;
+    return this.getNestSideLayout();
   }
 }
 

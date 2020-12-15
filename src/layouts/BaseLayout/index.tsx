@@ -1,6 +1,7 @@
 import React from 'react';
 // import lodash from 'lodash';
 import classNames from "classnames";
+import { Helmet } from 'react-helmet';
 import { CloseOutlined } from '@ant-design/icons';
 import Tabs, { TabPane } from 'rc-tabs';
 
@@ -29,6 +30,15 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   constructor(props: P) {
     super(props);
+  }
+
+  /** 页面标题 */
+  protected getHtmlTitle() {
+    return (
+      <Helmet>
+        {/*<title>{getHtmlTitle(layoutMenuData, htmlTitleSuffix)}</title>*/}
+      </Helmet>
+    );
   }
 
   /** 页面内容 */

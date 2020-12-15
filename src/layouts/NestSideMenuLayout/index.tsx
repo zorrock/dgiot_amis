@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { BaseLayout, BaseLayoutState } from "@/layouts/BaseLayout";
 import styles from './index.less';
 
-export interface NestSideMenuLayoutProps extends LayoutPageComponentProps {
+interface NestSideMenuLayoutProps extends LayoutPageComponentProps {
   // ----------------------------------------------------------------------------------- NestSideMenuLayout 主配置
   /** html页面title后缀 */
   htmlTitleSuffix?: string;
@@ -55,14 +55,19 @@ export interface NestSideMenuLayoutProps extends LayoutPageComponentProps {
   /** Footer容器样式 */
   footerStyle?: CSSProperties;
   // ----------------------------------------------------------------------------------- GlobalSide 配置
+
   // ----------------------------------------------------------------------------------- SideMenu 配置
+
   // ----------------------------------------------------------------------------------- GlobalHeader 配置
+
   // ----------------------------------------------------------------------------------- PageContent 配置
+
   // ----------------------------------------------------------------------------------- GlobalFooter 配置
+
   // -----------------------------------------------------------------------------------
 }
 
-export interface NestSideMenuLayoutState extends BaseLayoutState {
+interface NestSideMenuLayoutState extends BaseLayoutState {
 
 }
 
@@ -126,13 +131,11 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
   render() {
     return (
       <>
-        {/*<Helmet>*/}
-        {/*  <title>{getHtmlTitle(layoutMenuData, htmlTitleSuffix)}</title>*/}
-        {/*</Helmet>*/}
+        {this.getHtmlTitle()}
         {this.getLayoutPage()}
       </>
     );
   }
 }
 
-export default NestSideMenuLayout;
+export { NestSideMenuLayoutProps, NestSideMenuLayoutState, NestSideMenuLayout };
