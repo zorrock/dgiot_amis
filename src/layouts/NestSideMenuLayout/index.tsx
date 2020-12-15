@@ -50,11 +50,9 @@ interface NestSideMenuLayoutProps extends BaseLayoutProps {
 
   // ----------------------------------------------------------------------------------- SideMenu 配置
 
-  // ----------------------------------------------------------------------------------- GlobalHeader 配置
 
   // ----------------------------------------------------------------------------------- PageContent 配置
 
-  // ----------------------------------------------------------------------------------- GlobalFooter 配置
 
   // -----------------------------------------------------------------------------------
 }
@@ -65,7 +63,9 @@ interface NestSideMenuLayoutState extends BaseLayoutState {
 
 class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMenuLayoutState> {
   /** props的默认值 */
-  static defaultProps: Readonly<Partial<NestSideMenuLayoutProps>> = {};
+  static defaultProps: Readonly<Partial<NestSideMenuLayoutProps>> = {
+    headerHeight: 40,
+  };
 
   constructor(props: NestSideMenuLayoutProps) {
     super(props);
@@ -81,6 +81,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
   /** 页面布局内容 */
   protected getLayoutPage() {
     const {
+      hideGlobalHeader, hideGlobalFooter, headerHeight,
       layoutClassName, layoutStyle, globalSideClassName, globalSideStyle, nestLayoutClassName, nestLayoutStyle,
       sideClassName, sideStyle, twoLevelNestLayoutClassName, twoLevelNestLayoutStyle, headerClassName, headerStyle,
       contentClassName, contentStyle, footerClassName, footerStyle,
@@ -105,15 +106,27 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
             }}>简单表单</a>
           </aside>
           <section className={classNames(styles.twoLevelNestLayout, twoLevelNestLayoutClassName)} style={twoLevelNestLayoutStyle}>
-            <header className={classNames(styles.header, headerClassName)} style={headerStyle}>
-              <div>页头</div>
-            </header>
+            {/* 全局页头 */}
+            {
+              !hideGlobalHeader &&
+              <header
+                className={classNames(styles.header, headerClassName)}
+                style={{...headerStyle, ...(headerHeight ? {height: headerHeight, lineHeight: `${headerHeight}px`} : {})}}
+              >
+                {this.getGlobalHeader()}
+              </header>
+            }
+            {/* 页面内容 */}
             <main className={classNames(styles.content, contentClassName)} style={contentStyle}>
               {this.getPageContent()}
             </main>
-            <footer className={classNames(styles.footer, footerClassName)} style={footerStyle}>
-              <div>页尾</div>
-            </footer>
+            {/* 全局页脚 */}
+            {
+              !hideGlobalFooter && this.existsFooter() &&
+              <footer className={classNames(styles.footer, footerClassName)} style={footerStyle}>
+                {this.getGlobalFooter()}
+              </footer>
+            }
           </section>
         </section>
       </section>

@@ -1,3 +1,5 @@
+import React from 'react';
+import { CopyrightCircleOutlined } from "@ant-design/icons";
 import { LayoutConfig, LayoutType } from '@/utils/router';
 
 const layoutSettings: LayoutSettings = {
@@ -40,7 +42,11 @@ const routerConfigs: LayoutConfig[] = [
   {
     path: "/nest-side",
     layout: LayoutType.NestSide,
-    layoutProps: {},
+    layoutProps: {
+      hideGlobalHeader: false,
+      hideGlobalFooter: false,
+      globalFooterCopyright: <>Copyright <CopyrightCircleOutlined/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>
+    },
     routes: [
       {path: "/curd-00", pagePath: "/amis/curd-00-schema.ts", name: "简单CURD"},
       {path: "/form-00", pagePath: "/amis/form-00-schema.ts", name: "简单表单"},
