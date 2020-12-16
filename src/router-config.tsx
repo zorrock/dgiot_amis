@@ -1,7 +1,7 @@
 import React from 'react';
-import {CopyrightCircleOutlined} from "@ant-design/icons";
-import {LayoutConfig, LayoutType} from '@/utils/router';
-import {SideFirstMenuMode} from "@/components/Layout/GlobalSide";
+import { CopyrightCircleOutlined } from "@ant-design/icons";
+import { LayoutConfig, LayoutType } from '@/utils/router';
+import { SideFirstMenuMode } from "@/components/Layout/GlobalSide";
 
 const layoutSettings: LayoutSettings = {
   menu: {defaultOpen: true},
@@ -51,6 +51,78 @@ const routerConfigs: LayoutConfig[] = [
       globalSideMenuMode: SideFirstMenuMode.AntdMenu,
     },
     routes: [
+      // 通用组件
+      {
+        path: '/general',
+        name: '通用组件',
+        icon: 'AppstoreOutlined',
+        routes: [
+          {path: '/icon', name: 'AntdIcon(图标)', icon: 'PictureOutlined', pagePath: '/amis/curd-00-schema.ts'},
+          {path: '/toolbar', name: 'ToolBar(工具栏)', icon: 'ToolOutlined', pagePath: '/amis/curd-00-schema.ts'},
+        ],
+      },
+      // 导航组件
+      {
+        path: '/navigation',
+        name: '导航组件',
+        icon: 'MenuOutlined',
+        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page-schema.ts'}],
+      },
+      // 页面布局
+      {
+        path: '/layout',
+        name: '页面布局',
+        icon: 'LayoutOutlined',
+        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page-schema.ts'}],
+      },
+      // 数据录入
+      {
+        path: '/data_entry',
+        name: '数据录入',
+        icon: 'FormOutlined',
+        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page-schema.ts'}],
+      },
+      // 数据展示
+      {
+        path: '/data_display',
+        name: '数据展示',
+        icon: 'ProfileOutlined',
+        routes: [
+          {
+            path: '/detail',
+            name: '数据详情',
+            icon: 'ContainerOutlined',
+            routes: [
+              {path: '/detail_table', name: '详情表格', pagePath: '/amis/empty-page-schema.ts'},
+              {path: '/detail_modal', name: '对话框详情表格', pagePath: '/amis/empty-page-schema.ts'},
+            ],
+          },
+          {
+            path: '/table',
+            name: 'Table表格',
+            icon: 'TableOutlined',
+            routes: [
+              {path: '/data_table_base', name: '数据表格(基本)', pagePath: '/amis/empty-page-schema.ts'},
+              {path: '/data_table_data', name: '数据表格(数据)', pagePath: '/amis/empty-page-schema.ts'},
+            ],
+          },
+        ],
+      },
+      // 反馈组件
+      {
+        path: '/feedback',
+        name: '反馈组件',
+        icon: 'SmileOutlined',
+        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page-schema.ts'}],
+      },
+      // 其他组件
+      {
+        path: '/component/other',
+        name: '其他组件',
+        icon: 'EllipsisOutlined',
+        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page-schema.ts'}],
+      },
+      // -------------------------------------------------------------------------
       {
         path: "/curd",
         name: "CURD",
@@ -67,46 +139,46 @@ const routerConfigs: LayoutConfig[] = [
           {path: "/00", name: "简单表单", icon: "LayoutOutlined", pagePath: "/amis/form-00-schema.ts"},
         ],
       },
-      // {
-      //   path: "/form1",
-      //   name: "表单1",
-      //   icon: "TableOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-      //   ],
-      // },
-      // {
-      //   path: "/form2",
-      //   name: "表单2",
-      //   icon: "LayoutOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-      //   ],
-      // },
-      // {
-      //   path: "/form3",
-      //   name: "表单3",
-      //   icon: "SmileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-      //   ],
-      // },
-      // {
-      //   path: "/form4",
-      //   name: "表单4",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-      //   ],
-      // },
-      // {
-      //   path: "/form5",
-      //   name: "表单5",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
-      //   ],
-      // },
+      {
+        path: "/form1",
+        name: "表单1",
+        icon: "TableOutlined",
+        routes: [
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+        ],
+      },
+      {
+        path: "/form2",
+        name: "表单2",
+        icon: "LayoutOutlined",
+        routes: [
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+        ],
+      },
+      {
+        path: "/form3",
+        name: "表单3",
+        icon: "SmileOutlined",
+        routes: [
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+        ],
+      },
+      {
+        path: "/form4",
+        name: "表单4",
+        icon: "ProfileOutlined",
+        routes: [
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+        ],
+      },
+      {
+        path: "/form5",
+        name: "表单5",
+        icon: "ProfileOutlined",
+        routes: [
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+        ],
+      },
       // {
       //   path: "/form6",
       //   name: "表单6",
@@ -191,4 +263,4 @@ const routerConfigs: LayoutConfig[] = [
   }
 ];
 
-export {layoutSettings, routerConfigs};
+export { layoutSettings, routerConfigs };
