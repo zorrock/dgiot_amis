@@ -1,12 +1,12 @@
-import React, {CSSProperties} from 'react';
+import React, { CSSProperties } from 'react';
 import Immutable from 'immutable';
 import classNames from 'classnames';
-import {MenuFoldOutlined, MenuUnfoldOutlined} from "@ant-design/icons";
-import {logger} from "@/utils/logger";
-import {BaseLayout, BaseLayoutProps, BaseLayoutState, DefaultSideMenuTopRender} from "@/layouts/BaseLayout";
-import {AntdMenuProps} from "@/components/Layout/layout-types";
-import {GlobalSide, GlobalSideProps, SideFirstMenuClickParam, SideFirstMenuMode, SideFirstMenuSelectParam} from "@/components/Layout/GlobalSide";
-import {getCurrentFirstMenu, getCurrentFirstMenuKey} from "@/components/Layout/utils/layouts-utils";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { logger } from "@/utils/logger";
+import { BaseLayout, BaseLayoutProps, BaseLayoutState, DefaultSideMenuTopRender } from "@/layouts/BaseLayout";
+import { AntdMenuProps } from "@/components/Layout/layout-types";
+import { GlobalSide, GlobalSideProps, SideFirstMenuClickParam, SideFirstMenuMode, SideFirstMenuSelectParam } from "@/components/Layout/GlobalSide";
+import { getCurrentFirstMenu, getCurrentFirstMenuKey } from "@/components/Layout/utils/layouts-utils";
 import styles from './index.less';
 
 const log = logger.getLogger("src/layouts/NestSideMenuLayout/index.tsx");
@@ -299,4 +299,4 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
   }
 }
 
-export {NestSideMenuLayoutProps, NestSideMenuLayoutState, NestSideMenuLayout};
+export { NestSideMenuLayoutProps, NestSideMenuLayoutState, NestSideMenuLayout };

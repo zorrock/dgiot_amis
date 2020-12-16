@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from "react-dom";
-import {$rootMounted, initAppPage} from '@/utils/amis-utils';
-import {getLocationHash} from '@/utils/utils';
-import {logger} from '@/utils/logger';
-import {layoutToRuntime, LayoutType, locationHashMatch, RuntimeLayoutConfig} from "@/utils/router";
-import {NestSideMenuLayout} from '@/layouts/NestSideMenuLayout';
-import {layoutSettings, routerConfigs} from './router-config';
-import {getLayoutMenuData} from "@/components/Layout/utils/menu-data";
+import { $rootMounted, initAppPage } from '@/utils/amis-utils';
+import { getLocationHash } from '@/utils/utils';
+import { logger } from '@/utils/logger';
+import { layoutToRuntime, LayoutType, locationHashMatch, RuntimeLayoutConfig } from "@/utils/router";
+import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
+import { layoutSettings, routerConfigs } from './router-config';
+import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 
 const log = logger.getLogger("src/schema-app.tsx");
 

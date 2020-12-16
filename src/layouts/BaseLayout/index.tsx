@@ -410,4 +410,4 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   }
 }
 
-export {DefaultSideMenuBottomRender, DefaultSideMenuTopRender, BaseLayoutProps, BaseLayoutState, BaseLayout};
+export { DefaultSideMenuBottomRender, DefaultSideMenuTopRender, BaseLayoutProps, BaseLayoutState, BaseLayout };

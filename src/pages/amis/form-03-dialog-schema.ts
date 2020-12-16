@@ -129,13 +129,13 @@ const schema = {
                     size: 'lg', actions: [],
                     body: {
                       type: "crud",
+                      name: "button-dialog-crud",
                       syncLocation: false,
                       keepItemSelectionOnPageChange: true,
                       api: {
                         method: "get",
                         url: `${serverHost}/!/amis-api/curd-page@curdQuery`,
                       },
-
                       columns: [
                         {name: "orderId", label: "订单编号", sortable: true},
                         {name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper),},
@@ -146,6 +146,8 @@ const schema = {
                         {
                           actionType: 'reload',
                           label: '选择',
+                          size: "md",
+                          level: "primary",
                           target: 'form?f7=${selected}',
                           onClick: (event: any, context: any) => {
                             let selected = Array.from(context.data.f7 || []);
@@ -161,7 +163,21 @@ const schema = {
                           },
                         }
                       ],
-                      headerToolbar: ['bulkActions'],
+                      headerToolbar: [
+                        {
+                          type: "form",
+                          mode: "inline",
+                          target: "button-dialog-crud",
+                          wrapWithPanel: false,
+                          controls: [
+                            {
+                              type: "text", name: "orderCode", placeholder: "输入订单编号", inputClassName: WidthClassName.width24x,
+                              addOn: {type: "submit", label: "查询", icon: "fa fa-search pull-left"},
+                            },
+                          ]
+                        },
+                        {align: "left", type: "bulkActions"},
+                      ],
                     },
                   },
                 },
