@@ -1,18 +1,18 @@
-import React, {CSSProperties} from 'react';
+import React, { CSSProperties } from 'react';
 import Immutable from 'immutable';
 import classNames from "classnames";
-import {Helmet} from 'react-helmet';
-import {CloseOutlined} from '@ant-design/icons';
-import Tabs, {TabPane} from 'rc-tabs';
+import { Helmet } from 'react-helmet';
+import { CloseOutlined } from '@ant-design/icons';
+import Tabs, { TabPane } from 'rc-tabs';
 import SimpleBarReact from 'simplebar-react';
-import {getPropOrStateValue} from "@/utils/utils";
-import {loadPageByPath} from "@/utils/amis-utils";
-import {PageContent} from "@/components/Layout/PageContent";
-import {GlobalFooter, GlobalFooterLink, GlobalFooterProps} from "@/components/Layout/GlobalFooter";
-import {GlobalHeader, GlobalHeaderProps} from "@/components/Layout/GlobalHeader";
-import {getCurrentFirstMenu, getDefaultOpenKeys, getHtmlTitle, getSideMenuData} from "@/components/Layout/utils/layouts-utils";
-import {SideMenu, SideMenuProps, SideSecondMenuClickParam, SideSecondMenuOpenChangeParam, SideSecondMenuSelectParam} from "@/components/Layout/SideMenu";
-import {AntdInputSearchProps, AntdMenuProps, AntdMenuTheme} from "@/components/Layout/layout-types";
+import { getPropOrStateValue } from "@/utils/utils";
+import { loadPageByPath } from "@/utils/amis-utils";
+import { PageContent } from "@/components/Layout/PageContent";
+import { GlobalFooter, GlobalFooterLink, GlobalFooterProps } from "@/components/Layout/GlobalFooter";
+import { GlobalHeader, GlobalHeaderProps } from "@/components/Layout/GlobalHeader";
+import { getCurrentFirstMenu, getDefaultOpenKeys, getHtmlTitle, getSideMenuData } from "@/components/Layout/utils/layouts-utils";
+import { SideMenu, SideMenuProps, SideSecondMenuClickParam, SideSecondMenuOpenChangeParam, SideSecondMenuSelectParam } from "@/components/Layout/SideMenu";
+import { AntdInputSearchProps, AntdMenuProps, AntdMenuTheme } from "@/components/Layout/layout-types";
 import styles from './index.less';
 
 type DefaultSideMenuBottomRender = (
@@ -318,6 +318,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         onMenuClick={(param) => {
           if (sideMenuOnMenuClick instanceof Function) sideMenuOnMenuClick(param);
           // this.sideMenuOnMenuClick(param);
+          this.addTabPage("1", "/amis/form-03-dialog-schema.ts");
+          // this.addTabPage("1", "/amis/00-tmp-schema.ts");
         }}
         onMenuOpenChange={(param) => {
           if (sideMenuOnMenuOpenChange instanceof Function) sideMenuOnMenuOpenChange(param);

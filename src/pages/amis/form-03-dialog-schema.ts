@@ -93,6 +93,7 @@ const schema = {
         className: classnames(DialogClassName.width55x),
         body: {
           type: "form",
+          name: "form",
           controls: [
             {
               type: "fieldSet",
@@ -122,21 +123,62 @@ const schema = {
               controls: [
                 {type: "text", name: "f6", label: "供货范围", required: false, placeholder: "请输入", clearable: true},
                 {type: "html", html: "<br />"},
-                {type: "button", actionType: "dialog", label: "添加供应商", icon: "fa fa-plus"},
+                {
+                  type: "button", actionType: "dialog", label: "添加供应商", icon: "fa fa-plus",
+                  dialog: {
+                    size: 'lg', actions: [],
+                    body: {
+                      type: "crud",
+                      syncLocation: false,
+                      keepItemSelectionOnPageChange: true,
+                      api: {
+                        method: "get",
+                        url: `${serverHost}/!/amis-api/curd-page@curdQuery`,
+                      },
+
+                      columns: [
+                        {name: "orderId", label: "订单编号", sortable: true},
+                        {name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper),},
+                        {name: "shipName", label: "收货人姓名", sortable: true},
+                        {name: "shipMobile", label: "手机号", sortable: true},
+                      ],
+                      bulkActions: [
+                        {
+                          actionType: 'reload',
+                          label: '选择',
+                          target: 'form?f7=${selected}',
+                          onClick: (event: any, context: any) => {
+                            let selected = Array.from(context.data.f7 || []);
+                            context.data.selectedItems
+                              .filter((item: any) => item != null)
+                              .forEach((item1: any) => {
+                                if (!selected.some((item2: any) => item1.orderId === item2.orderId)) {
+                                  selected.push(item1);
+                                }
+                              });
+                            context.data.selected = selected.sort((item1: any, item2: any) => item1.orderId - item2.orderId);
+                            context.store.parentStore.parentStore.closeDialog();
+                          },
+                        }
+                      ],
+                      headerToolbar: ['bulkActions'],
+                    },
+                  },
+                },
                 {type: "button", actionType: "dialog", label: "删除", icon: "fa fa-times"},
                 {type: "html", html: "<br />"},
                 {
-                  type: "table",
+                  type: "crud",
                   name: "f7",
                   className: classnames(styles.formItemValueFull, HeightClassName.height_unset),
                   inputClassName: classnames(WidthClassName.width_full),
-                  // addable: true,
-                  // removable: true,
+                  // addable: true, removable: true,
+                  primaryField: "orderId",
                   columns: [
-                    {name: "t1", label: "供应商编码"},
-                    {name: "t2", label: "供应商名称"},
-                    {name: "t3", label: "采购员"},
-                    {name: "t4", label: "业务联系人"},
+                    {name: "orderId", label: "订单编号", sortable: true},
+                    {name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper),},
+                    {name: "shipName", label: "收货人姓名", sortable: true},
+                    {name: "shipMobile", label: "手机号", sortable: true},
                   ],
                 },
               ],
