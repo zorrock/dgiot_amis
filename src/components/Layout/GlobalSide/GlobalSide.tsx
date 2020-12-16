@@ -92,7 +92,7 @@ class GlobalSide extends React.Component<GlobalSideProps, GlobalSideState> {
     }
     return (
       <div key="logo" className={classNames(styles.logo, logoClassName)} style={logoStyle} onClick={onLogoClick}>
-        {logo ?? <img src={antdLogo} alt="logo" style={{width: 36}}/>}
+        {logo ?? <img src={antdLogo} alt="logo" style={{width: 32}}/>}
       </div>
     );
   }
