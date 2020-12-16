@@ -351,29 +351,27 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   protected getPageContent() {
     const {tabPages, activePageKey} = this.state;
     return (
-      <PageContent>
-        <Tabs
-          className={styles.tabs}
-          type={"editable-card"}
-          tabPosition={"top"}
-          hideAdd={true}
-          animated={{inkBar: false, tabPane: false}}
-          tabBarGutter={8}
-          tabBarStyle={{}}
-          activeKey={activePageKey}
-          tabBarExtraContent={{right: <div>更多</div>}}
-          onEdit={(targetKey, action) => {
-            if (action !== "remove") return;
-            const newTabPanes = tabPages.filter(item => targetKey !== item.key);
-            this.setState({tabPages: newTabPanes});
-          }}
-          onChange={undefined}
-          onTabClick={undefined}
-          onTabScroll={undefined}
-        >
-          {tabPages}
-        </Tabs>
-      </PageContent>
+      <Tabs
+        className={styles.tabs}
+        type={"editable-card"}
+        tabPosition={"top"}
+        hideAdd={true}
+        animated={{inkBar: false, tabPane: false}}
+        tabBarGutter={8}
+        tabBarStyle={{background: '#f0f2f5'}}
+        activeKey={activePageKey}
+        tabBarExtraContent={{right: <div>更多</div>}}
+        onEdit={(targetKey, action) => {
+          if (action !== "remove") return;
+          const newTabPanes = tabPages.filter(item => targetKey !== item.key);
+          this.setState({tabPages: newTabPanes});
+        }}
+        onChange={undefined}
+        onTabClick={undefined}
+        onTabScroll={undefined}
+      >
+        {tabPages}
+      </Tabs>
     );
   }
 
@@ -393,13 +391,15 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   protected addTabPage(id: string, path: string) {
     const {tabPages} = this.state;
     if (tabPages.findIndex(item => item.key === `TabPaneKey-${id}`) === -1) {
-      tabPages.push((
+      tabPages.push(
         <Tabs.TabPane key={`TabPaneKey-${id}`} tab={`TabPane-${id}`} forceRender={true} closable={true}>
-          <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-            <div id={`AmisId-${id}`} key={`AmisKey-${id}`}/>
-          </SimpleBarReact>
+          <PageContent>
+            <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
+              <div id={`AmisId-${id}`} key={`AmisKey-${id}`}/>
+            </SimpleBarReact>
+          </PageContent>
         </Tabs.TabPane>
-      ));
+      );
     }
     this.setState(
       {tabPages, activePageKey: `TabPaneKey-${id}`},

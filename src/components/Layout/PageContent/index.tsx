@@ -5,17 +5,10 @@ interface PageContentProps extends PageContextProps {
 }
 
 interface PageContentState {
-  // /** 是否存在滚动条 */
-  // multiTabNavHasScroll: boolean;
-  // /** 多页签容器scrollLeft值 */
-  // multiTabNavMultiTabScrollLeft?: number;
 }
 
 class PageContent extends React.Component<PageContentProps, PageContentState> {
-  // state = {
-  //   multiTabNavHasScroll: false,
-  //   multiTabNavMultiTabScrollLeft: undefined,
-  // };
+  state = {};
 
   public render() {
     const {children, ...globalContextProps} = this.props;
