@@ -121,8 +121,6 @@ const schema = {
               mode: "inline",
               className: classnames(FormClassName.label4x, FormClassName.input20x),
               controls: [
-                {type: "text", name: "f6", label: "供货范围", required: false, placeholder: "请输入", clearable: true},
-                {type: "html", html: "<br />"},
                 {
                   type: "button", actionType: "dialog", label: "添加供应商", icon: "fa fa-plus",
                   dialog: {
@@ -136,6 +134,10 @@ const schema = {
                         method: "get",
                         url: `${serverHost}/!/amis-api/curd-page@curdQuery`,
                       },
+                      defaultParams: {pageNo: 1, pageSize: 10},
+                      pageField: "pageNo",
+                      perPageField: "pageSize",
+                      primaryField: "orderId",
                       columns: [
                         {name: "orderId", label: "订单编号", sortable: true},
                         {name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper),},
@@ -171,7 +173,7 @@ const schema = {
                           wrapWithPanel: false,
                           controls: [
                             {
-                              type: "text", name: "orderCode", placeholder: "输入订单编号", inputClassName: WidthClassName.width24x,
+                              type: "text", name: "orderId", placeholder: "输入订单编号", inputClassName: WidthClassName.width24x,
                               addOn: {type: "submit", label: "查询", icon: "fa fa-search pull-left"},
                             },
                           ]
@@ -181,14 +183,13 @@ const schema = {
                     },
                   },
                 },
-                {type: "button", actionType: "dialog", label: "删除", icon: "fa fa-times"},
                 {type: "html", html: "<br />"},
                 {
-                  type: "crud",
+                  type: "table",
                   name: "f7",
                   className: classnames(styles.formItemValueFull, HeightClassName.height_unset),
                   inputClassName: classnames(WidthClassName.width_full),
-                  // addable: true, removable: true,
+                  removable: true,
                   primaryField: "orderId",
                   columns: [
                     {name: "orderId", label: "订单编号", sortable: true},
@@ -196,6 +197,11 @@ const schema = {
                     {name: "shipName", label: "收货人姓名", sortable: true},
                     {name: "shipMobile", label: "手机号", sortable: true},
                   ],
+                  bulkActions: [
+                    {label: "批量操作1"},
+                    {label: "批量操作2"},
+                  ],
+                  headerToolbar: [{align: "left", type: "bulkActions"}],
                 },
               ],
             },
