@@ -4,64 +4,9 @@
   height: 100%;
   border: none;
 
-  // 多页签页签导航部分
-  :global(.rc-tabs-nav) {
-    height: 40px;
-    // 多页签页签导航部分 - wrap
-    :global(.rc-tabs-nav-wrap) {
-      :global(.rc-tabs-nav-list) {
-        // 页签项 - 导航
-        :global(.rc-tabs-tab) {
-          min-width: 64px;
-
-          :global(.rc-tabs-tab-btn) {
-            &:focus {
-              outline: none;
-            }
-          }
-        }
-
-        // 页签项 - 活动导航
-        :global(.rc-tabs-tab-active) {
-
-        }
-      }
-    }
-  }
-
-  // 多页签内容 - holder
-  :global(.rc-tabs-content-holder) {
-    width: 100%;
-    height: 100%;
-
-    &:focus {
-      outline: none;
-    }
-
-    // 多页签内容
-    :global(.rc-tabs-content) {
-      width: 100%;
-      height: 100%;
-
-      &:focus {
-        outline: none;
-      }
-
-      // 页签项 - 内容
-      :global(.rc-tabs-tabpane) {
-        &:focus {
-          outline: none;
-        }
-
-        :global(.amis-scope) {
-          overflow: visible;
-        }
-      }
-
-      // 页签项 - 活动内容
-      :global(.rc-tabs-tabpane-active) {
-
-      }
+  :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab-with-remove .anticon-close) {
+    &:hover {
+      color: #f5222d;
     }
   }
 }

@@ -2,8 +2,7 @@ import React, { CSSProperties } from 'react';
 import Immutable from 'immutable';
 import classNames from "classnames";
 import { Helmet } from 'react-helmet';
-import { CloseOutlined } from '@ant-design/icons';
-import Tabs, { TabPane } from 'rc-tabs';
+import { Tabs } from 'antd';
 import SimpleBarReact from 'simplebar-react';
 import { getPropOrStateValue } from "@/utils/utils";
 import { loadPageByPath } from "@/utils/amis-utils";
@@ -355,23 +354,22 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       <PageContent>
         <Tabs
           className={styles.tabs}
-          animated={false}
+          type={"editable-card"}
           tabPosition={"top"}
+          hideAdd={true}
+          animated={{inkBar: false, tabPane: false}}
           tabBarGutter={8}
+          tabBarStyle={{}}
           activeKey={activePageKey}
-          tabBarExtraContent={<div>更多</div>}
-          onTabClick={activeKey => this.setState({activePageKey: activeKey})}
-          editable={{
-            onEdit: (type, info) => {
-              if (!info.key) return;
-              if (type === "remove") {
-                const newTabPanes = tabPages.filter(item => info.key !== item.key);
-                this.setState({tabPages: newTabPanes});
-              }
-            },
-            showAdd: false,
-            removeIcon: <CloseOutlined/>,
+          tabBarExtraContent={{right: <div>更多</div>}}
+          onEdit={(targetKey, action) => {
+            if (action !== "remove") return;
+            const newTabPanes = tabPages.filter(item => targetKey !== item.key);
+            this.setState({tabPages: newTabPanes});
           }}
+          onChange={undefined}
+          onTabClick={undefined}
+          onTabScroll={undefined}
         >
           {tabPages}
         </Tabs>
@@ -396,11 +394,11 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     const {tabPages} = this.state;
     if (tabPages.findIndex(item => item.key === `TabPaneKey-${id}`) === -1) {
       tabPages.push((
-        <TabPane key={`TabPaneKey-${id}`} tab={`TabPane-${id}`} forceRender={true} closable={true}>
+        <Tabs.TabPane key={`TabPaneKey-${id}`} tab={`TabPane-${id}`} forceRender={true} closable={true}>
           <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
             <div id={`AmisId-${id}`} key={`AmisKey-${id}`}/>
           </SimpleBarReact>
-        </TabPane>
+        </Tabs.TabPane>
       ));
     }
     this.setState(
