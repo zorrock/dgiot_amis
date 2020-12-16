@@ -1,5 +1,6 @@
 import memoizeOne from 'memoize-one';
 import isEqual from 'lodash.isequal';
+import { getMenuItemByKey } from "./layouts-utils";
 
 /**
  * 拍平的菜单数据
@@ -91,7 +92,16 @@ const getLayoutMenuData = (params: GetLayoutMenuDataParams): LayoutMenuData => {
   });
   // 当前访问Url地址
   const currentPath = location.pathname ?? '/';
-  return {rootMenus, showRootMenus, flattenMenuMap, flattenMenu, currentPath, currentMenu};
+  // 当前访问页面对应的显示菜单(显示逻辑对应关系)
+  let showCurrentMenu: RuntimeMenuItem | undefined = (currentMenu && !currentMenu.isHide) ? currentMenu : undefined;
+  if (!showCurrentMenu && currentMenu && currentMenu.parentKeys && currentMenu.parentKeys.length > 0) {
+    const parentKeys = currentMenu.parentKeys.reverse();
+    parentKeys.forEach(key => {
+      if (showCurrentMenu) return;
+      showCurrentMenu = getMenuItemByKey(flattenMenuMap, key);
+    });
+  }
+  return {rootMenus, showRootMenus, flattenMenuMap, flattenMenu, currentPath, currentMenu, showCurrentMenu};
 }
 
 export { GetLayoutMenuDataParams, getLayoutMenuData };

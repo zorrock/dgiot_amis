@@ -1,8 +1,11 @@
-import React, {CSSProperties} from 'react';
+import React, { CSSProperties } from 'react';
 import lodash from "lodash";
 import classNames from 'classnames';
-import {Menu} from 'antd';
-import AntdIcon, {AntdIconFont, createIconFontCN} from '@/components/AntdIcon';
+import { Menu } from 'antd';
+import { compile } from "path-to-regexp";
+import qs from "qs";
+import baseX from "base-x";
+import AntdIcon, { AntdIconFont, createIconFontCN } from '@/components/AntdIcon';
 import styles from '../GlobalSide/SideFirstMenu.less';
 
 /**
@@ -122,6 +125,64 @@ const getSideMenuData = (menuData: RuntimeMenuItem, searchValue: string): Runtim
   return resMenu;
 };
 
+/**
+ * 根据 menuKey 获取 RuntimeMenuItem
+ * @param flattenMenuMap  拍平的菜单数据
+ * @param key             菜单唯一Key(menuKey)
+ */
+const getMenuItemByKey = (flattenMenuMap: Map<String, RuntimeMenuItem>, key: string): RuntimeMenuItem | undefined => {
+  let menuItem: RuntimeMenuItem | undefined = undefined;
+  flattenMenuMap.forEach((menu) => {
+    if (menuItem) return;
+    if (menu.menuKey === key) menuItem = menu;
+  });
+  return menuItem;
+};
+
+/**
+ * 根据RuntimeMenuItem进行跳转页面
+ * @param menuData                跳转菜单
+ * @param location                当前Location
+ * @param pageJumpBeforeCalBack 跳转前的回调函数
+ */
+const pageJumpForRouter = (menuData: RuntimeMenuItem, location: RouterLocation, pageJumpBeforeCalBack?: Function): boolean => {
+  const {runtimeRouter} = menuData;
+  let {search: currentSearch, hash: currentHash} = location;
+  currentSearch = currentSearch && currentSearch.startsWith("?") ? currentSearch.substring(1) : currentSearch;
+  currentHash = currentHash && currentHash.startsWith("#") ? currentHash.substring(1) : currentHash;
+  const currentPath = lodash.trim(currentSearch).length > 0 ? `${currentSearch}#${currentHash}` : currentHash;
+  let newPath: string | undefined;
+  let newHash: string | undefined;
+  if (runtimeRouter.path) {
+    newHash = runtimeRouter.path ?? "";
+    if (newHash.indexOf(':') >= 0 && runtimeRouter.pathVariable) {
+      newHash = compile(newHash)(runtimeRouter.pathVariable);
+    }
+    if (runtimeRouter.querystring) {
+      newPath = `${qs.stringify(runtimeRouter.querystring)}#${newHash}`;
+    } else {
+      newPath = newHash;
+    }
+  } else if (runtimeRouter.redirect) {
+    newPath = runtimeRouter.redirect;
+  }
+  // console.log("pageJumpForMenu -> ", currentUrlPath, newUrlPath);
+  if (!newPath || currentPath === newPath) {
+    return false;
+  }
+  // umiHistory.push({pathname: newPathname, search: qs.stringify(router.querystring), query: router.querystring});
+  if (pageJumpBeforeCalBack instanceof Function) {
+    pageJumpBeforeCalBack();
+  }
+  return true;
+}
+
+const BASE62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const base62Converter = baseX(BASE62);
+/** base62编码 */
+const base62Encode = (str: string): string => {
+  return base62Converter.encode(new Buffer(str));
+}
 
 /**
  * 获取页面标题
@@ -237,6 +298,9 @@ export {
   getCurrentFirstMenu,
   getDefaultOpenKeys,
   getSideMenuData,
+  getMenuItemByKey,
+  pageJumpForRouter,
+  base62Encode,
   getHtmlTitle,
   defaultCustomMenuItemRender,
   defaultMenuItemRender,

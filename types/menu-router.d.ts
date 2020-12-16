@@ -165,6 +165,8 @@ interface LayoutMenuData {
   currentPath: string;
   /** 当前访问页面对应的菜单 */
   currentMenu?: RuntimeMenuItem;
+  /** 当前访问页面对应的显示菜单(显示逻辑对应关系) */
+  showCurrentMenu?: RuntimeMenuItem;
 }
 
 /** 路由菜单设置 */

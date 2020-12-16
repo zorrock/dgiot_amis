@@ -4,15 +4,18 @@ import classNames from "classnames";
 import { Helmet } from 'react-helmet';
 import { Tabs } from 'antd';
 import SimpleBarReact from 'simplebar-react';
+import { logger } from "@/utils/logger";
 import { getPropOrStateValue } from "@/utils/utils";
 import { loadPageByPath } from "@/utils/amis-utils";
 import { PageContent } from "@/components/Layout/PageContent";
 import { GlobalFooter, GlobalFooterLink, GlobalFooterProps } from "@/components/Layout/GlobalFooter";
 import { GlobalHeader, GlobalHeaderProps } from "@/components/Layout/GlobalHeader";
-import { getCurrentFirstMenu, getDefaultOpenKeys, getHtmlTitle, getSideMenuData } from "@/components/Layout/utils/layouts-utils";
+import { base62Encode, getCurrentFirstMenu, getDefaultOpenKeys, getHtmlTitle, getSideMenuData } from "@/components/Layout/utils/layouts-utils";
 import { SideMenu, SideMenuProps, SideSecondMenuClickParam, SideSecondMenuOpenChangeParam, SideSecondMenuSelectParam } from "@/components/Layout/SideMenu";
 import { AntdInputSearchProps, AntdMenuProps, AntdMenuTheme } from "@/components/Layout/layout-types";
 import styles from './index.less';
+
+const log = logger.getLogger("src/layouts/BaseLayout/index.tsx");
 
 type DefaultSideMenuBottomRender = (
   props: Omit<SideMenuProps, 'topRender'>,
@@ -202,6 +205,21 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     super(props);
   }
 
+  componentDidMount() {
+    const {layoutMenuData} = this.props;
+    if (!layoutMenuData.currentMenu) return;
+    this.addTabPage(layoutMenuData.currentMenu);
+  }
+
+  public shouldComponentUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
+    const {layoutMenuData} = nextProps;
+    log.info("shouldComponentUpdate currentMenu -> ", layoutMenuData?.currentMenu);
+    if (layoutMenuData.currentMenu) this.addTabPage(layoutMenuData.currentMenu);
+    return true;
+  }
+
+  // -----------------------------------------------------------------------------------
+
   /** 页面标题 */
   protected getHtmlTitle() {
     const {route, htmlTitleSuffix} = this.props;
@@ -257,15 +275,15 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     // 事件 onSearchMenu onSearchValueChange onMenuClick onMenuOpenChange
     // 扩展 menuTheme? bottomRender scrollbarClassName?
     if (!layoutMenuData.currentMenu) return undefined;
-    // if (!layoutMenuData.showCurrentMenu) return undefined;
+    if (!layoutMenuData.showCurrentMenu) return undefined;
     const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
     if (!currentFirstMenu) return undefined;
     const searchValue = sideMenuSearchValueMap.get(currentFirstMenu.menuKey) || '';
     const currentPath = layoutMenuData.currentPath;
     const menuData = currentFirstMenu;
     // 选中的菜单
-    const defaultSelectedKeys: string[] = [layoutMenuData.currentMenu.menuKey]; // showCurrentMenu
-    const selectedKeys: string[] = [layoutMenuData.currentMenu.menuKey]; // showCurrentMenu
+    const defaultSelectedKeys: string[] = [layoutMenuData.showCurrentMenu.menuKey];
+    const selectedKeys: string[] = [layoutMenuData.showCurrentMenu.menuKey];
     // 保存当前二级菜单
     sideMenuSelectedKeysMap.set(currentFirstMenu.menuKey, {menuKey: layoutMenuData.currentMenu.menuKey, location});
     // 展开的菜单
@@ -293,11 +311,11 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         searchValue={this.props.sideMenuSearchValue || searchValue}
         onSearchMenu={(value, event) => {
           if (sideMenuOnSearchMenu instanceof Function) sideMenuOnSearchMenu(value, event);
-          // this.sideMenuOnSearchMenu(value, event);
+          this.sideMenuOnSearchMenu(value);
         }}
         onSearchValueChange={(value, event) => {
           if (sideMenuOnSearchValueChange instanceof Function) sideMenuOnSearchValueChange(value, event);
-          // this.sideMenuOnSearchValueChange(value, event);
+          this.sideMenuOnSearchValueChange(value);
         }}
         searchClassName={this.props.sideMenuSearchClassName}
         searchStyle={this.props.sideMenuSearchStyle}
@@ -316,9 +334,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         onMenuSelect={this.props.sideMenuOnMenuSelect}
         onMenuClick={(param) => {
           if (sideMenuOnMenuClick instanceof Function) sideMenuOnMenuClick(param);
-          // this.sideMenuOnMenuClick(param);
-          this.addTabPage("1", "/amis/form-03-dialog-schema.ts");
-          // this.addTabPage("1", "/amis/00-tmp-schema.ts");
+          this.sideMenuOnMenuClick(param);
+          // this.addTabPage("1", "/amis/form-03-dialog-schema.ts");
         }}
         onMenuOpenChange={(param) => {
           if (sideMenuOnMenuOpenChange instanceof Function) sideMenuOnMenuOpenChange(param);
@@ -350,6 +367,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   /** 页面内容 */
   protected getPageContent() {
     const {tabPages, activePageKey} = this.state;
+    if (!tabPages || tabPages.length <= 0) return;
     return (
       <Tabs
         className={styles.tabs}
@@ -367,7 +385,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           this.setState({tabPages: newTabPanes});
         }}
         onChange={undefined}
-        onTabClick={undefined}
+        onTabClick={activeKey => {
+          // pageJumpForRouter
+          this.setState({activePageKey: activeKey});
+        }}
         onTabScroll={undefined}
       >
         {tabPages}
@@ -388,22 +409,64 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     return getPropOrStateValue('menuCollapsed', this.props, this.state);
   }
 
-  protected addTabPage(id: string, path: string) {
-    const {tabPages} = this.state;
-    if (tabPages.findIndex(item => item.key === `TabPaneKey-${id}`) === -1) {
-      tabPages.push(
-        <Tabs.TabPane key={`TabPaneKey-${id}`} tab={`TabPane-${id}`} forceRender={true} closable={true}>
-          <PageContent>
-            <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-              <div id={`AmisId-${id}`} key={`AmisKey-${id}`}/>
-            </SimpleBarReact>
-          </PageContent>
-        </Tabs.TabPane>
-      );
+  /** 二级菜单过滤事件 */
+  protected sideMenuOnSearchMenu(value: string): void {
+    const {layoutMenuData} = this.props;
+    const {sideMenuSearchValueMap} = this.state;
+    const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
+    if (!currentFirstMenu) return;
+    this.setState({sideMenuSearchValueMap: sideMenuSearchValueMap.set(currentFirstMenu.menuKey, value)});
+  }
+
+  /** 二级菜单过滤关键字改变事件 */
+  protected sideMenuOnSearchValueChange(value: string): void {
+    const {layoutMenuData} = this.props;
+    const {sideMenuSearchValueMap} = this.state;
+    const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
+    if (!currentFirstMenu) return;
+    this.setState({sideMenuSearchValueMap: sideMenuSearchValueMap.set(currentFirstMenu.menuKey, value)});
+  }
+
+  /** 二级菜单点击跳转页面事件 */
+  protected sideMenuOnMenuClick(param: SideSecondMenuClickParam): void {
+    console.log(param);
+    // const {sideMenuSelectedKeysMap} = this.state;
+    // const {layoutMenuData, location} = this.props;
+    // const {menuData: routerMenu} = param;
+    // const currentFirstMenuKey = getCurrentFirstMenuKey(layoutMenuData.currentMenu);
+    // pageJumpForRouter({currentLocation: location, router: routerMenu.routerConfig}, () => {
+    //   if (currentFirstMenuKey) {
+    //     sideMenuSelectedKeysMap.set(currentFirstMenuKey, {menuKey: routerMenu.menuKey, location});
+    //   }
+    // });
+  }
+
+  /** 新增标签页 */
+  protected addTabPage(menuData: RuntimeMenuItem) {
+    let {tabPages, activePageKey} = this.state;
+    const tabPaneKey = `tabPaneKey-${menuData.menuKey}`;
+    const amisId = `amisId-${base62Encode(menuData.menuKey)}`;
+    const amisKey = `amisKey-${menuData.menuKey}`;
+    log.info("routerName -> ", menuData.runtimeRouter?.name);
+    log.info("amisId -> ", amisId);
+    log.info("pagePath -> ", menuData.runtimeRouter?.pagePath);
+    if (tabPages.findIndex(item => item.key === tabPaneKey) >= 0) {
+      if (activePageKey !== tabPaneKey) this.setState({activePageKey: tabPaneKey});
+      return;
     }
+    tabPages = [...tabPages];
+    tabPages.push(
+      <Tabs.TabPane key={tabPaneKey} tab={menuData.runtimeRouter.name} forceRender={true} closable={true}>
+        <PageContent>
+          <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
+            <div id={amisId} key={amisKey}/>
+          </SimpleBarReact>
+        </PageContent>
+      </Tabs.TabPane>
+    );
     this.setState(
-      {tabPages, activePageKey: `TabPaneKey-${id}`},
-      async () => await loadPageByPath(`AmisId-${id}`, path, {})
+      {tabPages, activePageKey: tabPaneKey},
+      async () => await loadPageByPath(amisId, menuData.runtimeRouter.pagePath!, {})
     );
   }
 }

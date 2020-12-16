@@ -2173,6 +2173,13 @@ balanced-match@^1.0.0:
   resolved "https://registry.npm.taobao.org/balanced-match/download/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
+base-x@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.npm.taobao.org/base-x/download/base-x-3.0.8.tgz#1e1106c2537f0162e8b52474a557ebb09000018d"
+  integrity sha1-HhEGwlN/AWLotSR0pVfrsJAAAY0=
+  dependencies:
+    safe-buffer "^5.0.1"
+
 base16@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/base16/download/base16-1.0.0.tgz#e297f60d7ec1014a7a971a39ebc8a98c0b681e70"
@@ -7674,7 +7681,7 @@ rc-mentions@~1.5.0:
     rc-trigger "^5.0.4"
     rc-util "^5.0.1"
 
-rc-menu@^8.0.1, rc-menu@^8.10.1, rc-menu@^8.6.1, rc-menu@~8.10.0:
+rc-menu@^8.0.1, rc-menu@^8.6.1, rc-menu@~8.10.0:
   version "8.10.1"
   resolved "https://registry.npm.taobao.org/rc-menu/download/rc-menu-8.10.1.tgz?cache=0&sync_timestamp=1606290071272&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-menu%2Fdownload%2Frc-menu-8.10.1.tgz#5637d85760ea6bd6ead49f44ae29686c5cc59798"
   integrity sha1-VjfYV2Dqa9bq1J9ErilobFzFl5g=
@@ -7819,7 +7826,7 @@ rc-table@~7.11.0:
     rc-util "^5.4.0"
     shallowequal "^1.1.0"
 
-rc-tabs@^11.7.2, rc-tabs@~11.7.0:
+rc-tabs@~11.7.0:
   version "11.7.2"
   resolved "https://registry.npm.taobao.org/rc-tabs/download/rc-tabs-11.7.2.tgz?cache=0&sync_timestamp=1606307606587&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-tabs%2Fdownload%2Frc-tabs-11.7.2.tgz#d9443e471859b9dad81dc70abbdaefe40b1db5ab"
   integrity sha1-2UQ+RxhZudrYHccKu9rv5Asdtas=
@@ -7891,7 +7898,7 @@ rc-upload@~3.3.1:
     classnames "^2.2.5"
     rc-util "^5.2.0"
 
-rc-util@^5.0.0, rc-util@^5.0.5, rc-util@^5.0.6, rc-util@^5.0.7, rc-util@^5.1.0, rc-util@^5.2.0, rc-util@^5.4.0, rc-util@^5.5.1:
+rc-util@^5.0.0, rc-util@^5.0.5, rc-util@^5.0.6, rc-util@^5.0.7, rc-util@^5.1.0, rc-util@^5.2.0, rc-util@^5.4.0:
   version "5.5.1"
   resolved "https://registry.npm.taobao.org/rc-util/download/rc-util-5.5.1.tgz?cache=0&sync_timestamp=1607394262041&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-util%2Fdownload%2Frc-util-5.5.1.tgz#8c75a115c09bd9b80ce17eb3457c9b221df6f526"
   integrity sha1-jHWhFcCb2bgM4X6zRXybIh329SY=

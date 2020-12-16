@@ -146,6 +146,8 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
   }
 
   componentDidMount() {
+    super.componentDidMount();
+    console.log("!!!####");
   }
 
   /** 全局侧边栏(一级菜单) */

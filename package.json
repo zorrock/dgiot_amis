@@ -20,6 +20,7 @@
     "ncu-u": "ncu -u"
   },
   "dependencies": {
+    "base-x": "^3.0.8",
     "classnames": "^2.2.6",
     "qs": "^6.9.4",
     "lodash": "^4.17.20",
@@ -39,10 +40,7 @@
     "react-helmet": "^6.1.0",
     "amis": "^1.0.19",
     "antd": "^4.9.2",
-    "rc-util": "^5.5.1",
     "@ant-design/icons": "^4.3.0",
-    "rc-menu": "^8.10.1",
-    "rc-tabs": "^11.7.2",
     "simplebar": "^5.3.0",
     "simplebar-react": "^2.3.0"
   },

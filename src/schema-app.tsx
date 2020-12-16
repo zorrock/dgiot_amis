@@ -62,7 +62,6 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
   /** Location Hash更新事件 */
   onLocationHashChange = (event: HashChangeEvent) => {
-    log.info("event ->", event.newURL);
     const {runtimeLayouts, layoutSettings} = this.props;
     const locationHash = getLocationHash();
     const matched = locationHashMatch(layoutSettings.menu, locationHash, runtimeLayouts);
@@ -72,6 +71,8 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     const rootMenus = matched?.rootMenus;
     const location = matched?.location;
     const match = matched?.match;
+    log.info("event ->", event.newURL);
+    log.info("locationHash ->", locationHash);
     this.setState({locationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match})
     log.info("newState ->", this.state);
   }
