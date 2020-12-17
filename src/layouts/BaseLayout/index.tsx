@@ -543,6 +543,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 关闭标签页 */
   protected closeTabPage(multiTabKey: string) {
+    const {location} = this.props;
     const {multiTabs, tabPageMap} = this.state;
     if (!tabPageMap.delete(multiTabKey)) return;
     const delIndex = multiTabs.findIndex(tab => tab.multiTabKey === multiTabKey);
@@ -550,8 +551,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     multiTabs.splice(delIndex, 1);
     if (multiTabs.length <= 0) {
       // TODO 怎么处理 hash
-      routerHistory.push({hash: "/"});
-      // this.forceUpdate();
+      // routerHistory.push({hash: "/"});
+      this.forceUpdate();
       return;
     }
     const array = lodash.sortBy(multiTabs, (tabTmp) => {
@@ -559,8 +560,14 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       return tabTmp.lastActiveTime;
     });
     const multiTab = array[array.length - 1];
-    multiTab.lastActiveTime = new Date().getTime();
-    routerHistory.push(multiTab.location);
+    const currentLocationUnique = routerLocationToStr(location)
+    const newLocationUnique = routerLocationToStr(multiTab.location)
+    if (currentLocationUnique === newLocationUnique) {
+      this.forceUpdate();
+    } else {
+      multiTab.lastActiveTime = new Date().getTime();
+      routerHistory.push(multiTab.location);
+    }
   }
 }
 
