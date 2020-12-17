@@ -18,6 +18,8 @@ interface Window {
   //   _store: any;
   //   [propName: string]: any;
   // };
+  /** 当前显示的 Amis Mounted Dom Id */
+  currentAmisId: string;
 }
 
 /** 是否是生产环境 */

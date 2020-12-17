@@ -4,7 +4,7 @@ import classNames from "classnames";
 import Immutable from 'immutable';
 import { Helmet } from 'react-helmet';
 import { ArrowLeftOutlined, ArrowRightOutlined, CloseOutlined, CloseSquareOutlined, MoreOutlined } from "@ant-design/icons";
-import { Dropdown, Menu, Tabs } from 'antd';
+import { Dropdown, Menu, Spin, Tabs } from 'antd';
 import SimpleBarReact from 'simplebar-react';
 import { logger } from "@/utils/logger";
 import { getPropOrStateValue } from "@/utils/utils";
@@ -531,15 +531,20 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       <Tabs.TabPane key={multiTabKey} tab={runtimeRouter.name} forceRender={true} closable={true}>
         <PageContent>
           <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-            <div id={newMultiTab.mountedDomId} key={newMultiTab.mountedDomId} className={styles.pageContent}/>
+            <Spin tip="Loading..." spinning={false}>
+              <div id={newMultiTab.mountedDomId} key={newMultiTab.mountedDomId} className={styles.pageContent}/>
+            </Spin>
           </SimpleBarReact>
         </PageContent>
       </Tabs.TabPane>
     ));
     log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", runtimeRouter.name, "pagePath -> ", runtimeRouter.pagePath);
+    window.currentAmisId = newMultiTab.mountedDomId;
     this.setState(
       {activePageKey: multiTabKey, multiTabs, tabPageMap},
-      async () => await loadPageByPath(newMultiTab.mountedDomId, runtimeRouter.pagePath!, {})
+      async () => {
+        await loadPageByPath(newMultiTab.mountedDomId, runtimeRouter.pagePath!, {});
+      }
     );
   }
 
@@ -562,8 +567,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     multiTabs.splice(delIndex, 1);
     if (multiTabs.length <= 0) {
       // TODO 怎么处理 hash
-      // routerHistory.push({hash: "/"});
-      this.forceUpdate();
+      routerHistory.push({hash: "/"});
+      // this.forceUpdate();
       return;
     }
     const array = lodash.sortBy(multiTabs, (tabTmp) => {

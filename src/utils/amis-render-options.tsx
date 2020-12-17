@@ -135,10 +135,10 @@ const amisRenderOptions: RenderOptions = {
   /** 渲染器解析实现 */
   // rendererResolver:(path, schema, props) => {},
   /** 用来决定弹框容器 */
-  // getModalContainer: () => {
-  //   log.info("getModalContainer");
-  //   return document.querySelectorAll<HTMLElement>("body main")[0]!;
-  // },
+  getModalContainer: () => {
+    log.info("getModalContainer");
+    return document.getElementById(window.currentAmisId)!;
+  },
   /** 用于懒加载自定义组件 */
   // loadRenderer:(schema, path, reRender) => {},
   /** 固顶间距，当你的有其他固顶元素时，需要设置一定的偏移量，否则会重叠 */
