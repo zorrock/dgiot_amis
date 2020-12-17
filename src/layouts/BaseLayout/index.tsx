@@ -451,6 +451,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     );
   }
 
+
   // -----------------------------------------------------------------------------------
 
   /** 是否存在页脚(Footer容器) */
@@ -524,18 +525,19 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       isHomePage: false,
       lastActiveTime: new Date().getTime(),
       showClose: true,
+      loading: true,
     };
     const {runtimeRouter} = layoutMenuData.currentMenu;
     multiTabs.push(newMultiTab);
     tabPageMap.set(multiTabKey, (
       <Tabs.TabPane key={multiTabKey} tab={runtimeRouter.name} forceRender={true} closable={true}>
-        <PageContent>
-          <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-            <Spin tip="Loading..." spinning={false}>
+        <Spin size={"default"} tip="页面加载中..." spinning={true} style={{height: "100%"}}>
+          <PageContent>
+            <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
               <div id={newMultiTab.mountedDomId} key={newMultiTab.mountedDomId} className={styles.pageContent}/>
-            </Spin>
-          </SimpleBarReact>
-        </PageContent>
+            </SimpleBarReact>
+          </PageContent>
+        </Spin>
       </Tabs.TabPane>
     ));
     log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", runtimeRouter.name, "pagePath -> ", runtimeRouter.pagePath);
@@ -544,6 +546,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       {activePageKey: multiTabKey, multiTabs, tabPageMap},
       async () => {
         await loadPageByPath(newMultiTab.mountedDomId, runtimeRouter.pagePath!, {});
+        newMultiTab.loading = false;
+        this.forceUpdate();
       }
     );
   }

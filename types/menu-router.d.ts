@@ -139,6 +139,8 @@ interface MultiTabItem {
   lastActiveTime: number;
   /** 是否显示关闭按钮 */
   showClose: boolean;
+  /** 当前页签加载状态 */
+  loading: boolean;
 }
 
 /** 全局Layout菜单数据 */
