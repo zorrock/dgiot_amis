@@ -139,6 +139,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState> {
    */
   public getSecondMenu() {
     const {
+      menuCollapsed,
       currentPath,
       menuData,
       menuIconScriptUrl,
@@ -165,6 +166,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState> {
     } = this.props;
     const secondMenu = (
       <SideSecondMenu
+        menuCollapsed={menuCollapsed}
         key="secondMenu"
         currentPath={currentPath}
         menuData={menuData}

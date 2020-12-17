@@ -253,7 +253,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
           {/* 二级侧边栏 - 二级级菜单 */}
           {
             currentFirstMenu && currentFirstMenu.children && currentFirstMenu.children.length > 0 &&
-            <aside className={classNames(styles.layoutSide, sideClassName)} style={{...sideStyle, width: sideMenuWidth}}>
+            <aside className={classNames(styles.layoutSide, sideClassName)} style={{...sideStyle, width: this.getMenuCollapsed() ? 48 : sideMenuWidth}}>
               {this.getSideMenu(undefined, this.sideMenuTopRender)}
             </aside>
           }

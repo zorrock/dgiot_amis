@@ -491,12 +491,12 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 二级菜单展开/折叠事件 */
   protected sideMenuOnMenuOpenChange(param: SideSecondMenuOpenChangeParam): void {
-    const { layoutMenuData } = this.props;
-    const { menuCollapsed, sideMenuOpenKeysMap } = this.state;
+    const {layoutMenuData} = this.props;
+    const {menuCollapsed, sideMenuOpenKeysMap} = this.state;
     if (menuCollapsed) return;
     const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
     if (!currentFirstMenu) return;
-    this.setState({ sideMenuOpenKeysMap: sideMenuOpenKeysMap.set(currentFirstMenu.menuKey, param.openKeys) });
+    this.setState({sideMenuOpenKeysMap: sideMenuOpenKeysMap.set(currentFirstMenu.menuKey, param.openKeys)});
   }
 
   /** 新增或显示标签页 */

@@ -36,6 +36,8 @@ interface TitleEventEntityParam {
 }
 
 interface SideSecondMenuProps {
+  /** 菜单折叠状态(true:已折叠) */
+  menuCollapsed: boolean;
   /** 当前url path */
   currentPath: string;
   /** 菜单数据 */
@@ -161,6 +163,7 @@ class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenu
 
   public render() {
     const {
+      menuCollapsed,
       currentPath,
       menuData,
       menuTheme,
@@ -190,6 +193,10 @@ class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenu
         mode="inline"
         multiple={false}
         theme={menuTheme ?? 'light'}
+        inlineIndent={17}
+        collapsedWidth={48}
+        siderCollapsed={menuCollapsed}
+        // inlineCollapsed={menuCollapsed}
         onSelect={(eventParams) => {
           if (onMenuSelect instanceof Function) {
             // @ts-ignore

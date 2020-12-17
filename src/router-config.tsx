@@ -103,7 +103,7 @@ const routerConfigs: LayoutConfig[] = [
             icon: 'TableOutlined',
             routes: [
               {path: '/data_table_base', name: '数据表格(基本)', pagePath: '/amis/empty-page-schema.ts'},
-              {path: '/data_table_data', name: '数据表格(数据)', pagePath: '/amis/curd-01-general-schema.ts'},
+              {path: '/data_table_data', name: '数据表格(数据)', pagePath: '/amis/form-03-dialog-schema.ts'},
             ],
           },
         ],
