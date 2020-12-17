@@ -10,8 +10,36 @@
     }
   }
 
+  :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab .ant-tabs-tab-btn) {
+    font-weight: bold;
+
+    &:hover {
+      color: #1890ff;
+    }
+  }
+
   :global(.amis-scope) {
     background-color: #ffffff;
+  }
+
+  .multiTabButton {
+    background-color: #ffffff;
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 8px;
+    font-size: 16px;
+    line-height: 1em;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      color: #1890ff;
+    }
+
+    &:active {
+      background: #e6f7ff;
+    }
   }
 }
 

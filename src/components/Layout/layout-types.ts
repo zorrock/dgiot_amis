@@ -45,6 +45,9 @@ type AntdBreadcrumbProps = BreadcrumbProps;
 // antd/es/page-header BreadcrumbProps
 type AntdPageHeaderProps = PageHeaderProps;
 
+/** “更多”按钮操作选项key */
+type MoreButtonEventKey = 'closeLeft' | 'closeRight' | 'closeOther' | 'closeAll';
+
 export {
   AntdMenuClickParam,
   AntdTagType,
@@ -55,4 +58,5 @@ export {
   AntdSiderProps,
   AntdBreadcrumbProps,
   AntdPageHeaderProps,
+  MoreButtonEventKey,
 };

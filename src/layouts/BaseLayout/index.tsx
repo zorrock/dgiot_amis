@@ -2,7 +2,8 @@ import React, { CSSProperties } from 'react';
 import Immutable from 'immutable';
 import classNames from "classnames";
 import { Helmet } from 'react-helmet';
-import { Tabs } from 'antd';
+import { ArrowLeftOutlined, ArrowRightOutlined, CloseOutlined, CloseSquareOutlined, MoreOutlined } from "@ant-design/icons";
+import { Dropdown, Menu, Tabs } from 'antd';
 import SimpleBarReact from 'simplebar-react';
 import { logger } from "@/utils/logger";
 import { getPropOrStateValue } from "@/utils/utils";
@@ -12,7 +13,7 @@ import { GlobalFooter, GlobalFooterLink, GlobalFooterProps } from "@/components/
 import { GlobalHeader, GlobalHeaderProps } from "@/components/Layout/GlobalHeader";
 import { base62Encode, getCurrentFirstMenu, getDefaultOpenKeys, getHtmlTitle, getSideMenuData } from "@/components/Layout/utils/layouts-utils";
 import { SideMenu, SideMenuProps, SideSecondMenuClickParam, SideSecondMenuOpenChangeParam, SideSecondMenuSelectParam } from "@/components/Layout/SideMenu";
-import { AntdInputSearchProps, AntdMenuProps, AntdMenuTheme } from "@/components/Layout/layout-types";
+import { AntdInputSearchProps, AntdMenuClickParam, AntdMenuProps, AntdMenuTheme, MoreButtonEventKey } from "@/components/Layout/layout-types";
 import styles from './index.less';
 
 const log = logger.getLogger("src/layouts/BaseLayout/index.tsx");
@@ -53,7 +54,8 @@ interface BaseLayoutProps extends LayoutPageComponentProps {
   hideGlobalFooter?: boolean;
   /** 菜单-默认展开子菜单 */
   defaultOpen?: boolean;
-  /** 自定义 LayoutMenuData 数据处理 */
+  /** 点击更多按钮项事件 */
+  onClickMoreButton?: (param: AntdMenuClickParam, eventKey: MoreButtonEventKey) => void;
   // ----------------------------------------------------------------------------------- GlobalHeader 配置
   /** 左侧区域class样式 */
   globalHeaderLeftClassName?: string;
@@ -364,6 +366,45 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     );
   }
 
+  /** 多页签栏，更多按钮 */
+  protected getMoreButton(): React.ReactNode {
+    const { onClickMoreButton } = this.props;
+    return (
+      <Dropdown
+        trigger={['click']}
+        placement="bottomLeft"
+        overlay={
+          <Menu
+            onClick={(event) => {
+              if (onClickMoreButton instanceof Function) onClickMoreButton(event, event.key as MoreButtonEventKey);
+            }}
+          >
+            <Menu.Item key="closeLeft">
+              <ArrowLeftOutlined />
+              关闭左侧
+            </Menu.Item>
+            <Menu.Item key="closeRight">
+              <ArrowRightOutlined />
+              关闭右侧
+            </Menu.Item>
+            <Menu.Item key="closeOther">
+              <CloseOutlined />
+              关闭其它
+            </Menu.Item>
+            <Menu.Item key="closeAll">
+              <CloseSquareOutlined />
+              全部关闭
+            </Menu.Item>
+          </Menu>
+        }
+      >
+        <div className={classNames(styles.multiTabButton)}>
+          <MoreOutlined />
+        </div>
+      </Dropdown>
+    );
+  }
+
   /** 页面内容 */
   protected getPageContent() {
     const {tabPages, activePageKey} = this.state;
@@ -375,10 +416,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         tabPosition={"top"}
         hideAdd={true}
         animated={{inkBar: false, tabPane: false}}
-        tabBarGutter={8}
-        tabBarStyle={{background: '#f0f2f5'}}
+        tabBarGutter={4}
+        tabBarStyle={{background: '#f6f6f6'}}
         activeKey={activePageKey}
-        tabBarExtraContent={{right: <div>更多</div>}}
+        tabBarExtraContent={{right: this.getMoreButton()}}
         onEdit={(targetKey, action) => {
           if (action !== "remove") return;
           const newTabPanes = tabPages.filter(item => targetKey !== item.key);
