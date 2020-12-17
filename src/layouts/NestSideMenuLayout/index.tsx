@@ -135,7 +135,6 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
       sideMenuSearchValueMap: Immutable.Map<string, string>(),
       activePageKey: undefined,
       multiTabs: [],
-      tabPageMap: new Map<string, React.ReactElement>(),
     };
   }
 

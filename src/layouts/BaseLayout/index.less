@@ -83,14 +83,6 @@
     bottom: -2px;
   }
 
-  :global(.ant-spin-nested-loading) {
-    height: 100%;
-  }
-
-  :global(.ant-spin-nested-loading .ant-spin.ant-spin-spinning) {
-    max-height: unset;
-  }
-
   :global(.amis-scope) {
     background-color: #ffffff;
     overflow: visible;
@@ -116,6 +108,19 @@
     &:active {
       background-color: #e6f7ff;
     }
+  }
+}
+
+/* --------------------------------------------------------------------------------------------------------------------- Spin组件自定义样式 */
+.spinWrapper {
+  height: 100%;
+
+  :global(.ant-spin-container) {
+    height: 100%;
+  }
+
+  :global(.ant-spin.ant-spin-spinning) {
+    max-height: unset;
   }
 }
 

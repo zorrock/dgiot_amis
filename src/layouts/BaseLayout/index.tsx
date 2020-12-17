@@ -209,13 +209,6 @@ interface BaseLayoutState {
    * 多页签信息
    */
   multiTabs: MultiTabItem[];
-  /**
-   * 多页签页面
-   * <pre>
-   *   Map<MultiTabItem.multiTabKey, Tabs.TabPane>
-   * </pre>
-   */
-  tabPageMap: Map<string, React.ReactElement>;
 }
 
 class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends React.Component<P, S> {
@@ -226,13 +219,6 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   componentDidMount() {
     this.addOrShowTabPage();
   }
-
-  // shouldComponentUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
-  //   const {layoutMenuData} = nextProps;
-  //   log.info("shouldComponentUpdate currentMenu -> ", layoutMenuData?.currentMenu);
-  //   if (layoutMenuData.currentMenu) this.addTabPage(layoutMenuData.currentMenu);
-  //   return true;
-  // }
 
   componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot?: any) {
     this.addOrShowTabPage();
@@ -422,10 +408,28 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     );
   }
 
+  /** 获取多标签页页面 */
+  protected getTabPages(multiTabs: MultiTabItem[]) {
+    return multiTabs.map(tab => {
+      const {mountedDomId, multiTabKey, menuItem: {runtimeRouter}, loading} = tab;
+      return (
+        <Tabs.TabPane key={multiTabKey} tab={runtimeRouter.name} forceRender={true} closable={true}>
+          <Spin size={"default"} spinning={loading} delay={200} tip="页面加载中..." style={{height: "100%"}} wrapperClassName={styles.spinWrapper}>
+            <PageContent>
+              <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
+                <div id={mountedDomId} key={mountedDomId} className={styles.pageContent}/>
+              </SimpleBarReact>
+            </PageContent>
+          </Spin>
+        </Tabs.TabPane>
+      );
+    });
+  }
+
   /** 页面内容 */
   protected getPageContent() {
-    const {tabPageMap, activePageKey} = this.state;
-    if (!tabPageMap || tabPageMap.size <= 0) return;
+    const {multiTabs, activePageKey} = this.state;
+    if (!multiTabs || multiTabs.length <= 0) return;
     return (
       <Tabs
         className={styles.tabs}
@@ -446,11 +450,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         onTabClick={activeKey => this.jumpTabPage(activeKey)}
         onTabScroll={undefined}
       >
-        {[...tabPageMap.values()]}
+        {this.getTabPages(multiTabs)}
       </Tabs>
     );
   }
-
 
   // -----------------------------------------------------------------------------------
 
@@ -505,7 +508,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   protected addOrShowTabPage() {
     const {location, layoutMenuData} = this.props;
     if (!layoutMenuData.currentMenu) return;
-    const {activePageKey, multiTabs, tabPageMap} = this.state;
+    const {activePageKey, multiTabs} = this.state;
     const multiTabKey = base62Encode(routerLocationToStr(location));
     const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);
     if (multiTab) {
@@ -529,21 +532,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     };
     const {runtimeRouter} = layoutMenuData.currentMenu;
     multiTabs.push(newMultiTab);
-    tabPageMap.set(multiTabKey, (
-      <Tabs.TabPane key={multiTabKey} tab={runtimeRouter.name} forceRender={true} closable={true}>
-        <Spin size={"default"} tip="页面加载中..." spinning={true} style={{height: "100%"}}>
-          <PageContent>
-            <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-              <div id={newMultiTab.mountedDomId} key={newMultiTab.mountedDomId} className={styles.pageContent}/>
-            </SimpleBarReact>
-          </PageContent>
-        </Spin>
-      </Tabs.TabPane>
-    ));
     log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", runtimeRouter.name, "pagePath -> ", runtimeRouter.pagePath);
     window.currentAmisId = newMultiTab.mountedDomId;
     this.setState(
-      {activePageKey: multiTabKey, multiTabs, tabPageMap},
+      {activePageKey: multiTabKey, multiTabs},
       async () => {
         await loadPageByPath(newMultiTab.mountedDomId, runtimeRouter.pagePath!, {});
         newMultiTab.loading = false;
@@ -564,8 +556,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   /** 关闭标签页 */
   protected closeTabPage(multiTabKey: string) {
     const {location} = this.props;
-    const {multiTabs, tabPageMap} = this.state;
-    if (!tabPageMap.delete(multiTabKey)) return;
+    const {multiTabs} = this.state;
     const delIndex = multiTabs.findIndex(tab => tab.multiTabKey === multiTabKey);
     if (delIndex < 0) return;
     multiTabs.splice(delIndex, 1);
