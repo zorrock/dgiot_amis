@@ -543,9 +543,24 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 关闭标签页 */
   protected closeTabPage(multiTabKey: string) {
-    const {multiTabs} = this.state;
-    const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);
-    if (!multiTab) return;
+    const {multiTabs, tabPageMap} = this.state;
+    if (!tabPageMap.delete(multiTabKey)) return;
+    const delIndex = multiTabs.findIndex(tab => tab.multiTabKey === multiTabKey);
+    if (delIndex < 0) return;
+    multiTabs.splice(delIndex, 1);
+    if (multiTabs.length <= 0) {
+      // TODO 怎么处理 hash
+      routerHistory.push({hash: "/"});
+      // this.forceUpdate();
+      return;
+    }
+    const array = lodash.sortBy(multiTabs, (tabTmp) => {
+      if (!tabTmp || !tabTmp.lastActiveTime) return 0;
+      return tabTmp.lastActiveTime;
+    });
+    const multiTab = array[array.length - 1];
+    multiTab.lastActiveTime = new Date().getTime();
+    routerHistory.push(multiTab.location);
   }
 }
 
