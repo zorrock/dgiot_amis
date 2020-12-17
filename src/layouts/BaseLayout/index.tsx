@@ -358,7 +358,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         }}
         onMenuOpenChange={(param) => {
           if (sideMenuOnMenuOpenChange instanceof Function) sideMenuOnMenuOpenChange(param);
-          // this.sideMenuOnMenuOpenChange(param);
+          this.sideMenuOnMenuOpenChange(param);
         }}
         onSubMenuTitleClick={this.props.sideMenuOnSubMenuTitleClick}
         menuClassName={this.props.sideMenuMenuClassName}
@@ -487,6 +487,16 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     const routerLocation = menuToRouterLocation(menuData);
     if (!routerLocation) return;
     routerHistory.push(routerLocation);
+  }
+
+  /** 二级菜单展开/折叠事件 */
+  protected sideMenuOnMenuOpenChange(param: SideSecondMenuOpenChangeParam): void {
+    const { layoutMenuData } = this.props;
+    const { menuCollapsed, sideMenuOpenKeysMap } = this.state;
+    if (menuCollapsed) return;
+    const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
+    if (!currentFirstMenu) return;
+    this.setState({ sideMenuOpenKeysMap: sideMenuOpenKeysMap.set(currentFirstMenu.menuKey, param.openKeys) });
   }
 
   /** 新增或显示标签页 */
