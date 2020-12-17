@@ -432,9 +432,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         type={"editable-card"}
         tabPosition={"top"}
         hideAdd={true}
-        animated={{inkBar: false, tabPane: false}}
+        moreIcon={undefined}
+        animated={{inkBar: true, tabPane: false}}
         tabBarGutter={4}
-        tabBarStyle={{background: "#f6f6f6", userSelect: "none"}}
+        tabBarStyle={{background: "#f6f6f6", userSelect: "none", borderBottom: "1px solid #d6d6d6"}}
         activeKey={activePageKey}
         tabBarExtraContent={{right: this.getMoreButton()}}
         onEdit={(targetKey, action) => {

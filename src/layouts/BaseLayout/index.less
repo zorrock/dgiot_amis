@@ -10,17 +10,74 @@
   }
 
   :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab-with-remove .ant-tabs-tab-remove) {
+    transition: none;
+
     &:hover {
       color: #f5222d;
     }
   }
 
+  :global(.ant-tabs-nav .ant-tabs-nav-wrap) {
+    margin: 4px 0 0 4px;
+  }
+
+  :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab) {
+    border: 1px solid #d6d6d6;
+    border-bottom: none;
+    background-color: #f8f8f8;
+  }
+
+  :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab.ant-tabs-tab-active) {
+    background-color: #ffffff;
+  }
+
   :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab .ant-tabs-tab-btn) {
     font-weight: normal;
+    min-width: 48px;
+    max-width: 188px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: none;
+  }
+
+  :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn) {
+    font-weight: normal;
+  }
+
+  :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list) {
+    transition: none;
+  }
+
+  :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab) {
+    font-weight: normal;
+    //margin-bottom: -1px;
+    //z-index: 999;
+    transition: none;
 
     &:hover {
       color: #1890ff;
     }
+  }
+
+  :global(.ant-tabs-nav .ant-tabs-nav-operations .ant-tabs-nav-more) {
+    background-color: #ffffff;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      color: #1890ff;
+    }
+
+    &:active {
+      background-color: #e6f7ff;
+    }
+  }
+
+  :global(.ant-tabs-extra-content) {
+    position: relative;
+    bottom: -2px;
   }
 
   :global(.amis-scope) {
@@ -29,11 +86,13 @@
   }
 
   .multiTabButton {
+    border: 1px solid #d8d8d8;
+    border-bottom: none;
     background-color: #ffffff;
     display: block;
     flex-grow: 0;
     flex-shrink: 0;
-    padding: 8px;
+    padding: 6px;
     font-size: 16px;
     line-height: 1em;
     text-align: center;

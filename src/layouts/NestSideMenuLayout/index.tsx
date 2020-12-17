@@ -15,7 +15,6 @@ const log = logger.getLogger("src/layouts/NestSideMenuLayout/index.tsx");
 
 interface NestSideMenuLayoutProps extends BaseLayoutProps {
   // ----------------------------------------------------------------------------------- 基础配置
-
   // ----------------------------------------------------------------------------------- NestSideMenuLayout 扩展配置
   /** 最外层Layout容器class样式 */
   layoutClassName?: string;
@@ -108,12 +107,6 @@ interface NestSideMenuLayoutProps extends BaseLayoutProps {
   globalSideAutoHideScrollbar?: boolean;
   /** 自定义美化滚动条class样式 */
   globalSideScrollbarClassName?: string;
-  // ----------------------------------------------------------------------------------- SideMenu 配置
-
-
-  // ----------------------------------------------------------------------------------- PageContent 配置
-
-
   // -----------------------------------------------------------------------------------
 }
 
