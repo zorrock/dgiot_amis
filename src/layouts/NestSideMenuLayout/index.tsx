@@ -6,8 +6,10 @@ import { logger } from "@/utils/logger";
 import { BaseLayout, BaseLayoutProps, BaseLayoutState, DefaultSideMenuTopRender } from "@/layouts/BaseLayout";
 import { AntdMenuProps } from "@/components/Layout/layout-types";
 import { GlobalSide, GlobalSideProps, SideFirstMenuClickParam, SideFirstMenuMode, SideFirstMenuSelectParam } from "@/components/Layout/GlobalSide";
-import { getCurrentFirstMenu, getCurrentFirstMenuKey } from "@/components/Layout/utils/layouts-utils";
+import { getCurrentFirstMenu, getCurrentFirstMenuKey, getFirstMenu, getFirstShowMenu, getMenuItemByKey, menuToRouterLocation } from "@/components/Layout/utils/layouts-utils";
 import styles from './index.less';
+import { HeaderFirstMenuSelectParam } from "@/components/Layout/HeaderMenu";
+import { routerHistory } from "@/utils/router";
 
 const log = logger.getLogger("src/layouts/NestSideMenuLayout/index.tsx");
 
@@ -181,7 +183,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
         menuItemRender={globalSideMenuItemRender}
         onMenuSelect={(param) => {
           if (globalSideOnMenuSelect instanceof Function) globalSideOnMenuSelect(param);
-          // this.firstMenuOnSelect(param);
+          this.firstMenuOnSelect(param);
         }}
         onMenuClick={globalSideOnMenuClick}
         menuClassName={globalSideMenuClassName}
@@ -283,6 +285,31 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
         </section>
       </section>
     );
+  }
+
+  // -----------------------------------------------------------------------------------
+
+  /** 一级菜单选中事件 */
+  protected firstMenuOnSelect(param: HeaderFirstMenuSelectParam): void {
+    const {menuData} = param;
+    // 获取当前一级菜单下的二级菜单的 selectedKeys 对应的 RuntimeMenuItem
+    const {layoutMenuData} = this.props;
+    const {sideMenuSelectedKeysMap} = this.state;
+    let routerMenu: RuntimeMenuItem | undefined;
+    let routerMenuKey: string | undefined;
+    if (menuData.menuKey) {
+      const valueTmp = sideMenuSelectedKeysMap.get(menuData.menuKey);
+      if (valueTmp) {
+        routerMenuKey = valueTmp.menuKey;
+      }
+    }
+    if (routerMenuKey) routerMenu = getMenuItemByKey(layoutMenuData.flattenMenuMap, routerMenuKey);
+    // 获取默认的第一个 RouterMenuItem
+    if (!routerMenu) routerMenu = getFirstShowMenu(menuData) || getFirstMenu(menuData);
+    // console.log("headerMenuOnMenuSelect ", routerMenu, location);
+    const routerLocation = menuToRouterLocation(routerMenu);
+    if (!routerLocation) return;
+    routerHistory.push(routerLocation);
   }
 
   render() {

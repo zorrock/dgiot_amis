@@ -2,7 +2,6 @@ import React, { CSSProperties } from 'react';
 import lodash from "lodash";
 import classNames from 'classnames';
 import { Menu } from 'antd';
-import { compile } from "path-to-regexp";
 import qs from "qs";
 import baseX from "base-x";
 import stableStringify from "fast-json-stable-stringify";
@@ -140,6 +139,41 @@ const getMenuItemByKey = (flattenMenuMap: Map<String, RuntimeMenuItem>, key: str
   return menuItem;
 };
 
+/**
+ * 获取第一个显示的页面菜单
+ * @param menu 菜单数据
+ */
+const getFirstShowMenu = (menu: RuntimeMenuItem): RuntimeMenuItem | undefined => {
+  if (!menu.children) return menu;
+  let showMenu: RuntimeMenuItem | undefined = undefined;
+  menu.children.forEach((childrenMenu) => {
+    if (showMenu) return;
+    if (childrenMenu.isHide) return;
+    if (childrenMenu.children && childrenMenu.children.length > 0) {
+      // 递归获取
+      showMenu = getFirstShowMenu(childrenMenu);
+    } else {
+      showMenu = childrenMenu;
+    }
+  });
+  return showMenu;
+};
+
+/**
+ * 获取第一个页面菜单
+ * @param menu 菜单数据
+ */
+const getFirstMenu = (menu: RuntimeMenuItem): RuntimeMenuItem => {
+  if (!menu.children || menu.children.length <= 0) return menu;
+  let showMenu: RuntimeMenuItem = menu;
+  menu.children.forEach((childrenMenu) => {
+    if (showMenu) return;
+    // 递归获取
+    showMenu = getFirstMenu(childrenMenu);
+  });
+  return showMenu;
+};
+
 /** 路由转换成字符串 */
 const routerLocationToStr = (routerLocation: RouterLocation): string => {
   const {pathname, hash, query, state} = routerLocation;
@@ -158,44 +192,6 @@ const menuToRouterLocation = (menu: RuntimeMenuItem): RouterLocation | undefined
     state: runtimeRouter.state,
   };
 };
-
-/**
- * 根据RuntimeMenuItem进行跳转页面
- * @param menuData                跳转菜单
- * @param location                当前Location
- * @param pageJumpBeforeCalBack 跳转前的回调函数
- */
-const pageJumpForRouter = (menuData: RuntimeMenuItem, location: RouterLocation, pageJumpBeforeCalBack?: Function): boolean => {
-  const {runtimeRouter} = menuData;
-  let {search: currentSearch, hash: currentHash} = location;
-  currentSearch = currentSearch && currentSearch.startsWith("?") ? currentSearch.substring(1) : currentSearch;
-  currentHash = currentHash && currentHash.startsWith("#") ? currentHash.substring(1) : currentHash;
-  const currentPath = lodash.trim(currentSearch).length > 0 ? `${currentSearch}#${currentHash}` : currentHash;
-  let newPath: string | undefined;
-  let newHash: string | undefined;
-  if (runtimeRouter.path) {
-    newHash = runtimeRouter.path ?? "";
-    if (newHash.indexOf(':') >= 0 && runtimeRouter.pathVariable) {
-      newHash = compile(newHash)(runtimeRouter.pathVariable);
-    }
-    if (runtimeRouter.querystring) {
-      newPath = `${qs.stringify(runtimeRouter.querystring)}#${newHash}`;
-    } else {
-      newPath = newHash;
-    }
-  } else if (runtimeRouter.redirect) {
-    newPath = runtimeRouter.redirect;
-  }
-  // console.log("pageJumpForMenu -> ", currentUrlPath, newUrlPath);
-  if (!newPath || currentPath === newPath) {
-    return false;
-  }
-  // umiHistory.push({pathname: newPathname, search: qs.stringify(router.querystring), query: router.querystring});
-  if (pageJumpBeforeCalBack instanceof Function) {
-    pageJumpBeforeCalBack();
-  }
-  return true;
-}
 
 const BASE62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const base62Converter = baseX(BASE62);
@@ -319,9 +315,10 @@ export {
   getDefaultOpenKeys,
   getSideMenuData,
   getMenuItemByKey,
+  getFirstShowMenu,
   routerLocationToStr,
+  getFirstMenu,
   menuToRouterLocation,
-  pageJumpForRouter,
   base62Encode,
   getHtmlTitle,
   defaultCustomMenuItemRender,
