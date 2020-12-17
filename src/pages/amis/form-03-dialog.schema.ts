@@ -3,7 +3,7 @@ import { DialogClassName, FormClassName, GeneralClassName, HeightClassName, Widt
 import { payStatusMapper, payTypeMapper, statusMapper } from "./enum-data";
 import { enum2object } from "@/utils/enum";
 import { serverHost } from "@/server-api";
-import styles from "./form-03-dialog-schema.less";
+import styles from "./form-03-dialog.schema.less";
 
 const schema = {
   type: "page",

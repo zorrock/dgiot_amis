@@ -57,8 +57,8 @@ const routerConfigs: LayoutConfig[] = [
         name: '通用组件',
         icon: 'AppstoreOutlined',
         routes: [
-          {path: '/icon', name: 'AntdIcon(图标)', icon: 'PictureOutlined', pagePath: '/amis/curd-00-schema.ts'},
-          {path: '/toolbar', name: 'ToolBar(工具栏)', icon: 'ToolOutlined', pagePath: '/amis/curd-00-schema.ts'},
+          {path: '/icon', name: 'AntdIcon(图标)', icon: 'PictureOutlined', pagePath: '/amis/curd-00.schema.ts'},
+          {path: '/toolbar', name: 'ToolBar(工具栏)', icon: 'ToolOutlined', pagePath: '/amis/curd-00.schema.ts'},
         ],
       },
       // 导航组件
@@ -66,21 +66,21 @@ const routerConfigs: LayoutConfig[] = [
         path: '/navigation',
         name: '导航组件',
         icon: 'MenuOutlined',
-        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page-schema.ts'}],
+        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts'}],
       },
       // 页面布局
       {
         path: '/layout',
         name: '页面布局',
         icon: 'LayoutOutlined',
-        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page-schema.ts'}],
+        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts'}],
       },
       // 数据录入
       {
         path: '/data_entry',
         name: '数据录入',
         icon: 'FormOutlined',
-        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page-schema.ts'}],
+        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts'}],
       },
       // 数据展示
       {
@@ -93,8 +93,8 @@ const routerConfigs: LayoutConfig[] = [
             name: '数据详情',
             icon: 'ContainerOutlined',
             routes: [
-              {path: '/detail_table', name: '详情表格', pagePath: '/amis/empty-page-schema.ts'},
-              {path: '/detail_modal', name: '对话框详情表格', pagePath: '/amis/empty-page-schema.ts'},
+              {path: '/detail_table', name: '详情表格', pagePath: '/amis/empty-page.schema.ts'},
+              {path: '/detail_modal', name: '对话框详情表格', pagePath: '/amis/empty-page.schema.ts'},
             ],
           },
           {
@@ -102,8 +102,8 @@ const routerConfigs: LayoutConfig[] = [
             name: 'Table表格',
             icon: 'TableOutlined',
             routes: [
-              {path: '/data_table_base', name: '数据表格(基本)', pagePath: '/amis/empty-page-schema.ts'},
-              {path: '/data_table_data', name: '数据表格(数据)', pagePath: '/amis/form-03-dialog-schema.ts'},
+              {path: '/data_table_base', name: '数据表格(基本)', pagePath: '/amis/empty-page.schema.ts'},
+              {path: '/data_table_data', name: '数据表格(数据)', pagePath: '/amis/form-03-dialog.schema.ts'},
             ],
           },
         ],
@@ -113,14 +113,14 @@ const routerConfigs: LayoutConfig[] = [
         path: '/feedback',
         name: '反馈组件',
         icon: 'SmileOutlined',
-        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page-schema.ts'}],
+        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts'}],
       },
       // 其他组件
       {
         path: '/component/other',
         name: '其他组件',
         icon: 'EllipsisOutlined',
-        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page-schema.ts'}],
+        routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts'}],
       },
       // -------------------------------------------------------------------------
       {
@@ -128,7 +128,7 @@ const routerConfigs: LayoutConfig[] = [
         name: "CURD",
         icon: "ProfileOutlined",
         routes: [
-          {path: "/00", name: "简单CURD", icon: "TableOutlined", pagePath: "/amis/curd-00-schema.ts"},
+          {path: "/00", name: "简单CURD", icon: "TableOutlined", pagePath: "/amis/curd-00.schema.ts"},
         ],
       },
       {
@@ -136,7 +136,7 @@ const routerConfigs: LayoutConfig[] = [
         name: "表单",
         icon: "ContainerOutlined",
         routes: [
-          {path: "/00", name: "简单表单", icon: "LayoutOutlined", pagePath: "/amis/form-00-schema.ts"},
+          {path: "/00", name: "简单表单", icon: "LayoutOutlined", pagePath: "/amis/form-00.schema.ts"},
         ],
       },
       {
@@ -144,7 +144,7 @@ const routerConfigs: LayoutConfig[] = [
         name: "表单1",
         icon: "TableOutlined",
         routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
         ],
       },
       {
@@ -152,7 +152,7 @@ const routerConfigs: LayoutConfig[] = [
         name: "表单2",
         icon: "LayoutOutlined",
         routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
         ],
       },
       {
@@ -160,7 +160,7 @@ const routerConfigs: LayoutConfig[] = [
         name: "表单3",
         icon: "SmileOutlined",
         routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
         ],
       },
       {
@@ -168,7 +168,7 @@ const routerConfigs: LayoutConfig[] = [
         name: "表单4",
         icon: "ProfileOutlined",
         routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
         ],
       },
       {
@@ -176,7 +176,7 @@ const routerConfigs: LayoutConfig[] = [
         name: "表单5",
         icon: "ProfileOutlined",
         routes: [
-          {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+          {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
         ],
       },
       // {
@@ -184,21 +184,21 @@ const routerConfigs: LayoutConfig[] = [
       //   name: "表单6",
       //   icon: "ProfileOutlined",
       //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
       //   ],
       // }, {
       //   path: "/form7",
       //   name: "表单7",
       //   icon: "ProfileOutlined",
       //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
       //   ],
       // }, {
       //   path: "/form8",
       //   name: "表单8",
       //   icon: "ProfileOutlined",
       //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
       //   ],
       // },
       // {
@@ -206,7 +206,7 @@ const routerConfigs: LayoutConfig[] = [
       //   name: "表单9",
       //   icon: "ProfileOutlined",
       //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
       //   ],
       // },
       // {
@@ -214,7 +214,7 @@ const routerConfigs: LayoutConfig[] = [
       //   name: "表单10",
       //   icon: "ProfileOutlined",
       //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
       //   ],
       // },
       // {
@@ -222,7 +222,7 @@ const routerConfigs: LayoutConfig[] = [
       //   name: "表单11",
       //   icon: "ProfileOutlined",
       //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
       //   ],
       // },
       // {
@@ -230,14 +230,14 @@ const routerConfigs: LayoutConfig[] = [
       //   name: "表单12",
       //   icon: "ProfileOutlined",
       //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
       //   ],
       // }, {
       //   path: "/form13",
       //   name: "表单13",
       //   icon: "ProfileOutlined",
       //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
       //   ],
       // },
       // {
@@ -245,7 +245,7 @@ const routerConfigs: LayoutConfig[] = [
       //   name: "表单14",
       //   icon: "ProfileOutlined",
       //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
       //   ],
       // },
       // {
@@ -253,7 +253,7 @@ const routerConfigs: LayoutConfig[] = [
       //   name: "表单15",
       //   icon: "ProfileOutlined",
       //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00-schema.ts"},
+      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
       //   ],
       // },
     ],
