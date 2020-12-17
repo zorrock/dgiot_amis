@@ -1,10 +1,11 @@
 import lodash from 'lodash';
-import {match, pathToRegexp} from 'path-to-regexp';
+import qs from "qs";
+import { match, pathToRegexp } from 'path-to-regexp';
 import stableStringify from "fast-json-stable-stringify";
 import memoizeOne from "memoize-one";
 import isEqual from "lodash.isequal";
-import {NestSideMenuLayoutProps} from "@/layouts/NestSideMenuLayout";
-import {getUrlParam, hasValue, noValue} from "@/utils/utils";
+import { NestSideMenuLayoutProps } from "@/layouts/NestSideMenuLayout";
+import { getUrlParam, hasValue, noValue } from "@/utils/utils";
 
 /** 布局类型 */
 enum LayoutType {
@@ -71,6 +72,15 @@ type RuntimeLayoutConfig = RuntimeNestSideLayoutConfig | RuntimeBlankLayoutConfi
 // Location状态数据
 type LocationState = RouterLocation['state'];
 
+interface Router {
+  /** url的hash部分(#号后面部分) */
+  hash: string;
+  /** url的querystring解析结果(一个对象) */
+  query?: QueryString;
+  /** router.push 传入的 state */
+  state?: RouterState;
+}
+
 /** 路由跳转工具类 */
 class RouterHistory {
   private static getHash(hash: string): string | undefined {
@@ -93,13 +103,18 @@ class RouterHistory {
 
   /**
    * 页面跳转
-   * @param hash  页面路径
-   * @param state 页面的状态值
+   * @param router 路由地址
    */
-  public push(hash: string, state: LocationState = {}): void {
+  public push(router: Router): void {
+    let {state} = router;
+    const {hash, query} = router;
     const path = RouterHistory.getHash(hash);
     if (!path) return;
+    if (!state) state = this.routerLocationStateMap.get(path) ?? {};
     this.routerLocationStateMap.set(path, state);
+    if (lodash.keys(query).length > 0) {
+      window.location.search = `?${qs.stringify(query ?? {})}`;
+    }
     window.location.hash = `#${path}`;
   }
 
@@ -377,4 +392,4 @@ const locationHashMatchInner = (menuSettings: RouterMenuSettings, locationHash: 
  */
 const locationHashMatch = memoizeOne(locationHashMatchInner, isEqual);
 
-export {LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu, layoutMatch, locationHashMatch};
+export { LayoutType, LayoutConfig, RuntimeLayoutConfig, routerHistory, layoutToRuntime, routerToMenu, layoutMatch, locationHashMatch };

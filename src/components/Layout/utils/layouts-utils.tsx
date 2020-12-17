@@ -5,6 +5,7 @@ import { Menu } from 'antd';
 import { compile } from "path-to-regexp";
 import qs from "qs";
 import baseX from "base-x";
+import stableStringify from "fast-json-stable-stringify";
 import AntdIcon, { AntdIconFont, createIconFontCN } from '@/components/AntdIcon';
 import styles from '../GlobalSide/SideFirstMenu.less';
 
@@ -137,6 +138,25 @@ const getMenuItemByKey = (flattenMenuMap: Map<String, RuntimeMenuItem>, key: str
     if (menu.menuKey === key) menuItem = menu;
   });
   return menuItem;
+};
+
+/** 路由转换成字符串 */
+const routerLocationToStr = (routerLocation: RouterLocation): string => {
+  const {pathname, hash, query, state} = routerLocation;
+  return `${pathname ?? ""}|${stableStringify(query ?? {})}|${hash ?? ""}|${stableStringify(state)}`;
+};
+
+/** 菜单转换成RouterLocation */
+const menuToRouterLocation = (menu: RuntimeMenuItem): RouterLocation | undefined => {
+  const {runtimeRouter} = menu;
+  if (!runtimeRouter) return;
+  return {
+    pathname: window.location.pathname,
+    search: lodash.keys(runtimeRouter.querystring).length > 0 ? `?${qs.stringify(runtimeRouter.querystring)}` : "",
+    hash: runtimeRouter.path,
+    query: runtimeRouter.querystring,
+    state: runtimeRouter.state,
+  };
 };
 
 /**
@@ -299,6 +319,8 @@ export {
   getDefaultOpenKeys,
   getSideMenuData,
   getMenuItemByKey,
+  routerLocationToStr,
+  menuToRouterLocation,
   pageJumpForRouter,
   base62Encode,
   getHtmlTitle,

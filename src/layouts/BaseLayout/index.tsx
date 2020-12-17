@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
-import Immutable from 'immutable';
+import lodash from "lodash";
 import classNames from "classnames";
+import Immutable from 'immutable';
 import { Helmet } from 'react-helmet';
 import { ArrowLeftOutlined, ArrowRightOutlined, CloseOutlined, CloseSquareOutlined, MoreOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Tabs } from 'antd';
@@ -8,10 +9,19 @@ import SimpleBarReact from 'simplebar-react';
 import { logger } from "@/utils/logger";
 import { getPropOrStateValue } from "@/utils/utils";
 import { loadPageByPath } from "@/utils/amis-utils";
+import { routerHistory } from "@/utils/router";
 import { PageContent } from "@/components/Layout/PageContent";
 import { GlobalFooter, GlobalFooterLink, GlobalFooterProps } from "@/components/Layout/GlobalFooter";
 import { GlobalHeader, GlobalHeaderProps } from "@/components/Layout/GlobalHeader";
-import { base62Encode, getCurrentFirstMenu, getDefaultOpenKeys, getHtmlTitle, getSideMenuData } from "@/components/Layout/utils/layouts-utils";
+import {
+  base62Encode,
+  getCurrentFirstMenu,
+  getDefaultOpenKeys,
+  getHtmlTitle,
+  getSideMenuData,
+  menuToRouterLocation,
+  routerLocationToStr
+} from "@/components/Layout/utils/layouts-utils";
 import { SideMenu, SideMenuProps, SideSecondMenuClickParam, SideSecondMenuOpenChangeParam, SideSecondMenuSelectParam } from "@/components/Layout/SideMenu";
 import { AntdInputSearchProps, AntdMenuClickParam, AntdMenuProps, AntdMenuTheme, MoreButtonEventKey } from "@/components/Layout/layout-types";
 import styles from './index.less';
@@ -192,14 +202,20 @@ interface BaseLayoutState {
    */
   sideMenuSearchValueMap: Immutable.Map<string, string>;
   /**
-   * 对页签页面Map
+   * 当前活动的页签(MultiTabItem.multiTabKey)
+   */
+  activePageKey?: string;
+  /**
+   * 多页签信息
+   */
+  multiTabs: MultiTabItem[];
+  /**
+   * 多页签页面
    * <pre>
-   *   Map<一级菜单key, 过滤值>
+   *   Map<MultiTabItem.multiTabKey, Tabs.TabPane>
    * </pre>
    */
-  tabPages: Array<React.ReactElement>;
-  /** 当前活动的页签 */
-  activePageKey?: string;
+  tabPageMap: Map<string, React.ReactElement>;
 }
 
 class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends React.Component<P, S> {
@@ -208,16 +224,18 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   }
 
   componentDidMount() {
-    const {layoutMenuData} = this.props;
-    if (!layoutMenuData.currentMenu) return;
-    this.addTabPage(layoutMenuData.currentMenu);
+    this.addOrShowTabPage();
   }
 
-  public shouldComponentUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
-    const {layoutMenuData} = nextProps;
-    log.info("shouldComponentUpdate currentMenu -> ", layoutMenuData?.currentMenu);
-    if (layoutMenuData.currentMenu) this.addTabPage(layoutMenuData.currentMenu);
-    return true;
+  // shouldComponentUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
+  //   const {layoutMenuData} = nextProps;
+  //   log.info("shouldComponentUpdate currentMenu -> ", layoutMenuData?.currentMenu);
+  //   if (layoutMenuData.currentMenu) this.addTabPage(layoutMenuData.currentMenu);
+  //   return true;
+  // }
+
+  componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot?: any) {
+    this.addOrShowTabPage();
   }
 
   // -----------------------------------------------------------------------------------
@@ -337,7 +355,6 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         onMenuClick={(param) => {
           if (sideMenuOnMenuClick instanceof Function) sideMenuOnMenuClick(param);
           this.sideMenuOnMenuClick(param);
-          // this.addTabPage("1", "/amis/form-03-dialog-schema.ts");
         }}
         onMenuOpenChange={(param) => {
           if (sideMenuOnMenuOpenChange instanceof Function) sideMenuOnMenuOpenChange(param);
@@ -368,7 +385,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 多页签栏，更多按钮 */
   protected getMoreButton(): React.ReactNode {
-    const { onClickMoreButton } = this.props;
+    const {onClickMoreButton} = this.props;
     return (
       <Dropdown
         trigger={['click']}
@@ -380,26 +397,26 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
             }}
           >
             <Menu.Item key="closeLeft">
-              <ArrowLeftOutlined />
+              <ArrowLeftOutlined/>
               关闭左侧
             </Menu.Item>
             <Menu.Item key="closeRight">
-              <ArrowRightOutlined />
+              <ArrowRightOutlined/>
               关闭右侧
             </Menu.Item>
             <Menu.Item key="closeOther">
-              <CloseOutlined />
+              <CloseOutlined/>
               关闭其它
             </Menu.Item>
             <Menu.Item key="closeAll">
-              <CloseSquareOutlined />
+              <CloseSquareOutlined/>
               全部关闭
             </Menu.Item>
           </Menu>
         }
       >
         <div className={classNames(styles.multiTabButton)}>
-          <MoreOutlined />
+          <MoreOutlined/>
         </div>
       </Dropdown>
     );
@@ -407,8 +424,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 页面内容 */
   protected getPageContent() {
-    const {tabPages, activePageKey} = this.state;
-    if (!tabPages || tabPages.length <= 0) return;
+    const {tabPageMap, activePageKey} = this.state;
+    if (!tabPageMap || tabPageMap.size <= 0) return;
     return (
       <Tabs
         className={styles.tabs}
@@ -421,18 +438,18 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         activeKey={activePageKey}
         tabBarExtraContent={{right: this.getMoreButton()}}
         onEdit={(targetKey, action) => {
-          if (action !== "remove") return;
-          const newTabPanes = tabPages.filter(item => targetKey !== item.key);
-          this.setState({tabPages: newTabPanes});
+          // if (action !== "remove") return;
+          // const newTabPanes = tabPages.filter(item => targetKey !== item.key);
+          // this.setState({tabPages: newTabPanes});
         }}
         onChange={undefined}
         onTabClick={activeKey => {
           // pageJumpForRouter
-          this.setState({activePageKey: activeKey});
+          // this.setState({activePageKey: activeKey});
         }}
         onTabScroll={undefined}
       >
-        {tabPages}
+        {[...tabPageMap.values()]}
       </Tabs>
     );
   }
@@ -470,44 +487,48 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 二级菜单点击跳转页面事件 */
   protected sideMenuOnMenuClick(param: SideSecondMenuClickParam): void {
-    console.log(param);
-    // const {sideMenuSelectedKeysMap} = this.state;
-    // const {layoutMenuData, location} = this.props;
-    // const {menuData: routerMenu} = param;
-    // const currentFirstMenuKey = getCurrentFirstMenuKey(layoutMenuData.currentMenu);
-    // pageJumpForRouter({currentLocation: location, router: routerMenu.routerConfig}, () => {
-    //   if (currentFirstMenuKey) {
-    //     sideMenuSelectedKeysMap.set(currentFirstMenuKey, {menuKey: routerMenu.menuKey, location});
-    //   }
-    // });
+    const {menuData} = param;
+    const routerLocation = menuToRouterLocation(menuData);
+    if (!routerLocation) return;
+    routerHistory.push(routerLocation);
   }
 
-  /** 新增标签页 */
-  protected addTabPage(menuData: RuntimeMenuItem) {
-    let {tabPages, activePageKey} = this.state;
-    const tabPaneKey = `tabPaneKey-${menuData.menuKey}`;
-    const amisId = `amisId-${base62Encode(menuData.menuKey)}`;
-    const amisKey = `amisKey-${menuData.menuKey}`;
-    log.info("routerName -> ", menuData.runtimeRouter?.name);
-    log.info("amisId -> ", amisId);
-    log.info("pagePath -> ", menuData.runtimeRouter?.pagePath);
-    if (tabPages.findIndex(item => item.key === tabPaneKey) >= 0) {
-      if (activePageKey !== tabPaneKey) this.setState({activePageKey: tabPaneKey});
+  /** 新增或显示标签页 */
+  protected addOrShowTabPage() {
+    const {location, layoutMenuData} = this.props;
+    if (!layoutMenuData.currentMenu) return;
+    const {activePageKey, multiTabs, tabPageMap} = this.state;
+    const multiTabKey = base62Encode(routerLocationToStr(location));
+    if (multiTabs.findIndex(tab => tab.multiTabKey === multiTabKey) >= 0) {
+      // 显示标签页
+      if (activePageKey !== multiTabKey) this.setState({activePageKey: multiTabKey});
       return;
     }
-    tabPages = [...tabPages];
-    tabPages.push(
-      <Tabs.TabPane key={tabPaneKey} tab={menuData.runtimeRouter.name} forceRender={true} closable={true}>
+    const multiTab: MultiTabItem = {
+      mountedDomId: lodash.uniqueId('amisId-'),
+      menuItem: layoutMenuData.currentMenu,
+      multiTabKey,
+      currentPath: layoutMenuData.currentPath,
+      location: location,
+      isHomePage: false,
+      lastActiveTime: new Date().getTime(),
+      showClose: true,
+    };
+    const {runtimeRouter} = layoutMenuData.currentMenu;
+    multiTabs.push(multiTab);
+    tabPageMap.set(multiTabKey, (
+      <Tabs.TabPane key={multiTabKey} tab={runtimeRouter.name} forceRender={true} closable={true}>
         <PageContent>
           <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-            <div id={amisId} key={amisKey}/>
+            <div id={multiTab.mountedDomId} key={multiTab.mountedDomId}/>
           </SimpleBarReact>
         </PageContent>
       </Tabs.TabPane>
-    );
+    ));
+    log.info("amisId -> ", multiTab.mountedDomId, "routerName -> ", runtimeRouter.name, "pagePath -> ", runtimeRouter.pagePath);
     this.setState(
-      {tabPages, activePageKey: tabPaneKey},
-      async () => await loadPageByPath(amisId, menuData.runtimeRouter.pagePath!, {})
+      {activePageKey: multiTabKey, multiTabs, tabPageMap},
+      async () => await loadPageByPath(multiTab.mountedDomId, runtimeRouter.pagePath!, {})
     );
   }
 }

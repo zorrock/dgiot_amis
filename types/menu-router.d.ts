@@ -28,9 +28,9 @@ interface RouterLocation {
   /** url的hash部分(#号后面部分) */
   hash: string;
   /** url的querystring解析结果(一个对象) */
-  query: { [name: string]: any };
+  query: QueryString;
   /** router.push 传入的 state */
-  state?: { [name: string]: any };
+  state?: RouterState;
 }
 
 /** 路由配置 */
@@ -121,25 +121,25 @@ interface RuntimeMenuItem {
   // [property: string]: any;
 }
 
-// /** 多页签项(多页签项) */
-// interface MultiTabItem {
-//   /** 路由菜单项 */
-//   menuItem: RuntimeMenuItem;
-//   /** 路由页签项唯一Key */
-//   multiTabKey: string;
-//   /** 当前url路径 */
-//   currentPath: string;
-//   /** 当前页面location状态 */
-//   location: RouterLocation;
-//   /** 是否是首页 */
-//   isHomePage: boolean;
-//   /** 当前页签是否是选中状态 */
-//   active: boolean;
-//   /** 最后一次活动时间(时间戳) */
-//   lastActiveTime: number;
-//   /** 是否显示关闭按钮 */
-//   showClose: boolean;
-// }
+/** 多页签项(多页签项) */
+interface MultiTabItem {
+  /** 挂载的Dom节点ID */
+  mountedDomId: string,
+  /** 路由菜单项 */
+  menuItem: RuntimeMenuItem;
+  /** 路由页签项唯一Key */
+  multiTabKey: string;
+  /** 当前url路径 */
+  currentPath: string;
+  /** 当前页面location状态 */
+  location: RouterLocation;
+  /** 是否是首页 */
+  isHomePage: boolean;
+  /** 最后一次活动时间(时间戳) */
+  lastActiveTime: number;
+  /** 是否显示关闭按钮 */
+  showClose: boolean;
+}
 
 /** 全局Layout菜单数据 */
 interface LayoutMenuData {

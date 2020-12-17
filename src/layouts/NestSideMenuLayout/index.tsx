@@ -129,8 +129,6 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
     sideMenuEnableSearchMenu: false,
     sideMenuBeautifyScrollbar: true,
     sideMenuAutoHideScrollbar: true,
-    // pageContentPageHeaderModel: PageHeaderModel.AntPageHeader,
-    // pageContentEnablePageHeader: false,
   };
 
   constructor(props: NestSideMenuLayoutProps) {
@@ -140,8 +138,9 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
       sideMenuSelectedKeysMap: new Map<string, { menuKey: string; location: RouterLocation }>(),
       sideMenuOpenKeysMap: Immutable.Map<string, string[]>(),
       sideMenuSearchValueMap: Immutable.Map<string, string>(),
-      tabPages: [],
       activePageKey: undefined,
+      multiTabs: [],
+      tabPageMap: new Map<string, React.ReactElement>(),
     };
   }
 
