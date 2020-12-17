@@ -434,19 +434,15 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         hideAdd={true}
         animated={{inkBar: false, tabPane: false}}
         tabBarGutter={4}
-        tabBarStyle={{background: '#f6f6f6'}}
+        tabBarStyle={{background: "#f6f6f6", userSelect: "none"}}
         activeKey={activePageKey}
         tabBarExtraContent={{right: this.getMoreButton()}}
         onEdit={(targetKey, action) => {
-          // if (action !== "remove") return;
-          // const newTabPanes = tabPages.filter(item => targetKey !== item.key);
-          // this.setState({tabPages: newTabPanes});
+          if (action !== "remove") return;
+          this.closeTabPage(targetKey as string);
         }}
         onChange={undefined}
-        onTabClick={activeKey => {
-          // pageJumpForRouter
-          // this.setState({activePageKey: activeKey});
-        }}
+        onTabClick={activeKey => this.jumpTabPage(activeKey)}
         onTabScroll={undefined}
       >
         {[...tabPageMap.values()]}
@@ -499,12 +495,16 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     if (!layoutMenuData.currentMenu) return;
     const {activePageKey, multiTabs, tabPageMap} = this.state;
     const multiTabKey = base62Encode(routerLocationToStr(location));
-    if (multiTabs.findIndex(tab => tab.multiTabKey === multiTabKey) >= 0) {
+    const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);
+    if (multiTab) {
       // 显示标签页
-      if (activePageKey !== multiTabKey) this.setState({activePageKey: multiTabKey});
+      if (activePageKey !== multiTabKey) {
+        multiTab.lastActiveTime = new Date().getTime();
+        this.setState({activePageKey: multiTabKey});
+      }
       return;
     }
-    const multiTab: MultiTabItem = {
+    const newMultiTab: MultiTabItem = {
       mountedDomId: lodash.uniqueId('amisId-'),
       menuItem: layoutMenuData.currentMenu,
       multiTabKey,
@@ -515,21 +515,37 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       showClose: true,
     };
     const {runtimeRouter} = layoutMenuData.currentMenu;
-    multiTabs.push(multiTab);
+    multiTabs.push(newMultiTab);
     tabPageMap.set(multiTabKey, (
       <Tabs.TabPane key={multiTabKey} tab={runtimeRouter.name} forceRender={true} closable={true}>
         <PageContent>
           <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-            <div id={multiTab.mountedDomId} key={multiTab.mountedDomId}/>
+            <div id={newMultiTab.mountedDomId} key={newMultiTab.mountedDomId}/>
           </SimpleBarReact>
         </PageContent>
       </Tabs.TabPane>
     ));
-    log.info("amisId -> ", multiTab.mountedDomId, "routerName -> ", runtimeRouter.name, "pagePath -> ", runtimeRouter.pagePath);
+    log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", runtimeRouter.name, "pagePath -> ", runtimeRouter.pagePath);
     this.setState(
       {activePageKey: multiTabKey, multiTabs, tabPageMap},
-      async () => await loadPageByPath(multiTab.mountedDomId, runtimeRouter.pagePath!, {})
+      async () => await loadPageByPath(newMultiTab.mountedDomId, runtimeRouter.pagePath!, {})
     );
+  }
+
+  /** 跳转标签页 */
+  protected jumpTabPage(multiTabKey: string) {
+    const {multiTabs} = this.state;
+    const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);
+    if (!multiTab) return;
+    multiTab.lastActiveTime = new Date().getTime();
+    routerHistory.push(multiTab.location);
+  }
+
+  /** 关闭标签页 */
+  protected closeTabPage(multiTabKey: string) {
+    const {multiTabs} = this.state;
+    const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);
+    if (!multiTab) return;
   }
 }
 
