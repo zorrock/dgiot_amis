@@ -187,11 +187,9 @@ const dateAdd = (howLong: number, unit: OpUnitType, date?: any): dayjs.Dayjs => 
 const howLongAgo = (agoDate: Date, level?: number, maxTimeStamp?: number, timeUnit?: string[]): string => {
   if (level === null || level === undefined) level = 1;
   if (maxTimeStamp === null || maxTimeStamp === undefined) maxTimeStamp = 7 * 24 * 60 * 60 * 1000;
-  // TODO 国际化
   if (timeUnit === null || timeUnit === undefined) timeUnit = ['年', '个月', '天', '小时', '分钟', '秒'];
   const byTime = [365 * 24 * 60 * 60 * 1000, 30 * 24 * 60 * 60 * 1000, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000, 1000];
   let ct = new Date().getTime() - dayjs(agoDate).toDate().getTime();
-  // TODO 国际化
   const suffix = ct > 0 ? '前' : '后';
   ct = ct < 0 ? -1 * ct : ct;
   if (ct > maxTimeStamp) {
@@ -216,7 +214,6 @@ const howLongAgo = (agoDate: Date, level?: number, maxTimeStamp?: number, timeUn
       break;
     }
   }
-  // TODO 国际化
   if (sb.length <= 0) return '刚刚';
   return `${sb.join('')}${suffix}`;
 };
