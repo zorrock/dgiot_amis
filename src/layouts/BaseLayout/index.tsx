@@ -520,7 +520,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       <Tabs.TabPane key={multiTabKey} tab={runtimeRouter.name} forceRender={true} closable={true}>
         <PageContent>
           <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-            <div id={newMultiTab.mountedDomId} key={newMultiTab.mountedDomId}/>
+            <div id={newMultiTab.mountedDomId} key={newMultiTab.mountedDomId} className={styles.pageContent}/>
           </SimpleBarReact>
         </PageContent>
       </Tabs.TabPane>
