@@ -13,6 +13,10 @@ const schema = {
       title: "支持的校验类型",
       mode: "inline",
       className: classnames(FormClassName.label6x, FormClassName.input26x, FormClassName.item_height3_5x),
+      data: {
+        f2: "init-f2",
+        f3: "init-f3",
+      },
       // submitText: "提交",
       trimValues: false,
       controls: [
@@ -65,7 +69,14 @@ const schema = {
         },
         {type: "html", html: "<br />"},
         {type: "submit", label: "提交", level: "primary", className: HeightClassName.height_unset},
-        {type: "reset", label: "重置", className: HeightClassName.height_unset},
+        {
+          type: "reset", label: "重置", className: HeightClassName.height_unset,
+          onClick: (event: any, context: any) => {
+            const formStore = context.formStore;
+            formStore.data.f2 = "";
+            formStore.updateData();
+          }
+        },
       ],
       api: {
         method: "post",
