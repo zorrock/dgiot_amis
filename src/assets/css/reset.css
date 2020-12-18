@@ -4,6 +4,10 @@ html {
   font-size: 0.925rem;
 }
 
+.amis-scope .a-Table-content {
+  overflow-y: hidden;
+}
+
 .amis-scope .a-Button {
   line-height: 1.5;
 }
