@@ -932,7 +932,6 @@ export interface AntdIconProps extends Omit<IconProps, "ref">, React.RefAttribut
   icon?: AntdIconName;
   type?: string;
 }
-
 const AntdIcon: FunctionComponent<AntdIconProps> = (props: AntdIconProps): React.ReactElement | null => {
   let Icon: any;
   if (props.icon) {
@@ -953,11 +952,10 @@ export default AntdIcon;
 export interface IconFontProps extends IconBaseProps {
   type: string;
 }
-
 export type AntdIconFont = FunctionComponent<IconFontProps>;
 // noinspection JSUnusedGlobalSymbols
 export const createIconFontCN = (options: CustomIconOptions): AntdIconFont => {
-  return AntDesignIcons.createFromIconfontCN({...options});
+  return AntDesignIcons.createFromIconfontCN({ ...options });
 };
 
 // 代码使用 auto-generate.js 自动生成
