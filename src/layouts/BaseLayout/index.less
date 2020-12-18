@@ -12,11 +12,16 @@
   :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab-with-remove .ant-tabs-tab-remove) {
     transition: none;
 
+    span {
+      padding: 2px;
+      //border-radius: 8px;
+    }
+
     &:hover {
       color: #f5222d;
-      //span {
-      //  background-color: #dbdbdb;
-      //}
+      span {
+        background-color: #dbdbdb;
+      }
     }
   }
 
@@ -25,6 +30,7 @@
   }
 
   :global(.ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab) {
+    padding: 4px 4px 4px 8px;
     border: 1px solid #d6d6d6;
     border-bottom: none;
     background-color: #f8f8f8;
