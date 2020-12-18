@@ -49,7 +49,7 @@ const schema = {
         {type: "text", name: "f5", label: "供货范围", required: false, placeholder: "请输入", clearable: true},
         {type: "button", label: "查看供货公司"},
         {type: "html", html: "<br />"},
-        {type: "html", html: "<span style='display: inline-block; width: 105px;'></span>"},
+        {type: "html", html: "<span style='display: inline-block; width: 95px;'></span>"},
         {type: "submit", label: "提交", level: "primary"},
       ],
       api: {
@@ -83,7 +83,7 @@ const schema = {
         {type: "html", html: "<span style='display: inline-block; width: 117px;'></span>"},
         {type: "text", name: "f8", label: "其他", required: false, placeholder: "请输入", clearable: true},
         {type: "html", html: "<br />"},
-        {type: "html", html: "<span style='display: inline-block; width: 105px;'></span>"},
+        {type: "html", html: "<span style='display: inline-block; width: 95px;'></span>"},
         {type: "submit", label: "提交", level: "primary"},
       ],
       api: {
@@ -128,7 +128,7 @@ const schema = {
             {type: "button", label: "查看供货公司"},
           ],
         },
-        {type: "html", html: "<span style='display: inline-block; width: 105px;'></span>"},
+        {type: "html", html: "<span style='display: inline-block; width: 95px;'></span>"},
         {type: "submit", label: "提交", level: "primary"},
       ],
       api: {

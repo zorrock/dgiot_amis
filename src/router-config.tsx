@@ -51,6 +51,27 @@ const routerConfigs: LayoutConfig[] = [
       globalSideMenuMode: SideFirstMenuMode.AntdMenu,
     },
     routes: [
+      {
+        path: "/curd",
+        name: "CURD",
+        icon: "ProfileOutlined",
+        routes: [
+          {path: "/00", name: "通用CURD", icon: "TableOutlined", pagePath: "/amis/curd-00.schema.ts"},
+          {path: "/01", name: "常规CURD", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts"},
+        ],
+      },
+      {
+        path: "/form",
+        name: "表单",
+        icon: "FormOutlined",
+        routes: [
+          {path: "/00", name: "所有表单类型", icon: "EditOutlined", pagePath: "/amis/form-00.schema.ts"},
+          {path: "/01", name: "表单布局", icon: "EditOutlined", pagePath: "/amis/form-01-layout.schema.ts"},
+          {path: "/02", name: "表单校验", icon: "EditOutlined", pagePath: "/amis/form-02-verify.schema.ts"},
+          {path: "/03", name: "对话框表单", icon: "EditOutlined", pagePath: "/amis/form-03-dialog.schema.ts"},
+        ],
+      },
+      // -------------------------------------------------------------------------
       // 通用组件
       {
         path: '/general',
@@ -121,23 +142,6 @@ const routerConfigs: LayoutConfig[] = [
         name: '其他组件',
         icon: 'EllipsisOutlined',
         routes: [{path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts'}],
-      },
-      // -------------------------------------------------------------------------
-      {
-        path: "/curd",
-        name: "CURD",
-        icon: "ProfileOutlined",
-        routes: [
-          {path: "/00", name: "简单CURD", icon: "TableOutlined", pagePath: "/amis/curd-00.schema.ts"},
-        ],
-      },
-      {
-        path: "/form",
-        name: "表单",
-        icon: "ContainerOutlined",
-        routes: [
-          {path: "/00", name: "简单表单", icon: "LayoutOutlined", pagePath: "/amis/form-00.schema.ts"},
-        ],
       },
       {
         path: "/form1",
