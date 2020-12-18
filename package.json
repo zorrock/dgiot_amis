@@ -10,6 +10,7 @@
     "global-init": "yarn global add typescript && yarn global add npm-check-updates",
     "project-init": "yarn install",
     "fix-memory-limit": "cross-env LIMIT=4096 increase-memory-limit",
+    "generate-AntdIcon": "ts-node scripts/generate-AntdIcon.ts",
     "dev": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=development webpack-dev-server --config build/webpack.conf.ts --color --progress",
     "dev:analyzer": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=development ANALYZER=1 webpack-dev-server --config build/webpack.conf.ts",
     "build": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=production webpack --config build/webpack.conf.ts",

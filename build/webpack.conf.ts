@@ -92,6 +92,22 @@ let config: Configuration = {
       patterns: [
         {from: publicPath, to: "./public"},
         ...[
+          // react 相关
+          "/react/umd/react.profiling.min.js",
+          "/react/umd/react.production.min.js",
+          "/react-dom/umd/react-dom.profiling.min.js",
+          "/react-dom/umd/react-dom.production.min.js",
+          // moment 相关
+          "/moment/min/moment-with-locales.js",
+          // @ant-design/icons 相关
+          "/@ant-design/icons/dist/index.umd.min.js",
+          // antd 相关
+          "/antd/dist/antd.min.js",
+          "/antd/dist/antd-with-locales.min.js",
+          "/antd/dist/antd.min.css",
+          "/antd/dist/antd.compact.min.css",
+          "/antd/dist/antd.dark.min.css",
+          // amis 相关
           "/amis/sdk/**/*.css",
           "/amis/sdk/**/*.js",
           "/amis/sdk/**/*.svg",
@@ -129,7 +145,12 @@ let config: Configuration = {
     },
   },
   externals: {
-    amis: {commonjs: 'amisRequire', amd: 'amisRequire', root: 'amisRequire'},
+    react: "window.React",
+    "react-dom": "window.ReactDOM",
+    moment: "moment",
+    antd: "antd",
+    // "@ant-design/icons": "AntDesignIcons", // 不起作用
+    amis: {commonjs: "amisRequire", amd: "amisRequire", root: "amisRequire"},
     // amis: "amisRequire",
   },
   optimization: {
