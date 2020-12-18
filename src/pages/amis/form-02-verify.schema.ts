@@ -4,7 +4,7 @@ import { serverHost } from "@/server-api";
 
 const schema = {
   type: "page",
-  title: "表单数据校验",
+  title: "",
   toolbar: [],
   body: [
     // --------------------------------------------------------------- 支持的校验类型

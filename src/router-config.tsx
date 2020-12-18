@@ -54,7 +54,7 @@ const routerConfigs: LayoutConfig[] = [
       {
         path: "/curd",
         name: "CURD",
-        icon: "ProfileOutlined",
+        icon: "TableOutlined",
         routes: [
           {path: "/00", name: "通用CURD", icon: "TableOutlined", pagePath: "/amis/curd-00.schema.ts"},
           {path: "/01", name: "常规CURD", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts"},

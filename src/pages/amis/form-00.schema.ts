@@ -38,7 +38,7 @@ const treeData = [
 
 const schema = {
   type: "page",
-  title: "简单的表单",
+  title: "",
   toolbar: [],
   body: [
     // --------------------------------------------------------------- 输入框类型

@@ -4,7 +4,7 @@ import { serverHost } from "@/server-api";
 
 const schema = {
   type: "page",
-  title: "表单各种布局",
+  title: "",
   toolbar: [],
   body: [
     // --------------------------------------------------------------- 常规表单

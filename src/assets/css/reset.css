@@ -8,6 +8,10 @@ html {
   overflow-y: hidden;
 }
 
+.amis-scope .a-Page-body {
+  padding-top: 0.5rem;
+}
+
 .amis-scope .a-Button {
   line-height: 1.5;
 }

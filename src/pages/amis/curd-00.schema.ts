@@ -94,7 +94,7 @@ function deleteDialog() {
 
 const schema = {
   type: "page",
-  title: "简单的CURD操作",
+  title: "",
   toolbar: [],
   body: [
     {

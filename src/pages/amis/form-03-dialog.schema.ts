@@ -7,7 +7,7 @@ import styles from "./form-03-dialog.schema.less";
 
 const schema = {
   type: "page",
-  title: "对话框表单",
+  title: "",
   toolbar: [],
   body: [
     // --------------------------------------------------------------- 简单对话框表单

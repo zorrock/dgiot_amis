@@ -81,7 +81,7 @@ function deleteDialog() {
 
 const schema = {
   type: "page",
-  title: "常规的CURD操作",
+  title: "",
   toolbar: [],
   body: [
     {
