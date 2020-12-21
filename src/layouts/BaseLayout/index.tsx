@@ -539,34 +539,24 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     };
     multiTabs.push(newMultiTab);
     log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", name, "pagePath -> ", pagePath, "isReactPage -> ", newMultiTab.isReactPage);
-    if (newMultiTab.isReactPage) {
-      // react 组件
-      this.setState(
-        { activePageKey: multiTabKey, multiTabs },
-        async () => {
+    if (!newMultiTab.isReactPage) window.currentAmisId = newMultiTab.mountedDomId;
+    this.setState(
+      { activePageKey: multiTabKey, multiTabs },
+      async () => {
+        if (newMultiTab.isReactPage) {
+          // react 组件
           newMultiTab.component = await loadReactPageByPath(runtimeRouter.pagePath!);
-          if (newMultiTab.loading) {
-            newMultiTab.loading = false;
-            this.forceUpdate();
-          }
+        } else {
+          // amis 组件
+          newMultiTab.component = await loadAmisPageByPath(runtimeRouter.pagePath!);
+          amisRender(newMultiTab.mountedDomId, newMultiTab.component.schema);
         }
-      );
-    } else {
-      // amis 组件
-      window.currentAmisId = newMultiTab.mountedDomId;
-      this.setState(
-        { activePageKey: multiTabKey, multiTabs },
-        async () => {
-          const amisPage = await loadAmisPageByPath(runtimeRouter.pagePath!);
-          newMultiTab.component = amisPage;
-          amisRender(newMultiTab.mountedDomId, amisPage.schema);
-          if (newMultiTab.loading) {
-            newMultiTab.loading = false;
-            this.forceUpdate();
-          }
+        if (newMultiTab.loading) {
+          newMultiTab.loading = false;
+          this.forceUpdate();
         }
-      );
-    }
+      }
+    );
   }
 
   /** 跳转标签页 */
