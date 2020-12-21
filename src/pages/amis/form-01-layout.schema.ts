@@ -69,6 +69,7 @@ const schema = {
       controls: [
         {type: "text", name: "f5", label: "供货范围", required: false, placeholder: "请输入", clearable: true},
         {type: "button", label: "查看供货公司"},
+        {type: "html", html: "<span style='display: inline-block; width: 8px;'></span>"},
         {type: "text", name: "f2", label: "登录账号", required: false, placeholder: "请输入", clearable: true},
         {type: "html", html: "<br />"},
         {type: "password", name: "f6", label: "设置密码", required: false, placeholder: "请输入", clearable: true},
