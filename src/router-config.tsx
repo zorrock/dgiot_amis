@@ -71,6 +71,14 @@ const routerConfigs: LayoutConfig[] = [
           {path: "/03", name: "对话框表单", icon: "EditOutlined", pagePath: "/amis/form-03-dialog.schema.ts"},
         ],
       },
+      {
+        path: "/react",
+        name: "React页面",
+        icon: "FormOutlined",
+        routes: [
+          {path: "/00", name: "ReactDemo页面", icon: "EditOutlined", pagePath: "/react/01demo.react.tsx"},
+        ],
+      },
       // -------------------------------------------------------------------------
       // 通用组件
       {

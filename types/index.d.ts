@@ -25,7 +25,12 @@ interface Window {
 /** 是否是生产环境 */
 declare const isProdEnv: boolean;
 
-interface AmisSchemaPageProp {
+interface AmisSchemaPage {
   /** amis schema 对象 */
   schema: any;
+}
+
+interface ReactPage {
+  /** React组件 */
+  default: any;
 }

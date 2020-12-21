@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import lodash from "lodash";
 import { SchemaObject } from "amis";
 import { RenderOptions, RootRenderProps } from "amis/src/factory";
@@ -51,7 +52,7 @@ const amisRender = function (mountedId: string, schema: SchemaObject, props: Roo
  * 动态加载 amis schema文件
  * @param schemaPath schema文件路径
  */
-const loadSchema = async function (schemaPath: string): Promise<AmisSchemaPageProp> {
+const loadSchema = async function (schemaPath: string): Promise<AmisSchemaPage | ReactPage> {
   const fileExtArr = [".ts", ".tsx", ".js", ".json"];
   let flag = false;
   fileExtArr.forEach(fileExt => {
@@ -63,9 +64,9 @@ const loadSchema = async function (schemaPath: string): Promise<AmisSchemaPagePr
   });
   if (schemaPath.startsWith("/") || schemaPath.startsWith(".")) schemaPath = schemaPath.substring(1);
   if (schemaPath.startsWith("./")) schemaPath = schemaPath.substring(2);
-  // webpack.conf.ts(splitChunks.schema.test) ---> /[\\/]src[\\/]pages[\\/].*\.schema\.(ts|tsx|js|jsx|json)$/
+  // webpack.conf.ts(splitChunks.schema.test) ---> /[\\/]src[\\/]pages[\\/].*\.(schema|react)\.(ts|tsx|js|jsx|json)$/
   return import(
-    /* webpackInclude: /[\\/]src[\\/]pages[\\/].*\.schema\.(ts|tsx|js|jsx|json)$/ */
+    /* webpackInclude: /[\\/]src[\\/]pages[\\/].*\.(schema|react)\.(ts|tsx|js|jsx|json)$/ */
     /* webpackChunkName: "[request]" */
     `@/pages/${schemaPath}`
     );
@@ -81,8 +82,16 @@ const loadSchema = async function (schemaPath: string): Promise<AmisSchemaPagePr
  */
 const loadPageByPath = async function (mountedId: string, schemaPath: string, props: RootRenderProps = {}, options: RenderOptions = {}, pathPrefix?: string): Promise<React.ReactNode> {
   return loadSchema(schemaPath)
-    .then(amisSchemaPageProp => {
-      return amisRender(mountedId, amisSchemaPageProp.schema, props, options, pathPrefix);
+    .then(page => {
+      const {schema} = page as AmisSchemaPage;
+      const {default: Component} = page as ReactPage;
+      if (Component) {
+        console.log("Component -> ", Component);
+        ReactDOM.render(<Component/>, document.getElementById(`#${mountedId}`));
+      } else if (schema) {
+        return amisRender(mountedId, (page as AmisSchemaPage).schema, props, options, pathPrefix);
+      }
+      return;
     })
     .catch(reason => {
       // 默认的异常处理
