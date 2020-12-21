@@ -8,7 +8,7 @@ import { Dropdown, Menu, Spin, Tabs } from 'antd';
 import SimpleBarReact from 'simplebar-react';
 import { logger } from "@/utils/logger";
 import { getPropOrStateValue } from "@/utils/utils";
-import { loadPageByPath } from "@/utils/amis-utils";
+import { amisRender, loadAmisPageByPath, loadReactPageByPath } from "@/utils/amis-utils";
 import { routerHistory } from "@/utils/router";
 import { PageContent } from "@/components/Layout/PageContent";
 import { GlobalFooter, GlobalFooterLink, GlobalFooterProps } from "@/components/Layout/GlobalFooter";
@@ -228,7 +228,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 页面标题 */
   protected getHtmlTitle() {
-    const {route, htmlTitleSuffix} = this.props;
+    const { route, htmlTitleSuffix } = this.props;
     return (
       <Helmet>
         <title>{getHtmlTitle(route, htmlTitleSuffix)}</title>
@@ -260,7 +260,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 全局页脚 */
   protected getGlobalFooter() {
-    const {globalFooterLinks, globalFooterCopyright, globalFooterStyle = {}, globalFooterClassName, globalFooterRender} = this.props;
+    const { globalFooterLinks, globalFooterCopyright, globalFooterStyle = {}, globalFooterClassName, globalFooterRender } = this.props;
     return (
       <GlobalFooter
         links={globalFooterLinks}
@@ -274,8 +274,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 侧边栏菜单(二级菜单) */
   protected getSideMenu(defaultSideMenuBottomRender?: DefaultSideMenuBottomRender, defaultSideMenuTopRender?: DefaultSideMenuTopRender) {
-    const {sideMenuSelectedKeysMap, sideMenuOpenKeysMap, sideMenuSearchValueMap} = this.state;
-    const {location, defaultOpen, layoutMenuData, sideMenuOnSearchMenu, sideMenuOnSearchValueChange, sideMenuOnMenuClick, sideMenuOnMenuOpenChange} = this.props;
+    const { sideMenuSelectedKeysMap, sideMenuOpenKeysMap, sideMenuSearchValueMap } = this.state;
+    const { location, defaultOpen, layoutMenuData, sideMenuOnSearchMenu, sideMenuOnSearchValueChange, sideMenuOnMenuClick, sideMenuOnMenuOpenChange } = this.props;
     const menuCollapsed = this.getMenuCollapsed();
     // 计算 searchDefaultValue searchValue currentPath menuData defaultSelectedKeys selectedKeys defaultOpenKeys openKeys
     // 事件 onSearchMenu onSearchValueChange onMenuClick onMenuOpenChange
@@ -291,7 +291,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     const defaultSelectedKeys: string[] = [layoutMenuData.showCurrentMenu.menuKey];
     const selectedKeys: string[] = [layoutMenuData.showCurrentMenu.menuKey];
     // 保存当前二级菜单
-    sideMenuSelectedKeysMap.set(currentFirstMenu.menuKey, {menuKey: layoutMenuData.currentMenu.menuKey, location});
+    sideMenuSelectedKeysMap.set(currentFirstMenu.menuKey, { menuKey: layoutMenuData.currentMenu.menuKey, location });
     // 展开的菜单
     let defaultOpenKeys: string[] | undefined;
     let openKeys: string[] | undefined;
@@ -299,7 +299,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       defaultOpenKeys = getDefaultOpenKeys(defaultOpen ?? false, currentFirstMenu, layoutMenuData.currentMenu);
       openKeys = sideMenuOpenKeysMap.get(currentFirstMenu.menuKey) || defaultOpenKeys;
     }
-    let {sideMenuTopRender, sideMenuBottomRender} = this.props;
+    let { sideMenuTopRender, sideMenuBottomRender } = this.props;
     if (!sideMenuBottomRender && defaultSideMenuBottomRender instanceof Function) {
       sideMenuBottomRender = (props, className, elementMap) => defaultSideMenuBottomRender!(props, className, elementMap, currentFirstMenu);
     }
@@ -371,7 +371,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 多页签栏，更多按钮 */
   protected getMoreButton(): React.ReactNode {
-    const {onClickMoreButton} = this.props;
+    const { onClickMoreButton } = this.props;
     return (
       <Dropdown
         trigger={['click']}
@@ -411,13 +411,17 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   /** 获取多标签页页面 */
   protected getTabPages(multiTabs: MultiTabItem[]) {
     return multiTabs.map(tab => {
-      const {mountedDomId, multiTabKey, menuItem: {runtimeRouter}, loading} = tab;
+      const { mountedDomId, multiTabKey, menuItem: { runtimeRouter }, loading } = tab;
       return (
         <Tabs.TabPane key={multiTabKey} tab={runtimeRouter.name} forceRender={true} closable={true}>
-          <Spin size={"default"} spinning={loading} delay={200} tip="页面加载中..." style={{height: "100%"}} wrapperClassName={styles.spinWrapper}>
+          <Spin size={"default"} spinning={loading} delay={200} tip="页面加载中..." style={{ height: "100%" }} wrapperClassName={styles.spinWrapper}>
             <PageContent>
               <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
-                <div id={mountedDomId} key={mountedDomId} className={styles.pageContent}/>
+                {
+                  tab.isReactPage && tab.component?.default ?
+                    <tab.component.default param={{ a: "aaa", b: 123 }}/> :
+                    <div id={mountedDomId} key={mountedDomId} className={styles.pageContent}/>
+                }
               </SimpleBarReact>
             </PageContent>
           </Spin>
@@ -428,7 +432,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 页面内容 */
   protected getPageContent() {
-    const {multiTabs, activePageKey} = this.state;
+    const { multiTabs, activePageKey } = this.state;
     if (!multiTabs || multiTabs.length <= 0) return;
     return (
       <Tabs
@@ -437,11 +441,11 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         tabPosition={"top"}
         hideAdd={true}
         moreIcon={undefined}
-        animated={{inkBar: true, tabPane: false}}
+        animated={{ inkBar: true, tabPane: false }}
         tabBarGutter={4}
-        tabBarStyle={{background: "#f6f6f6", userSelect: "none", borderBottom: "1px solid #d6d6d6"}}
+        tabBarStyle={{ background: "#f6f6f6", userSelect: "none", borderBottom: "1px solid #d6d6d6" }}
         activeKey={activePageKey}
-        tabBarExtraContent={{right: this.getMoreButton()}}
+        tabBarExtraContent={{ right: this.getMoreButton() }}
         onEdit={(targetKey, action) => {
           if (action !== "remove") return;
           this.closeTabPage(targetKey as string);
@@ -459,7 +463,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 是否存在页脚(Footer容器) */
   public existsFooter(): boolean {
-    const {globalFooterLinks, globalFooterCopyright} = this.props;
+    const { globalFooterLinks, globalFooterCopyright } = this.props;
     return (globalFooterLinks && Array.isArray(globalFooterLinks) && globalFooterLinks.length > 0) || !!globalFooterCopyright;
   }
 
@@ -470,25 +474,25 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 二级菜单过滤事件 */
   protected sideMenuOnSearchMenu(value: string): void {
-    const {layoutMenuData} = this.props;
-    const {sideMenuSearchValueMap} = this.state;
+    const { layoutMenuData } = this.props;
+    const { sideMenuSearchValueMap } = this.state;
     const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
     if (!currentFirstMenu) return;
-    this.setState({sideMenuSearchValueMap: sideMenuSearchValueMap.set(currentFirstMenu.menuKey, value)});
+    this.setState({ sideMenuSearchValueMap: sideMenuSearchValueMap.set(currentFirstMenu.menuKey, value) });
   }
 
   /** 二级菜单过滤关键字改变事件 */
   protected sideMenuOnSearchValueChange(value: string): void {
-    const {layoutMenuData} = this.props;
-    const {sideMenuSearchValueMap} = this.state;
+    const { layoutMenuData } = this.props;
+    const { sideMenuSearchValueMap } = this.state;
     const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
     if (!currentFirstMenu) return;
-    this.setState({sideMenuSearchValueMap: sideMenuSearchValueMap.set(currentFirstMenu.menuKey, value)});
+    this.setState({ sideMenuSearchValueMap: sideMenuSearchValueMap.set(currentFirstMenu.menuKey, value) });
   }
 
   /** 二级菜单点击跳转页面事件 */
   protected sideMenuOnMenuClick(param: SideSecondMenuClickParam): void {
-    const {menuData} = param;
+    const { menuData } = param;
     const routerLocation = menuToRouterLocation(menuData);
     if (!routerLocation) return;
     routerHistory.push(routerLocation);
@@ -496,29 +500,31 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 二级菜单展开/折叠事件 */
   protected sideMenuOnMenuOpenChange(param: SideSecondMenuOpenChangeParam): void {
-    const {layoutMenuData} = this.props;
-    const {menuCollapsed, sideMenuOpenKeysMap} = this.state;
+    const { layoutMenuData } = this.props;
+    const { menuCollapsed, sideMenuOpenKeysMap } = this.state;
     if (menuCollapsed) return;
     const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
     if (!currentFirstMenu) return;
-    this.setState({sideMenuOpenKeysMap: sideMenuOpenKeysMap.set(currentFirstMenu.menuKey, param.openKeys)});
+    this.setState({ sideMenuOpenKeysMap: sideMenuOpenKeysMap.set(currentFirstMenu.menuKey, param.openKeys) });
   }
 
   /** 新增或显示标签页 */
   protected addOrShowTabPage() {
-    const {location, layoutMenuData} = this.props;
+    const { location, layoutMenuData } = this.props;
     if (!layoutMenuData.currentMenu) return;
-    const {activePageKey, multiTabs} = this.state;
+    const { activePageKey, multiTabs } = this.state;
     const multiTabKey = base62Encode(routerLocationToStr(location));
     const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);
     if (multiTab) {
       // 显示标签页
       if (activePageKey !== multiTabKey) {
         multiTab.lastActiveTime = new Date().getTime();
-        this.setState({activePageKey: multiTabKey});
+        this.setState({ activePageKey: multiTabKey });
       }
       return;
     }
+    const { runtimeRouter } = layoutMenuData.currentMenu;
+    const { name, pagePath } = runtimeRouter;
     const newMultiTab: MultiTabItem = {
       mountedDomId: lodash.uniqueId('amisId-'),
       menuItem: layoutMenuData.currentMenu,
@@ -529,24 +535,43 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       lastActiveTime: new Date().getTime(),
       showClose: true,
       loading: true,
+      isReactPage: pagePath?.endsWith(".react.tsx") || pagePath?.endsWith(".react.ts") || pagePath?.endsWith(".react.js") || false,
     };
-    const {runtimeRouter} = layoutMenuData.currentMenu;
     multiTabs.push(newMultiTab);
-    log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", runtimeRouter.name, "pagePath -> ", runtimeRouter.pagePath);
-    window.currentAmisId = newMultiTab.mountedDomId;
-    this.setState(
-      {activePageKey: multiTabKey, multiTabs},
-      async () => {
-        await loadPageByPath(newMultiTab.mountedDomId, runtimeRouter.pagePath!, {});
-        newMultiTab.loading = false;
-        this.forceUpdate();
-      }
-    );
+    log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", name, "pagePath -> ", pagePath, "isReactPage -> ", newMultiTab.isReactPage);
+    if (newMultiTab.isReactPage) {
+      // react 组件
+      this.setState(
+        { activePageKey: multiTabKey, multiTabs },
+        async () => {
+          newMultiTab.component = await loadReactPageByPath(runtimeRouter.pagePath!);
+          if (newMultiTab.loading) {
+            newMultiTab.loading = false;
+            this.forceUpdate();
+          }
+        }
+      );
+    } else {
+      // amis 组件
+      window.currentAmisId = newMultiTab.mountedDomId;
+      this.setState(
+        { activePageKey: multiTabKey, multiTabs },
+        async () => {
+          const amisPage = await loadAmisPageByPath(runtimeRouter.pagePath!);
+          newMultiTab.component = amisPage;
+          amisRender(newMultiTab.mountedDomId, amisPage.schema);
+          if (newMultiTab.loading) {
+            newMultiTab.loading = false;
+            this.forceUpdate();
+          }
+        }
+      );
+    }
   }
 
   /** 跳转标签页 */
   protected jumpTabPage(multiTabKey: string) {
-    const {multiTabs} = this.state;
+    const { multiTabs } = this.state;
     const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);
     if (!multiTab) return;
     multiTab.lastActiveTime = new Date().getTime();
@@ -555,14 +580,14 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 关闭标签页 */
   protected closeTabPage(multiTabKey: string) {
-    const {location} = this.props;
-    const {multiTabs} = this.state;
+    const { location } = this.props;
+    const { multiTabs } = this.state;
     const delIndex = multiTabs.findIndex(tab => tab.multiTabKey === multiTabKey);
     if (delIndex < 0) return;
     multiTabs.splice(delIndex, 1);
     if (multiTabs.length <= 0) {
       // TODO 怎么处理 hash
-      routerHistory.push({hash: "/"});
+      routerHistory.push({ hash: "/" });
       // this.forceUpdate();
       return;
     }

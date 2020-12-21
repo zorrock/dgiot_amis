@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import lodash from "lodash";
 import { SchemaObject } from "amis";
 import { RenderOptions, RootRenderProps } from "amis/src/factory";
@@ -44,15 +43,15 @@ const initAppPage = function (): void {
  * @param pathPrefix  pathPrefix
  */
 const amisRender = function (mountedId: string, schema: SchemaObject, props: RootRenderProps = {}, options: RenderOptions = {}, pathPrefix?: string): React.ReactNode {
-  const ops = {...amisRenderOptions, ...options};
+  const ops = { ...amisRenderOptions, ...options };
   return amis.embed(`#${mountedId}`, schema, props, ops, pathPrefix);
 }
 
 /**
- * 动态加载 amis schema文件
+ * 动态加载组件
  * @param schemaPath schema文件路径
  */
-const loadSchema = async function (schemaPath: string): Promise<AmisSchemaPage | ReactPage> {
+const loadDynamicComponent = async function (schemaPath: string): Promise<AmisPage | ReactPage> {
   const fileExtArr = [".ts", ".tsx", ".js", ".json"];
   let flag = false;
   fileExtArr.forEach(fileExt => {
@@ -74,42 +73,58 @@ const loadSchema = async function (schemaPath: string): Promise<AmisSchemaPage |
 
 /**
  * 根据schemaPath加载amis页面
- * @param mountedId     挂载点id
- * @param schemaPath    amis schema path
- * @param props         props
- * @param options       amis选项
- * @param pathPrefix    pathPrefix
  */
-const loadPageByPath = async function (mountedId: string, schemaPath: string, props: RootRenderProps = {}, options: RenderOptions = {}, pathPrefix?: string): Promise<React.ReactNode> {
-  return loadSchema(schemaPath)
+const loadAmisPageByPath = async function (schemaPath: string): Promise<AmisPage> {
+  return loadDynamicComponent(schemaPath)
     .then(page => {
-      const {schema} = page as AmisSchemaPage;
-      const {default: Component} = page as ReactPage;
-      if (Component) {
-        console.log("Component -> ", Component);
-        ReactDOM.render(<Component/>, document.getElementById(`#${mountedId}`));
-      } else if (schema) {
-        return amisRender(mountedId, (page as AmisSchemaPage).schema, props, options, pathPrefix);
-      }
-      return;
+      const amisPage: AmisPage = page as AmisPage;
+      if (amisPage?.schema) return amisPage;
+      return {
+        schema: {
+          type: "page",
+          title: "当前组件不是不符合Amis页面组件规则",
+          body: {
+            type: "html",
+            html: "<pre>当前组件不是不符合Amis页面组件规则</pre>",
+          },
+        },
+      };
     })
     .catch(reason => {
       // 默认的异常处理
-      const jsonReason = JSON.stringify({schemaPath, reason, msg: lodash.toString(reason)}, null, 2);
+      const jsonReason = JSON.stringify({ schemaPath, reason, msg: lodash.toString(reason) }, null, 2);
       log.error(reason);
       log.error(jsonReason);
-      const schema: SchemaObject = {
-        type: "page",
-        title: `schema文件加载失败: ${schemaPath}`,
-        body: {
-          type: "html",
-          html: `<pre>${jsonReason}</pre>`
+      return {
+        schema: {
+          type: "page",
+          title: `schema文件加载失败: ${schemaPath}`,
+          body: {
+            type: "html",
+            html: `<pre>${jsonReason}</pre>`,
+          },
         },
       };
-      return amisRender(mountedId, schema);
     });
 }
 
-// window.addEventListener("hashchange", funcRef, false);
+/**
+ * 根据pagePath加载React组件
+ */
+const loadReactPageByPath = async function (pagePath: string): Promise<ReactPage> {
+  return loadDynamicComponent(pagePath)
+    .then(page => {
+      const reactPage: ReactPage = page as ReactPage;
+      if (reactPage?.default) return reactPage;
+      return {
+        default: () => <div>当前组件不符合React组件页面规则</div>,
+      };
+    }).catch(reason => {
+      log.error(reason);
+      return {
+        default: () => <div>加载React组件页面失败</div>,
+      };
+    });
+}
 
-export { amis, rootMountedId, $rootMounted, initAppPage, amisRender, loadSchema, loadPageByPath };
+export { amis, rootMountedId, $rootMounted, initAppPage, amisRender, loadDynamicComponent, loadAmisPageByPath, loadReactPageByPath };

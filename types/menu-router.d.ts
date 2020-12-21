@@ -141,6 +141,10 @@ interface MultiTabItem {
   showClose: boolean;
   /** 当前页签加载状态 */
   loading: boolean;
+  /** 当前页面是否是React组件 */
+  isReactPage: boolean;
+  /** 组件内容 */
+  component?: any;
 }
 
 /** 全局Layout菜单数据 */
