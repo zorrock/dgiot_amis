@@ -89,8 +89,7 @@ const loadAmisPageByPath = async function (schemaPath: string): Promise<AmisPage
           },
         },
       };
-    })
-    .catch(reason => {
+    }).catch(reason => {
       // 默认的异常处理
       const jsonReason = JSON.stringify({ schemaPath, reason, msg: lodash.toString(reason) }, null, 2);
       log.error(reason);
