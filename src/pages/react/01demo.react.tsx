@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button, Card } from 'antd';
 
 interface DemoPageProps {
   match?: any;
@@ -9,7 +10,6 @@ interface DemoPageState {
   loading: boolean;
   count: number;
 }
-
 
 class DemoPage extends Component<DemoPageProps, DemoPageState> {
   state: DemoPageState = {
@@ -22,13 +22,13 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
     // console.log("param", param);
     const { loading, count } = this.state;
     return (
-      <div>
-        <button onClick={event => this.setState({ loading: !loading, count: (count + 1) })}>点击{count}</button>
+      <Card style={{ margin: "16px" }}>
+        <Button type={"primary"} onClick={event => this.setState({ loading: !loading, count: (count + 1) })}>点击{count}</Button>
         <br/>
         {loading && "加载中..."}
         <br/>
         {JSON.stringify(param)}
-      </div>
+      </Card>
     );
   }
 }
