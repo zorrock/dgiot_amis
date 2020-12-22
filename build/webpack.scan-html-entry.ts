@@ -21,10 +21,10 @@ const scanHtmlEntry = (config: Configuration, srcPath: string, distPath: string,
   const htmlFiles: string[] = [];
   const jsExtArr: string[] = [".ts", ".tsx", ".js", ".jsx", ".json"];
   glob
-    .sync(slash(`${srcPath}/pages/**/*.ejs`), {matchBase: true})
+    .sync(slash(`${srcPath}/pages/**/*.ejs`), { matchBase: true })
     .forEach(file => htmlFiles.push(file));
   glob
-    .sync(slash(`${srcPath}/pages/**/*.html`), {matchBase: true})
+    .sync(slash(`${srcPath}/pages/**/*.html`), { matchBase: true })
     .forEach(file => htmlFiles.push(file));
   htmlFiles.forEach(htmlFile => {
     const fileExtName = path.extname(htmlFile);

@@ -1,7 +1,7 @@
 import path from "path";
 import { ProxyConfigMap } from 'webpack-dev-server';
 
-const {NODE_ENV, ANALYZER} = process.env;
+const { NODE_ENV, ANALYZER } = process.env;
 
 interface Settings {
   /** 打包版本号 */
@@ -44,12 +44,12 @@ const settings: Settings = {
       '/api/': {
         target: 'https://houtai.baidu.com',
         changeOrigin: true,
-        pathRewrite: {'^': ''},
+        pathRewrite: { '^': '' },
       },
       '/!/': {
         target: 'http://api-dev.msvc.top',
         changeOrigin: true,
-        pathRewrite: {'^': ''},
+        pathRewrite: { '^': '' },
       },
     },
   },
