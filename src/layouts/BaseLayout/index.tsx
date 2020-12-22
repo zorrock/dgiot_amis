@@ -229,10 +229,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 页面标题 */
   protected getHtmlTitle() {
-    const { route, htmlTitleSuffix } = this.props;
+    const { route, htmlTitleSuffix, layoutMenuData: { currentMenu } } = this.props;
     return (
       <Helmet>
-        <title>{getHtmlTitle(route, htmlTitleSuffix)}</title>
+        <title>{currentMenu ? getHtmlTitle(route, htmlTitleSuffix) : "404"}</title>
       </Helmet>
     );
   }

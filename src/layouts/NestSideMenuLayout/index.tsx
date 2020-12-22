@@ -140,7 +140,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
 
   /** 全局侧边栏(一级菜单) */
   protected getGlobalSide() {
-    const {layoutMenuData} = this.props;
+    const { layoutMenuData } = this.props;
     const {
       menuIconScriptUrl,
       globalSideLogo, globalSideOnLogoClick, globalSideLogoClassName, globalSideLogoStyle, globalSideMenuMode, globalSideDefaultSelectedKeys,
@@ -202,8 +202,8 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
 
   /** 二级菜单自定义侧边栏顶部部区域渲染逻辑 */
   protected sideMenuTopRender: DefaultSideMenuTopRender = (props, className, elementMap, currentFirstMenu) => {
-    const {topClassName, topStyle} = props;
-    const {sideMenuWidth} = this.props;
+    const { topClassName, topStyle } = props;
+    const { sideMenuWidth } = this.props;
     const menuCollapsed = this.getMenuCollapsed();
     const CollapseCursor = menuCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined;
     return (
@@ -211,12 +211,12 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
         <div className={styles.sideMenuCollapse}>
           <div className={styles.sideMenuCollapseFill}>
             {!this.getMenuCollapsed() && (
-              <span className={styles.sideMenuCollapseTitle} style={{width: sideMenuWidth - 16 - 48}}>
+              <span className={styles.sideMenuCollapseTitle} style={{ width: sideMenuWidth - 16 - 48 }}>
                 {currentFirstMenu.runtimeRouter.name}
               </span>
             )}
           </div>
-          <CollapseCursor onClick={() => this.setState({menuCollapsed: !menuCollapsed})} className={styles.sideMenuCollapseCursor}/>
+          <CollapseCursor onClick={() => this.setState({ menuCollapsed: !menuCollapsed })} className={styles.sideMenuCollapseCursor}/>
           <div className={styles.sideMenuCollapseEmpty}/>
         </div>
         {[...elementMap.values()]}
@@ -238,7 +238,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
       <section className={classNames(styles.layout, layoutClassName)} style={layoutStyle}>
         <aside
           className={classNames(styles.firstSideMenuLayout, globalSideClassName)}
-          style={{...(globalSideMenuMode === SideFirstMenuMode.CustomMenu ? {width: globalSideMenuWidth} : {}), ...globalSideStyle}}
+          style={{ ...(globalSideMenuMode === SideFirstMenuMode.CustomMenu ? { width: globalSideMenuWidth } : {}), ...globalSideStyle }}
         >
           {/* 全局侧边栏 - 一级菜单 */}
           {this.getGlobalSide()}
@@ -247,7 +247,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
           {/* 二级侧边栏 - 二级级菜单 */}
           {
             currentFirstMenu && currentFirstMenu.children && currentFirstMenu.children.length > 0 &&
-            <aside className={classNames(styles.layoutSide, sideClassName)} style={{...sideStyle, width: this.getMenuCollapsed() ? 48 : sideMenuWidth}}>
+            <aside className={classNames(styles.layoutSide, sideClassName)} style={{ ...sideStyle, width: this.getMenuCollapsed() ? 48 : sideMenuWidth }}>
               {this.getSideMenu(undefined, this.sideMenuTopRender)}
             </aside>
           }
@@ -257,7 +257,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
               !hideGlobalHeader &&
               <header
                 className={classNames(styles.header, headerClassName)}
-                style={{...headerStyle, ...(headerHeight ? {height: headerHeight, lineHeight: `${headerHeight}px`} : {})}}
+                style={{ ...headerStyle, ...(headerHeight ? { height: headerHeight, lineHeight: `${headerHeight}px` } : {}) }}
               >
                 {this.getGlobalHeader()}
               </header>
@@ -283,10 +283,10 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
 
   /** 一级菜单选中事件 */
   protected firstMenuOnSelect(param: HeaderFirstMenuSelectParam): void {
-    const {menuData} = param;
+    const { menuData } = param;
     // 获取当前一级菜单下的二级菜单的 selectedKeys 对应的 RuntimeMenuItem
-    const {layoutMenuData} = this.props;
-    const {sideMenuSelectedKeysMap} = this.state;
+    const { layoutMenuData } = this.props;
+    const { sideMenuSelectedKeysMap } = this.state;
     let routerMenu: RuntimeMenuItem | undefined;
     let routerMenuKey: string | undefined;
     if (menuData.menuKey) {
