@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
+import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 import { $rootMounted, initAppPage } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
 import { layoutToRuntime, LayoutType, locationHashMatch, RuntimeLayoutConfig } from "@/utils/router";
+import { BlankLayout } from "@/layouts/BlankLayout";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { layoutSettings, routerConfigs } from './router-config';
-import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 
 const log = logger.getLogger("src/schema-app.tsx");
 
@@ -46,7 +47,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     const rootMenus = matched?.rootMenus;
     const location = matched?.location;
     const match = matched?.match;
-    this.state = {locationHash: initLocationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match};
+    this.state = { locationHash: initLocationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match };
     log.info("initState ->", this.state);
   }
 
@@ -62,7 +63,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
   /** Location Hash更新事件 */
   onLocationHashChange = (event: HashChangeEvent) => {
-    const {runtimeLayouts, layoutSettings} = this.props;
+    const { runtimeLayouts, layoutSettings } = this.props;
     const locationHash = getLocationHash();
     const matched = locationHashMatch(layoutSettings.menu, locationHash, runtimeLayouts);
     const currentLayout = matched?.currentLayout;
@@ -73,20 +74,32 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     const match = matched?.match;
     log.info("event ->", event.newURL);
     log.info("locationHash ->", locationHash);
-    this.setState({locationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match})
+    this.setState({ locationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match })
     log.info("newState ->", this.state);
   }
 
-  protected getNestSideLayout() {
-    const {currentLayout, currentRouter, currentMenu, rootMenus, location, match} = this.state;
-    const layoutMenuData: LayoutMenuData = getLayoutMenuData({location: location!, rootMenus: rootMenus!, currentMenu: currentMenu!});
-    log.info("layoutMenuData ->", layoutMenuData);
+  protected getNestSideLayout(layoutMenuData: LayoutMenuData) {
+    const { currentLayout, currentRouter, location, match } = this.state;
     return (
       <NestSideMenuLayout
-        route={currentRouter}
-        location={location}
-        match={match}
-        rootRoutes={currentLayout?.routes}
+        route={currentRouter!}
+        location={location!}
+        match={match!}
+        rootRoutes={currentLayout?.routes!}
+        layoutMenuData={layoutMenuData}
+        {...currentLayout?.layoutProps}
+      />
+    );
+  }
+
+  protected getBlankLayout(layoutMenuData: LayoutMenuData) {
+    const { currentLayout, currentRouter, location, match } = this.state;
+    return (
+      <BlankLayout
+        route={currentRouter!}
+        location={location!}
+        match={match!}
+        rootRoutes={currentLayout?.routes!}
         layoutMenuData={layoutMenuData}
         {...currentLayout?.layoutProps}
       />
@@ -94,13 +107,17 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   }
 
   render() {
-    const {currentLayout} = this.state;
-    if (!currentLayout) return "404";
+    const { currentLayout, currentMenu, rootMenus, location } = this.state;
+    const layoutMenuData: LayoutMenuData = getLayoutMenuData({ location: location!, rootMenus: rootMenus!, currentMenu: currentMenu! });
+    log.info("layoutMenuData ->", layoutMenuData);
+    if (!currentLayout) {
+      return "404";
+    }
     if (currentLayout.layout === LayoutType.Blank) {
-      return "空白页 LayoutType.Blank";
+      return this.getBlankLayout(layoutMenuData);
     }
     if (currentLayout.layout === LayoutType.NestSide) {
-      return this.getNestSideLayout();
+      return this.getNestSideLayout(layoutMenuData);
     }
     return "不支持的Layout";
   }

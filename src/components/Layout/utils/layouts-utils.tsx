@@ -30,7 +30,7 @@ const getCurrentFirstMenuKey = (currentMenu?: RuntimeMenuItem): string | undefin
  * @param layoutMenuData  全局Layout菜单数据
  */
 const getCurrentFirstMenu = (layoutMenuData: LayoutMenuData): RuntimeMenuItem | undefined => {
-  const {flattenMenuMap} = layoutMenuData;
+  const { flattenMenuMap } = layoutMenuData;
   const currentFirstMenuKey = getCurrentFirstMenuKey(layoutMenuData.currentMenu);
   if (!currentFirstMenuKey) return undefined;
   let currentFirstMenu: RuntimeMenuItem | undefined = undefined;
@@ -102,12 +102,12 @@ const getSideMenuData = (menuData: RuntimeMenuItem, searchValue: string): Runtim
   };
   filterSearch(menuData);
   if (showMenuKeys.size <= 1) return undefined;
-  const resMenu: RuntimeMenuItem = {...menuData, children: []};
+  const resMenu: RuntimeMenuItem = { ...menuData, children: [] };
   const filterKey = (oldMenu: RuntimeMenuItem, newParentMenu: RuntimeMenuItem): void => {
     let menu: RuntimeMenuItem | undefined;
     if (showMenuKeys.has(oldMenu.menuKey)) {
       // 构造子菜单
-      menu = {...oldMenu, children: []};
+      menu = { ...oldMenu, children: [] };
       // if (!oldMenu.children) delete menu.children;
       // 加入子菜单
       if (!newParentMenu.children) newParentMenu.children = [];
@@ -176,13 +176,13 @@ const getFirstMenu = (menu: RuntimeMenuItem): RuntimeMenuItem => {
 
 /** 路由转换成字符串 */
 const routerLocationToStr = (routerLocation: RouterLocation): string => {
-  const {pathname, hash, query, state} = routerLocation;
+  const { pathname, hash, query, state } = routerLocation;
   return `${pathname ?? ""}|${stableStringify(query ?? {})}|${hash ?? ""}|${stableStringify(state)}`;
 };
 
 /** 菜单转换成RouterLocation */
 const menuToRouterLocation = (menu: RuntimeMenuItem): RouterLocation | undefined => {
-  const {runtimeRouter} = menu;
+  const { runtimeRouter } = menu;
   if (!runtimeRouter) return;
   return {
     pathname: window.location.pathname,
@@ -200,6 +200,11 @@ const base62Encode = (str: string): string => {
   return base62Converter.encode(new Buffer(str));
 }
 
+/** 页面是否是React组件页面 */
+const isReactPage = (pagePath: string = ""): boolean => {
+  return pagePath.endsWith(".react.tsx") || pagePath.endsWith(".react.ts") || pagePath.endsWith(".react.js") || false;
+}
+
 /**
  * 获取页面标题
  * @param route           当前路由信息
@@ -207,7 +212,7 @@ const base62Encode = (str: string): string => {
  */
 const getHtmlTitle = (route: RuntimeRouter, htmlTitleSuffix?: string): string => {
   let title = 'Amis Admin';
-  const {pageTitle} = route;
+  const { pageTitle } = route;
   if (pageTitle) {
     if (pageTitle && htmlTitleSuffix) {
       title = `${pageTitle} - ${htmlTitleSuffix ?? ''}`;
@@ -263,7 +268,7 @@ const getMenuIcon = (icon?: string, iconScriptUrl?: string): React.ReactNode | u
     });
   }
   let iconNode: React.ReactNode | undefined;
-  const style: CSSProperties = {marginRight: 8};
+  const style: CSSProperties = { marginRight: 8 };
   if (IconFont && icon.startsWith('icon-')) {
     iconNode = <IconFont type={icon} style={style}/>;
   } else {
@@ -291,7 +296,7 @@ interface GetMenuNodeParam {
  * @param param 相关参数
  */
 const getAntdMenuItems = (param: GetMenuNodeParam): React.ReactNode[] => {
-  const {showRootMenus, menuIconScriptUrl, menuItemRender, menuItemClassName, menuItemStyle = {}} = param;
+  const { showRootMenus, menuIconScriptUrl, menuItemRender, menuItemClassName, menuItemStyle = {} } = param;
   const nodes: React.ReactNode[] = [];
   if (showRootMenus && showRootMenus.length > 0) {
     showRootMenus.forEach(menu => {
@@ -320,6 +325,7 @@ export {
   getFirstMenu,
   menuToRouterLocation,
   base62Encode,
+  isReactPage,
   getHtmlTitle,
   defaultCustomMenuItemRender,
   defaultMenuItemRender,

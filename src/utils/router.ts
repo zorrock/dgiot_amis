@@ -4,6 +4,7 @@ import { match, pathToRegexp } from 'path-to-regexp';
 import stableStringify from "fast-json-stable-stringify";
 import memoizeOne from "memoize-one";
 import isEqual from "lodash.isequal";
+import { BlankLayoutProps } from "@/layouts/BlankLayout";
 import { NestSideMenuLayoutProps } from "@/layouts/NestSideMenuLayout";
 import { getUrlParam, hasValue, noValue } from "@/utils/utils";
 
@@ -13,10 +14,8 @@ enum LayoutType {
   NestSide = "NestSide",
   /** 顶部和侧边栏二级路由布局(顶部和侧边栏) */
   TopSide = "TopSide",
-  /** 空布局，使用amis-schema开发页面 */
-  AmisBlank = "AmisBlank",
-  /** 空布局，不支持amis-schema开发页面 */
-  Blank = "HtmlBlank",
+  /** 空布局页 */
+  Blank = "Blank",
 }
 
 interface NestSideLayoutConfig extends BaseLayoutConfig {
@@ -40,25 +39,18 @@ interface RuntimeNestSideLayoutConfig extends RuntimeBaseLayoutConfig {
 //   layoutProps: object;
 // }
 
-// interface AmisBlankLayoutConfig extends BaseLayoutConfig {
-//   /** 页面布局类型 */
-//   layout: LayoutType.AmisBlank;
-//   /** TODO 页面布局配置 */
-//   layoutProps: object;
-// }
-
 interface BlankLayoutConfig extends BaseLayoutConfig {
   /** 页面布局类型 */
   layout: LayoutType.Blank;
-  /** TODO 页面布局配置 */
-  layoutProps: object;
+  /** 页面布局配置 */
+  layoutProps: Partial<BlankLayoutProps>;
 }
 
 interface RuntimeBlankLayoutConfig extends RuntimeBaseLayoutConfig {
   /** 页面布局类型 */
   layout: LayoutType.Blank;
-  /** TODO 页面布局配置 */
-  layoutProps: object;
+  /** 页面布局配置 */
+  layoutProps: Partial<BlankLayoutProps>;
 }
 
 /** 布局配置 */
@@ -106,8 +98,8 @@ class RouterHistory {
    * @param router 路由地址
    */
   public push(router: Router): void {
-    let {state} = router;
-    const {hash, query} = router;
+    let { state } = router;
+    const { hash, query } = router;
     const path = RouterHistory.getHash(hash);
     if (!path) return;
     if (!state) state = this.routerLocationStateMap.get(path) ?? {};
@@ -219,7 +211,7 @@ const routerToRuntime = (rootPath: string, current: RouterConfig, parent?: Runti
 const layoutToRuntime = (routerConfigs: LayoutConfig[]): RuntimeLayoutConfig[] => {
   if (!routerConfigs || routerConfigs.length <= 0) return routerConfigs as RuntimeLayoutConfig[];
   routerConfigs.forEach(routerConfig => {
-    const {path: rootPath, routes} = routerConfig;
+    const { path: rootPath, routes } = routerConfig;
     if (!routes || routes.length <= 0) return;
     const runtimeRouters: RuntimeRouter[] = [];
     routes.forEach(currentRoute => runtimeRouters.push(routerToRuntime(rootPath, currentRoute)));
@@ -230,13 +222,13 @@ const layoutToRuntime = (routerConfigs: LayoutConfig[]): RuntimeLayoutConfig[] =
 
 // 获取菜单key(唯一不重复)
 const getMenuKey = (runtimeRouter: RuntimeRouter): string => {
-  const {path, exact, redirect, pathVariable, querystring, name} = runtimeRouter;
+  const { path, exact, redirect, pathVariable, querystring, name } = runtimeRouter;
   return `${path}|${exact}|${stableStringify(pathVariable ?? {})}|${stableStringify(querystring ?? {})}|${name}|${redirect}`;
 }
 
 /** 把Router转换成Menu(递归) */
 const routerToMenu = (menuSettings: RouterMenuSettings, runtimeRouter: RuntimeRouter, parent?: RuntimeMenuItem): RuntimeMenuItem => {
-  const currentMenu: RuntimeMenuItem = {runtimeRouter, menuKey: getMenuKey(runtimeRouter), parentKeys: [], children: [], isHide: false};
+  const currentMenu: RuntimeMenuItem = { runtimeRouter, menuKey: getMenuKey(runtimeRouter), parentKeys: [], children: [], isHide: false };
   if (parent) {
     currentMenu.parentKeys = [...parent.parentKeys, parent.menuKey];
     parent.children.push(currentMenu);
@@ -302,8 +294,8 @@ const layoutMatchInner = (locationHash: string, runtimeLayouts: RuntimeLayoutCon
   let matchedRouter: RuntimeRouter | undefined = undefined;
   runtimeLayouts.forEach(runtimeLayout => {
     if (matchedLayout) return;
-    const {path, routes} = runtimeLayout;
-    if (!pathToRegexp(path, undefined, {end: false}).test(locationHash)) {
+    const { path, routes } = runtimeLayout;
+    if (!pathToRegexp(path, undefined, { end: false }).test(locationHash)) {
       return;
     }
     if (!routes || routes.length <= 0) {
@@ -318,7 +310,7 @@ const layoutMatchInner = (locationHash: string, runtimeLayouts: RuntimeLayoutCon
     }
   });
   if (matchedLayout && matchedRouter) {
-    return {matchedLayout, matchedRouter}
+    return { matchedLayout, matchedRouter }
   }
   return;
 }
@@ -384,7 +376,7 @@ const locationHashMatchInner = (menuSettings: RouterMenuSettings, locationHash: 
     url: window.location.href,
     params: (matchParams ? (matchParams.params ?? {}) : {}),
   };
-  return {currentLayout: matched.matchedLayout, currentRouter: matched.matchedRouter, currentMenu, rootMenus, location, match: matchInfo};
+  return { currentLayout: matched.matchedLayout, currentRouter: matched.matchedRouter, currentMenu, rootMenus, location, match: matchInfo };
 }
 
 /**

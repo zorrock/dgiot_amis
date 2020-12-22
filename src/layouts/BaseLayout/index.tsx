@@ -19,6 +19,7 @@ import {
   getDefaultOpenKeys,
   getHtmlTitle,
   getSideMenuData,
+  isReactPage,
   menuToRouterLocation,
   routerLocationToStr
 } from "@/components/Layout/utils/layouts-utils";
@@ -418,8 +419,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
             <PageContent>
               <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
                 {
-                  tab.isReactPage && tab.component?.default ?
-                    <tab.component.default param={{ a: "aaa", b: 123 }}/> :
+                  tab.isReactPage ?
+                    (tab.component?.default ? <tab.component.default/> : <div/>) :
                     <div id={mountedDomId} key={mountedDomId} className={styles.pageContent}/>
                 }
               </SimpleBarReact>
@@ -535,7 +536,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       lastActiveTime: new Date().getTime(),
       showClose: true,
       loading: true,
-      isReactPage: pagePath?.endsWith(".react.tsx") || pagePath?.endsWith(".react.ts") || pagePath?.endsWith(".react.js") || false,
+      isReactPage: isReactPage(pagePath),
     };
     multiTabs.push(newMultiTab);
     log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", name, "pagePath -> ", pagePath, "isReactPage -> ", newMultiTab.isReactPage);
@@ -545,10 +546,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       async () => {
         if (newMultiTab.isReactPage) {
           // react 组件
-          newMultiTab.component = await loadReactPageByPath(runtimeRouter.pagePath!);
+          newMultiTab.component = await loadReactPageByPath(pagePath!);
         } else {
           // amis 组件
-          newMultiTab.component = await loadAmisPageByPath(runtimeRouter.pagePath!);
+          newMultiTab.component = await loadAmisPageByPath(pagePath!);
           amisRender(newMultiTab.mountedDomId, newMultiTab.component.schema);
         }
         if (newMultiTab.loading) {

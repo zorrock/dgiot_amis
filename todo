@@ -1,0 +1,20 @@
+[  ] 1. 401未登录页面
+[  ] 2. 403无权访问页面
+[  ] 3. 404页面不存在
+[OK] 4. LayoutType.Blank
+[  ] 5. iframe??
+[  ] 6. RouterConfig.path 支持path-to-regexp 测试
+[  ] 7. RouterConfig.pathVariable 测试
+[  ] 8. RouterConfig.querystring 测试
+[  ] 9. RouterConfig.exact 测试
+[  ] 10.RouterConfig.redirect 测试
+[  ] 11.RouterConfig.icon 测试
+[  ] 12.RouterConfig.defaultOpen 测试
+[  ] 13.RouterConfig.breadcrumbName 测试
+[  ] 14.RouterConfig.groupName 测试
+[  ] 15.RouterConfig.hideMenu 测试
+[  ] 16.RouterConfig.state 测试
+[  ] 17.RouterConfig.authority 测试
+
+
+
