@@ -11,8 +11,8 @@
     <!--<link rel="stylesheet" href="<%= opts.urlPrefix %>public/font-awesome/css/font-awesome.css"/>-->
     <!--<link rel="stylesheet" href="<%= opts.urlPrefix %>public/amis/lib/themes/cxd.css"/>-->
     <!--<link rel="stylesheet" href="<%= opts.urlPrefix %>public/amis/lib/themes/dark.css"/>-->
-    <!--<link rel="stylesheet" href="<%= opts.urlPrefix %>public/antd/dist/antd.min.css"/>-->
-    <link rel="stylesheet" href="<%= opts.urlPrefix %>public/antd/dist/antd.compact.min.css"/>
+    <!--<link rel="stylesheet" href="<%= opts.urlPrefix %>public/antd/dist/antd.<%= opts.isDevMode ? '' : 'min.' %>css"/>-->
+    <link rel="stylesheet" href="<%= opts.urlPrefix %>public/antd/dist/antd.compact.<%= opts.isDevMode ? '' : 'min.' %>css"/>
     <style>
         html, body, #app-root {
             height: 100%;
@@ -24,11 +24,11 @@
 <div id="app-root">
 </div>
 <script type="text/javascript" src="<%= opts.urlPrefix %>public/react/umd/react.profiling.min.js"></script>
-<script type="text/javascript" src="<%= opts.urlPrefix %>public/react/umd/react.production.min.js"></script>
-<script type="text/javascript" src="<%= opts.urlPrefix %>public/react-dom/umd/react-dom.production.min.js"></script>
-<script type="text/javascript" src="<%= opts.urlPrefix %>public/moment/min/moment-with-locales.js"></script>
-<!--<script type="text/javascript" src="<%= opts.urlPrefix %>public/@ant-design/icons/dist/index.umd.min.js"></script>-->
-<script type="text/javascript" src="<%= opts.urlPrefix %>public/antd/dist/antd-with-locales.min.js"></script>
+<script type="text/javascript" src="<%= opts.urlPrefix %>public/react/umd/<%= opts.isDevMode ? 'react.development.js' : 'react.production.min.js' %>"></script>
+<script type="text/javascript" src="<%= opts.urlPrefix %>public/react-dom/umd/<%= opts.isDevMode ? 'react-dom.development.js' : 'react-dom.production.min.js' %>"></script>
+<script type="text/javascript" src="<%= opts.urlPrefix %>public/moment/min/moment-with-locales.<%= opts.isDevMode ? '' : 'min.' %>js"></script>
+<!--<script type="text/javascript" src="<%= opts.urlPrefix %>public/@ant-design/icons/dist/index.umd.<%= opts.isDevMode ? '' : 'min.' %>js"></script>-->
+<script type="text/javascript" src="<%= opts.urlPrefix %>public/antd/dist/antd-with-locales.<%= opts.isDevMode ? '' : 'min.' %>js"></script>
 <script type="text/javascript" src="<%= opts.urlPrefix %>public/amis/sdk/sdk.js"></script>
 </body>
 </html>

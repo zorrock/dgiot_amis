@@ -17,6 +17,8 @@ import { settings } from './config';
 import { scanJsEntry } from './webpack.scan-js-entry';
 import HtmlWebpackPlugin from "html-webpack-plugin";
 
+// 是否是开发模式
+const isDevMode = settings.mode === "development";
 // src文件夹绝对路径
 const srcPath = path.resolve(settings.rootPath, "./src");
 // pages文件夹绝对路径
@@ -40,34 +42,34 @@ let config: Configuration = {
   module: {
     // noParse: content => {},
     rules: [
-      {test: /\.json$/, use: "json-loader", type: "javascript/auto"},
+      { test: /\.json$/, use: "json-loader", type: "javascript/auto" },
       // 图片
       {
         test: /\.(png|jp?g|gif|svg|ico)$/,
-        use: [{loader: "url-loader", options: {limit: 8192, name: "images/[name].[hash:8].[ext]", publicPath: ""}}],
+        use: [{ loader: "url-loader", options: { limit: 8192, name: "images/[name].[hash:8].[ext]", publicPath: "" } }],
       },
       // 字体图标
       {
         test: /\.(woff|woff2|svg|eot|ttf)$/,
-        use: [{loader: "file-loader", options: {limit: 8192, name: "fonts/[name].[ext]?[hash:8]", publicPath: ""}}],
+        use: [{ loader: "file-loader", options: { limit: 8192, name: "fonts/[name].[ext]?[hash:8]", publicPath: "" } }],
       },
       // 音频
       {
         test: /\.(wav|mp3|ogg)?$/,
-        use: [{loader: "file-loader", options: {limit: 8192, name: "audios/[name].[ext]?[hash:8]", publicPath: ""}}],
+        use: [{ loader: "file-loader", options: { limit: 8192, name: "audios/[name].[ext]?[hash:8]", publicPath: "" } }],
       },
       // 视频
       {
         test: /\.(ogg|mpeg4|webm)?$/,
-        use: [{loader: "file-loader", options: {limit: 8192, name: "videos/[name].[ext]?[hash:8]", publicPath: ""}}],
+        use: [{ loader: "file-loader", options: { limit: 8192, name: "videos/[name].[ext]?[hash:8]", publicPath: "" } }],
       },
       // js、jsx
       {
         test: /\.jsx?$/,
         use: [
-          {loader: "cache-loader"},
-          {loader: "thread-loader", options: {workers: 3}},
-          {loader: "babel-loader", options: {cacheDirectory: true}},
+          { loader: "cache-loader" },
+          { loader: "thread-loader", options: { workers: 3 } },
+          { loader: "babel-loader", options: { cacheDirectory: true } },
         ],
         include: [srcPath],
         exclude: /node_modules/,
@@ -76,10 +78,10 @@ let config: Configuration = {
       {
         test: /\.tsx?$/,
         use: [
-          {loader: "cache-loader"},
-          {loader: "thread-loader", options: {workers: 3}},
+          { loader: "cache-loader" },
+          { loader: "thread-loader", options: { workers: 3 } },
           // {loader: "ts-loader", options: {happyPackMode: true, transpileOnly: true}},
-          {loader: "babel-loader", options: {cacheDirectory: true}},
+          { loader: "babel-loader", options: { cacheDirectory: true } },
         ],
         include: [srcPath],
         exclude: /node_modules/,
@@ -87,26 +89,26 @@ let config: Configuration = {
     ],
   },
   plugins: [
-    new DefinePlugin({...settings.define}),
+    new DefinePlugin({ ...settings.define }),
     new CopyWebpackPlugin({
       patterns: [
-        {from: publicPath, to: "./public"},
+        { from: publicPath, to: "./public" },
         ...[
           // react 相关
           "/react/umd/react.profiling.min.js",
-          "/react/umd/react.production.min.js",
+          isDevMode ? "/react/umd/react.development.js" : "/react/umd/react.production.min.js",
           "/react-dom/umd/react-dom.profiling.min.js",
-          "/react-dom/umd/react-dom.production.min.js",
+          isDevMode ? "/react-dom/umd/react-dom.development.js" : "/react-dom/umd/react-dom.production.min.js",
           // moment 相关
-          "/moment/min/moment-with-locales.js",
+          isDevMode ? "/moment/min/moment-with-locales.js" : "/moment/min/moment-with-locales.min.js",
           // @ant-design/icons 相关
-          "/@ant-design/icons/dist/index.umd.min.js",
+          isDevMode ? "/@ant-design/icons/dist/index.umd.js" : "/@ant-design/icons/dist/index.umd.min.js",
           // antd 相关
-          "/antd/dist/antd.min.js",
-          "/antd/dist/antd-with-locales.min.js",
-          "/antd/dist/antd.min.css",
-          "/antd/dist/antd.compact.min.css",
-          "/antd/dist/antd.dark.min.css",
+          isDevMode ? "/antd/dist/antd.js" : "/antd/dist/antd.min.js",
+          isDevMode ? "/antd/dist/antd-with-locales.js" : "/antd/dist/antd-with-locales.min.js",
+          isDevMode ? "/antd/dist/antd.css" : "/antd/dist/antd.min.css",
+          isDevMode ? "/antd/dist/antd.compact.css" : "/antd/dist/antd.compact.min.css",
+          isDevMode ? "/antd/dist/antd.dark.css" : "/antd/dist/antd.dark.min.css",
           // amis 相关
           "/amis/sdk/**/*.css",
           "/amis/sdk/**/*.js",
@@ -134,7 +136,7 @@ let config: Configuration = {
           };
         }),
       ],
-      options: {concurrency: 64}
+      options: { concurrency: 64 }
     }),
   ],
   resolve: {
@@ -150,7 +152,7 @@ let config: Configuration = {
     moment: "moment",
     antd: "antd",
     // "@ant-design/icons": "AntDesignIcons", // 不起作用
-    amis: {commonjs: "amisRequire", amd: "amisRequire", root: "amisRequire"},
+    amis: { commonjs: "amisRequire", amd: "amisRequire", root: "amisRequire" },
     // amis: "amisRequire",
   },
   optimization: {
@@ -164,7 +166,7 @@ const postcssOptions = {
     ["postcss-preset-env", {}],
     ["autoprefixer", {}],
     ["postcss-aspect-ratio-mini", {}],
-    ["postcss-write-svg", {utf8: false}],
+    ["postcss-write-svg", { utf8: false }],
     // ["postcss-px-to-viewport", {
     //   // 视窗的宽度，对应的是我们设计稿的宽度，一般是750
     //   viewportWidth: 750,
@@ -185,7 +187,7 @@ const postcssOptions = {
 };
 
 // 开发模式
-if (settings.mode === "development") {
+if (isDevMode) {
   // @ts-ignore
   const devConfig: Configuration = {
     output: {
@@ -202,21 +204,21 @@ if (settings.mode === "development") {
         {
           test: /\.css$/,
           use: [
-            {loader: "cache-loader"},
-            {loader: "style-loader"},
-            {loader: "css-loader", options: {}},
-            {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
+            { loader: "cache-loader" },
+            { loader: "style-loader" },
+            { loader: "css-loader", options: {} },
+            { loader: "postcss-loader", options: { postcssOptions: postcssOptions } },
           ],
         },
         // 编译less
         {
           test: /\.less$/,
           use: [
-            {loader: "cache-loader"},
-            {loader: "style-loader"},
-            {loader: "css-loader", options: {importLoaders: 1, modules: {compileType: "module", localIdentName: "[path][name]_[local]", localIdentContext: srcPath}}},
-            {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
-            {loader: "less-loader", options: {sourceMap: true}},
+            { loader: "cache-loader" },
+            { loader: "style-loader" },
+            { loader: "css-loader", options: { importLoaders: 1, modules: { compileType: "module", localIdentName: "[path][name]_[local]", localIdentContext: srcPath } } },
+            { loader: "postcss-loader", options: { postcssOptions: postcssOptions } },
+            { loader: "less-loader", options: { sourceMap: true } },
           ],
         },
       ],
@@ -262,7 +264,7 @@ if (settings.mode === "development") {
 }
 
 // 生产模式
-if (settings.mode === "production") {
+if (!isDevMode) {
   const prodConfig: Configuration = {
     output: {
       path: distPath,
@@ -278,8 +280,8 @@ if (settings.mode === "production") {
           test: /\.css$/,
           use: [
             MiniCssExtractPlugin.loader,
-            {loader: "css-loader", options: {}},
-            {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
+            { loader: "css-loader", options: {} },
+            { loader: "postcss-loader", options: { postcssOptions: postcssOptions } },
           ],
         },
         // 编译less
@@ -289,10 +291,10 @@ if (settings.mode === "production") {
             MiniCssExtractPlugin.loader,
             {
               loader: "css-loader",
-              options: {importLoaders: 1, modules: {compileType: "module", localIdentName: "[path][name]_[local]_[hash:base64:5]", localIdentContext: srcPath}}
+              options: { importLoaders: 1, modules: { compileType: "module", localIdentName: "[path][name]_[local]_[hash:base64:5]", localIdentContext: srcPath } }
             },
-            {loader: "postcss-loader", options: {postcssOptions: postcssOptions}},
-            {loader: "less-loader", options: {sourceMap: false}},
+            { loader: "postcss-loader", options: { postcssOptions: postcssOptions } },
+            { loader: "less-loader", options: { sourceMap: false } },
           ],
         },
       ],
@@ -311,7 +313,7 @@ if (settings.mode === "production") {
         name: "manifest",
       },
       minimizer: [
-        new TerserPlugin({parallel: true, extractComments: false}),
+        new TerserPlugin({ parallel: true, extractComments: false }),
         new OptimizeCSSAssetsPlugin({}),
       ],
       splitChunks: {
@@ -412,6 +414,7 @@ const options: HtmlWebpackPlugin.Options = {
   appVersion: settings.appVersion,
   chunks: ["manifest", ...chunks, "global", "schemaApp"],
   urlPrefix: "/",
+  isDevMode,
 };
 if (settings.mode === "production") {
   options.minify = {

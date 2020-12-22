@@ -7,6 +7,9 @@ import { Configuration } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { settings } from "./config";
 
+// 是否是开发模式
+const isDevMode = settings.mode === "development";
+
 /**
  * 扫描js(ts)文件动态增加入口文件
  * @param config      webpack配置
@@ -60,6 +63,7 @@ const scanJsEntry = (config: Configuration, srcPath: string, distPath: string, c
       appVersion: settings.appVersion,
       chunks: ["manifest", ...chunks, "global", entryKey],
       urlPrefix: "/",
+      isDevMode,
     };
     if (settings.mode === "production") {
       options.minify = {

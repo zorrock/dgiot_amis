@@ -7,6 +7,9 @@ import { base62Encode, getHtmlTitle, isReactPage, routerLocationToStr } from "@/
 import styles from "./index.less";
 import SimpleBarReact from "simplebar-react";
 import classNames from "classnames";
+import { logger } from "@/utils/logger";
+
+const log = logger.getLogger("src/layouts/BlankLayout/index.tsx");
 
 interface BlankLayoutProps extends LayoutPageComponentProps {
   /** 当前Layout菜单数据 */
@@ -49,6 +52,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
   }
 
   render() {
+    log.info("BlankLayout render");
     const { currentLocationKey } = this.state;
     const { route, htmlTitleSuffix } = this.props;
     if (!currentLocationKey) return <div/>;
