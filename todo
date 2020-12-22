@@ -15,6 +15,5 @@
 [  ] 15.RouterConfig.hideMenu 测试
 [  ] 16.RouterConfig.state 测试
 [  ] 17.RouterConfig.authority 测试
-
-
-
+[  ] 18.动态菜单
+[  ] 19.菜单权限
