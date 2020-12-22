@@ -72,7 +72,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
   protected getPage() {
     const { loading, mountedDomId, component, isReactComponent } = this.state;
     return (
-      <Spin size={"default"} delay={200} spinning={loading} tip="页面加载中..." style={{ height: "100%" }} wrapperClassName={styles.spinWrapper}>
+      <Spin size={"large"} delay={200} spinning={loading} tip="页面加载中..." style={{ height: "100%" }} wrapperClassName={styles.spinWrapper}>
         <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
           {
             isReactComponent ?
