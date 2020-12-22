@@ -85,7 +85,7 @@ interface SideSecondMenuState {
 
 class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenuState> {
   protected getMenuNode(menus?: RuntimeMenuItem[]): React.ReactNode[] {
-    const {currentPath, menuIconScriptUrl, menuItemRender, menuFolderRender, menuItemGroupRender, onSubMenuTitleClick} = this.props;
+    const { currentPath, menuIconScriptUrl, menuItemRender, menuFolderRender, menuItemGroupRender, onSubMenuTitleClick } = this.props;
     const nodes: React.ReactNode[] = [];
     if (!menus || menus.length <= 0) return nodes;
     // 处理菜单 Map<groupName, RuntimeMenuItem[]>
@@ -113,7 +113,7 @@ class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenu
               key={menu.menuKey}
               title={menuFolderRender instanceof Function ? menuFolderRender(menu, icon) : this.defaultMenuFolderRender(menu, icon)}
               onTitleClick={(eventParams) => {
-                if (onSubMenuTitleClick instanceof Function) onSubMenuTitleClick({...eventParams, currentPath, menuData: menu});
+                if (onSubMenuTitleClick instanceof Function) onSubMenuTitleClick({ ...eventParams, currentPath, menuData: menu });
               }}
             >
               {this.getMenuNode(menu.children)}
@@ -188,7 +188,7 @@ class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenu
     return (
       <Menu
         className={classNames(styles.secondMenu, menuClassName)}
-        style={{width: '100%', ...menuStyle}}
+        style={{ width: '100%', ...menuStyle }}
         {...keysProps}
         mode="inline"
         multiple={false}
@@ -200,17 +200,17 @@ class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenu
         onSelect={(eventParams) => {
           if (onMenuSelect instanceof Function) {
             // @ts-ignore
-            onMenuSelect({...eventParams, currentPath, menuData: eventParams.item.props['data-menu']});
+            onMenuSelect({ ...eventParams, currentPath, menuData: eventParams.item.props['data-menu'] });
           }
         }}
         onClick={(eventParams) => {
           if (onMenuClick instanceof Function) {
             // @ts-ignore
-            onMenuClick({...eventParams, currentPath, menuData: eventParams.item.props['data-menu']});
+            onMenuClick({ ...eventParams, currentPath, menuData: eventParams.item.props['data-menu'] });
           }
         }}
         onOpenChange={(eventParams) => {
-          if (onMenuOpenChange instanceof Function) onMenuOpenChange({openKeys: eventParams as string[], currentPath});
+          if (onMenuOpenChange instanceof Function) onMenuOpenChange({ openKeys: eventParams as string[], currentPath });
         }}
         {...menuProps}
       >

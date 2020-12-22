@@ -110,7 +110,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState> {
    * 获取搜索输入框
    */
   public getInputSearch() {
-    const {menuCollapsed, enableSearchMenu, searchDefaultValue, searchValue, onSearchMenu, onSearchValueChange, searchClassName, searchStyle = {}, searchProps} = this.props;
+    const { menuCollapsed, enableSearchMenu, searchDefaultValue, searchValue, onSearchMenu, onSearchValueChange, searchClassName, searchStyle = {}, searchProps } = this.props;
     if (menuCollapsed || !enableSearchMenu) return undefined;
     const valueProp: AntdInputSearchProps = {};
     if (searchDefaultValue !== undefined) valueProp.defaultValue = searchDefaultValue;
@@ -196,7 +196,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState> {
       <SimpleBarReact
         key="secondMenuScrollbar"
         className={classNames(styles.simpleBar, scrollbarClassName)}
-        style={{height: '100%', width: '100%', overflowX: 'hidden'}}
+        style={{ height: '100%', width: '100%', overflowX: 'hidden' }}
         autoHide={autoHideScrollbar}
         timeout={350}
       >
@@ -206,7 +206,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState> {
   }
 
   public render() {
-    const {sideMenuRender, ...otherProps} = this.props;
+    const { sideMenuRender, ...otherProps } = this.props;
     if (sideMenuRender instanceof Function) {
       return sideMenuRender(otherProps);
     }

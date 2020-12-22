@@ -22,9 +22,9 @@ const errorMsg = {
 
 // 请求异常通知
 const errorNotice = (error: any): boolean => {
-  const {response} = error;
+  const { response } = error;
   if (error && response) {
-    const {data} = response;
+    const { data } = response;
     if (data && data.message) {
       if (data.validMessageList) {
         data.message = '请求参数校验失败';
@@ -46,7 +46,7 @@ axios.interceptors.request.use(
     const baseURL = '/';
     const timeout = 30000;
     const validateStatus = (status: number): boolean => (status >= 200 && status < 300);
-    return {...config, baseURL, timeout, validateStatus};
+    return { ...config, baseURL, timeout, validateStatus };
   },
   error => {
     toast.error("发送请求给服务端失败，请检查电脑网络，再重试", "请求发送失败");

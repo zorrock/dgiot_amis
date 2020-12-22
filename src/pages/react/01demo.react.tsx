@@ -19,13 +19,13 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
   };
 
   render() {
-    const {param} = this.props;
+    const { param } = this.props;
     // console.log("param", param);
-    const {loading, count} = this.state;
+    const { loading, count } = this.state;
     return (
-      <Card style={{margin: "16px"}}>
+      <Card style={{ margin: "16px" }}>
         <Button type={"primary"} onClick={event => {
-          this.setState({loading: !loading, count: (count + 1)});
+          this.setState({ loading: !loading, count: (count + 1) });
           routerHistory.push({
             hash: "/nest-side/curd/01",
             // query: {},

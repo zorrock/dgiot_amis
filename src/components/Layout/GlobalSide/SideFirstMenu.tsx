@@ -85,11 +85,11 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
       selectedProps.selectedKeys = selectedKeys;
     }
     // 菜单项
-    const menuNodes = getAntdMenuItems({showRootMenus: layoutMenuData.showRootMenus!, menuIconScriptUrl, menuItemRender, menuItemClassName, menuItemStyle});
+    const menuNodes = getAntdMenuItems({ showRootMenus: layoutMenuData.showRootMenus!, menuIconScriptUrl, menuItemRender, menuItemClassName, menuItemStyle });
     return (
       <Menu
         className={classNames(styles.menu, menuClassName)}
-        style={{width: '100%', ...menuStyle}}
+        style={{ width: '100%', ...menuStyle }}
         mode="inline"
         inlineCollapsed={true}
         multiple={false}
@@ -100,13 +100,13 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
         onSelect={(param) => {
           if (onMenuSelect instanceof Function) {
             // @ts-ignore
-            onMenuSelect({...param, currentPath: layoutMenuData.currentPath, menuData: param.item.props['data-menu']});
+            onMenuSelect({ ...param, currentPath: layoutMenuData.currentPath, menuData: param.item.props['data-menu'] });
           }
         }}
         onClick={(param) => {
           if (onMenuClick instanceof Function) {
             // @ts-ignore
-            onMenuClick({...param, currentPath: layoutMenuData.currentPath, menuData: param.item.props['data-menu']});
+            onMenuClick({ ...param, currentPath: layoutMenuData.currentPath, menuData: param.item.props['data-menu'] });
           }
         }}
         {...menuProps}
@@ -117,7 +117,7 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
   }
 
   protected getCustomMenu() {
-    const {menuClassName, menuStyle = {}} = this.props;
+    const { menuClassName, menuStyle = {} } = this.props;
     // 菜单项
     const menuNodes = this.getCustomMenuNode();
     return (
@@ -128,8 +128,8 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
   }
 
   protected getCustomMenuNode(): React.ReactNode[] {
-    const {layoutMenuData, menuIconScriptUrl, defaultSelectedKeys, selectedKeys, onMenuSelect, onMenuClick, menuItemRender, menuItemClassName, menuItemStyle = {}} = this.props;
-    const {showRootMenus} = layoutMenuData;
+    const { layoutMenuData, menuIconScriptUrl, defaultSelectedKeys, selectedKeys, onMenuSelect, onMenuClick, menuItemRender, menuItemClassName, menuItemStyle = {} } = this.props;
+    const { showRootMenus } = layoutMenuData;
     // 选中的菜单项 key 数组
     const selectedProps: AntdMenuProps = {};
     if (defaultSelectedKeys) {
@@ -154,7 +154,7 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
         const node = (
           <div
             key={menu.menuKey}
-            className={classNames(styles.customMenuItem, {[styles.customMenuItemActive]: active}, {[styles.customMenuItemCompact]: true}, menuItemClassName)}
+            className={classNames(styles.customMenuItem, { [styles.customMenuItemActive]: active }, { [styles.customMenuItemCompact]: true }, menuItemClassName)}
             style={menuItemStyle}
             onClick={(event) => {
               const key = menu.menuKey;
@@ -166,10 +166,10 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
               if (!active && onMenuSelect instanceof Function) {
                 let selectedKeysTmp = selectedProps.selectedKeys ?? selectedProps.defaultSelectedKeys ?? [];
                 selectedKeysTmp = selectedKeysTmp.filter((keyTmp) => keyTmp !== menu.menuKey);
-                onMenuSelect({key, keyPath, item, domEvent, selectedKeys: selectedKeysTmp, currentPath, menuData});
+                onMenuSelect({ key, keyPath, item, domEvent, selectedKeys: selectedKeysTmp, currentPath, menuData });
               }
               if (onMenuClick instanceof Function) {
-                onMenuClick({key, keyPath, item, domEvent, currentPath, menuData});
+                onMenuClick({ key, keyPath, item, domEvent, currentPath, menuData });
               }
             }}
           >
@@ -184,7 +184,7 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
   }
 
   public render() {
-    const {menuMode} = this.props;
+    const { menuMode } = this.props;
     if (menuMode === SideFirstMenuMode.AntdMenu) {
       return this.getAntdMenu();
     }

@@ -128,7 +128,7 @@ function removeExpireValue(): void {
 function setGlobalData(key: string, value: any, expireTime?: Date): void {
   removeExpireValue();
   if (value === null || value === undefined) return;
-  const dataItem: GlobalDataItem = {value};
+  const dataItem: GlobalDataItem = { value };
   if (expireTime) dataItem.expireTime = expireTime.getTime();
   globalDataMap.set(key, dataItem);
 }

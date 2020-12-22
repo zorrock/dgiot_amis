@@ -46,7 +46,8 @@ interface HeaderFirstMenuProps {
   menuProps?: AntdMenuProps;
 }
 
-interface HeaderFirstMenuState {}
+interface HeaderFirstMenuState {
+}
 
 class HeaderFirstMenu extends React.Component<HeaderFirstMenuProps, HeaderFirstMenuState> {
   public render() {

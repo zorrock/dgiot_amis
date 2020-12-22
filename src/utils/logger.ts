@@ -52,7 +52,7 @@ const allowedLevel: Level[] = [];
 
 // 刷新当前允许的日志级别
 function refreshAllowedLevel(): void {
-  const {level} = innerConfig;
+  const { level } = innerConfig;
   // ERROR > WARN > INFO > LOG
   const allLevel: Level[] = ['log', 'info', 'warn', 'error'];
   const idx = allLevel.findIndex(lvl => lvl === level);
@@ -67,7 +67,7 @@ refreshAllowedLevel();
  * @param conf 日志配置
  */
 function setConfig(conf: Partial<InnerConfig>): void {
-  innerConfig = {...innerConfig, ...conf};
+  innerConfig = { ...innerConfig, ...conf };
   if (isProdEnv) return;
   logger.info('lib:logger:config', innerConfig);
   refreshAllowedLevel();
@@ -80,7 +80,7 @@ function setConfig(conf: Partial<InnerConfig>): void {
 function initLogger(defConf: any = {}): void {
   const moduleName = getUrlParam('loggerModule') || defConf?.moduleName || '';
   const loggerLevel = getUrlParam('loggerLevel') || defConf?.level || 'log';
-  const loggerConfig = lodash.defaults({moduleName, level: loggerLevel, enable: !!moduleName}, defConf);
+  const loggerConfig = lodash.defaults({ moduleName, level: loggerLevel, enable: !!moduleName }, defConf);
   setConfig(loggerConfig);
 }
 
@@ -91,7 +91,7 @@ function filterLog(option: Required<Pick<LoggerOption, 'level' | 'moduleName'>>)
   // 过滤不同级别的 LOG
   if (!allowedLevel.find((l) => l === option.level)) return false;
   // 根据传入的 moduleName 过滤日志
-  const {moduleNameRegExp} = innerConfig;
+  const { moduleNameRegExp } = innerConfig;
   return moduleNameRegExp.test(option.moduleName);
 }
 
@@ -99,10 +99,10 @@ function filterLog(option: Required<Pick<LoggerOption, 'level' | 'moduleName'>>)
 function printLogger(option: LoggerOption, message: any[]) {
   // 生产环境不打印日志
   if (isProdEnv) return;
-  const loggerOption: Required<LoggerOption> = {...innerConfig.defaultOption, ...option};
-  const {isPrint = true, moduleName, level} = loggerOption;
+  const loggerOption: Required<LoggerOption> = { ...innerConfig.defaultOption, ...option };
+  const { isPrint = true, moduleName, level } = loggerOption;
   if (!isPrint) return;
-  if (!filterLog({level, moduleName})) return;
+  if (!filterLog({ level, moduleName })) return;
   const logArgs: any[] = [
     // `%c${lodash.repeat("%s", message.length + 1)}`,
     // levelStyle[level],
@@ -122,19 +122,19 @@ function time<T = any>(label: string, timeFn: () => T, loggerOption: LoggerOptio
 
 class Logger {
   public log(moduleName: string, ...loggerDetail: any[]) {
-    printLogger({level: 'log', moduleName}, loggerDetail)
+    printLogger({ level: 'log', moduleName }, loggerDetail)
   }
 
   public info(moduleName: string, ...loggerDetail: any[]) {
-    printLogger({level: 'info', moduleName}, loggerDetail)
+    printLogger({ level: 'info', moduleName }, loggerDetail)
   }
 
   public warn(moduleName: string, ...loggerDetail: any[]) {
-    printLogger({level: 'warn', moduleName}, loggerDetail)
+    printLogger({ level: 'warn', moduleName }, loggerDetail)
   }
 
   public error(moduleName: string, ...loggerDetail: any[]) {
-    printLogger({level: 'error', moduleName}, loggerDetail)
+    printLogger({ level: 'error', moduleName }, loggerDetail)
   }
 
   /**
@@ -143,13 +143,13 @@ class Logger {
    * @param option      日志选项
    */
   public getLogger(moduleName: string, option: LoggerOption = {}) {
-    const loggerOption: LoggerOption = {...option, moduleName}
+    const loggerOption: LoggerOption = { ...option, moduleName }
     return {
       /**
        * 表达式满足条件才会打印日志
        * @param expression bool表达式
        */
-      if: (expression: boolean) => this.getLogger(moduleName, {...option, isPrint: expression}),
+      if: (expression: boolean) => this.getLogger(moduleName, { ...option, isPrint: expression }),
       /**
        * 打印函数执行耗时
        * @param label   日志前缀Label
@@ -157,13 +157,13 @@ class Logger {
        */
       time: <T = any>(label: string, timeFn: () => T): T => time(label, timeFn, loggerOption),
       /** log日志 */
-      log: (...message: any[]) => printLogger({...loggerOption, level: "log"}, message),
+      log: (...message: any[]) => printLogger({ ...loggerOption, level: "log" }, message),
       /** info日志 */
-      info: (...message: any[]) => printLogger({...loggerOption, level: "info"}, message),
+      info: (...message: any[]) => printLogger({ ...loggerOption, level: "info" }, message),
       /** warn日志 */
-      warn: (...message: any[]) => printLogger({...loggerOption, level: "warn"}, message),
+      warn: (...message: any[]) => printLogger({ ...loggerOption, level: "warn" }, message),
       /** error日志 */
-      error: (...message: any[]) => printLogger({...loggerOption, level: "error"}, message),
+      error: (...message: any[]) => printLogger({ ...loggerOption, level: "error" }, message),
     }
   }
 }

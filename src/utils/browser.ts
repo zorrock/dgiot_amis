@@ -1,7 +1,7 @@
 import { logger } from './logger';
 
 const log = logger.getLogger("src/utils/browser.ts");
-const {userAgent} = navigator;
+const { userAgent } = navigator;
 log.info("浏览器信息 -> ", userAgent);
 
 /**

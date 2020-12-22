@@ -99,10 +99,10 @@ class PageWrapper extends React.Component<PageWrapperProps, PageWrapperState> {
 
   // 页面内容
   protected getPageContent() {
-    const {children} = this.props;
+    const { children } = this.props;
     return (
       <div className={classNames(styles.simpleBarContent)}>
-        <SimpleBarReact className={classNames(styles.simpleBar)} style={{height: '100%', width: '100%'}} autoHide={true}>
+        <SimpleBarReact className={classNames(styles.simpleBar)} style={{ height: '100%', width: '100%' }} autoHide={true}>
           <div className={classNames(styles.content)}>
             {children}
           </div>

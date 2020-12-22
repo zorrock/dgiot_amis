@@ -315,7 +315,7 @@ type AmisSchemaIcon = string;
  *
  * 更多文档：https://baidu.gitee.io/amis/docs/concepts/template
  */
- type AmisSchemaTpl = string;
+type AmisSchemaTpl = string;
 
 export {
   AmisSchemaType,

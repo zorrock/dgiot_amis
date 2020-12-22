@@ -37,11 +37,11 @@ const schema = {
               multiple: true, valueField: "orderCode", labelField: "orderCode", labelTpl: "${shipName} - ${shipMobile}",
               pickerSchema: getPickerSchema(),
             },
-            {type: "text", name: "f1", label: "简单文本"},
-            {type: "textarea", name: "f2", label: "多行文本"},
-            {type: "number", name: "f3", label: "数字"},
-            {type: "checkboxes", name: "f4", label: "多选组", columnsCount: 3, options: statusMapper},
-            {type: "datetime", name: "f5", label: "日期时间"},
+            { type: "text", name: "f1", label: "简单文本" },
+            { type: "textarea", name: "f2", label: "多行文本" },
+            { type: "number", name: "f3", label: "数字" },
+            { type: "checkboxes", name: "f4", label: "多选组", columnsCount: 3, options: statusMapper },
+            { type: "datetime", name: "f5", label: "日期时间" },
           ],
           api: {
             method: "post",
@@ -50,7 +50,7 @@ const schema = {
         },
       },
     },
-    {type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block)},
+    { type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block) },
     // --------------------------------------------------------------- 对话框表单布局
     {
       type: "button",
@@ -65,14 +65,14 @@ const schema = {
           mode: "inline",
           className: classnames(FormClassName.label6x, FormClassName.input18x, FormClassName.item_height3_5x),
           controls: [
-            {type: "text", name: "f1", label: "供应商名称", required: false, placeholder: "请输入", clearable: true},
-            {type: "html", html: "<br />"},
-            {type: "text", name: "f3", label: "联系人", required: false, placeholder: "请输入", clearable: true},
-            {type: "html", html: "<br />"},
-            {type: "text", name: "f4", label: "联系人手机号", required: false, placeholder: "请输入", clearable: true},
-            {type: "html", html: "<br />"},
-            {type: "text", name: "f5", label: "供货范围", required: false, placeholder: "请输入", clearable: true},
-            {type: "button", label: "查看供货公司"},
+            { type: "text", name: "f1", label: "供应商名称", required: false, placeholder: "请输入", clearable: true },
+            { type: "html", html: "<br />" },
+            { type: "text", name: "f3", label: "联系人", required: false, placeholder: "请输入", clearable: true },
+            { type: "html", html: "<br />" },
+            { type: "text", name: "f4", label: "联系人手机号", required: false, placeholder: "请输入", clearable: true },
+            { type: "html", html: "<br />" },
+            { type: "text", name: "f5", label: "供货范围", required: false, placeholder: "请输入", clearable: true },
+            { type: "button", label: "查看供货公司" },
           ],
           api: {
             method: "post",
@@ -81,7 +81,7 @@ const schema = {
         },
       },
     },
-    {type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block)},
+    { type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block) },
     // --------------------------------------------------------------- 对话框表单分组
     {
       type: "button",
@@ -102,16 +102,16 @@ const schema = {
               mode: "inline",
               className: classnames(FormClassName.label6x, FormClassName.input18x, FormClassName.item_height2_5x),
               controls: [
-                {type: "text", name: "f1", label: "供应商名称", required: false, placeholder: "请输入", clearable: true},
-                {type: "html", html: "<br />"},
-                {type: "password", name: "f2", label: "登录账号", required: false, placeholder: "请输入", clearable: true},
-                {type: "html", html: "<br />"},
-                {type: "password", name: "f3", label: "联系人", required: false, placeholder: "请输入", clearable: true},
-                {type: "html", html: "<br />"},
-                {type: "text", name: "f4", label: "联系人手机号", required: false, placeholder: "请输入", clearable: true},
-                {type: "html", html: "<br />"},
-                {type: "text", name: "f5", label: "供货范围", required: false, placeholder: "请输入", clearable: true},
-                {type: "button", label: "查看供货公司"},
+                { type: "text", name: "f1", label: "供应商名称", required: false, placeholder: "请输入", clearable: true },
+                { type: "html", html: "<br />" },
+                { type: "password", name: "f2", label: "登录账号", required: false, placeholder: "请输入", clearable: true },
+                { type: "html", html: "<br />" },
+                { type: "password", name: "f3", label: "联系人", required: false, placeholder: "请输入", clearable: true },
+                { type: "html", html: "<br />" },
+                { type: "text", name: "f4", label: "联系人手机号", required: false, placeholder: "请输入", clearable: true },
+                { type: "html", html: "<br />" },
+                { type: "text", name: "f5", label: "供货范围", required: false, placeholder: "请输入", clearable: true },
+                { type: "button", label: "查看供货公司" },
               ],
             },
             {
@@ -121,8 +121,8 @@ const schema = {
               mode: "inline",
               className: classnames(FormClassName.label4x, FormClassName.input20x),
               controls: [
-                {type: "text", name: "f6", label: "供货范围", required: false, placeholder: "请输入", clearable: true},
-                {type: "html", html: "<br />"},
+                { type: "text", name: "f6", label: "供货范围", required: false, placeholder: "请输入", clearable: true },
+                { type: "html", html: "<br />" },
                 {
                   type: "button", actionType: "dialog", label: "添加供应商", icon: "fa fa-plus",
                   dialog: {
@@ -136,15 +136,15 @@ const schema = {
                         method: "get",
                         url: `${serverHost}/!/amis-api/curd-page@curdQuery`,
                       },
-                      defaultParams: {pageNo: 1, pageSize: 10},
+                      defaultParams: { pageNo: 1, pageSize: 10 },
                       pageField: "pageNo",
                       perPageField: "pageSize",
                       primaryField: "orderId",
                       columns: [
-                        {name: "orderId", label: "订单编号", sortable: true},
-                        {name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper),},
-                        {name: "shipName", label: "收货人姓名", sortable: true},
-                        {name: "shipMobile", label: "手机号", sortable: true},
+                        { name: "orderId", label: "订单编号", sortable: true },
+                        { name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper), },
+                        { name: "shipName", label: "收货人姓名", sortable: true },
+                        { name: "shipMobile", label: "手机号", sortable: true },
                       ],
                       bulkActions: [
                         {
@@ -176,16 +176,16 @@ const schema = {
                           controls: [
                             {
                               type: "text", name: "orderId", placeholder: "输入订单编号", inputClassName: WidthClassName.width24x,
-                              addOn: {type: "submit", label: "查询", icon: "fa fa-search pull-left"},
+                              addOn: { type: "submit", label: "查询", icon: "fa fa-search pull-left" },
                             },
                           ]
                         },
-                        {align: "left", type: "bulkActions"},
+                        { align: "left", type: "bulkActions" },
                       ],
                     },
                   },
                 },
-                {type: "html", html: "<br />"},
+                { type: "html", html: "<br />" },
                 {
                   type: "table",
                   name: "f7",
@@ -194,10 +194,10 @@ const schema = {
                   removable: true,
                   primaryField: "orderId",
                   columns: [
-                    {name: "orderId", label: "订单编号", sortable: true, searchable: false},
-                    {name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper),},
-                    {name: "shipName", label: "收货人姓名", sortable: true},
-                    {name: "shipMobile", label: "手机号", sortable: true},
+                    { name: "orderId", label: "订单编号", sortable: true, searchable: false },
+                    { name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper), },
+                    { name: "shipName", label: "收货人姓名", sortable: true },
+                    { name: "shipMobile", label: "手机号", sortable: true },
                   ],
                 },
               ],
@@ -210,7 +210,7 @@ const schema = {
         },
       },
     },
-    {type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block)},
+    { type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block) },
     // --------------------------------------------------------------- 对话框表单分组2
     {
       type: "button",
@@ -231,16 +231,16 @@ const schema = {
               mode: "inline",
               className: classnames(FormClassName.label6x, FormClassName.input18x, FormClassName.item_height2_5x),
               controls: [
-                {type: "text", name: "f1", label: "供应商名称2", required: false, placeholder: "请输入", clearable: true},
-                {type: "html", html: "<br />"},
-                {type: "password", name: "f2", label: "登录账号2", required: false, placeholder: "请输入", clearable: true},
-                {type: "html", html: "<br />"},
-                {type: "password", name: "f3", label: "联系人2", required: false, placeholder: "请输入", clearable: true},
-                {type: "html", html: "<br />"},
-                {type: "text", name: "f4", label: "联系人手机号2", required: false, placeholder: "请输入", clearable: true},
-                {type: "html", html: "<br />"},
-                {type: "text", name: "f5", label: "供货范围2", required: false, placeholder: "请输入", clearable: true},
-                {type: "button", label: "查看供货公司2"},
+                { type: "text", name: "f1", label: "供应商名称2", required: false, placeholder: "请输入", clearable: true },
+                { type: "html", html: "<br />" },
+                { type: "password", name: "f2", label: "登录账号2", required: false, placeholder: "请输入", clearable: true },
+                { type: "html", html: "<br />" },
+                { type: "password", name: "f3", label: "联系人2", required: false, placeholder: "请输入", clearable: true },
+                { type: "html", html: "<br />" },
+                { type: "text", name: "f4", label: "联系人手机号2", required: false, placeholder: "请输入", clearable: true },
+                { type: "html", html: "<br />" },
+                { type: "text", name: "f5", label: "供货范围2", required: false, placeholder: "请输入", clearable: true },
+                { type: "button", label: "查看供货公司2" },
               ],
             },
             {
@@ -272,8 +272,8 @@ const schema = {
                     },
                   },
                 },
-                {type: "button", actionType: "dialog", label: "删除", icon: "fa fa-times"},
-                {type: "html", html: "<br />"},
+                { type: "button", actionType: "dialog", label: "删除", icon: "fa fa-times" },
+                { type: "html", html: "<br />" },
                 {
                   type: "picker", name: "f7", label: false, size: "lg", embed: true,
                   // source: "${f7}",
@@ -292,7 +292,7 @@ const schema = {
         },
       },
     },
-    {type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block)},
+    { type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block) },
     // --------------------------------------------------------------- 对话框表单校验
     {
       type: "button",
@@ -307,11 +307,11 @@ const schema = {
           mode: "inline",
           className: classnames(FormClassName.label6x, FormClassName.input18x, FormClassName.item_height3_5x),
           controls: [
-            {type: "text", name: "f1", label: "随意填", placeholder: "随意填"},
-            {type: "text", name: "f2-1", label: "非空字符", placeholder: "不能填空字符", required: true, validations: {notEmptyString: true}},
-            {type: "text", name: "f3", label: "邮箱", placeholder: "必须是Email", required: true, validations: {isEmail: true}},
-            {type: "text", name: "f9", label: "整数或小数", placeholder: "必须是整数或小数", required: true, validations: {isFloat: true}},
-            {type: "text", name: "f11", label: "长度限制", placeholder: "长度在6~10", required: true, validations: {minLength: 6, maxLength: 10}},
+            { type: "text", name: "f1", label: "随意填", placeholder: "随意填" },
+            { type: "text", name: "f2-1", label: "非空字符", placeholder: "不能填空字符", required: true, validations: { notEmptyString: true } },
+            { type: "text", name: "f3", label: "邮箱", placeholder: "必须是Email", required: true, validations: { isEmail: true } },
+            { type: "text", name: "f9", label: "整数或小数", placeholder: "必须是整数或小数", required: true, validations: { isFloat: true } },
+            { type: "text", name: "f11", label: "长度限制", placeholder: "长度在6~10", required: true, validations: { minLength: 6, maxLength: 10 } },
           ],
           api: {
             method: "post",
@@ -320,7 +320,7 @@ const schema = {
         },
       },
     },
-    {type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block)},
+    { type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block) },
     // --------------------------------------------------------------- 对话框表单校验(服务端校验)
     {
       type: "button",
@@ -335,12 +335,12 @@ const schema = {
           mode: "inline",
           className: classnames(FormClassName.label4x, FormClassName.input22x, FormClassName.item_height3_5x),
           controls: [
-            {type: "text", name: "f1", label: "随意填1", placeholder: "只能填“aaa”"},
-            {type: "html", html: "<br />"},
-            {type: "text", name: "f2", label: "随意填2", placeholder: "只能填“bbb”"},
-            {type: "html", html: "<br />"},
-            {type: "text", name: "f3", label: "随意填3", placeholder: "只能填“ccc”"},
-            {type: "html", html: "<br />"},
+            { type: "text", name: "f1", label: "随意填1", placeholder: "只能填“aaa”" },
+            { type: "html", html: "<br />" },
+            { type: "text", name: "f2", label: "随意填2", placeholder: "只能填“bbb”" },
+            { type: "html", html: "<br />" },
+            { type: "text", name: "f3", label: "随意填3", placeholder: "只能填“ccc”" },
+            { type: "html", html: "<br />" },
           ],
           api: {
             method: "post",
@@ -349,7 +349,7 @@ const schema = {
         },
       },
     },
-    {type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block)},
+    { type: "html", html: "<span></span>", className: classnames(WidthClassName.width1x, GeneralClassName.Inline_Block) },
     // ---------------------------------------------------------------
   ],
 };
@@ -361,19 +361,19 @@ function getPickerSchema() {
     labelTpl: "${shipName} - ${shipMobile}",
     affixHeader: false,
     perPageAvailable: [10, 20, 50, 100],
-    defaultParams: {pageNo: 1, pageSize: 10},
+    defaultParams: { pageNo: 1, pageSize: 10 },
     pageField: "pageNo",
     perPageField: "pageSize",
     primaryField: "orderCode",
     columns: [
-      {name: "orderCode", label: "订单编号", sortable: true},
-      {name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper),},
-      {name: "shipName", label: "收货人姓名", sortable: true},
-      {name: "shipMobile", label: "手机号", sortable: true},
-      {name: "payStatus", label: "支付方式", sortable: true, type: "mapping", map: enum2object(payTypeMapper)},
-      {name: "payType", label: "支付状态", sortable: true, type: "mapping", map: enum2object(payStatusMapper)},
-      {name: "payAmount", label: "支付金额", sortable: true},
-      {name: "createAt", label: "下单时间", sortable: true},
+      { name: "orderCode", label: "订单编号", sortable: true },
+      { name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper), },
+      { name: "shipName", label: "收货人姓名", sortable: true },
+      { name: "shipMobile", label: "手机号", sortable: true },
+      { name: "payStatus", label: "支付方式", sortable: true, type: "mapping", map: enum2object(payTypeMapper) },
+      { name: "payType", label: "支付状态", sortable: true, type: "mapping", map: enum2object(payStatusMapper) },
+      { name: "payAmount", label: "支付金额", sortable: true },
+      { name: "createAt", label: "下单时间", sortable: true },
       // {name: "labelField", label: "下单时间", type: "tpl", tpl: "${shipName} - ${shipMobile}", sortable: true, visible: false},
     ],
     headerToolbar: [
@@ -385,16 +385,16 @@ function getPickerSchema() {
         controls: [
           {
             type: "text", name: "orderCode", placeholder: "输入订单编号", inputClassName: WidthClassName.width24x,
-            addOn: {type: "submit", label: "查询", level: "primary", icon: "fa fa-search pull-left"},
+            addOn: { type: "submit", label: "查询", level: "primary", icon: "fa fa-search pull-left" },
           },
         ]
       },
-      {align: "right", type: "columns-toggler"},
+      { align: "right", type: "columns-toggler" },
     ],
     footerToolbar: [
-      {align: "left", type: "statistics"},
-      {align: "right", type: "pagination"},
-      {align: "right", type: "switch-per-page"},
+      { align: "left", type: "statistics" },
+      { align: "right", type: "pagination" },
+      { align: "right", type: "switch-per-page" },
     ],
   };
 }
@@ -406,15 +406,15 @@ function getPickerSchema2() {
     labelTpl: "${shipName} - ${shipMobile}",
     affixHeader: false,
     perPageAvailable: [10, 20, 50, 100],
-    defaultParams: {pageNo: 1, pageSize: 10},
+    defaultParams: { pageNo: 1, pageSize: 10 },
     pageField: "pageNo",
     perPageField: "pageSize",
     primaryField: "orderCode",
     columns: [
-      {name: "orderId", label: "订单编号2", sortable: true},
-      {name: "status", label: "订单状态2", sortable: true, type: "mapping", map: enum2object(statusMapper),},
-      {name: "shipName", label: "收货人姓名2", sortable: true},
-      {name: "shipMobile", label: "手机号2", sortable: true},
+      { name: "orderId", label: "订单编号2", sortable: true },
+      { name: "status", label: "订单状态2", sortable: true, type: "mapping", map: enum2object(statusMapper), },
+      { name: "shipName", label: "收货人姓名2", sortable: true },
+      { name: "shipMobile", label: "手机号2", sortable: true },
     ],
     bulkActions: [
       {
@@ -446,16 +446,16 @@ function getPickerSchema2() {
         controls: [
           {
             type: "text", name: "orderCode", placeholder: "输入订单编号", inputClassName: WidthClassName.width24x,
-            addOn: {type: "submit", label: "查询", icon: "fa fa-search pull-left"},
+            addOn: { type: "submit", label: "查询", icon: "fa fa-search pull-left" },
           },
         ]
       },
-      {align: "left", type: "bulkActions"},
+      { align: "left", type: "bulkActions" },
     ],
     footerToolbar: [
-      {align: "left", type: "statistics"},
-      {align: "right", type: "pagination"},
-      {align: "right", type: "switch-per-page"},
+      { align: "left", type: "statistics" },
+      { align: "right", type: "pagination" },
+      { align: "right", type: "switch-per-page" },
     ],
   };
 }
@@ -467,15 +467,15 @@ function getPickerSchema3() {
     labelTpl: "${shipName} - ${shipMobile}",
     affixHeader: false,
     perPageAvailable: [10, 20, 50, 100],
-    defaultParams: {pageNo: 1, pageSize: 10},
+    defaultParams: { pageNo: 1, pageSize: 10 },
     pageField: "pageNo",
     perPageField: "pageSize",
     primaryField: "orderCode",
     columns: [
-      {name: "orderId", label: "订单编号3", sortable: true},
-      {name: "status", label: "订单状态3", sortable: true, type: "mapping", map: enum2object(statusMapper),},
-      {name: "shipName", label: "收货人姓名3", sortable: true},
-      {name: "shipMobile", label: "手机号3", sortable: true},
+      { name: "orderId", label: "订单编号3", sortable: true },
+      { name: "status", label: "订单状态3", sortable: true, type: "mapping", map: enum2object(statusMapper), },
+      { name: "shipName", label: "收货人姓名3", sortable: true },
+      { name: "shipMobile", label: "手机号3", sortable: true },
     ],
     bulkActions: [
       {
@@ -493,16 +493,16 @@ function getPickerSchema3() {
         controls: [
           {
             type: "text", name: "orderCode", placeholder: "供货公司", inputClassName: WidthClassName.width24x,
-            addOn: {type: "submit", label: "查询", icon: "fa fa-search pull-left"},
+            addOn: { type: "submit", label: "查询", icon: "fa fa-search pull-left" },
           },
         ]
       },
-      {align: "left", type: "bulkActions"},
+      { align: "left", type: "bulkActions" },
     ],
     footerToolbar: [
-      {align: "left", type: "statistics"},
-      {align: "right", type: "pagination"},
-      {align: "right", type: "switch-per-page"},
+      { align: "left", type: "statistics" },
+      { align: "right", type: "pagination" },
+      { align: "right", type: "switch-per-page" },
     ],
   };
 }

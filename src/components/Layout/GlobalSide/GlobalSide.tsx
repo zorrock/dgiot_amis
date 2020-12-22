@@ -86,13 +86,13 @@ class GlobalSide extends React.Component<GlobalSideProps, GlobalSideState> {
 
   /** 系统Logo */
   public getLogo() {
-    const {logo, onLogoClick, logoClassName, logoStyle = {}} = this.props;
+    const { logo, onLogoClick, logoClassName, logoStyle = {} } = this.props;
     if (onLogoClick instanceof Function) {
       logoStyle.cursor = 'pointer';
     }
     return (
       <div key="logo" className={classNames(styles.logo, logoClassName)} style={logoStyle} onClick={onLogoClick}>
-        {logo ?? <img src={antdLogo} alt="logo" style={{width: 32}}/>}
+        {logo ?? <img src={antdLogo} alt="logo" style={{ width: 32 }}/>}
       </div>
     );
   }
@@ -120,8 +120,8 @@ class GlobalSide extends React.Component<GlobalSideProps, GlobalSideState> {
     return (
       <SimpleBarReact
         key="secondMenuScrollbar"
-        className={classNames(styles.simpleBar, {[styles.hiddenScrollbarVertical]: forceHideScrollbar}, scrollbarClassName)}
-        style={{height: '100%', width: '100%'}}
+        className={classNames(styles.simpleBar, { [styles.hiddenScrollbarVertical]: forceHideScrollbar }, scrollbarClassName)}
+        style={{ height: '100%', width: '100%' }}
         autoHide={autoHideScrollbar}
         timeout={450}
       >
@@ -146,7 +146,7 @@ class GlobalSide extends React.Component<GlobalSideProps, GlobalSideState> {
   }
 
   public render() {
-    const {globalSideRender, ...otherProps} = this.props;
+    const { globalSideRender, ...otherProps } = this.props;
     if (globalSideRender instanceof Function) {
       return globalSideRender(otherProps);
     }

@@ -38,9 +38,9 @@ interface GlobalFooterState {
 /** 页脚组件 */
 class GlobalFooter extends React.Component<GlobalFooterProps, GlobalFooterState> {
   render() {
-    const {links, copyright, className, style = {}, footerRender} = this.props;
+    const { links, copyright, className, style = {}, footerRender } = this.props;
     if (footerRender && variableTypeOf(footerRender) === TypeEnum.function) {
-      const {footerRender: _, ...globalFooterRenderParams} = this.props;
+      const { footerRender: _, ...globalFooterRenderParams } = this.props;
       return footerRender(globalFooterRenderParams);
     }
     if ((!links || (Array.isArray(links) && links.length === 0)) && !copyright) {
@@ -51,7 +51,7 @@ class GlobalFooter extends React.Component<GlobalFooterProps, GlobalFooterState>
         {links && (
           <div className={styles.links}>
             {links.map((link, index) => {
-              const {key, href, title, blankTarget = '_blank', ...linkProp} = link;
+              const { key, href, title, blankTarget = '_blank', ...linkProp } = link;
               return (
                 <a key={`${key}_${index}`} target={blankTarget} {...linkProp}>
                   {title}

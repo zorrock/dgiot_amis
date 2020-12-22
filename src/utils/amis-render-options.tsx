@@ -51,7 +51,7 @@ axios.interceptors.response.use(response => {
     const data = payload.data;
     if (!data) return response;
     // 全局处理分页查询响应字段问题
-    const {records, total, searchCount, pages, rows, count} = data;
+    const { records, total, searchCount, pages, rows, count } = data;
     if (hasValue(records) && hasValue(total) && hasValue(searchCount) && hasValue(pages) && !hasValue(rows) && !hasValue(count)) {
       data.rows = data.records;
       data.count = data.total;
@@ -78,8 +78,8 @@ const amisRenderOptions: RenderOptions = {
   session: "global",
   /** 发送http请求 */
   fetcher: fetcherConfig => {
-    const {url, method = "get", responseType, config = {}, headers = {}} = fetcherConfig as FetcherConfig;
-    let {data} = fetcherConfig as FetcherConfig;
+    const { url, method = "get", responseType, config = {}, headers = {} } = fetcherConfig as FetcherConfig;
+    let { data } = fetcherConfig as FetcherConfig;
     config.withCredentials = true;
     if (responseType) config.responseType = responseType;
     if (config.cancelExecutor) config.cancelToken = new axios.CancelToken(config.cancelExecutor);
@@ -103,11 +103,11 @@ const amisRenderOptions: RenderOptions = {
       log.warn("[Notify]", type, msg);
       return;
     }
-    const style: CSSProperties = {width: 296};
+    const style: CSSProperties = { width: 296 };
     if (type === "error") {
-      notification.error({message: "系统错误", description: msg, style});
+      notification.error({ message: "系统错误", description: msg, style });
     } else if (type === "success") {
-      notification.success({message: "系统消息", description: msg, style});
+      notification.success({ message: "系统消息", description: msg, style });
     } else {
       log.warn("[Notify]", type, msg);
     }

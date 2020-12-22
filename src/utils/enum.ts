@@ -47,7 +47,7 @@ const getMapperDataLabel = (mapperData: MapperData, value: EnumItemValue, defaul
  * @param value         value值
  * @param defaultObject 默认的label
  */
-const getMapperDataItem = (mapperArray: MapperData, value: EnumItemValue, defaultObject: EnumArrayItem = {value, label: '未知'}): EnumArrayItem => {
+const getMapperDataItem = (mapperArray: MapperData, value: EnumItemValue, defaultObject: EnumArrayItem = { value, label: '未知' }): EnumArrayItem => {
   const strValue = `${value}`;
   let label = defaultObject;
   if (mapperArray instanceof Array) {
@@ -75,8 +75,8 @@ const enum2object = (enumArray: EnumArrayItem[]): { [key: string]: any } => {
 
 /** 排序 */
 const SorterOrderArray: MapperData = [
-  {value: 'descend', label: 'DESC'},
-  {value: 'ascend', label: 'ASC'},
+  { value: 'descend', label: 'DESC' },
+  { value: 'ascend', label: 'ASC' },
 ];
 
 export { EnumItemValue, EnumItemLabel, EnumArrayItem, EnumArray, MapperData, getMapperDataLabel, getMapperDataItem, enum2object, SorterOrderArray };

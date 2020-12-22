@@ -66,7 +66,8 @@ interface HeaderMenuProps {
   headerMenuRender?: (props: Omit<HeaderMenuProps, 'headerMenuRender'>) => React.ReactNode;
 }
 
-interface HeaderMenuState {}
+interface HeaderMenuState {
+}
 
 class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
   /** 系统Logo */
@@ -77,7 +78,7 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
     }
     return (
       <div key="logo" className={classNames(styles.logo, logoClassName)} style={logoStyle} onClick={onLogoClick}>
-        {logo ?? <img src={antdLogo} alt="logo" style={{ width: 36 }} />}
+        {logo ?? <img src={antdLogo} alt="logo" style={{ width: 36 }}/>}
         {title ?? <div className={styles.title}>Ant-Layout</div>}
       </div>
     );

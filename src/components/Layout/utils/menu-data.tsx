@@ -51,8 +51,8 @@ function fromEntries(breadcrumbMap: Map<string, RuntimeMenuItem>) {
 const filterMenuData = (rootMenu: RuntimeMenuItem): RuntimeMenuItem | undefined => {
   if (rootMenu.runtimeRouter.hideMenu) return;
   if (rootMenu.runtimeRouter.hideChildrenMenu) {
-    const {children, ...rootProps} = rootMenu;
-    return {...rootProps, children: []};
+    const { children, ...rootProps } = rootMenu;
+    return { ...rootProps, children: [] };
   }
   const showChildren: RuntimeMenuItem[] = [];
   rootMenu.children.forEach((item) => {
@@ -75,7 +75,7 @@ interface GetLayoutMenuDataParams {
 
 /** 获取菜单数据 */
 const getLayoutMenuData = (params: GetLayoutMenuDataParams): LayoutMenuData => {
-  const {location, rootMenus, currentMenu} = params;
+  const { location, rootMenus, currentMenu } = params;
   // 拍平的菜单数据
   const flattenMenuMap = new Map<string, RuntimeMenuItem>();
   rootMenus.forEach(rootMenu => {
@@ -101,7 +101,7 @@ const getLayoutMenuData = (params: GetLayoutMenuDataParams): LayoutMenuData => {
       showCurrentMenu = getMenuItemByKey(flattenMenuMap, key);
     });
   }
-  return {rootMenus, showRootMenus, flattenMenuMap, flattenMenu, currentPath, currentMenu, showCurrentMenu};
+  return { rootMenus, showRootMenus, flattenMenuMap, flattenMenu, currentPath, currentMenu, showCurrentMenu };
 }
 
 export { GetLayoutMenuDataParams, getLayoutMenuData };

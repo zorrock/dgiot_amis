@@ -34,7 +34,7 @@ interface GlobalHeaderState {
  */
 class GlobalHeader extends React.Component<GlobalHeaderProps, GlobalHeaderState> {
   public render() {
-    const {headerRender, ...otherProps} = this.props;
+    const { headerRender, ...otherProps } = this.props;
     if (headerRender instanceof Function) {
       return headerRender(otherProps);
     }
