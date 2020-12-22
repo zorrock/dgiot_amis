@@ -53,8 +53,9 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
 
   render() {
     log.info("BlankLayout render");
+    const { route, htmlTitleSuffix, layoutMenuData: { currentMenu } } = this.props;
+    if (!currentMenu) return "BlankLayout - 404";
     const { currentLocationKey } = this.state;
-    const { route, htmlTitleSuffix } = this.props;
     if (!currentLocationKey) return <div/>;
     return (
       <>
@@ -86,12 +87,12 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
   // -----------------------------------------------------------------------------------
 
   protected showPage() {
-    const { location, layoutMenuData } = this.props;
-    if (!layoutMenuData.currentMenu) return;
+    const { location, layoutMenuData: { currentMenu } } = this.props;
+    if (!currentMenu) return;
     const { currentLocationKey } = this.state;
     const locationKey = base62Encode(routerLocationToStr(location));
     if (currentLocationKey === locationKey) return;
-    const { pagePath } = layoutMenuData.currentMenu.runtimeRouter;
+    const { pagePath } = currentMenu.runtimeRouter;
     const mountedDomId = lodash.uniqueId('amisId-');
     const isReactComponent = isReactPage(pagePath);
     if (!isReactComponent) window.currentAmisId = mountedDomId;

@@ -1,6 +1,6 @@
 import lodash from 'lodash';
 import qs from "qs";
-import { match, pathToRegexp } from 'path-to-regexp';
+import { Match, match, pathToRegexp } from 'path-to-regexp';
 import stableStringify from "fast-json-stable-stringify";
 import memoizeOne from "memoize-one";
 import isEqual from "lodash.isequal";
@@ -12,8 +12,8 @@ import { getUrlParam, hasValue, noValue } from "@/utils/utils";
 enum LayoutType {
   /** 侧边栏二级路由布局(内嵌的侧边栏 - NestSideLayout) */
   NestSide = "NestSide",
-  /** 顶部和侧边栏二级路由布局(顶部和侧边栏) */
-  TopSide = "TopSide",
+  // /** 顶部和侧边栏二级路由布局(顶部和侧边栏) */
+  // TopSide = "TopSide",
   /** 空布局页 */
   Blank = "Blank",
 }
@@ -265,7 +265,7 @@ const routerMatch = (locationHash: string, runtimeRouter: RuntimeRouter): Runtim
   if (noValue(locationHash) || noValue(runtimeRouter)) return;
   // 存在子路由 - 递归匹配
   if (runtimeRouter.routes && runtimeRouter.routes.length > 0) {
-    let matchRuntimeRouter: RuntimeRouter | undefined = undefined;
+    let matchRuntimeRouter: RuntimeRouter | undefined;
     runtimeRouter.routes.forEach(route => {
       if (matchRuntimeRouter) return;
       // 递归匹配
@@ -284,13 +284,14 @@ const routerMatch = (locationHash: string, runtimeRouter: RuntimeRouter): Runtim
 
 interface LayoutMatchResult {
   matchedLayout: RuntimeLayoutConfig;
-  matchedRouter: RuntimeRouter;
+  matchedRouter?: RuntimeRouter;
 }
 
 /** Layout匹配(递归) */
 const layoutMatchInner = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LayoutMatchResult | undefined => {
   if (!runtimeLayouts || noValue(locationHash) || runtimeLayouts.length <= 0) return;
-  let matchedLayout: RuntimeLayoutConfig | undefined = undefined;
+  let matchedFirstLayout: RuntimeLayoutConfig | undefined = undefined;
+  let matchedLayout: RuntimeLayoutConfig | undefined;
   let matchedRouter: RuntimeRouter | undefined = undefined;
   runtimeLayouts.forEach(runtimeLayout => {
     if (matchedLayout) return;
@@ -298,6 +299,7 @@ const layoutMatchInner = (locationHash: string, runtimeLayouts: RuntimeLayoutCon
     if (!pathToRegexp(path, undefined, { end: false }).test(locationHash)) {
       return;
     }
+    matchedFirstLayout = runtimeLayout;
     if (!routes || routes.length <= 0) {
       return;
     }
@@ -309,7 +311,8 @@ const layoutMatchInner = (locationHash: string, runtimeLayouts: RuntimeLayoutCon
       matchedLayout = runtimeLayout;
     }
   });
-  if (matchedLayout && matchedRouter) {
+  if (!matchedLayout) matchedLayout = matchedFirstLayout;
+  if (matchedLayout) {
     return { matchedLayout, matchedRouter }
   }
   return;
@@ -356,11 +359,6 @@ const locationHashMatchInner = (menuSettings: RouterMenuSettings, locationHash: 
   if (!matched) return;
   const rootMenus: RuntimeMenuItem[] = [];
   matched.matchedLayout.routes.forEach(route => rootMenus.push(routerToMenu(menuSettings, route)));
-  let currentMenu: RuntimeMenuItem | undefined = undefined;
-  rootMenus.forEach(rootMenu => {
-    if (currentMenu) return;
-    currentMenu = findMenu(matched.matchedRouter, rootMenu);
-  })
   const location: RouterLocation = {
     state: routerHistory.getLocationState(locationHash),
     hash: locationHash,
@@ -368,10 +366,18 @@ const locationHashMatchInner = (menuSettings: RouterMenuSettings, locationHash: 
     search: window.location.search ?? "",
     query: getUrlParam(),
   };
-  const matchFuc = match<RouteMatchParams["params"]>(matched.matchedRouter.path);
-  const matchParams = matchFuc(locationHash);
+  let currentMenu: RuntimeMenuItem | undefined = undefined;
+  let matchParams: Match<RouteMatchParams["params"]> | undefined;
+  if (matched.matchedRouter) {
+    rootMenus.forEach(rootMenu => {
+      if (currentMenu) return;
+      currentMenu = findMenu(matched.matchedRouter!, rootMenu);
+    });
+    const matchFuc = match<RouteMatchParams["params"]>(matched.matchedRouter.path);
+    matchParams = matchFuc(locationHash);
+  }
   const matchInfo: RouteMatchParams = {
-    isExact: matched.matchedRouter.path === locationHash,
+    isExact: matched.matchedRouter?.path === locationHash,
     path: window.location.pathname,
     url: window.location.href,
     params: (matchParams ? (matchParams.params ?? {}) : {}),

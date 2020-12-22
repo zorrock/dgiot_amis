@@ -108,11 +108,11 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
   render() {
     const { currentLayout, currentMenu, rootMenus, location } = this.state;
-    const layoutMenuData: LayoutMenuData = getLayoutMenuData({ location: location!, rootMenus: rootMenus!, currentMenu: currentMenu! });
-    log.info("layoutMenuData ->", layoutMenuData);
     if (!currentLayout) {
       return "404";
     }
+    const layoutMenuData = getLayoutMenuData({ location: location!, rootMenus: rootMenus!, currentMenu: currentMenu! });
+    log.info("layoutMenuData ->", layoutMenuData);
     if (currentLayout.layout === LayoutType.Blank) {
       return this.getBlankLayout(layoutMenuData);
     }
