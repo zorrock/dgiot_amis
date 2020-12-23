@@ -494,6 +494,12 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   /** 二级菜单点击跳转页面事件 */
   protected sideMenuOnMenuClick(param: SideSecondMenuClickParam): void {
     const { menuData } = param;
+    // 点击菜单打开新页面
+    if (menuData?.runtimeRouter?.openOptions?.url) {
+      const options = menuData.runtimeRouter.openOptions;
+      window.open(options.url, options.target, options.features, options.replace);
+      return;
+    }
     const routerLocation = menuToRouterLocation(menuData);
     if (!routerLocation) return;
     routerHistory.push(routerLocation);

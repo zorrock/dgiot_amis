@@ -45,8 +45,17 @@ interface RouterConfig {
   exact?: boolean;
   /** 页面路径(根路径为“/src/pages”) */
   pagePath?: string;
-  /** 重定向到其它路由或url(支持http(s)://路径) */
-  redirect?: string;
+  /** 打开新页面地址的行为选项(参考:https://developer.mozilla.org/zh-CN/docs/Web/API/Window/open) */
+  openOptions?: {
+    /** 打开新页面地址 */
+    url: string;
+    /** 指定target属性或窗口的名称 */
+    target?: "_self" | "_blank" | "_parent" | "_top" | string,
+    /** 一个逗号分隔的项目列表 */
+    features?: string,
+    /** 是在窗口的浏览历史中创建一个新条目，还是替换浏览历史中的当前条目 */
+    replace?: boolean,
+  },
   /** 路由图标 */
   icon?: string;
   /** 路由名称 */

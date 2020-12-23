@@ -161,7 +161,7 @@ const joinPath = (path: string, childPath: string): string => {
 // 递归转换 RouterConfig -> RuntimeRouter
 const routerToRuntime = (rootPath: string, current: RouterConfig, parent?: RuntimeRouter): RuntimeRouter => {
   const {
-    path, pathVariable, querystring, exact, pagePath, redirect, icon, name, pageTitle, defaultOpen, breadcrumbName,
+    path, pathVariable, querystring, exact, pagePath, openOptions, icon, name, pageTitle, defaultOpen, breadcrumbName,
     hideBreadcrumb, groupName, hideMenu, hideChildrenMenu, state, authority, routes: childRoutes, ...props
   } = current;
   // 默认值处理
@@ -183,7 +183,7 @@ const routerToRuntime = (rootPath: string, current: RouterConfig, parent?: Runti
     querystring: current.querystring,
     exact: current.exact,
     pagePath,
-    redirect,
+    openOptions,
     icon,
     name,
     pageTitle: current.pageTitle,
@@ -222,8 +222,8 @@ const layoutToRuntime = (routerConfigs: LayoutConfig[]): RuntimeLayoutConfig[] =
 
 // 获取菜单key(唯一不重复)
 const getMenuKey = (runtimeRouter: RuntimeRouter): string => {
-  const { path, exact, redirect, pathVariable, querystring, name } = runtimeRouter;
-  return `${path}|${exact}|${stableStringify(pathVariable ?? {})}|${stableStringify(querystring ?? {})}|${name}|${redirect}`;
+  const { path, exact, pathVariable, querystring, name } = runtimeRouter;
+  return `${path}|${exact}|${stableStringify(pathVariable ?? {})}|${stableStringify(querystring ?? {})}|${name}`;
 }
 
 /** 把Router转换成Menu(递归) */

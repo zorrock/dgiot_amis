@@ -284,6 +284,12 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
   /** 一级菜单选中事件 */
   protected firstMenuOnSelect(param: HeaderFirstMenuSelectParam): void {
     const { menuData } = param;
+    // 点击菜单打开新页面
+    if (menuData?.runtimeRouter?.openOptions?.url) {
+      const options = menuData.runtimeRouter.openOptions;
+      window.open(options.url, options.target, options.features, options.replace);
+      return;
+    }
     // 获取当前一级菜单下的二级菜单的 selectedKeys 对应的 RuntimeMenuItem
     const { layoutMenuData } = this.props;
     const { sideMenuSelectedKeysMap } = this.state;

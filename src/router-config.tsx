@@ -76,6 +76,7 @@ const routerConfigs: LayoutConfig[] = [
         routes: [
           { path: "/00", name: "通用CURD", icon: "TableOutlined", pagePath: "/amis/curd-00.schema.ts" },
           { path: "/01", name: "常规CURD", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts" },
+          { path: "/02", name: "新浪微博", icon: "WeiboOutlined", openOptions: { url: "https://weibo.com/" } },
         ],
       },
       {
@@ -96,6 +97,16 @@ const routerConfigs: LayoutConfig[] = [
         routes: [
           { path: "/00", name: "ReactDemo页面", icon: "BulbOutlined", pagePath: "/react/01demo.react.tsx" },
         ],
+      },
+      {
+        path: "/help",
+        name: "帮助文档",
+        icon: "QuestionCircleOutlined",
+        openOptions: {
+          url: "http://git.yyjzt.com/b2b-public/data-sync/wikis/home",
+          target: "_blank",
+          features: "directories=no, status=no, resizable=no, copyhistory=yes, width=800, height=400",
+        },
       },
       // -------------------------------------------------------------------------
       // 通用组件
