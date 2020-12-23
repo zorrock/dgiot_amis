@@ -1,13 +1,14 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import lodash from "lodash";
+import classNames from "classnames";
 import { Spin } from "antd";
+import SimpleBarReact from "simplebar-react";
+import { logger } from "@/utils/logger";
 import { amisRender, loadAmisPageByPath, loadReactPageByPath } from "@/utils/amis-utils";
+import { IFramePage } from "@/components/IFramePage";
 import { base62Encode, getHtmlTitle, getPageType, routerLocationToStr } from "@/components/Layout/utils/layouts-utils";
 import styles from "./index.less";
-import SimpleBarReact from "simplebar-react";
-import classNames from "classnames";
-import { logger } from "@/utils/logger";
 
 const log = logger.getLogger("src/layouts/BlankLayout/index.tsx");
 
@@ -71,6 +72,16 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
 
   protected getPage() {
     const { loading, mountedDomId, component, pageType } = this.state;
+    const { layoutMenuData: { currentMenu } } = this.props;
+    if (currentMenu && pageType === "iframe") {
+      return (
+        <IFramePage
+          defaultSrc={currentMenu.runtimeRouter.pagePath}
+          style={{ height: "100%" }}
+          spinProps={{ size: "large", tip: "页面加载中..." }}
+        />
+      );
+    }
     return (
       <Spin size={"large"} delay={200} spinning={loading} tip="页面加载中..." style={{ height: "100%" }} wrapperClassName={styles.spinWrapper}>
         <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
@@ -111,7 +122,6 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
         } else if (pageType === "amis") {
           // amis 组件
           component = await loadAmisPageByPath(pagePath!);
-          console.log("component.schema", component.schema)
           amisRender(mountedDomId, component.schema);
         }
         this.setState({ loading: false, component });

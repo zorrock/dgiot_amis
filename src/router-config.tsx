@@ -54,6 +54,7 @@ const routerConfigs: LayoutConfig[] = [
           { path: "/01", name: "常规CURD", pagePath: "/amis/curd-01-general.schema.ts" },
           { path: "/02", name: "空白页", pagePath: "/amis/empty-page.schema.ts" },
           { path: "/03", name: "ReactDemo页面", pagePath: "/react/01demo.react.tsx" },
+          { path: "/04", name: "内嵌百度", pagePath: "https://www.baidu.com/" },
         ],
       },
     ],
