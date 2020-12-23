@@ -254,7 +254,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           type: "form",
           name: "form",
           title: "",
-          controls: [{ type: "editor", name: "code", label: false, language: "json" }],
+          controls: [{ type: "editor", language: "json", name: "code", label: false, disabled: true }],
           actions: [],
         },
       }, { data: { code: multiTab.component.schema } });

@@ -115,7 +115,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
           type: "form",
           name: "form",
           title: "",
-          controls: [{ type: "editor", name: "code", label: false, language: "json" }],
+          controls: [{ type: "editor", language: "json", name: "code", label: false, disabled: true }],
           actions: [],
         },
       }, { data: { code: component.schema } });
