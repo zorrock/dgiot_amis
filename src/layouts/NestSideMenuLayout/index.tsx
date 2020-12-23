@@ -135,6 +135,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
       sideMenuSearchValueMap: Immutable.Map<string, string>(),
       activePageKey: undefined,
       multiTabs: [],
+      showEditCodeModal: false,
     };
   }
 
@@ -314,6 +315,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
     return (
       <>
         {this.getHtmlTitle()}
+        {!isProdEnv && this.getEditCodeButton()}
         {this.getLayoutPage()}
       </>
     );

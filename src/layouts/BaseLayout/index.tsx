@@ -3,8 +3,8 @@ import lodash from "lodash";
 import classNames from "classnames";
 import Immutable from 'immutable';
 import { Helmet } from 'react-helmet';
-import { ArrowLeftOutlined, ArrowRightOutlined, CloseOutlined, CloseSquareOutlined, MoreOutlined } from "@ant-design/icons";
-import { Dropdown, Menu, Spin, Tabs } from 'antd';
+import { ArrowLeftOutlined, ArrowRightOutlined, CloseOutlined, CloseSquareOutlined, EditOutlined, MoreOutlined } from "@ant-design/icons";
+import { Button, Drawer, Dropdown, Menu, Spin, Tabs } from 'antd';
 import SimpleBarReact from 'simplebar-react';
 import { logger } from "@/utils/logger";
 import { getPropOrStateValue } from "@/utils/utils";
@@ -203,14 +203,12 @@ interface BaseLayoutState {
    * </pre>
    */
   sideMenuSearchValueMap: Immutable.Map<string, string>;
-  /**
-   * 当前活动的页签(MultiTabItem.multiTabKey)
-   */
+  /** 当前活动的页签(MultiTabItem.multiTabKey) */
   activePageKey?: string;
-  /**
-   * 多页签信息
-   */
+  /** 多页签信息 */
   multiTabs: MultiTabItem[];
+  /** 是否显示编辑代码对话框 */
+  showEditCodeModal: boolean;
 }
 
 class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends React.Component<P, S> {
@@ -235,6 +233,59 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       <Helmet>
         <title>{currentMenu ? getHtmlTitle(route, htmlTitleSuffix) : "404"}</title>
       </Helmet>
+    );
+  }
+
+  /** 编辑Amis代码按钮 */
+  protected getEditCodeButton() {
+    const { location } = this.props;
+    const { multiTabs, showEditCodeModal } = this.state;
+    const multiTabKey = base62Encode(routerLocationToStr(location));
+    const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);
+    if (!multiTab || multiTab.pageType !== "amis") return;
+    const editCodeDomId = "amisId-editCodeDomId";
+    if (document.getElementById(editCodeDomId) && showEditCodeModal) {
+      amisRender(editCodeDomId, {
+        type: "page",
+        title: "",
+        toolbar: [],
+        body: {
+          type: "form",
+          title: "",
+          controls: [{ type: "editor", label: false, language: "json", value: multiTab.component.schema }],
+          actions: [],
+        },
+      });
+    }
+    return (
+      <div className={styles.editCode}>
+        <Button
+          type={showEditCodeModal ? "default" : "primary"}
+          shape={"circle"}
+          size={"large"}
+          icon={showEditCodeModal ? <CloseOutlined/> : <EditOutlined/>}
+          onClick={() => this.setState({ showEditCodeModal: !showEditCodeModal })}
+        />
+        <Drawer
+          title={`编辑Amis代码 - ${multiTab.menuItem.runtimeRouter.pageTitle}`}
+          visible={showEditCodeModal}
+          placement={"right"}
+          width={"35%"}
+          mask={false}
+          maskClosable={false}
+          className={styles.editCodeDrawer}
+          bodyStyle={{ padding: "0" }}
+          forceRender={true}
+          onClose={() => this.setState({ showEditCodeModal: false })}
+          // footer={
+          //   <div style={{ textAlign: 'right' }}>
+          //     <Button type={"primary"}>保存</Button>
+          //   </div>
+          // }
+        >
+          <div id={editCodeDomId} key={editCodeDomId}/>
+        </Drawer>
+      </div>
     );
   }
 

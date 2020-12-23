@@ -2,7 +2,8 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import lodash from "lodash";
 import classNames from "classnames";
-import { Spin } from "antd";
+import { Button, Spin } from "antd";
+import { EditOutlined } from "@ant-design/icons";
 import SimpleBarReact from "simplebar-react";
 import { logger } from "@/utils/logger";
 import { amisRender, loadAmisPageByPath, loadReactPageByPath } from "@/utils/amis-utils";
@@ -92,6 +93,15 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
           }
         </SimpleBarReact>
       </Spin>
+    );
+  }
+
+  /** 编辑Amis代码按钮 */
+  protected getEditCodeButton() {
+    return (
+      <>
+        <Button icon={<EditOutlined/>}/>
+      </>
     );
   }
 
