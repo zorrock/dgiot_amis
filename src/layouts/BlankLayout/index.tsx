@@ -87,9 +87,14 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
   // -----------------------------------------------------------------------------------
 
   protected showPage() {
-    const { location, layoutMenuData: { currentMenu } } = this.props;
-    if (!currentMenu) return;
     const { currentLocationKey } = this.state;
+    const { location, layoutMenuData: { currentMenu } } = this.props;
+    if (!currentMenu) {
+      if (currentLocationKey) {
+        this.setState({ loading: false, currentLocationKey: undefined, mountedDomId: undefined });
+      }
+      return;
+    }
     const locationKey = base62Encode(routerLocationToStr(location));
     if (currentLocationKey === locationKey) return;
     const { pagePath } = currentMenu.runtimeRouter;
@@ -106,6 +111,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
         } else {
           // amis 组件
           component = await loadAmisPageByPath(pagePath!);
+          console.log("component.schema", component.schema)
           amisRender(mountedDomId, component.schema);
         }
         this.setState({ loading: false, component });
