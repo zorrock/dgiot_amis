@@ -10,6 +10,7 @@ import { logger } from "@/utils/logger";
 import { getPropOrStateValue } from "@/utils/utils";
 import { amisRender, loadAmisPageByPath, loadReactPageByPath } from "@/utils/amis-utils";
 import { routerHistory } from "@/utils/router";
+import { IFramePage } from "@/components/IFramePage";
 import { PageContent } from "@/components/Layout/PageContent";
 import { GlobalFooter, GlobalFooterLink, GlobalFooterProps } from "@/components/Layout/GlobalFooter";
 import { GlobalHeader, GlobalHeaderProps } from "@/components/Layout/GlobalHeader";
@@ -413,6 +414,13 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   protected getTabPages(multiTabs: MultiTabItem[]) {
     return multiTabs.map(tab => {
       const { mountedDomId, multiTabKey, menuItem: { runtimeRouter }, loading } = tab;
+      if (tab.pageType === "iframe") {
+        return (
+          <Tabs.TabPane key={multiTabKey} tab={runtimeRouter.name} forceRender={true} closable={true}>
+            <IFramePage defaultSrc={tab.menuItem.runtimeRouter.pagePath} style={{ height: "100%" }}/>
+          </Tabs.TabPane>
+        );
+      }
       return (
         <Tabs.TabPane key={multiTabKey} tab={runtimeRouter.name} forceRender={true} closable={true}>
           <Spin size={"default"} spinning={loading} delay={200} tip="页面加载中..." style={{ height: "100%" }} wrapperClassName={styles.spinWrapper}>

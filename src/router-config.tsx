@@ -76,7 +76,9 @@ const routerConfigs: LayoutConfig[] = [
         routes: [
           { path: "/00", name: "通用CURD", icon: "TableOutlined", pagePath: "/amis/curd-00.schema.ts" },
           { path: "/01", name: "常规CURD", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts" },
-          { path: "/02", name: "新浪微博", icon: "WeiboOutlined", openOptions: { url: "https://weibo.com/" } },
+          { path: "/02", name: "新浪微博", icon: "LinkOutlined", openOptions: { url: "https://weibo.com/" } },
+          { path: "/03", name: "内嵌微博", icon: "WeiboOutlined", pagePath: "https://weibo.com/" },
+          { path: "/04", name: "内嵌百度", icon: "WeiboOutlined", pagePath: "https://www.baidu.com/" },
         ],
       },
       {

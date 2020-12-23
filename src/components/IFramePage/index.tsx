@@ -89,6 +89,7 @@ class IFramePage extends React.Component<IFramePageProps, IFramePageState> {
   protected handleLoad = () => {
     const { onload } = this.props;
     if (onload instanceof Function) onload(this);
+    this.setState({ loading: false });
   };
 
   public render() {
