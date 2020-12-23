@@ -106,18 +106,19 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
     if (!component || pageType !== "amis") return;
     const editCodeDomId = "amisId-BlankLayout-editCodeDomId";
     if (document.getElementById(editCodeDomId) && showEditCodeModal) {
-      console.log("component", component.schema)
       amisRender(editCodeDomId, {
         type: "page",
+        name: "page",
         title: "",
         toolbar: [],
         body: {
           type: "form",
+          name: "form",
           title: "",
-          controls: [{ type: "editor", label: false, language: "json", value: component.schema }],
+          controls: [{ type: "editor", name: "code", label: false, language: "json" }],
           actions: [],
         },
-      });
+      }, { data: { code: component.schema } });
     }
     return (
       <div className={styles.editCode}>
@@ -175,7 +176,6 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
           component = await loadAmisPageByPath(pagePath!);
           amisRender(mountedDomId, component.schema);
         }
-        console.log("###component", component)
         this.setState({ loading: false, component });
       }
     );

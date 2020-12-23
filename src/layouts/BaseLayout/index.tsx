@@ -247,15 +247,17 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     if (document.getElementById(editCodeDomId) && showEditCodeModal) {
       amisRender(editCodeDomId, {
         type: "page",
+        name: "page",
         title: "",
         toolbar: [],
         body: {
           type: "form",
+          name: "form",
           title: "",
-          controls: [{ type: "editor", label: false, language: "json", value: multiTab.component.schema }],
+          controls: [{ type: "editor", name: "code", label: false, language: "json" }],
           actions: [],
         },
-      });
+      }, { data: { code: multiTab.component.schema } });
     }
     return (
       <div className={styles.editCode}>
@@ -607,7 +609,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", name, "pagePath -> ", pagePath, "pageType -> ", newMultiTab.pageType);
     if (newMultiTab.pageType === "amis") window.currentAmisId = newMultiTab.mountedDomId;
     this.setState(
-      { activePageKey: multiTabKey, multiTabs },
+      { activePageKey: multiTabKey, multiTabs, showEditCodeModal: false },
       async () => {
         if (newMultiTab.pageType === "react") {
           // react 组件

@@ -42,7 +42,7 @@ const initAppPage = function (): void {
  * @param options     amis选项
  * @param pathPrefix  pathPrefix
  */
-const amisRender = function (mountedId: string, schema: SchemaObject, props: RootRenderProps = {}, options: RenderOptions = {}, pathPrefix?: string): React.ReactNode {
+const amisRender = function (mountedId: string, schema: SchemaObject, props: RootRenderProps = {}, options: RenderOptions = {}, pathPrefix?: string): any {
   const ops = { ...amisRenderOptions, ...options };
   return amis.embed(`#${mountedId}`, schema, props, ops, pathPrefix);
 }
