@@ -18,8 +18,8 @@ import {
   getCurrentFirstMenu,
   getDefaultOpenKeys,
   getHtmlTitle,
+  getPageType,
   getSideMenuData,
-  isReactPage,
   menuToRouterLocation,
   routerLocationToStr
 } from "@/components/Layout/utils/layouts-utils";
@@ -419,7 +419,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
             <PageContent>
               <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
                 {
-                  tab.isReactPage ?
+                  tab.pageType === "react" ?
                     (tab.component?.default ? <tab.component.default/> : <div/>) :
                     <div id={mountedDomId} key={mountedDomId} className={styles.pageContent}/>
                 }
@@ -536,18 +536,18 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       lastActiveTime: new Date().getTime(),
       showClose: true,
       loading: true,
-      isReactPage: isReactPage(pagePath),
+      pageType: getPageType(runtimeRouter),
     };
     multiTabs.push(newMultiTab);
-    log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", name, "pagePath -> ", pagePath, "isReactPage -> ", newMultiTab.isReactPage);
-    if (!newMultiTab.isReactPage) window.currentAmisId = newMultiTab.mountedDomId;
+    log.info("amisId -> ", newMultiTab.mountedDomId, "routerName -> ", name, "pagePath -> ", pagePath, "pageType -> ", newMultiTab.pageType);
+    if (newMultiTab.pageType === "amis") window.currentAmisId = newMultiTab.mountedDomId;
     this.setState(
       { activePageKey: multiTabKey, multiTabs },
       async () => {
-        if (newMultiTab.isReactPage) {
+        if (newMultiTab.pageType === "react") {
           // react 组件
           newMultiTab.component = await loadReactPageByPath(pagePath!);
-        } else {
+        } else if (newMultiTab.pageType === "amis") {
           // amis 组件
           newMultiTab.component = await loadAmisPageByPath(pagePath!);
           amisRender(newMultiTab.mountedDomId, newMultiTab.component.schema);

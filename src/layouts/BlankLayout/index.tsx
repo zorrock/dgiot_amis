@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import lodash from "lodash";
 import { Spin } from "antd";
 import { amisRender, loadAmisPageByPath, loadReactPageByPath } from "@/utils/amis-utils";
-import { base62Encode, getHtmlTitle, isReactPage, routerLocationToStr } from "@/components/Layout/utils/layouts-utils";
+import { base62Encode, getHtmlTitle, getPageType, routerLocationToStr } from "@/components/Layout/utils/layouts-utils";
 import styles from "./index.less";
 import SimpleBarReact from "simplebar-react";
 import classNames from "classnames";
@@ -27,8 +27,8 @@ interface BlankLayoutState {
   mountedDomId?: string;
   /** 组件内容 */
   component?: any;
-  /** 是否是React组件  */
-  isReactComponent: boolean;
+  /** 页面组件类型  */
+  pageType: TabPageType;
 }
 
 class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
@@ -39,7 +39,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
     super(props);
     this.state = {
       loading: true,
-      isReactComponent: false,
+      pageType: "amis",
     };
   }
 
@@ -70,12 +70,12 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
   // -----------------------------------------------------------------------------------
 
   protected getPage() {
-    const { loading, mountedDomId, component, isReactComponent } = this.state;
+    const { loading, mountedDomId, component, pageType } = this.state;
     return (
       <Spin size={"large"} delay={200} spinning={loading} tip="页面加载中..." style={{ height: "100%" }} wrapperClassName={styles.spinWrapper}>
         <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
           {
-            isReactComponent ?
+            pageType === "react" ?
               (component?.default ? <component.default/> : <div/>) :
               <div id={mountedDomId} key={mountedDomId} className={styles.pageContent}/>
           }
@@ -99,16 +99,16 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
     if (currentLocationKey === locationKey) return;
     const { pagePath } = currentMenu.runtimeRouter;
     const mountedDomId = lodash.uniqueId('amisId-');
-    const isReactComponent = isReactPage(pagePath);
-    if (!isReactComponent) window.currentAmisId = mountedDomId;
+    const pageType = getPageType(currentMenu.runtimeRouter);
+    if (pageType === "amis") window.currentAmisId = mountedDomId;
     this.setState(
-      { loading: true, currentLocationKey: locationKey, mountedDomId, isReactComponent },
+      { loading: true, currentLocationKey: locationKey, mountedDomId, pageType },
       async () => {
         let component: any;
-        if (isReactComponent) {
+        if (pageType === "react") {
           // react 组件
           component = await loadReactPageByPath(pagePath!);
-        } else {
+        } else if (pageType === "amis") {
           // amis 组件
           component = await loadAmisPageByPath(pagePath!);
           console.log("component.schema", component.schema)

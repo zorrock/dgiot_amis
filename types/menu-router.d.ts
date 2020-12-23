@@ -121,6 +121,9 @@ interface RuntimeMenuItem {
   // [property: string]: any;
 }
 
+/** 页面类型 */
+type TabPageType = "amis" | "react" | "iframe";
+
 /** 多页签项(多页签项) */
 interface MultiTabItem {
   /** 挂载的Dom节点ID */
@@ -141,8 +144,8 @@ interface MultiTabItem {
   showClose: boolean;
   /** 当前页签加载状态 */
   loading: boolean;
-  /** 当前页面是否是React组件 */
-  isReactPage: boolean;
+  /** 页面组件类型 */
+  pageType: TabPageType;
   /** 组件内容 */
   component?: any;
 }

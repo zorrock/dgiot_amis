@@ -200,9 +200,16 @@ const base62Encode = (str: string): string => {
   return base62Converter.encode(new Buffer(str));
 }
 
-/** 页面是否是React组件页面 */
-const isReactPage = (pagePath: string = ""): boolean => {
-  return pagePath.endsWith(".react.tsx") || pagePath.endsWith(".react.ts") || pagePath.endsWith(".react.js") || false;
+/** 获取页面组件类型 */
+const getPageType = (runtimeRouter: RuntimeRouter): TabPageType => {
+  const { pagePath = "" } = runtimeRouter;
+  if (pagePath.endsWith(".schema.tsx") || pagePath.endsWith(".schema.ts") || pagePath.endsWith(".schema.js")) {
+    return "amis";
+  }
+  if (pagePath.endsWith(".react.tsx") || pagePath.endsWith(".react.ts") || pagePath.endsWith(".react.js")) {
+    return "react";
+  }
+  return "iframe";
 }
 
 /**
@@ -325,7 +332,7 @@ export {
   getFirstMenu,
   menuToRouterLocation,
   base62Encode,
-  isReactPage,
+  getPageType,
   getHtmlTitle,
   defaultCustomMenuItemRender,
   defaultMenuItemRender,
