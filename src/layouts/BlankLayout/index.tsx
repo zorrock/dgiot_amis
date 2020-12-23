@@ -2,8 +2,8 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import lodash from "lodash";
 import classNames from "classnames";
-import { Button, Spin } from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import { Button, Drawer, Spin } from "antd";
+import { CloseOutlined, EditOutlined } from "@ant-design/icons";
 import SimpleBarReact from "simplebar-react";
 import { logger } from "@/utils/logger";
 import { amisRender, loadAmisPageByPath, loadReactPageByPath } from "@/utils/amis-utils";
@@ -31,6 +31,8 @@ interface BlankLayoutState {
   component?: any;
   /** 页面组件类型  */
   pageType: TabPageType;
+  /** 是否显示编辑代码对话框 */
+  showEditCodeModal: boolean;
 }
 
 class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
@@ -42,6 +44,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
     this.state = {
       loading: true,
       pageType: "amis",
+      showEditCodeModal: false,
     };
   }
 
@@ -64,6 +67,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
         <Helmet>
           <title>{getHtmlTitle(route, htmlTitleSuffix)}</title>
         </Helmet>
+        {this.getEditCodeButton()}
         {this.getPage()}
       </>
     );
@@ -98,10 +102,47 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
 
   /** 编辑Amis代码按钮 */
   protected getEditCodeButton() {
+    const { component, pageType, showEditCodeModal } = this.state;
+    if (!component || pageType !== "amis") return;
+    const editCodeDomId = "amisId-BlankLayout-editCodeDomId";
+    if (document.getElementById(editCodeDomId) && showEditCodeModal) {
+      console.log("component", component.schema)
+      amisRender(editCodeDomId, {
+        type: "page",
+        title: "",
+        toolbar: [],
+        body: {
+          type: "form",
+          title: "",
+          controls: [{ type: "editor", label: false, language: "json", value: component.schema }],
+          actions: [],
+        },
+      });
+    }
     return (
-      <>
-        <Button icon={<EditOutlined/>}/>
-      </>
+      <div className={styles.editCode}>
+        <Button
+          type={showEditCodeModal ? "default" : "primary"}
+          shape={"circle"}
+          size={"large"}
+          icon={showEditCodeModal ? <CloseOutlined/> : <EditOutlined/>}
+          onClick={() => this.setState({ showEditCodeModal: !showEditCodeModal })}
+        />
+        <Drawer
+          title={"Amis代码"}
+          visible={showEditCodeModal}
+          placement={"right"}
+          width={"35%"}
+          mask={false}
+          maskClosable={false}
+          className={styles.editCodeDrawer}
+          bodyStyle={{ padding: "0" }}
+          forceRender={true}
+          onClose={() => this.setState({ showEditCodeModal: false })}
+        >
+          <div id={editCodeDomId} key={editCodeDomId}/>
+        </Drawer>
+      </div>
     );
   }
 
@@ -123,7 +164,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
     const pageType = getPageType(currentMenu.runtimeRouter);
     if (pageType === "amis") window.currentAmisId = mountedDomId;
     this.setState(
-      { loading: true, currentLocationKey: locationKey, mountedDomId, pageType },
+      { loading: true, currentLocationKey: locationKey, mountedDomId, pageType, showEditCodeModal: false },
       async () => {
         let component: any;
         if (pageType === "react") {
@@ -134,6 +175,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
           component = await loadAmisPageByPath(pagePath!);
           amisRender(mountedDomId, component.schema);
         }
+        console.log("###component", component)
         this.setState({ loading: false, component });
       }
     );

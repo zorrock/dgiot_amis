@@ -267,7 +267,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           onClick={() => this.setState({ showEditCodeModal: !showEditCodeModal })}
         />
         <Drawer
-          title={`编辑Amis代码 - ${multiTab.menuItem.runtimeRouter.pageTitle}`}
+          title={`Amis代码 - ${multiTab.menuItem.runtimeRouter.pageTitle}`}
           visible={showEditCodeModal}
           placement={"right"}
           width={"35%"}
