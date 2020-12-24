@@ -375,7 +375,7 @@ const locationHashMatchInner = (menuSettings: RouterMenuSettings, locationHash: 
     });
     const matchFuc = match<RouteMatchParams["params"]>(matched.matchedRouter.path);
     matchParams = matchFuc(locationHash);
-  } else if (matched.matchedLayout && matched.matchedLayout["404"]) {
+  } else if (matched.matchedLayout && matched.matchedLayout["404"] && locationHash !== matched.matchedLayout.path) {
     // 404页面路由处理
     matched.matchedRouter = routerToRuntime("/", { path: locationHash, pagePath: matched.matchedLayout["404"], name: "404-页面不存在" });
     currentMenu = routerToMenu(menuSettings, matched.matchedRouter);

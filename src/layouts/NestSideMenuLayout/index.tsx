@@ -153,8 +153,8 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
     // 计算 defaultSelectedKeys selectedKeys
     // 事件 onMenuSelect
     // 扩展 menuProps? rightRender!
-    let defaultSelectedKeys: string[] | undefined;
-    let selectedKeys: string[] | undefined;
+    let defaultSelectedKeys: string[] = [];
+    let selectedKeys: string[] = [];
     const currentFirstMenuKey = getCurrentFirstMenuKey(layoutMenuData.currentMenu);
     if (currentFirstMenuKey) {
       defaultSelectedKeys = [currentFirstMenuKey];

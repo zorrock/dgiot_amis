@@ -17,11 +17,11 @@
 [  ] 17.RouterConfig.authority 测试
 [  ] 18.动态菜单
 [  ] 19.菜单权限
-[  ] 20.LayoutType.NestSide 默认页
+[OK] 20.LayoutType.NestSide 默认页
 [  ] 21.二级菜单过滤 测试
 [OK] 22.查看当前页amis代码
 [  ] 22.antd的中文语言
 [  ] 23.多详情页问题
-[  ] 24.NestSideMenuLayout关闭所有页签
-[  ] 25.NestSideMenuLayout页签栏“更多菜单”事件
+[OK] 24.NestSideMenuLayout无法关闭所有页签问题
+[OK] 25.NestSideMenuLayout页签栏“更多菜单”事件
 

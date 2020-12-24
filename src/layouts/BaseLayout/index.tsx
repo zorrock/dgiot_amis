@@ -9,7 +9,7 @@ import SimpleBarReact from 'simplebar-react';
 import { logger } from "@/utils/logger";
 import { getPropOrStateValue } from "@/utils/utils";
 import { amisRender, loadAmisPageByPath, loadReactPageByPath } from "@/utils/amis-utils";
-import { routerHistory } from "@/utils/router";
+import { routerHistory, RuntimeLayoutConfig } from "@/utils/router";
 import { IFramePage } from "@/components/IFramePage";
 import { PageContent } from "@/components/Layout/PageContent";
 import { GlobalFooter, GlobalFooterLink, GlobalFooterProps } from "@/components/Layout/GlobalFooter";
@@ -48,6 +48,8 @@ type DefaultSideMenuTopRender = (
 
 interface BaseLayoutProps extends LayoutPageComponentProps {
   // ----------------------------------------------------------------------------------- 基础配置
+  /** 当前Layout */
+  currentLayout: RuntimeLayoutConfig;
   /** 当前Layout菜单数据 */
   layoutMenuData: LayoutMenuData;
   /** Header高度(建议 32 ~ 64) */
@@ -497,7 +499,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   /** 页面内容 */
   protected getPageContent() {
     const { multiTabs, activePageKey } = this.state;
-    if (!multiTabs || multiTabs.length <= 0) return;
+    if (!multiTabs || multiTabs.length <= 0) return <div/>;
     return (
       <Tabs
         className={styles.tabs}
@@ -640,15 +642,14 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 关闭标签页 */
   protected closeTabPage(multiTabKey: string) {
-    const { location } = this.props;
+    const { location, currentLayout } = this.props;
     const { multiTabs } = this.state;
     const delIndex = multiTabs.findIndex(tab => tab.multiTabKey === multiTabKey);
     if (delIndex < 0) return;
     multiTabs.splice(delIndex, 1);
     if (multiTabs.length <= 0) {
-      // TODO 怎么处理 hash
-      // routerHistory.push({ hash: "/" });
-      this.forceUpdate();
+      // 关闭所有页签
+      routerHistory.push({ hash: currentLayout.path });
       return;
     }
     const array = lodash.sortBy(multiTabs, (tabTmp) => {
@@ -670,7 +671,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   protected onClickMoreButton(param: AntdMenuClickParam, eventKey: MoreButtonEventKey) {
     const { multiTabs } = this.state;
     if (!multiTabs || multiTabs.length <= 0) return;
-    const { location } = this.props;
+    const { location, currentLayout } = this.props;
     const multiTabKey = base62Encode(routerLocationToStr(location));
     const activeIndex = multiTabs.findIndex(tab => tab.multiTabKey === multiTabKey);
     let newMultiTabs: MultiTabItem[] = [];
@@ -685,7 +686,9 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         if (multiTabs[activeIndex]) newMultiTabs.push(multiTabs[activeIndex]);
         break;
       case "closeAll":
-        break;
+        multiTabs.length = 0;
+        routerHistory.push({ hash: currentLayout.path });
+        return;
     }
     this.setState({ multiTabs: newMultiTabs });
   }

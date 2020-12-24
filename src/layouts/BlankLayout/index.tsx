@@ -67,7 +67,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
         <Helmet>
           <title>{getHtmlTitle(route, htmlTitleSuffix)}</title>
         </Helmet>
-        {this.getEditCodeButton()}
+        {!isProdEnv && this.getEditCodeButton()}
         {this.getPage()}
       </>
     );

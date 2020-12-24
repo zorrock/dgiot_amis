@@ -88,6 +88,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
         match={match!}
         rootRoutes={currentLayout?.routes!}
         layoutMenuData={layoutMenuData}
+        currentLayout={currentLayout}
         {...currentLayout?.layoutProps}
       />
     );
