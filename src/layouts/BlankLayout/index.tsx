@@ -151,15 +151,15 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
                   if (!this.editCodeAmisApp) return;
                   const component = this.editCodeAmisApp.getComponentByName("page.form");
                   if (!component) return;
-                  let { code } = component.getValues();
-                  if (!code) return;
+                  const values = component.getValues();
+                  if (!values || !values.code) return;
                   try {
-                    if (variableTypeOf(code) === TypeEnum.string) code = JSON.parse(code);
+                    if (variableTypeOf(values.code) === TypeEnum.string) values.code = JSON.parse(values.code);
                   } catch (e) {
                     message.error("Amis代码不是正确的json格式").then(undefined);
                     return;
                   }
-                  const newComponent = { ...component, schema: code };
+                  const newComponent = { ...component, schema: values.code };
                   amisRender(mountedDomId!, newComponent.schema);
                   message.success("Amis代码应用成功页面已刷新").then(undefined);
                 }}
