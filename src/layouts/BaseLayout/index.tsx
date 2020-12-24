@@ -262,6 +262,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     return (
       <div className={styles.editCode}>
         <Button
+          style={{ boxShadow: "0px 0px 8px #888888" }}
           type={showEditCodeModal ? "default" : "primary"}
           shape={"circle"}
           size={"large"}
@@ -580,6 +581,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   protected addOrShowTabPage() {
     const { location, layoutMenuData: { currentPath, currentMenu } } = this.props;
     if (!currentMenu) {
+      // 跳转到404页面
+      // routerHistory.push({ hash: "/" });
       return;
     }
     const { activePageKey, multiTabs } = this.state;

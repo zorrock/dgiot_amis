@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
 import classNames from 'classnames';
 import { getCenterNode, getLeftNode, getRightNode } from '../utils/flex-horizontal-layout';
-import antdLogo from '@/assets/logo.png';
+import appLogo from '@/assets/images/logo.png';
 import { AntdMenuProps } from '../layout-types';
 import { HeaderFirstMenu, HeaderFirstMenuClickParam, HeaderFirstMenuSelectParam } from './HeaderFirstMenu';
 import styles from './HeaderMenu.less';
@@ -78,7 +78,7 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
     }
     return (
       <div key="logo" className={classNames(styles.logo, logoClassName)} style={logoStyle} onClick={onLogoClick}>
-        {logo ?? <img src={antdLogo} alt="logo" style={{ width: 36 }}/>}
+        {logo ?? <img src={appLogo} alt="logo" style={{ width: 36 }}/>}
         {title ?? <div className={styles.title}>Ant-Layout</div>}
       </div>
     );

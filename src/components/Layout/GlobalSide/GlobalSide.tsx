@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
 import classNames from 'classnames';
 import SimpleBarReact from 'simplebar-react';
-import antdLogo from '@/assets/logo.png';
+import appLogo from '@/assets/images/logo.png';
 import { AntdMenuProps } from '../layout-types';
 import { getBottomNode, getCenterNode, getTopNode } from '../utils/flex-vertical-layouts';
 import { SideFirstMenu, SideFirstMenuClickParam, SideFirstMenuMode, SideFirstMenuSelectParam } from './SideFirstMenu';
@@ -92,7 +92,7 @@ class GlobalSide extends React.Component<GlobalSideProps, GlobalSideState> {
     }
     return (
       <div key="logo" className={classNames(styles.logo, logoClassName)} style={logoStyle} onClick={onLogoClick}>
-        {logo ?? <img src={antdLogo} alt="logo" style={{ width: 32 }}/>}
+        {logo ?? <img src={appLogo} alt="logo" style={{ width: 32 }}/>}
       </div>
     );
   }
