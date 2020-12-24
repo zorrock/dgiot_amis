@@ -8,6 +8,7 @@ import { layoutToRuntime, LayoutType, locationHashMatch, RuntimeLayoutConfig } f
 import { BlankLayout } from "@/layouts/BlankLayout";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { layoutSettings, routerConfigs } from './router-config';
+import { Button, Result } from "antd";
 
 const log = logger.getLogger("src/schema-app.tsx");
 
@@ -106,10 +107,21 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     );
   }
 
+  protected getNoFoundPage() {
+    return (
+      <Result
+        status={"404"}
+        title="404"
+        subTitle={<div style={{ fontSize: 14, fontWeight: "bold" }}>抱歉，您访问的页面不存在。</div>}
+        extra={<Button type="primary" onClick={() => history.back()}>返回上一页</Button>}
+      />
+    );
+  }
+
   render() {
     const { currentLayout, currentMenu, rootMenus, location } = this.state;
     if (!currentLayout) {
-      return "404";
+      return this.getNoFoundPage();
     }
     const layoutMenuData = getLayoutMenuData({ location: location!, rootMenus: rootMenus!, currentMenu: currentMenu! });
     log.info("layoutMenuData ->", layoutMenuData);

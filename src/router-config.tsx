@@ -58,6 +58,7 @@ const routerConfigs: LayoutConfig[] = [
         ],
       },
     ],
+    404: "/404.react.tsx",
   },
   {
     path: "/nest-side",
