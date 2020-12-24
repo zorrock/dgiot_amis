@@ -436,6 +436,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           <Menu
             onClick={(event) => {
               if (onClickMoreButton instanceof Function) onClickMoreButton(event, event.key as MoreButtonEventKey);
+              this.onClickMoreButton(event, event.key as MoreButtonEventKey)
             }}
           >
             <Menu.Item key="closeLeft">
@@ -646,8 +647,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     multiTabs.splice(delIndex, 1);
     if (multiTabs.length <= 0) {
       // TODO 怎么处理 hash
-      routerHistory.push({ hash: "/" });
-      // this.forceUpdate();
+      // routerHistory.push({ hash: "/" });
+      this.forceUpdate();
       return;
     }
     const array = lodash.sortBy(multiTabs, (tabTmp) => {
@@ -663,6 +664,30 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       multiTab.lastActiveTime = new Date().getTime();
       routerHistory.push(multiTab.location);
     }
+  }
+
+  /** 多标签页更多菜单点击事件 */
+  protected onClickMoreButton(param: AntdMenuClickParam, eventKey: MoreButtonEventKey) {
+    const { multiTabs } = this.state;
+    if (!multiTabs || multiTabs.length <= 0) return;
+    const { location } = this.props;
+    const multiTabKey = base62Encode(routerLocationToStr(location));
+    const activeIndex = multiTabs.findIndex(tab => tab.multiTabKey === multiTabKey);
+    let newMultiTabs: MultiTabItem[] = [];
+    switch (eventKey) {
+      case "closeLeft":
+        newMultiTabs = multiTabs.slice(activeIndex);
+        break;
+      case "closeRight":
+        newMultiTabs = multiTabs.slice(0, activeIndex + 1);
+        break;
+      case "closeOther":
+        if (multiTabs[activeIndex]) newMultiTabs.push(multiTabs[activeIndex]);
+        break;
+      case "closeAll":
+        break;
+    }
+    this.setState({ multiTabs: newMultiTabs });
   }
 }
 
