@@ -578,8 +578,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 新增或显示标签页 */
   protected addOrShowTabPage() {
-    const { location, layoutMenuData } = this.props;
-    if (!layoutMenuData.currentMenu) return;
+    const { location, layoutMenuData: { currentPath, currentMenu } } = this.props;
+    if (!currentMenu) {
+      return;
+    }
     const { activePageKey, multiTabs } = this.state;
     const multiTabKey = base62Encode(routerLocationToStr(location));
     const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);
@@ -591,13 +593,13 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       }
       return;
     }
-    const { runtimeRouter } = layoutMenuData.currentMenu;
+    const { runtimeRouter } = currentMenu;
     const { name, pagePath } = runtimeRouter;
     const newMultiTab: MultiTabItem = {
       mountedDomId: lodash.uniqueId('amisId-'),
-      menuItem: layoutMenuData.currentMenu,
+      menuItem: currentMenu,
       multiTabKey,
-      currentPath: layoutMenuData.currentPath,
+      currentPath: currentPath,
       location: location,
       isHomePage: false,
       lastActiveTime: new Date().getTime(),
