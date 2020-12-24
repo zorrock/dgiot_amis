@@ -34,3 +34,19 @@ interface ReactPage {
   /** React组件 */
   default: any;
 }
+
+/** Amis应用 */
+interface AmisApp {
+  /**
+   * 根据组件名称获取组件
+   * @param name 组件名称
+   */
+  getComponentByName<C = any>(name: string): C;
+
+  /**
+   * 获取所有组件
+   */
+  getComponents<C = any>(): C[];
+
+  [property: any]: any;
+}

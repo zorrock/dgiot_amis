@@ -2,10 +2,11 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import lodash from "lodash";
 import classNames from "classnames";
-import { Button, Drawer, Spin } from "antd";
-import { CloseOutlined, EditOutlined } from "@ant-design/icons";
+import { Button, Drawer, message, Spin } from "antd";
+import { CloseOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons";
 import SimpleBarReact from "simplebar-react";
 import { logger } from "@/utils/logger";
+import { TypeEnum, variableTypeOf } from "@/utils/typeof";
 import { amisRender, loadAmisPageByPath, loadReactPageByPath } from "@/utils/amis-utils";
 import { IFramePage } from "@/components/IFramePage";
 import { base62Encode, getHtmlTitle, getPageType, routerLocationToStr } from "@/components/Layout/utils/layouts-utils";
@@ -36,8 +37,8 @@ interface BlankLayoutState {
 }
 
 class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
-  // /** Amis组件挂载ID */
-  // protected readonly mountedDomId = lodash.uniqueId('amisId-');
+  /** Amis代码编辑器应用 */
+  protected editCodeAmisApp: AmisApp | undefined;
 
   constructor(props: BlankLayoutProps) {
     super(props);
@@ -102,11 +103,11 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
 
   /** 编辑Amis代码按钮 */
   protected getEditCodeButton() {
-    const { component, pageType, showEditCodeModal } = this.state;
+    const { mountedDomId, component, pageType, showEditCodeModal } = this.state;
     if (!component || pageType !== "amis") return;
     const editCodeDomId = "amisId-BlankLayout-editCodeDomId";
     if (document.getElementById(editCodeDomId) && showEditCodeModal) {
-      amisRender(editCodeDomId, {
+      const amisApp = amisRender(editCodeDomId, {
         type: "page",
         name: "page",
         title: "",
@@ -115,10 +116,11 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
           type: "form",
           name: "form",
           title: "",
-          controls: [{ type: "editor", language: "json", name: "code", label: false, disabled: true }],
+          controls: [{ type: "editor", language: "json", name: "code", label: false, disabled: false }],
           actions: [],
         },
       }, { data: { code: component.schema } });
+      if (amisApp) this.editCodeAmisApp = amisApp;
     }
     return (
       <div className={styles.editCode}>
@@ -140,6 +142,32 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
           bodyStyle={{ padding: "0" }}
           forceRender={true}
           onClose={() => this.setState({ showEditCodeModal: false })}
+          footer={
+            <div style={{ textAlign: 'right' }}>
+              <Button
+                type={"primary"}
+                icon={<SaveOutlined/>}
+                onClick={() => {
+                  if (!this.editCodeAmisApp) return;
+                  const component = this.editCodeAmisApp.getComponentByName("page.form");
+                  if (!component) return;
+                  let { code } = component.getValues();
+                  if (!code) return;
+                  try {
+                    if (variableTypeOf(code) === TypeEnum.string) code = JSON.parse(code);
+                  } catch (e) {
+                    message.error("Amis代码不是正确的json格式").then(undefined);
+                    return;
+                  }
+                  const newComponent = { ...component, schema: code };
+                  amisRender(mountedDomId!, newComponent.schema);
+                  message.success("Amis代码应用成功页面已刷新").then(undefined);
+                }}
+              >
+                应用
+              </Button>
+            </div>
+          }
         >
           <div id={editCodeDomId} key={editCodeDomId}/>
         </Drawer>

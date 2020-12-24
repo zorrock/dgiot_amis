@@ -4,9 +4,10 @@ import classNames from "classnames";
 import Immutable from 'immutable';
 import { Helmet } from 'react-helmet';
 import { ArrowLeftOutlined, ArrowRightOutlined, CloseOutlined, CloseSquareOutlined, EditOutlined, MoreOutlined, SaveOutlined } from "@ant-design/icons";
-import { Button, Drawer, Dropdown, Menu, Spin, Tabs } from 'antd';
+import { Button, Drawer, Dropdown, Menu, message, Spin, Tabs } from 'antd';
 import SimpleBarReact from 'simplebar-react';
 import { logger } from "@/utils/logger";
+import { TypeEnum, variableTypeOf } from "@/utils/typeof";
 import { getPropOrStateValue } from "@/utils/utils";
 import { amisRender, loadAmisPageByPath, loadReactPageByPath } from "@/utils/amis-utils";
 import { routerHistory, RuntimeLayoutConfig } from "@/utils/router";
@@ -214,6 +215,9 @@ interface BaseLayoutState {
 }
 
 class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends React.Component<P, S> {
+  /** Amis代码编辑器应用 */
+  protected editCodeAmisApp: AmisApp | undefined;
+
   constructor(props: P) {
     super(props);
   }
@@ -247,7 +251,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     if (!multiTab || multiTab.pageType !== "amis") return;
     const editCodeDomId = "amisId-editCodeDomId";
     if (document.getElementById(editCodeDomId) && showEditCodeModal) {
-      amisRender(editCodeDomId, {
+      const amisApp = amisRender(editCodeDomId, {
         type: "page",
         name: "page",
         title: "",
@@ -260,6 +264,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           actions: [],
         },
       }, { data: { code: multiTab.component.schema } });
+      if (amisApp) this.editCodeAmisApp = amisApp;
     }
     return (
       <div className={styles.editCode}>
@@ -284,7 +289,28 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           onClose={() => this.setState({ showEditCodeModal: false })}
           footer={
             <div style={{ textAlign: 'right' }}>
-              <Button type={"primary"} icon={<SaveOutlined/>}>应用</Button>
+              <Button
+                type={"primary"}
+                icon={<SaveOutlined/>}
+                onClick={() => {
+                  if (!this.editCodeAmisApp) return;
+                  const component = this.editCodeAmisApp.getComponentByName("page.form");
+                  if (!component) return;
+                  let { code } = component.getValues();
+                  if (!code) return;
+                  try {
+                    if (variableTypeOf(code) === TypeEnum.string) code = JSON.parse(code);
+                  } catch (e) {
+                    message.error("Amis代码不是正确的json格式").then(undefined);
+                    return;
+                  }
+                  multiTab.component = { ...multiTab.component, schema: code };
+                  amisRender(multiTab.mountedDomId, multiTab.component.schema);
+                  message.success("Amis代码应用成功页面已刷新").then(undefined);
+                }}
+              >
+                应用
+              </Button>
             </div>
           }
         >
