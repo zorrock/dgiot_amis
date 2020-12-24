@@ -115,7 +115,7 @@ class RouterHistory {
    * @param hash  页面路径
    * @param state 页面的状态值
    */
-  public replace(hash: string, state: LocationState = {}): void {
+  public replaceState(hash: string, state: LocationState = {}): void {
     const path = RouterHistory.getHash(hash);
     if (!path) return;
     const oldState = this.routerLocationStateMap.get(path);

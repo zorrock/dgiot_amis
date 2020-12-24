@@ -580,11 +580,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   /** 新增或显示标签页 */
   protected addOrShowTabPage() {
     const { location, layoutMenuData: { currentPath, currentMenu } } = this.props;
-    if (!currentMenu) {
-      // 跳转到404页面
-      // routerHistory.push({ hash: "/" });
-      return;
-    }
+    if (!currentMenu) return;
     const { activePageKey, multiTabs } = this.state;
     const multiTabKey = base62Encode(routerLocationToStr(location));
     const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);

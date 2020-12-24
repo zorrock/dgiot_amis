@@ -70,6 +70,10 @@ const routerConfigs: LayoutConfig[] = [
       globalSideMenuMode: SideFirstMenuMode.AntdMenu,
     },
     routes: [
+      // ------------------------------------------------------------------------- 403、404页面
+      { path: "/403", name: "403", hideMenu: true, pagePath: "/amis/curd-00.schema.ts" },
+      { path: "/404", name: "404-页面不存在", hideMenu: true, pagePath: "/500.react.tsx" },
+      // -------------------------------------------------------------------------
       {
         path: "/curd",
         name: "CURD",
@@ -301,9 +305,9 @@ const routerConfigs: LayoutConfig[] = [
       //   ],
       // },
     ],
-    401: "",
-    403: "",
-    404: "",
+    401: "/nest-side/401",
+    403: "/nest-side/403",
+    404: "/nest-side/404",
   }
 ];
 
