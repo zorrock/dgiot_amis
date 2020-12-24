@@ -3,7 +3,7 @@ import lodash from "lodash";
 import classNames from "classnames";
 import Immutable from 'immutable';
 import { Helmet } from 'react-helmet';
-import { ArrowLeftOutlined, ArrowRightOutlined, CloseOutlined, CloseSquareOutlined, EditOutlined, MoreOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined, CloseOutlined, CloseSquareOutlined, EditOutlined, MoreOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, Drawer, Dropdown, Menu, Spin, Tabs } from 'antd';
 import SimpleBarReact from 'simplebar-react';
 import { logger } from "@/utils/logger";
@@ -254,7 +254,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           type: "form",
           name: "form",
           title: "",
-          controls: [{ type: "editor", language: "json", name: "code", label: false, disabled: true }],
+          controls: [{ type: "editor", language: "json", name: "code", label: false, disabled: false }],
           actions: [],
         },
       }, { data: { code: multiTab.component.schema } });
@@ -280,11 +280,11 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           bodyStyle={{ padding: "0" }}
           forceRender={true}
           onClose={() => this.setState({ showEditCodeModal: false })}
-          // footer={
-          //   <div style={{ textAlign: 'right' }}>
-          //     <Button type={"primary"}>保存</Button>
-          //   </div>
-          // }
+          footer={
+            <div style={{ textAlign: 'right' }}>
+              <Button type={"primary"} icon={<SaveOutlined/>}>应用</Button>
+            </div>
+          }
         >
           <div id={editCodeDomId} key={editCodeDomId}/>
         </Drawer>
@@ -503,7 +503,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         type={"editable-card"}
         tabPosition={"top"}
         hideAdd={true}
-        moreIcon={undefined}
+        moreIcon={null}
         animated={{ inkBar: true, tabPane: false }}
         tabBarGutter={4}
         tabBarStyle={{ background: "#f6f6f6", userSelect: "none", borderBottom: "1px solid #d6d6d6" }}
