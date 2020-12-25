@@ -301,7 +301,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
                   try {
                     if (variableTypeOf(code) === TypeEnum.string) code = JSON.parse(code);
                   } catch (e) {
-                    message.error("Amis代码不是正确的json格式").then(undefined);
+                    message.error("Amis代码不是正确的json格式").then();
                     return;
                   }
                   multiTab.component = { ...multiTab.component, schema: code };

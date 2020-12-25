@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Checkbox, Form, Input, Layout } from "antd";
+import { Button, Checkbox, Form, Input, Layout, message } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import request from "@/utils/request";
 import { routerHistory } from "@/utils/router";
@@ -27,15 +27,18 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
   protected login = (values: any) => {
     this.setState({ loading: true });
     request.post(`${serverHost}/!/amis-api/curd-page@login`, values)
-      .then(({ status, data }) => {
-        if (status === 0 || status === 200) {
-          window.currentUser = {
-            uid: data.uid,
-            loginName: data.username,
-            nickname: data.username,
-          };
-          routerHistory.push({ hash: "/nest-side/curd/00" });
+      .then(({ data }) => {
+        if (!data || !data.uid) {
+          message.error("用户名/密码错误").then();
+          return;
         }
+        window.currentUser = {
+          uid: data.uid,
+          loginName: data.username,
+          nickname: data.username,
+        };
+        message.success("登录成功").then();
+        routerHistory.push({ hash: "/nest-side/curd/00" });
       })
       .finally(() => this.setState({ loading: false }));
   }

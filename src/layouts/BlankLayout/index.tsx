@@ -156,7 +156,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
                   try {
                     if (variableTypeOf(values.code) === TypeEnum.string) values.code = JSON.parse(values.code);
                   } catch (e) {
-                    message.error("Amis代码不是正确的json格式").then(undefined);
+                    message.error("Amis代码不是正确的json格式").then();
                     return;
                   }
                   const newComponent = { ...component, schema: values.code };

@@ -69,11 +69,11 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     const locationHash = getLocationHash();
     // 跳转到默认地址或登录地址 - 全局跳转
     const { loginPath, defaultPath } = layoutSettings;
-    if (loginPath && !window.currentUser) {
+    if (loginPath && !window.currentUser && locationHash !== loginPath) {
       routerHistory.push({ hash: loginPath });
       return;
     }
-    if (lodash.trim(locationHash).length <= 0 && defaultPath) {
+    if (lodash.trim(locationHash).length <= 0 && defaultPath && locationHash !== defaultPath) {
       routerHistory.push({ hash: defaultPath });
       return;
     }
@@ -88,7 +88,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     log.info("event ->", event.newURL);
     log.info("locationHash ->", locationHash);
     // 跳转到登录地址 - 路由跳转
-    if (currentLayout && currentLayout["401"] && !window.currentUser) {
+    if (currentLayout && currentLayout["401"] && !window.currentUser && locationHash !== currentLayout["401"]) {
       routerHistory.push({ hash: currentLayout["401"] });
       return;
     }
@@ -142,7 +142,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
       return this.getNoFoundPage();
     }
     // 跳转到登录地址 - 路由跳转
-    if (currentLayout && currentLayout["401"] && !window.currentUser) {
+    if (currentLayout && currentLayout["401"] && !window.currentUser && location?.hash !== currentLayout["401"]) {
       routerHistory.push({ hash: currentLayout["401"] });
       return <div/>;
     }
