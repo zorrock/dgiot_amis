@@ -315,7 +315,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
     return (
       <>
         {this.getHtmlTitle()}
-        {!isProdEnv && this.getEditCodeButton()}
+        {(!isProdEnv || true) && this.getEditCodeButton()}
         {this.getLayoutPage()}
       </>
     );
