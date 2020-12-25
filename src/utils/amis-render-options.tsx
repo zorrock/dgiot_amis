@@ -21,7 +21,9 @@ export interface FetcherConfig {
   headers?: any;
 }
 
-axios.interceptors.request.use(request => {
+const instance = axios.create({});
+
+instance.interceptors.request.use(request => {
   log.info("全局请求拦截 request -> ", request);
   const path = request.url?.split('?')[0];
   const querystring = request.url?.split('?')[1];
@@ -36,7 +38,7 @@ axios.interceptors.request.use(request => {
   return request;
 });
 
-axios.interceptors.response.use(response => {
+instance.interceptors.response.use(response => {
     log.info("全局响应拦截 response -> ", response);
     // if (response.data && !hasValue(response.data.msg) && !hasValue(response.data.status) && !hasValue(response.data.data)) {
     //   response.data = {status: response.status === 200 ? 0 : -1, msg: "", data: response.data};
@@ -86,14 +88,14 @@ const amisRenderOptions: RenderOptions = {
     config.headers = headers;
     if (method !== "post" && method !== "put" && method !== "patch") {
       if (data) config.params = data;
-      return axios[method](url, config);
+      return instance[method](url, config);
     } else if (data && data instanceof FormData) {
       config.headers["Content-Type"] = "multipart/form-data";
     } else if (data && typeof data !== 'string' && !(data instanceof Blob) && !(data instanceof ArrayBuffer)) {
       data = JSON.stringify(data);
       config.headers["Content-Type"] = "application/json";
     }
-    return axios[method](url, data, config);
+    return instance[method](url, data, config);
   },
   /** 是否取消http请求 */
   isCancel: value => axios.isCancel(value),

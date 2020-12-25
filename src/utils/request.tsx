@@ -40,8 +40,10 @@ const errorNotice = (error: any): boolean => {
   return false;
 };
 
+const instance = axios.create({});
+
 // 全局请求拦截
-axios.interceptors.request.use(
+instance.interceptors.request.use(
   config => {
     const baseURL = '/';
     const timeout = 30000;
@@ -55,7 +57,7 @@ axios.interceptors.request.use(
 );
 
 //  全局拦截配置
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   response => response,
   error => {
     // resolve 通过， reject 驳回
@@ -76,27 +78,27 @@ const transformResponse = (response: AxiosResponse): any => {
 
 export default {
   request(config: AxiosRequestConfig) {
-    return axios.request(config).then(response => transformResponse(response));
+    return instance.request(config).then(response => transformResponse(response));
   },
   get(url: string, config?: AxiosRequestConfig) {
-    return axios.get(url, config).then(response => transformResponse(response));
+    return instance.get(url, config).then(response => transformResponse(response));
   },
   delete(url: string, config?: AxiosRequestConfig) {
-    return axios.delete(url, config).then(response => transformResponse(response));
+    return instance.delete(url, config).then(response => transformResponse(response));
   },
   head(url: string, config?: AxiosRequestConfig) {
-    return axios.head(url, config).then(response => transformResponse(response));
+    return instance.head(url, config).then(response => transformResponse(response));
   },
   options(url: string, config?: AxiosRequestConfig) {
-    return axios.options(url, config).then(response => transformResponse(response));
+    return instance.options(url, config).then(response => transformResponse(response));
   },
   post(url: string, data?: any, config?: AxiosRequestConfig) {
-    return axios.post(url, data, config).then(response => transformResponse(response));
+    return instance.post(url, data, config).then(response => transformResponse(response));
   },
   put(url: string, data?: any, config?: AxiosRequestConfig) {
-    return axios.put(url, data, config).then(response => transformResponse(response));
+    return instance.put(url, data, config).then(response => transformResponse(response));
   },
   patch(url: string, data?: any, config?: AxiosRequestConfig) {
-    return axios.patch(url, data, config).then(response => transformResponse(response));
+    return instance.patch(url, data, config).then(response => transformResponse(response));
   },
 };
