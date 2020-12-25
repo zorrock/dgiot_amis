@@ -12,13 +12,14 @@ const isDevMode = settings.mode === "development";
 
 /**
  * 扫描js(ts)文件动态增加入口文件
- * @param config      webpack配置
- * @param srcPath     src路径
- * @param distPath    dist路径
- * @param chunks      文件切割chunks列表
- * @param faviconPath favicon图标路径
+ * @param config        webpack配置
+ * @param srcPath       src路径
+ * @param distPath      dist路径
+ * @param chunks        文件切割chunks列表
+ * @param faviconPath   favicon图标路径
+ * @param base64Images  base64图片内容
  */
-const scanJsEntry = (config: Configuration, srcPath: string, distPath: string, chunks: string[], faviconPath?: string): void => {
+const scanJsEntry = (config: Configuration, srcPath: string, distPath: string, chunks: string[], faviconPath?: string, base64Images?: { [name: string]: string }): void => {
   const defaultHtmlFile = slash(`${srcPath}/template.ejs`);
   const jsFiles: { [dir: string]: string } = {};
   const jsExtArr: string[] = [".ts", ".tsx", ".js", ".jsx", ".json"];
@@ -64,6 +65,7 @@ const scanJsEntry = (config: Configuration, srcPath: string, distPath: string, c
       chunks: ["manifest", ...chunks, "global", entryKey],
       urlPrefix: "/",
       isDevMode,
+      ...base64Images,
     };
     if (settings.mode === "production") {
       options.minify = {

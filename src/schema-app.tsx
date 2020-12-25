@@ -141,5 +141,5 @@ initAppPage();
 const runtimeLayouts = layoutToRuntime(routerConfigs);
 log.info("layoutSettings ->", layoutSettings);
 log.info("runtimeLayouts ->", runtimeLayouts);
-ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted)
+ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted);
 log.info("ReactDOM.render完成!");

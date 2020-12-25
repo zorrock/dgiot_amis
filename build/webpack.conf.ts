@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 import slash from "slash";
@@ -399,6 +400,10 @@ if (!isDevMode) {
 }
 
 // 动态扫描入口文件 entry HtmlWebpackPlugin
+const imageHomeBackground = `data:image/png;base64,${fs.readFileSync(path.join(publicPath, "./images/home-background.png"), { encoding: "base64" })}`;
+const imageAmisLogo = `data:image/png;base64,${fs.readFileSync(path.join(publicPath, "./images/logo.png"), { encoding: "base64" })}`;
+const imageLogo = `data:image/png;base64,${fs.readFileSync(path.join(publicPath, "./images/logo.png"), { encoding: "base64" })}`;
+const base64Images = { imageHomeBackground, imageAmisLogo, imageLogo };
 const chunks: string[] = [];
 if (config.optimization?.splitChunks && config.optimization?.splitChunks?.cacheGroups) {
   const cacheGroups = (config.optimization!.splitChunks as Options.SplitChunksOptions).cacheGroups as ({ [key: string]: Options.CacheGroupsOptions });
@@ -407,7 +412,7 @@ if (config.optimization?.splitChunks && config.optimization?.splitChunks?.cacheG
   });
   // console.log("chunks -> ", JSON.stringify(chunks));
 }
-scanJsEntry(config, srcPath, distPath, chunks, faviconPath);
+scanJsEntry(config, srcPath, distPath, chunks, faviconPath, base64Images);
 
 // schema-app 支持
 const options: HtmlWebpackPlugin.Options = {
@@ -420,6 +425,7 @@ const options: HtmlWebpackPlugin.Options = {
   chunks: ["manifest", ...chunks, "global", "schemaApp"],
   urlPrefix: "/",
   isDevMode,
+  ...base64Images,
 };
 if (settings.mode === "production") {
   options.minify = {

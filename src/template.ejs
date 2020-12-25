@@ -26,7 +26,7 @@
 <div id="app-root">
     <style>
         #app-root {
-            background-image: url('<%= opts.urlPrefix %>public/images/home-background.png');
+            background-image: url('<%= opts.imageHomeBackground %>');
             background-repeat: no-repeat;
             background-size: 100% auto;
         }
@@ -173,7 +173,7 @@
         }
     </style>
     <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;min-height: 420px;height: 100%;">
-        <img src="<%= opts.urlPrefix %>public/images/logo.png" alt="logo" width="256"/>
+        <img src="<%= opts.imageLogo %>" alt="logo" width="256"/>
         <div class="page-loading-warp">
             <div class="ant-spin ant-spin-lg ant-spin-spinning">
             <span class="ant-spin-dot ant-spin-dot-spin">
@@ -185,7 +185,7 @@
             </div>
         </div>
         <div style="display: flex; justify-content: center; align-items: center">
-            <img src="<%= opts.urlPrefix %>public/images/logo.png" width="32" style="margin-right: 8px" alt="logo"/>
+            <img src="<%= opts.imageAmisLogo %>" width="32" style="margin-right: 8px" alt="logo"/>
             Amis-Admin
         </div>
     </div>
