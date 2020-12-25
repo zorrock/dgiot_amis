@@ -7,7 +7,8 @@ const layoutSettings: LayoutSettings = {
   menu: { defaultOpen: true },
   iconScriptUrl: "//at.alicdn.com/t/font_1326886_bbehrpsvyl.js",
   htmlTitleSuffix: "",
-  defaultPath: "/nest-side/curd/00",
+  // loginPath: "/blank/login",
+  // defaultPath: "/nest-side/curd/00",
 };
 
 const routerConfigs: LayoutConfig[] = [

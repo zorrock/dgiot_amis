@@ -203,6 +203,8 @@ interface LayoutSettings {
   iconScriptUrl: string;
   /** html页面title后缀 */
   htmlTitleSuffix: string;
+  /** 系统登录地址(配置后只要未登录都会跳转到登录地址) */
+  loginPath?: string;
   /** 默认跳转地址 */
   defaultPath?: string;
 }

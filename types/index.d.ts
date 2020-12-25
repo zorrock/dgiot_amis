@@ -13,15 +13,6 @@ declare module '*.bmp';
 declare module '*.tiff';
 declare module 'omit.js';
 
-interface Window {
-  // g_app: {
-  //   _store: any;
-  //   [propName: string]: any;
-  // };
-  /** 当前显示的 Amis Mounted Dom Id */
-  currentAmisId: string;
-}
-
 /** 是否是生产环境 */
 declare const isProdEnv: boolean;
 
@@ -49,4 +40,37 @@ interface AmisApp {
   getComponents<C = any>(): C[];
 
   [property: any]: any;
+}
+
+interface UserInfo {
+  /** 用户ID */
+  uid: string,
+  /** 登录名 */
+  loginName: string,
+  /** 昵称 */
+  nickname: string,
+  /** 头像 */
+  avatar?: null,
+  /** 手机号 */
+  telephone?: string,
+  /**  */
+  email?: string,
+  /** 过期时间 */
+  expiredTime?: string,
+  /** 启用状态 */
+  enabled?: string,
+  /** 备注 */
+  description?: string,
+}
+
+interface Window {
+  // g_app: {
+  //   _store: any;
+  //   [propName: string]: any;
+  // };
+
+  /** 当前登录用户信息 */
+  currentUser?: UserInfo;
+  /** 当前显示的 Amis Mounted Dom Id */
+  currentAmisId: string;
 }

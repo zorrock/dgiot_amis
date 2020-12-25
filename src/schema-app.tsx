@@ -67,6 +67,17 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   onLocationHashChange = (event: HashChangeEvent) => {
     const { runtimeLayouts, layoutSettings } = this.props;
     const locationHash = getLocationHash();
+    // 跳转到默认地址或登录地址 - 全局跳转
+    const { loginPath, defaultPath } = layoutSettings;
+    if (loginPath && !window.currentUser) {
+      routerHistory.push({ hash: loginPath });
+      return;
+    }
+    if (lodash.trim(locationHash).length <= 0 && defaultPath) {
+      routerHistory.push({ hash: defaultPath });
+      return;
+    }
+    // 路由菜单匹配
     const matched = locationHashMatch(layoutSettings, locationHash, runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
@@ -76,6 +87,11 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     const match = matched?.match;
     log.info("event ->", event.newURL);
     log.info("locationHash ->", locationHash);
+    // 跳转到登录地址 - 路由跳转
+    if (currentLayout && currentLayout["401"] && !window.currentUser) {
+      routerHistory.push({ hash: currentLayout["401"] });
+      return;
+    }
     this.setState({ locationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match })
     log.info("newState ->", this.state);
   }
@@ -122,14 +138,13 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
   render() {
     const { currentLayout, currentMenu, rootMenus, location } = this.state;
-    const { layoutSettings: { defaultPath } } = this.props;
     if (!currentLayout) {
-      // 跳转到默认页面
-      if ((!location || lodash.trim(location.hash).length <= 0) && defaultPath) {
-        routerHistory.push({ hash: defaultPath });
-        return <div/>;
-      }
       return this.getNoFoundPage();
+    }
+    // 跳转到登录地址 - 路由跳转
+    if (currentLayout && currentLayout["401"] && !window.currentUser) {
+      routerHistory.push({ hash: currentLayout["401"] });
+      return <div/>;
     }
     const layoutMenuData = getLayoutMenuData({ location: location!, rootMenus: rootMenus!, currentMenu: currentMenu! });
     log.info("layoutMenuData ->", layoutMenuData);
@@ -145,6 +160,15 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
 // ----------------------------------------------------------------------------------- 开始初始化应用
 initAppPage();
+// 跳转到默认地址或登录地址
+const locationHash = getLocationHash();
+const { loginPath, defaultPath } = layoutSettings;
+if (loginPath && !window.currentUser) {
+  routerHistory.push({ hash: loginPath });
+}
+if (lodash.trim(locationHash).length <= 0 && defaultPath) {
+  routerHistory.push({ hash: defaultPath });
+}
 const runtimeLayouts = layoutToRuntime(routerConfigs);
 log.info("layoutSettings ->", layoutSettings);
 log.info("runtimeLayouts ->", runtimeLayouts);
