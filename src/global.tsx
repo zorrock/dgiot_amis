@@ -7,7 +7,12 @@ import 'simplebar/src/simplebar.css';
 // import 'antd/dist/antd.css';
 // import 'antd/dist/antd.dark.css';
 // import 'antd/dist/antd.compact.css';
+import { getStore } from "@/utils/store";
 import { logger } from './utils/logger';
 
+const currentUser = getStore<UserInfo>("currentUser");
+if (currentUser) {
+  window.currentUser = currentUser;
+}
 const log = logger.getLogger("src/global.tsx");
 log.info("global.tsx加载完成")

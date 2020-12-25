@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Checkbox, Form, Input, Layout, message } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import request from "@/utils/request";
+import { setStore } from "@/utils/store";
 import { routerHistory } from "@/utils/router";
 import { serverHost } from "@/server-api";
 import logo from "@/assets/images/logo.png";
@@ -37,6 +38,7 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
           loginName: data.username,
           nickname: data.username,
         };
+        setStore("currentUser", window.currentUser);
         message.success("登录成功").then();
         routerHistory.push({ hash: "/nest-side/curd/00" });
       })

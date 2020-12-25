@@ -3,12 +3,14 @@ import ReactDOM from "react-dom";
 import lodash from "lodash";
 import { Button, Result } from "antd";
 import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
+import { BlankLayout } from "@/layouts/BlankLayout";
+import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { $rootMounted, initAppPage } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
+import request from '@/utils/request';
+import { serverHost } from '@/server-api';
 import { layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
-import { BlankLayout } from "@/layouts/BlankLayout";
-import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { layoutSettings, routerConfigs } from './router-config';
 
 const log = logger.getLogger("src/schema-app.tsx");
@@ -169,8 +171,13 @@ if (loginPath && !window.currentUser) {
 if (lodash.trim(locationHash).length <= 0 && defaultPath) {
   routerHistory.push({ hash: defaultPath });
 }
-const runtimeLayouts = layoutToRuntime(routerConfigs);
-log.info("layoutSettings ->", layoutSettings);
-log.info("runtimeLayouts ->", runtimeLayouts);
-ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted);
-log.info("ReactDOM.render完成!");
+// 获取服务端菜单
+request.get(`${serverHost}/!/amis-api/curd-page@menu`)
+  .then(({ data }) => {
+    routerConfigs[1].routes = data;
+    const runtimeLayouts = layoutToRuntime(routerConfigs);
+    log.info("layoutSettings ->", layoutSettings);
+    log.info("runtimeLayouts ->", runtimeLayouts);
+    ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted);
+    log.info("ReactDOM.render完成!");
+  });
