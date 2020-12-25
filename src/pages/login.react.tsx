@@ -57,7 +57,7 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
             <span style={{ fontSize: 32, fontWeight: "bold" }}>Amis Admin</span>
           </div>
           <div style={{ width: "100%", textAlign: "center", color: "rgba(0, 0, 0, 0.45)", marginBottom: 40 }}>
-            Ant Design 是西湖区最具影响力的 Web 设计规范
+            Amis 是一个低代码前端框架，可以减少页面开发工作量，极大提升效率
           </div>
           {/*登录表单*/}
           <Form name="loginForm" className={styles.loginForm} size={"large"} onFinish={this.login} initialValues={{ remember: true }}>
