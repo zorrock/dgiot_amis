@@ -161,7 +161,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
                   }
                   const newComponent = { ...component, schema: values.code };
                   amisRender(mountedDomId!, newComponent.schema);
-                  message.success("Amis代码应用成功页面已刷新").then(undefined);
+                  message.success("Amis代码应用成功，页面已更新").then(undefined);
                 }}
               >
                 应用

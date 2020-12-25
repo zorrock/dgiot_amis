@@ -1,7 +1,7 @@
-import { Button, Result } from 'antd';
 import React from 'react';
+import { Button, Result } from 'antd';
 
-const NoFoundPage: React.FC = () => (
+const InternalServerErrorPage: React.FC = () => (
   <Result
     status={"500"}
     title="500"
@@ -14,4 +14,4 @@ const NoFoundPage: React.FC = () => (
   />
 );
 
-export default NoFoundPage;
+export default InternalServerErrorPage;

@@ -40,11 +40,10 @@ const initAppPage = function (): void {
  * @param schema      amis schema
  * @param props       props
  * @param options     amis选项
- * @param pathPrefix  pathPrefix
  */
-const amisRender = function (mountedId: string, schema: SchemaObject, props: RootRenderProps = {}, options: RenderOptions = {}, pathPrefix?: string): AmisApp {
+const amisRender = function (mountedId: string, schema: SchemaObject, props: RootRenderProps = {}, options: RenderOptions = {}): AmisApp {
   const ops = { ...amisRenderOptions, ...options };
-  return amis.embed(`#${mountedId}`, schema, props, ops, pathPrefix);
+  return amis.embed(`#${mountedId}`, schema, props, ops);
 }
 
 /**

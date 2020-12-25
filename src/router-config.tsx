@@ -7,6 +7,7 @@ const layoutSettings: LayoutSettings = {
   menu: { defaultOpen: true },
   iconScriptUrl: "//at.alicdn.com/t/font_1326886_bbehrpsvyl.js",
   htmlTitleSuffix: "",
+  defaultPath: "/nest-side/curd/00",
 };
 
 const routerConfigs: LayoutConfig[] = [
@@ -45,6 +46,7 @@ const routerConfigs: LayoutConfig[] = [
     layout: LayoutType.Blank,
     layoutProps: {},
     routes: [
+      { path: "/login", name: "用户登录", pagePath: "login.react.tsx" },
       {
         path: "/curd",
         name: "CURD",
@@ -303,7 +305,7 @@ const routerConfigs: LayoutConfig[] = [
       //   ],
       // },
     ],
-    401: "/nest-side/401",
+    401: "/blank/login",
     403: "/403.react.tsx",
     404: "/404.react.tsx",
   }

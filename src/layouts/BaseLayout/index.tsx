@@ -306,7 +306,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
                   }
                   multiTab.component = { ...multiTab.component, schema: code };
                   amisRender(multiTab.mountedDomId, multiTab.component.schema);
-                  message.success("Amis代码应用成功页面已刷新").then(undefined);
+                  message.success("Amis代码应用成功，页面已更新").then(undefined);
                 }}
               >
                 应用

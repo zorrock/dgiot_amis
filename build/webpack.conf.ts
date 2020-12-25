@@ -46,7 +46,7 @@ let config: Configuration = {
       { test: /\.json$/, use: "json-loader", type: "javascript/auto" },
       // 图片
       {
-        test: /\.(png|jp?g|gif|svg|ico)$/,
+        test: /\.(png|jp?g|gif|ico)$/,
         use: [{ loader: "url-loader", options: { limit: 8192, name: "images/[name].[hash:8].[ext]", publicPath: "" } }],
       },
       // 字体图标

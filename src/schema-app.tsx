@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
+import lodash from "lodash";
+import { Button, Result } from "antd";
 import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 import { $rootMounted, initAppPage } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
-import { layoutToRuntime, LayoutType, locationHashMatch, RuntimeLayoutConfig } from "@/utils/router";
+import { layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
 import { BlankLayout } from "@/layouts/BlankLayout";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { layoutSettings, routerConfigs } from './router-config';
-import { Button, Result } from "antd";
 
 const log = logger.getLogger("src/schema-app.tsx");
 
@@ -41,7 +42,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   constructor(props: ReactAppPageProps) {
     super(props);
     const initLocationHash = getLocationHash();
-    const matched = locationHashMatch(props.layoutSettings.menu, initLocationHash, props.runtimeLayouts);
+    const matched = locationHashMatch(props.layoutSettings, initLocationHash, props.runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
     const currentMenu = matched?.currentMenu;
@@ -66,7 +67,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   onLocationHashChange = (event: HashChangeEvent) => {
     const { runtimeLayouts, layoutSettings } = this.props;
     const locationHash = getLocationHash();
-    const matched = locationHashMatch(layoutSettings.menu, locationHash, runtimeLayouts);
+    const matched = locationHashMatch(layoutSettings, locationHash, runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
     const currentMenu = matched?.currentMenu;
@@ -121,7 +122,13 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
   render() {
     const { currentLayout, currentMenu, rootMenus, location } = this.state;
+    const { layoutSettings: { defaultPath } } = this.props;
     if (!currentLayout) {
+      // 跳转到默认页面
+      if ((!location || lodash.trim(location.hash).length <= 0) && defaultPath) {
+        routerHistory.push({ hash: defaultPath });
+        return <div/>;
+      }
       return this.getNoFoundPage();
     }
     const layoutMenuData = getLayoutMenuData({ location: location!, rootMenus: rootMenus!, currentMenu: currentMenu! });

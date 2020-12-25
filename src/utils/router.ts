@@ -354,7 +354,8 @@ interface LocationHashMatchResult {
 }
 
 /** 页面路径匹配路由菜单等信息 */
-const locationHashMatchInner = (menuSettings: RouterMenuSettings, locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LocationHashMatchResult | undefined => {
+const locationHashMatchInner = (layoutSettings: LayoutSettings, locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LocationHashMatchResult | undefined => {
+  const { menu: menuSettings } = layoutSettings;
   const matched = layoutMatch(locationHash, runtimeLayouts);
   if (!matched) return;
   const rootMenus: RuntimeMenuItem[] = [];

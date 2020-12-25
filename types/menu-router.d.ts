@@ -203,6 +203,8 @@ interface LayoutSettings {
   iconScriptUrl: string;
   /** html页面title后缀 */
   htmlTitleSuffix: string;
+  /** 默认跳转地址 */
+  defaultPath?: string;
 }
 
 // ----------------------------------------------------------------------------------- 页面布局配置
