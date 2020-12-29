@@ -150,6 +150,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
                 onClick={() => {
                   if (!this.editCodeAmisApp) return;
                   const component = this.editCodeAmisApp.getComponentByName("page.form");
+                  // Object.keys(component.__proto__.__proto__);
                   if (!component) return;
                   const values = component.getValues();
                   if (!values || !values.code) return;
