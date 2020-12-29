@@ -66,7 +66,7 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
               <Input prefix={<UserOutlined/>} placeholder="用户名" readOnly={loading}/>
             </Form.Item>
             <Form.Item name="password" style={{ height: 48, marginBottom: 0 }} rules={[{ required: true, message: '请输入您的密码！' }]}>
-              <Input prefix={<LockOutlined/>} type="password" placeholder="密码" readOnly={loading}/>
+              <Input.Password prefix={<LockOutlined/>} placeholder="密码" readOnly={loading}/>
             </Form.Item>
             <Form.Item style={{ height: 40, marginBottom: 0 }}>
               <Form.Item name="remember" valuePropName="checked" noStyle={true}>
