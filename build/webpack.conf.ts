@@ -17,6 +17,8 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { settings } from './config';
 import { scanJsEntry } from './webpack.scan-js-entry';
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import { WebpackAliyunOss } from './plugins/webpack-aliyun-oss';
+import { aliOssConf, enableCND } from './oss.config';
 
 // 是否是开发模式
 const isDevMode = settings.mode === "development";
@@ -448,6 +450,30 @@ if (settings.needAnalyzer) {
       reportFilename: `${settings.rootPath}/out/report.html`,
     })
   );
+}
+
+// CDN支持(静态资源上传到阿里OSS)
+if (enableCND) {
+  const webpackAliyunOss = new WebpackAliyunOss({
+    // test: true,
+    timeout: 1000 * 60 * 10,
+    from: ['./dist/**', '!./dist/*.html', '!./dist/**/*.map', '!./dist/pages/**/*.html'],
+    dist: `${aliOssConf.appPath}/${aliOssConf.appVersion}/`,
+    region: aliOssConf.region,
+    accessKeyId: aliOssConf.accessKeyId,
+    accessKeySecret: aliOssConf.accessKeySecret,
+    bucket: aliOssConf.bucket,
+    // setOssPath(filePath: string) {
+    //   return filePath;
+    // },
+    setHeaders(filePath: string) {
+      return {
+        // 缓存时间
+        'Cache-Control': 'max-age=31536000',
+      };
+    },
+  });
+  config.plugins!.push(webpackAliyunOss);
 }
 
 export default config;
