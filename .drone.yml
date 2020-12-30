@@ -41,7 +41,6 @@ steps:
         from_secret: harbor_password
       registry: '172.18.1.1:15000'
       repo: '172.18.1.1:15000/nodejs-service/amis-admin'
-      insecure: true
       debug: true
       dockerfile: ./Dockerfile
       target: dev
