@@ -3,7 +3,7 @@ const Koa = require('koa');
 const KoaRouter = require('koa-router');
 const KoaStatic = require('koa-static');
 const KoaSend = require('koa-send');
-const { bytesFormat } = require('./utils');
+const { bytesFormat, hasValue } = require('./utils');
 const { proxy, proxyFnc } = require('./proxy');
 const { proxyConfig, frontConfig } = require('./config');
 
@@ -47,9 +47,9 @@ app.use(async (ctx, next) => {
 // 静态文件服务器
 console.log("前端资源文件目录: ", path.join(process.cwd(), frontConfig.dist), `(${frontConfig.dist})`);
 app.use(KoaStatic(frontConfig.dist, {
-  index: frontConfig.index || 'index.html',
+  index: hasValue(frontConfig.index) ? frontConfig.index : 'index.html',
   gzip: true,
-  maxage: frontConfig.maxAge || 1000 * 60 * 60 * 24 * 30,
+  maxage: hasValue(frontConfig.maxAge) ? frontConfig.maxAge : 1000 * 60 * 60 * 24 * 30,
   setHeaders: (res, path, stats) => {
     let flag = true;
     const suffixArray = frontConfig.noNeedMaxAgeSuffix.filter(suffix => path.endsWith(suffix));

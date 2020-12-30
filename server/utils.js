@@ -29,4 +29,7 @@ const bytesFormat = num => {
   return '-';
 };
 
+const hasValue = value => value !== null && value !== undefined;
+
 exports.bytesFormat = bytesFormat;
+exports.hasValue = hasValue;
