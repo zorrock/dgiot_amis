@@ -34,9 +34,6 @@ steps:
 
   - name: 构建镜像[Docker]
     image: plugins/docker
-    volumes:
-      - name: docker-daemon
-        path: /etc/docker
     settings:
       username:
         from_secret: harbor_username
@@ -46,7 +43,6 @@ steps:
       repo: '172.18.1.1:15000/nodejs-service/amis-admin'
       insecure: true
       debug: true
-
       dockerfile: ./Dockerfile
       target: dev
       tags: ['0.0.1-SNAPSHOT']
