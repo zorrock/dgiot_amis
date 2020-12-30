@@ -28,7 +28,7 @@ function getProxyUrl(originalUrl) {
   const key = array[2];
   let svc = proxyConfig.proxy[key];
   if (!svc) {
-    console.log("获取代理Url失败 | originalUrl=", originalUrl, " | array=", array, " | key=", key, " | proxy=", proxyConfig.proxy);
+    console.log("获取代理Url失败 | originalUrl=", originalUrl, " | array=", array.slice(1), " | key=", key, " | proxy=", proxyConfig.proxy);
     return undefined;
   }
   if (svc.endsWith("/")) {
@@ -38,7 +38,7 @@ function getProxyUrl(originalUrl) {
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
     url = `http://${url}`;
   }
-  console.log(`代理Url [${originalUrl} -> ${url}]`);
+  console.log(`代理Url [${originalUrl} -> (${key})${url}]`);
   return url;
 }
 

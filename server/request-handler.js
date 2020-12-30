@@ -3,13 +3,14 @@ const Koa = require('koa');
 const KoaRouter = require('koa-router');
 const KoaStatic = require('koa-static');
 const KoaSend = require('koa-send');
+const { bytesFormat } = require('./utils');
 const { proxy, proxyFnc } = require('./proxy');
-const { proxyConfig, } = require('./config');
+const { proxyConfig, frontConfig } = require('./config');
 
 // router配置
 const router = new KoaRouter();
 // 健康检查
-router.get(['/echo', '/ok'], (ctx) => {
+router.get(['/echo', '/ok'], ctx => {
   ctx.body = { status: "ok", timestamp: Date.now() };
 });
 // api接口代理
@@ -44,10 +45,11 @@ app.use(async (ctx, next) => {
   }
 });
 // 静态文件服务器
-app.use(KoaStatic('./dist', {
-  index: 'index.html',
+console.log("前端资源文件目录: ", path.join(process.cwd(), frontConfig.dist), `(${frontConfig.dist})`);
+app.use(KoaStatic(frontConfig.dist, {
+  index: frontConfig.index || 'index.html',
   gzip: true,
-  maxage: 1000 * 60 * 60 * 24 * 30,
+  maxage: frontConfig.maxAge || 1000 * 60 * 60 * 24 * 30,
   setHeaders: (res, path, stats) => {
     let flag = true;
     const suffixArray = ["/index.html", "/favicon.png", "/favicon.ico", ".html"].filter(suffix => path.indexOf(suffix, path.length - suffix.length) !== -1);
@@ -55,7 +57,11 @@ app.use(KoaStatic('./dist', {
       flag = false;
       res.setHeader('Cache-Control', 'max-age=0,must-revalidate');
     }
-    console.log("静态文件: ", path, " | size: ", stats ? (stats.size || '-') : '-', " | ", flag === true ? "[use maxage]" : "[no maxage]");
+    console.log(
+      "size: ", (stats ? bytesFormat(stats.size * 8) : '-'),
+      " \t| ", (flag === true ? "[use maxage]" : "[no maxage]"),
+      " \t| 静态文件: ", path
+    );
   },
 }));
 // 应用router
