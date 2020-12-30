@@ -34,6 +34,9 @@ steps:
 
   - name: 构建镜像[Docker]
     image: plugins/docker
+    volumes:
+      - name: docker-daemon
+        path: /etc/docker
     settings:
       username:
         from_secret: harbor_username
