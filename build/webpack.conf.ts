@@ -278,7 +278,7 @@ if (!isDevMode) {
       path: distPath,
       filename: "[name].[chunkhash].bundle.js",
       chunkFilename: "[name].[chunkhash].chunk.js",
-      publicPath: "/"
+      publicPath: enableCDN ? cdnPublicPath : '/',
     },
     mode: "production",
     module: {
