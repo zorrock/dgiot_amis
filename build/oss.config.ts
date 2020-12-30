@@ -1,9 +1,9 @@
 import { ossSecretConfig } from './git-ignore.config';
 import dayjs from 'dayjs';
 
-const { ENABLE_CND } = process.env;
+const { ENABLE_CDN } = process.env;
 // 是否启用CDN
-const enableCND = `${ENABLE_CND}` === 'true';
+const enableCDN = `${ENABLE_CDN}` === 'true';
 
 /**
  * 静态资源上次阿里OSS配置
@@ -28,4 +28,4 @@ const aliOssConf = {
   // appVersion: 'v0.0.1',
 };
 
-export { enableCND, aliOssConf };
+export { enableCDN, aliOssConf };

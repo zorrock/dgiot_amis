@@ -18,7 +18,7 @@ import { settings } from './config';
 import { scanJsEntry } from './webpack.scan-js-entry';
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { WebpackAliyunOss } from './plugins/webpack-aliyun-oss';
-import { aliOssConf, enableCND } from './oss.config';
+import { aliOssConf, enableCDN } from './oss.config';
 
 // 是否是开发模式
 const isDevMode = settings.mode === "development";
@@ -453,7 +453,7 @@ if (settings.needAnalyzer) {
 }
 
 // CDN支持(静态资源上传到阿里OSS)
-if (enableCND) {
+if (enableCDN) {
   const webpackAliyunOss = new WebpackAliyunOss({
     // test: true,
     timeout: 1000 * 60 * 10,

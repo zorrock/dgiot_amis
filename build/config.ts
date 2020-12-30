@@ -1,5 +1,6 @@
 import path from "path";
 import { ProxyConfigMap } from 'webpack-dev-server';
+import { enableCDN } from './oss.config';
 
 const { NODE_ENV, ANALYZER } = process.env;
 
@@ -31,7 +32,7 @@ interface Settings {
   },
 }
 
-
+// webpack全局配置
 const settings: Settings = {
   appVersion: new Date().getTime(),
   rootPath: path.resolve(__dirname, `../`),
@@ -57,6 +58,7 @@ const settings: Settings = {
   defaultTitle: "Amis Admin",
   define: {
     isProdEnv: NODE_ENV === "production",
+    enableCDN: enableCDN,
   },
 }
 
