@@ -28,7 +28,7 @@ steps:
       - npm config set disturl https://npm.taobao.org/dist --global
       #- npm -g install typescript --prefer-offline
       - npm install --prefer-offline
-      - npm run build:oss
+      - npm run build
       - cd server
       - npm install --prefer-offline
       - cd ../
@@ -67,7 +67,7 @@ steps:
         - echo "------------------< 拉取新镜像 >------------------"
         - docker pull 172.18.1.1:15000/nodejs-service/amis-admin:0.0.1-SNAPSHOT
         - echo "------------------< 运行新镜像 >------------------"
-        - docker run --name amis-admin -d -p 19080:9066 172.18.1.1:15000/nodejs-service/amis-admin:0.0.1-SNAPSHOT
+        - docker run --name amis-admin -d -p 19081:9066 172.18.1.1:15000/nodejs-service/amis-admin:0.0.1-SNAPSHOT
         - exit
 
   - name: 发送通知[Email]

@@ -81,7 +81,7 @@ typings/
 
 # 自定义忽略文件
 .idea
-/build/git-ignore.config.ts
+#/build/git-ignore.config.ts
 /dist
 /out
 /dll
