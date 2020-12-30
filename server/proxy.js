@@ -1,13 +1,14 @@
 const httpProxy = require('http-proxy');
-const {defaultPrefix, proxyMap} = require('./proxy-config');
+const { proxyConfig } = require('./config');
 
-// 创建代理服务器
+// noinspection JSUnresolvedFunction 创建代理服务器
 const proxy = httpProxy.createProxyServer({
   ignorePath: true,
 });
 
 // 代理测错误处理
 proxy.on('error', (err, req, res) => {
+  // noinspection JSUnresolvedVariable
   const resData = {
     timestamp: Date.now(),
     error: err.message,
@@ -16,7 +17,7 @@ proxy.on('error', (err, req, res) => {
     message: "Bad Gateway",
     path: req.path,
   };
-  res.writeHead(resData.status, {'Content-Type': 'application/json;charset=UTF-8'});
+  res.writeHead(resData.status, { 'Content-Type': 'application/json;charset=UTF-8' });
   res.end(JSON.stringify(resData));
   console.log("代理异常", err.message);
 });
@@ -25,9 +26,9 @@ proxy.on('error', (err, req, res) => {
 function getProxyUrl(originalUrl) {
   const array = originalUrl.split('/');
   const key = array[2];
-  let svc = proxyMap[key];
+  let svc = proxyConfig.proxy[key];
   if (!svc) {
-    console.log("获取代理Url失败 | originalUrl=", originalUrl, " | array=", array, " | key=", key, " | ProxyMap=", proxyMap);
+    console.log("获取代理Url失败 | originalUrl=", originalUrl, " | array=", array, " | key=", key, " | proxy=", proxyConfig.proxy);
     return undefined;
   }
   if (svc.endsWith("/")) {
@@ -61,10 +62,9 @@ function proxyFnc(ctx) {
     return;
   }
   ctx.respond = false;
-  const {req, res} = ctx;
-  proxy.web(req, res, {target: url, changeOrigin: true});
+  const { req, res } = ctx;
+  proxy.web(req, res, { target: url, changeOrigin: true });
 }
 
 exports.proxy = proxy;
 exports.proxyFnc = proxyFnc;
-exports.defaultPrefix = defaultPrefix;

@@ -1,34 +1,36 @@
-// const path = require('path');
+const path = require('path');
 const Koa = require('koa');
 const KoaRouter = require('koa-router');
 const KoaStatic = require('koa-static');
-// const KoaSend = require('koa-send');
-const {defaultPrefix, proxy, proxyFnc} = require('./proxy');
+const KoaSend = require('koa-send');
+const { proxy, proxyFnc } = require('./proxy');
+const { proxyConfig, } = require('./config');
 
 // router配置
 const router = new KoaRouter();
 // 健康检查
 router.get(['/echo', '/ok'], (ctx) => {
-  ctx.body = {status: "ok", timestamp: Date.now()};
-})
+  ctx.body = { status: "ok", timestamp: Date.now() };
+});
 // api接口代理
 router.all("/proxy/(.*)", proxyFnc);
-
-// 其它请求处理
-router.all("/(.*)", ctx => {
-  ctx.respond = false;
-  const {req, res} = ctx;
-  const url = `${defaultPrefix}${ctx.originalUrl}`;
-  console.log("当前请求:", ctx.originalUrl, " | 使用默认代理前缀:", defaultPrefix, " | url=", url);
-  proxy.web(req, res, {target: url, changeOrigin: true});
-});
-// // 自定义处理
-// router.get('/(.*)', async (ctx) => {
-//   if (ctx.path === '/') {
-//     ctx.path = 'index.html';
-//   }
-//   await KoaSend(ctx, path.join('/dist', ctx.path));
-// });
+// 其它请求 - 使用默认代理前缀
+if (proxyConfig.default) {
+  router.all("/(.*)", ctx => {
+    ctx.respond = false;
+    const { req, res } = ctx;
+    const url = `${proxyConfig.default}${ctx.originalUrl}`;
+    console.log("当前请求:", ctx.originalUrl, " | 使用默认代理:", proxyConfig.default, " | url=", url);
+    proxy.web(req, res, { target: url, changeOrigin: true });
+  });
+} else {
+  router.get('/(.*)', async (ctx) => {
+    if (ctx.path === '/') {
+      ctx.path = 'index.html';
+    }
+    await KoaSend(ctx, path.join('/dist', ctx.path));
+  });
+}
 
 // 新建app
 const app = new Koa();
