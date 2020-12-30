@@ -52,7 +52,7 @@ app.use(KoaStatic(frontConfig.dist, {
   maxage: frontConfig.maxAge || 1000 * 60 * 60 * 24 * 30,
   setHeaders: (res, path, stats) => {
     let flag = true;
-    const suffixArray = ["/index.html", "/favicon.png", "/favicon.ico", ".html"].filter(suffix => path.indexOf(suffix, path.length - suffix.length) !== -1);
+    const suffixArray = frontConfig.noNeedMaxAgeSuffix.filter(suffix => path.endsWith(suffix));
     if (suffixArray && suffixArray.length > 0) {
       flag = false;
       res.setHeader('Cache-Control', 'max-age=0,must-revalidate');

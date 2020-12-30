@@ -14,9 +14,12 @@ const frontConfig = {
   dist: "../dist",
   // 默认首页
   index: "schema-app.html",
-  // 客户端缓存时间
+  // 浏览器缓存时间
   maxAge: 1000 * 60 * 60 * 24 * 30,
   // maxAge: -1,
+  // 不需要浏览器缓存的文件后缀
+  noNeedMaxAgeSuffix: ["/index.html", "/favicon.png", "/favicon.ico", ".html"],
+
 };
 
 
