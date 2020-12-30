@@ -41,6 +41,7 @@ steps:
         from_secret: harbor_password
       registry: 'harbor.msvc.top'
       repo: 'harbor.msvc.top/nodejs-service/amis-admin'
+      insecure: true
       debug: true
       dockerfile: ./Dockerfile
       target: dev
