@@ -19,9 +19,7 @@ const frontConfig = {
   // maxAge: -1,
   // 不需要浏览器缓存的文件后缀
   noNeedMaxAgeSuffix: ["/index.html", "/favicon.png", "/favicon.ico", ".html"],
-
 };
-
 
 exports.proxyConfig = proxyConfig;
 exports.frontConfig = frontConfig;
