@@ -44,7 +44,7 @@ steps:
         from_secret: harborUsername
       password:
         from_secret: harborPassword
-      # insecure: true
+      insecure: true
       # bip: true
       dockerfile: ./Dockerfile
       target: dev
