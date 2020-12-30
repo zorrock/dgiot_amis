@@ -85,9 +85,4 @@ typings/
 /dist
 /out
 /dll
-# server/yarn.lock
 server/node_modules
-server/dist/**
-!server/dist/*.html
-!server/dist/**/*.html
-server/package-lock.json
