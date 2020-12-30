@@ -39,7 +39,7 @@ steps:
         path: /etc/docker
     settings:
       registry: '172.18.1.1:15000'
-      repo: '172.18.1.1:15000/nodejs-service/amis-admin'
+      repo: '172.18.1.1:15000/node-service/amis-admin'
       insecure: true
       debug: true
       dockerfile: ./Dockerfile
