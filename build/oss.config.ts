@@ -28,4 +28,6 @@ const aliOssConf = {
   // appVersion: 'v0.0.1',
 };
 
-export { enableCDN, aliOssConf };
+const cdnPublicPath = enableCDN ? `${aliOssConf.cdnUrl}/${aliOssConf.appPath}/${aliOssConf.appVersion}/` : undefined;
+
+export { enableCDN, aliOssConf, cdnPublicPath };

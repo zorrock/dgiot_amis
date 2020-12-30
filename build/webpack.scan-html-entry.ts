@@ -5,6 +5,7 @@ import fs from "fs";
 import { Configuration } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { settings } from "./config";
+import { cdnPublicPath, enableCDN } from "./oss.config";
 
 // 是否是开发模式
 const isDevMode = settings.mode === "development";
@@ -61,7 +62,7 @@ const scanHtmlEntry = (config: Configuration, srcPath: string, distPath: string,
       favicon: faviconPath,
       appVersion: settings.appVersion,
       chunks: ["manifest", ...chunks, "global", entryKey!],
-      urlPrefix: "/",
+      urlPrefix: enableCDN ? cdnPublicPath : '/',
       isDevMode,
     };
     if (settings.mode === "production") {

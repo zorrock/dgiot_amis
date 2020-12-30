@@ -18,7 +18,7 @@ import { settings } from './config';
 import { scanJsEntry } from './webpack.scan-js-entry';
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { WebpackAliyunOss } from './plugins/webpack-aliyun-oss';
-import { aliOssConf, enableCDN } from './oss.config';
+import { aliOssConf, cdnPublicPath, enableCDN } from './oss.config';
 
 // 是否是开发模式
 const isDevMode = settings.mode === "development";
@@ -425,7 +425,7 @@ const options: HtmlWebpackPlugin.Options = {
   favicon: faviconPath,
   appVersion: settings.appVersion,
   chunks: ["manifest", ...chunks, "global", "schemaApp"],
-  urlPrefix: "/",
+  urlPrefix: enableCDN ? cdnPublicPath : '/',
   isDevMode,
   ...base64Images,
 };

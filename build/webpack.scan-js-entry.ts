@@ -6,6 +6,7 @@ import lodash from "lodash";
 import { Configuration } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { settings } from "./config";
+import { cdnPublicPath, enableCDN } from "./oss.config";
 
 // 是否是开发模式
 const isDevMode = settings.mode === "development";
@@ -63,7 +64,7 @@ const scanJsEntry = (config: Configuration, srcPath: string, distPath: string, c
       favicon: faviconPath,
       appVersion: settings.appVersion,
       chunks: ["manifest", ...chunks, "global", entryKey],
-      urlPrefix: "/",
+      urlPrefix: enableCDN ? cdnPublicPath : '/',
       isDevMode,
       ...base64Images,
     };
