@@ -1,5 +1,6 @@
-import fs from 'fs';
 import path from 'path';
+import fs from "fs";
+import fsExtra from "fs-extra";
 import chalk from 'chalk';
 import slash from "slash";
 import ip from 'ip';
@@ -476,6 +477,7 @@ if (enableCDN) {
   });
   config.plugins!.push(webpackAliyunOss);
   config.plugins!.push(new CopyDistFiles({
+    onBefore: () => fsExtra.rmdirSync("./server/dist", { recursive: true }),
     patterns: [
       {
         from: "./dist/**/*.html",

@@ -1,9 +1,8 @@
 import path from "path";
+import fs from "fs";
+import glob from "glob";
+import fsExtra from "fs-extra";
 import { Compiler } from "webpack";
-
-const fs = require('fs');
-const glob = require('glob');
-const fsExtra = require('fs-extra');
 
 const PLUGIN_NAME = 'CopyDistFilesPlugin';
 
@@ -16,7 +15,10 @@ interface ObjectPattern {
 }
 
 interface PluginOptions {
+  onBefore?: () => void | Promise<void>
   patterns: ObjectPattern[];
+  onAfter?: () => void | Promise<void>
+  debug?: boolean;
 }
 
 class CopyDistFiles {
@@ -31,13 +33,18 @@ class CopyDistFiles {
   }
 
   protected copyFile = async () => {
-    const { patterns } = this.config;
+    const { onBefore, patterns, onAfter, debug } = this.config;
+    // 前置处理
+    if (onBefore instanceof Function) {
+      await onBefore();
+    }
+    const cwd = process.cwd();
     if (!patterns) return;
     for (let pattern of patterns) {
-      // console.log("pattern -> ", pattern);
+      if (debug) console.log(PLUGIN_NAME, " | pattern -> ", pattern);
       const { from, to = "./", globOptions = {}, filter, transformPath } = pattern;
       await glob(from, globOptions, async (err: Error | null, files: string[]) => {
-        // console.log("files -> ", files);
+        if (debug) console.log(PLUGIN_NAME, " | files -> ", files);
         if (err) console.error("复制文件失败", err);
         if (!files || files.length <= 0) return;
         for (let file of files) {
@@ -50,17 +57,21 @@ class CopyDistFiles {
             if (filter(file)) return
           }
           // 文件全路径
-          let toPath = path.join(process.cwd(), to, fileName);
+          let toPath = path.join(cwd, to, fileName);
           if (transformPath instanceof Function) {
-            toPath = await transformPath(toPath, path.join(process.cwd(), file));
+            toPath = await transformPath(toPath, path.join(cwd, file));
           }
           await fsExtra.ensureDir(path.join(toPath, "../"));
-          await fsExtra.copyFile(file, path.join(process.cwd(), toPath));
+          await fsExtra.copyFile(file, path.join(cwd, toPath));
           console.log("复制文件: ", file, " -> ", toPath);
         }
       })
     }
-    // console.log("config -> ", this.config);
+    if (debug) console.log("config -> ", this.config);
+    // 后置处理
+    if (onAfter instanceof Function) {
+      await onAfter();
+    }
   }
 }
 
