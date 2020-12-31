@@ -11,7 +11,7 @@ const proxyConfig = {
 // 前端配置
 const frontConfig = {
   // 前端资源文件地址
-  dist: "../dist",
+  dist: "./dist",
   // 默认首页
   index: "schema-app.html",
   // 浏览器缓存时间
