@@ -42,15 +42,15 @@ const settings: Settings = {
     port: 8000,
     needOpenApp: false,
     proxy: {
-      '/api/': {
-        target: 'https://houtai.baidu.com',
+      "/api/": {
+        target: "https://houtai.baidu.com",
         changeOrigin: true,
-        pathRewrite: { '^': '' },
+        pathRewrite: { "^": "" },
       },
-      '/!/': {
-        target: 'http://api-dev.msvc.top',
+      "/!/": {
+        target: "http://api-dev.msvc.top",
         changeOrigin: true,
-        pathRewrite: { '^': '' },
+        pathRewrite: { "^": "" },
       },
     },
   },

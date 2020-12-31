@@ -18,6 +18,7 @@ import { settings } from './config';
 import { scanJsEntry } from './webpack.scan-js-entry';
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { WebpackAliyunOss } from './plugins/webpack-aliyun-oss';
+import { CopyDistFiles } from './plugins/copy-dist-files';
 import { aliOssConf, cdnPublicPath, enableCDN } from './oss.config';
 
 // 是否是开发模式
@@ -183,9 +184,9 @@ const postcssOptions = {
     //   // 指定`px`转换为视窗单位值的小数位数（很多时候无法整除）
     //   unitPrecision: 3,
     //   // 指定需要转换成的视窗单位，建议使用vw
-    //   viewportUnit: 'vw',
+    //   viewportUnit: "vw",
     //   // 指定不转换为视窗单位的类，可以自定义，可以无限添加,建议定义一至两个通用的类名
-    //   selectorBlackList: ['.ignore', '.hairlines'],
+    //   selectorBlackList: [".ignore", ".hairlines"],
     //   // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值
     //   minPixelValue: 1,
     //   // 允许在媒体查询中转换`px`
@@ -278,7 +279,7 @@ if (!isDevMode) {
       path: distPath,
       filename: "[name].[chunkhash].bundle.js",
       chunkFilename: "[name].[chunkhash].chunk.js",
-      publicPath: enableCDN ? cdnPublicPath : '/',
+      publicPath: enableCDN ? cdnPublicPath : "/",
     },
     mode: "production",
     module: {
@@ -425,7 +426,7 @@ const options: HtmlWebpackPlugin.Options = {
   favicon: faviconPath,
   appVersion: settings.appVersion,
   chunks: ["manifest", ...chunks, "global", "schemaApp"],
-  urlPrefix: enableCDN ? cdnPublicPath : '/',
+  urlPrefix: enableCDN ? cdnPublicPath : "/",
   isDevMode,
   ...base64Images,
 };
@@ -457,7 +458,7 @@ if (enableCDN) {
   const webpackAliyunOss = new WebpackAliyunOss({
     // test: true,
     timeout: 1000 * 60 * 10,
-    from: ['./dist/**', '!./dist/*.html', '!./dist/**/*.map', '!./dist/pages/**/*.html'],
+    from: ["./dist/**", "!./dist/*.html", "!./dist/**/*.map", "!./dist/pages/**/*.html"],
     dist: `${aliOssConf.appPath}/${aliOssConf.appVersion}/`,
     region: aliOssConf.region,
     accessKeyId: aliOssConf.accessKeyId,
@@ -469,11 +470,21 @@ if (enableCDN) {
     setHeaders(filePath: string) {
       return {
         // 缓存时间
-        'Cache-Control': 'max-age=31536000',
+        "Cache-Control": "max-age=31536000",
       };
     },
   });
   config.plugins!.push(webpackAliyunOss);
+  config.plugins!.push(new CopyDistFiles({
+    patterns: [
+      {
+        from: "./dist/**/*.html",
+        transformPath: (targetPath, absolutePath) => {
+          return `./server/dist/${slash(absolutePath).substr(slash(distPath).length)}`;
+        }
+      }
+    ],
+  }));
 }
 
 export default config;
