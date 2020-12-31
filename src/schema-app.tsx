@@ -173,7 +173,7 @@ if (lodash.trim(locationHash).length <= 0 && defaultPath) {
 }
 // 获取服务端菜单
 request.get(`${serverHost}/!/amis-api/curd-page@menu`)
-  .then(({ data }) => {
+  .then(data => {
     routerConfigs[1].routes = data;
     const runtimeLayouts = layoutToRuntime(routerConfigs);
     log.info("layoutSettings ->", layoutSettings);

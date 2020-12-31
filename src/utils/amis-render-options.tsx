@@ -3,6 +3,7 @@ import qs from "qs";
 import axios, { AxiosRequestConfig, Canceler, ResponseType } from "axios";
 import { notification } from 'antd';
 import { logger } from "@/utils/logger";
+import { errorMsg } from "@/utils/request";
 import { hasValue } from "@/utils/utils";
 import { CSSProperties } from "react";
 
@@ -21,9 +22,10 @@ export interface FetcherConfig {
   headers?: any;
 }
 
-const instance = axios.create({});
+const axiosInstance = axios.create({});
 
-instance.interceptors.request.use(request => {
+// amis - 请求适配
+axiosInstance.interceptors.request.use(request => {
   log.info("全局请求拦截 request -> ", request);
   const path = request.url?.split('?')[0];
   const querystring = request.url?.split('?')[1];
@@ -38,37 +40,42 @@ instance.interceptors.request.use(request => {
   return request;
 });
 
-instance.interceptors.response.use(response => {
+// amis - 响应适配
+axiosInstance.interceptors.response.use(response => {
     log.info("全局响应拦截 response -> ", response);
-    // if (response.data && !hasValue(response.data.msg) && !hasValue(response.data.status) && !hasValue(response.data.data)) {
-    //   response.data = {status: response.status === 200 ? 0 : -1, msg: "", data: response.data};
-    // }
-    // if (response.status !== 200) response.status = 200;
-    // if (response.data && response.data.validMessageList instanceof Array) {
-    //   response.data = {data: response.data.validMessageList};
-    // }
-    const payload = response.data;
-    // log.info("payload -> ", payload);
-    if (!payload) return response;
-    const data = payload.data;
-    if (!data) return response;
-    // 全局处理分页查询响应字段问题
-    const { records, total, searchCount, pages, rows, count } = data;
+    const { status, data } = response;
+    // 支持amis返回值
+    if (hasValue(data.status) && (hasValue(data.msg) || hasValue(data.data))) return response;
+    // 错误处理 - 500
+    if (status >= 500) {
+      response.data = { status: -1, msg: data.message ?? errorMsg[status] ?? errorMsg["500"], data: null };
+      return response;
+    }
+    // 错误处理 - 400
+    if (status === 400) {
+      response.data = { status: -1, msg: data.message ?? "请求参数校验失败", data: null };
+      return response;
+    }
+    if (status < 200 || status >= 300) return response;
+    // 请求成功
+    const aimsData = { status: 0, msg: "", data: data };
+    response.data = aimsData;
+    // 适配 - 分页查询
+    const { records, total, searchCount, pages, rows, count, ...rest } = data;
     if (hasValue(records) && hasValue(total) && hasValue(searchCount) && hasValue(pages) && !hasValue(rows) && !hasValue(count)) {
-      data.rows = data.records;
-      data.count = data.total;
+      aimsData.data = { rows: records, count: total, searchCount, pages, ...rest };
     }
     // 数据校验适配
-    if (data instanceof Array && data.length > 0 && data[0] && data[0].code && data[0].entityName && data[0].errorMessage) {
-      payload.data = {};
-      payload.status = 422;
-      payload.errors = {};
-      (data as Array<any>).forEach(value => {
-        payload.errors[value.filed] = value.errorMessage;
-      });
-      payload.msg = "服务端数据校验失败";
-    }
-    // log.info("payload -> ", payload);
+    // if (data instanceof Array && data.length > 0 && data[0] && data[0].code && data[0].entityName && data[0].errorMessage) {
+    //   payload.data = {};
+    //   payload.status = 422;
+    //   payload.errors = {};
+    //   (data as Array<any>).forEach(value => {
+    //     payload.errors[value.filed] = value.errorMessage;
+    //   });
+    //   payload.msg = "服务端数据校验失败";
+    // }
+    log.info("全局响应拦截 data -> ", response.data);
     return response;
   },
 );
@@ -88,14 +95,14 @@ const amisRenderOptions: RenderOptions = {
     config.headers = headers;
     if (method !== "post" && method !== "put" && method !== "patch") {
       if (data) config.params = data;
-      return instance[method](url, config);
+      return axiosInstance[method](url, config);
     } else if (data && data instanceof FormData) {
       config.headers["Content-Type"] = "multipart/form-data";
     } else if (data && typeof data !== 'string' && !(data instanceof Blob) && !(data instanceof ArrayBuffer)) {
       data = JSON.stringify(data);
       config.headers["Content-Type"] = "application/json";
     }
-    return instance[method](url, data, config);
+    return axiosInstance[method](url, data, config);
   },
   /** 是否取消http请求 */
   isCancel: value => axios.isCancel(value),

@@ -28,7 +28,7 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
   protected login = (values: any) => {
     this.setState({ loading: true });
     request.post(`${serverHost}/!/amis-api/curd-page@login`, values)
-      .then(({ data }) => {
+      .then(data => {
         if (!data || !data.uid) {
           message.error("用户名/密码错误").then();
           return;
