@@ -99,9 +99,13 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   }
 
   protected getNestSideLayout(layoutMenuData: LayoutMenuData) {
+    const { layoutSettings: { menu, iconScriptUrl, htmlTitleSuffix } } = this.props;
     const { currentLayout, currentRouter, location, match } = this.state;
     return (
       <NestSideMenuLayout
+        defaultOpen={menu.defaultOpen}
+        menuIconScriptUrl={iconScriptUrl}
+        htmlTitleSuffix={htmlTitleSuffix}
         route={currentRouter!}
         location={location!}
         match={match!}
@@ -114,9 +118,11 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   }
 
   protected getBlankLayout(layoutMenuData: LayoutMenuData) {
+    const { layoutSettings: { htmlTitleSuffix } } = this.props;
     const { currentLayout, currentRouter, location, match } = this.state;
     return (
       <BlankLayout
+        htmlTitleSuffix={htmlTitleSuffix}
         route={currentRouter!}
         location={location!}
         match={match!}

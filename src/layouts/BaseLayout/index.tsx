@@ -237,7 +237,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     const { route, htmlTitleSuffix, layoutMenuData: { currentMenu } } = this.props;
     return (
       <Helmet>
-        <title>{currentMenu ? getHtmlTitle(route, htmlTitleSuffix) : "404"}</title>
+        <title>{currentMenu ? getHtmlTitle(route, htmlTitleSuffix) : (htmlTitleSuffix || "Amis-Admin")}</title>
       </Helmet>
     );
   }

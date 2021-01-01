@@ -203,10 +203,10 @@ const base62Encode = (str: string): string => {
 /** 获取页面组件类型 */
 const getPageType = (runtimeRouter: RuntimeRouter): TabPageType => {
   const { pagePath = "" } = runtimeRouter;
-  if (pagePath.endsWith(".schema.tsx") || pagePath.endsWith(".schema.ts") || pagePath.endsWith(".schema.js")) {
+  if (pagePath.endsWith(".schema.tsx") || pagePath.endsWith(".schema.ts") || pagePath.endsWith(".schema.js") || pagePath.endsWith(".schema.jsx")) {
     return "amis";
   }
-  if (pagePath.endsWith(".react.tsx") || pagePath.endsWith(".react.ts") || pagePath.endsWith(".react.js")) {
+  if (pagePath.endsWith(".react.tsx") || pagePath.endsWith(".react.ts") || pagePath.endsWith(".react.js") || pagePath.endsWith(".react.jsx")) {
     return "react";
   }
   return "iframe";
