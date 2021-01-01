@@ -22,38 +22,52 @@ export interface FetcherConfig {
   headers?: any;
 }
 
-const axiosInstance = axios.create({});
+const axiosInstance = axios.create({
+  validateStatus: () => true,
+});
 
 // amis - 请求适配
 axiosInstance.interceptors.request.use(request => {
-  log.info("全局请求拦截 request -> ", request);
-  const path = request.url?.split('?')[0];
-  const querystring = request.url?.split('?')[1];
-  if (!querystring) return request;
-  const params = qs.parse(querystring ?? "");
-  if (!params) return request;
-  if (params.orderDir && params.orderBy && /(asc|desc)/.test(`${params.orderDir}`)) {
-    params.orderField = params.orderBy;
-    params.sort = params.orderDir;
-  }
-  request.url = `${path}?${qs.stringify(params)}`;
-  return request;
-});
+    log.info("全局请求拦截[开始] request -> ", request);
+    const path = request.url?.split('?')[0];
+    const querystring = request.url?.split('?')[1];
+    if (!querystring) return request;
+    const params = qs.parse(querystring ?? "");
+    if (!params) return request;
+    if (params.orderDir && params.orderBy && /(asc|desc)/.test(`${params.orderDir}`)) {
+      params.orderField = params.orderBy;
+      params.sort = params.orderDir;
+    }
+    request.url = `${path}?${qs.stringify(params)}`;
+    log.info("全局请求拦截[结束] request -> ", request);
+    // 请求状态验证
+    return request;
+  },
+);
 
 // amis - 响应适配
 axiosInstance.interceptors.response.use(response => {
-    log.info("全局响应拦截 response -> ", response);
+    log.info("全局响应拦截[开始] response -> ", response);
     const { status, data } = response;
     // 支持amis返回值
     if (hasValue(data.status) && (hasValue(data.msg) || hasValue(data.data))) return response;
     // 错误处理 - 500
     if (status >= 500) {
+      response.status = 200;
       response.data = { status: -1, msg: data.message ?? errorMsg[status] ?? errorMsg["500"], data: null };
       return response;
     }
     // 错误处理 - 400
     if (status === 400) {
+      response.status = 200;
       response.data = { status: -1, msg: data.message ?? "请求参数校验失败", data: null };
+      // 数据校验适配
+      if (data?.validMessageList?.length > 0) {
+        response.data = { ...response.data, status: 422, errors: {} };
+        (data.validMessageList as any[]).forEach(({ filed, errorMessage }) => {
+          response.data.errors[filed] = errorMessage;
+        });
+      }
       return response;
     }
     if (status < 200 || status >= 300) return response;
@@ -65,17 +79,7 @@ axiosInstance.interceptors.response.use(response => {
     if (hasValue(records) && hasValue(total) && hasValue(searchCount) && hasValue(pages) && !hasValue(rows) && !hasValue(count)) {
       aimsData.data = { rows: records, count: total, searchCount, pages, ...rest };
     }
-    // 数据校验适配
-    // if (data instanceof Array && data.length > 0 && data[0] && data[0].code && data[0].entityName && data[0].errorMessage) {
-    //   payload.data = {};
-    //   payload.status = 422;
-    //   payload.errors = {};
-    //   (data as Array<any>).forEach(value => {
-    //     payload.errors[value.filed] = value.errorMessage;
-    //   });
-    //   payload.msg = "服务端数据校验失败";
-    // }
-    log.info("全局响应拦截 data -> ", response.data);
+    log.info("全局响应拦截[结束] response -> ", response);
     return response;
   },
 );

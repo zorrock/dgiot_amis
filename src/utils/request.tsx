@@ -40,21 +40,23 @@ const errorNotice = (error: any): boolean => {
   return false;
 };
 
-const axiosInstance = axios.create({});
+const axiosInstance = axios.create({
+  validateStatus: () => true,
+});
 
-// 全局请求拦截
-axiosInstance.interceptors.request.use(
-  config => {
-    const baseURL = '/';
-    const timeout = 30000;
-    const validateStatus = (status: number): boolean => (status >= 200 && status < 300);
-    return { ...config, baseURL, timeout, validateStatus };
-  },
-  error => {
-    toast.error("发送请求给服务端失败，请检查电脑网络，再重试", "请求发送失败");
-    return Promise.reject(error);
-  }
-);
+// // 全局请求拦截
+// axiosInstance.interceptors.request.use(
+//   config => {
+//     const baseURL = '/';
+//     const timeout = 30000;
+//     const validateStatus = (status: number): boolean => (status >= 200 && status < 300);
+//     return { ...config, baseURL, timeout, validateStatus };
+//   },
+//   error => {
+//     toast.error("发送请求给服务端失败，请检查电脑网络，再重试", "请求发送失败");
+//     return Promise.reject(error);
+//   }
+// );
 
 //  全局拦截配置
 axiosInstance.interceptors.response.use(
