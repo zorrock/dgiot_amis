@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Checkbox, Form, Input, Layout, message } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import request from "@/utils/request";
+import { request } from "@/utils/request";
 import { setStore } from "@/utils/store";
 import { routerHistory } from "@/utils/router";
 import { serverHost } from "@/server-api";

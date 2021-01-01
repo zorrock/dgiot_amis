@@ -3,7 +3,7 @@ import qs from "qs";
 import axios, { AxiosRequestConfig, Canceler, ResponseType } from "axios";
 import { notification } from 'antd';
 import { logger } from "@/utils/logger";
-import { errorMsg } from "@/utils/request";
+import { axiosCreate, errorMsg } from "@/utils/request";
 import { hasValue } from "@/utils/utils";
 import { CSSProperties } from "react";
 
@@ -22,10 +22,7 @@ export interface FetcherConfig {
   headers?: any;
 }
 
-const axiosInstance = axios.create({
-  validateStatus: () => true,
-});
-
+const axiosInstance = axiosCreate();
 // amis - 请求适配
 axiosInstance.interceptors.request.use(request => {
     log.info("全局请求拦截[开始] request -> ", request);

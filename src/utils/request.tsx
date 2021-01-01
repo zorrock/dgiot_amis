@@ -1,5 +1,6 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { toast } from "amis";
+import React from 'react';
+import { notification } from "antd";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 // HTTP 状态码错误说明
 const errorMsg = {
@@ -20,89 +21,104 @@ const errorMsg = {
   504: "网关超时。",
 };
 
-// 请求异常通知
-const errorNotice = (error: any): boolean => {
-  const { response } = error;
-  if (error && response) {
-    const { data } = response;
-    if (data && data.message) {
-      if (data.validMessageList) {
-        data.message = '请求参数校验失败';
-      }
-      toast.error(data.message, `${data.error} -> ${data.path}`);
-      return true;
-    }
-    const errorText = errorMsg[response.status] || response.statusText;
-    toast.error(errorText, `请求错误,响应状态码:${response.status}`);
-  } else {
-    toast.error('服务器异常', '请求服务端异常');
+class Request {
+  // 全局响应数据转换处理
+  protected static transformResponse(response: AxiosResponse): any {
+    return response.data ?? null;
   }
-  return false;
-};
 
-const axiosInstance = axios.create({
-  validateStatus: () => true,
+  private axiosInstance: AxiosInstance;
+
+  constructor(axiosInstance: AxiosInstance) {
+    this.axiosInstance = axiosInstance;
+  }
+
+  public get(url: string, config?: AxiosRequestConfig) {
+    return this.axiosInstance.get(url, config).then(response => Request.transformResponse(response));
+  }
+
+  public delete(url: string, config?: AxiosRequestConfig) {
+    return this.axiosInstance.delete(url, config).then(response => Request.transformResponse(response));
+  }
+
+  public head(url: string, config?: AxiosRequestConfig) {
+    return this.axiosInstance.head(url, config).then(response => Request.transformResponse(response));
+  }
+
+  public options(url: string, config?: AxiosRequestConfig) {
+    return this.axiosInstance.options(url, config).then(response => Request.transformResponse(response));
+  }
+
+  public post(url: string, data?: any, config?: AxiosRequestConfig) {
+    return this.axiosInstance.post(url, data, config).then(response => Request.transformResponse(response));
+  }
+
+  public put(url: string, data?: any, config?: AxiosRequestConfig) {
+    return this.axiosInstance.put(url, data, config).then(response => Request.transformResponse(response));
+  }
+
+  public patch(url: string, data?: any, config?: AxiosRequestConfig) {
+    return this.axiosInstance.patch(url, data, config).then(response => Request.transformResponse(response));
+  }
+
+  public request(config: AxiosRequestConfig) {
+    return this.axiosInstance.request(config).then(response => Request.transformResponse(response));
+  }
+}
+
+/** 创建一个axios实例对象 */
+function axiosCreate(config?: AxiosRequestConfig): AxiosInstance {
+  return axios.create({
+    validateStatus: () => true,
+    ...config,
+  });
+}
+
+const axiosInstance = axiosCreate({
+  validateStatus: status => (status >= 200 && status < 300),
 });
 
-// // 全局请求拦截
-// axiosInstance.interceptors.request.use(
-//   config => {
-//     const baseURL = '/';
-//     const timeout = 30000;
-//     const validateStatus = (status: number): boolean => (status >= 200 && status < 300);
-//     return { ...config, baseURL, timeout, validateStatus };
-//   },
-//   error => {
-//     toast.error("发送请求给服务端失败，请检查电脑网络，再重试", "请求发送失败");
-//     return Promise.reject(error);
-//   }
-// );
+// 全局请求拦截
+axiosInstance.interceptors.request.use(
+  request => request,
+  error => {
+    notification.error({
+      message: "请求发送失败",
+      description: "发送请求给服务端失败，请检查电脑网络，再重试",
+    });
+    return Promise.reject(error);
+  },
+);
 
-//  全局拦截配置
+// 全局拦截配置
 axiosInstance.interceptors.response.use(
   response => response,
   error => {
-    // resolve 通过， reject 驳回
-    if (errorNotice(error)) {
+    const { response } = error;
+    if (!error || !response) {
+      notification.error({ message: "服务器异常", description: "请求服务端异常" });
+      return Promise.reject(error);
+    }
+    const { data: { message, validMessageList } } = response;
+    if (validMessageList) {
+      notification.error({
+        message: "请求参数校验失败",
+        description: (
+          <ul style={{ margin: 0, paddingLeft: 20 }}>
+            {(validMessageList as any[]).map((item, index) => (<li key={index}>{item.filed}: {item.errorMessage}({item.code})</li>))}
+          </ul>
+        ),
+        duration: 100
+      });
       return Promise.reject(error.response);
+    } else if (message) {
+      const errorText = message ?? errorMsg[response.status] ?? "服务器异常";
+      notification.error({ message: errorText });
     }
     return Promise.reject(error);
   }
 );
 
-// 全局响应数据转换处理
-const transformResponse = (response: AxiosResponse): any => {
-  if (response.data) {
-    return response.data;
-  }
-  return null;
-};
+const request = new Request(axiosInstance);
 
-export { errorMsg };
-
-export default {
-  request(config: AxiosRequestConfig) {
-    return axiosInstance.request(config).then(response => transformResponse(response));
-  },
-  get(url: string, config?: AxiosRequestConfig) {
-    return axiosInstance.get(url, config).then(response => transformResponse(response));
-  },
-  delete(url: string, config?: AxiosRequestConfig) {
-    return axiosInstance.delete(url, config).then(response => transformResponse(response));
-  },
-  head(url: string, config?: AxiosRequestConfig) {
-    return axiosInstance.head(url, config).then(response => transformResponse(response));
-  },
-  options(url: string, config?: AxiosRequestConfig) {
-    return axiosInstance.options(url, config).then(response => transformResponse(response));
-  },
-  post(url: string, data?: any, config?: AxiosRequestConfig) {
-    return axiosInstance.post(url, data, config).then(response => transformResponse(response));
-  },
-  put(url: string, data?: any, config?: AxiosRequestConfig) {
-    return axiosInstance.put(url, data, config).then(response => transformResponse(response));
-  },
-  patch(url: string, data?: any, config?: AxiosRequestConfig) {
-    return axiosInstance.patch(url, data, config).then(response => transformResponse(response));
-  },
-};
+export { errorMsg, axiosCreate, request };
