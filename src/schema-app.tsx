@@ -8,8 +8,8 @@ import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { $rootMounted, initAppPage } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
-// import { request } from '@/utils/request';
-// import { serverHost } from '@/server-api';
+import { request } from '@/utils/request';
+import { serverHost } from '@/server-api';
 import { layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
 import { layoutSettings, routerConfigs } from './router-config';
 
@@ -171,17 +171,21 @@ if (loginPath && !window.currentUser) {
 if (lodash.trim(locationHash).length <= 0 && defaultPath) {
   routerHistory.push({ hash: defaultPath });
 }
-// 获取服务端菜单
-// request.get(`${serverHost}/!/amis-api/curd-page@menu`)
-//   .then(data => {
-//     routerConfigs[1].routes = data;
-//
-//   });
-
-const runtimeLayouts = layoutToRuntime(routerConfigs);
-log.info("layoutSettings ->", layoutSettings);
-log.info("runtimeLayouts ->", runtimeLayouts);
-ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted);
-log.info("ReactDOM.render完成!");
-
-// request.get(`${serverHost}/!/amis-api/curd-page@serverVerify`).then();
+const initApp = () => {
+  const runtimeLayouts = layoutToRuntime(routerConfigs);
+  log.info("layoutSettings ->", layoutSettings);
+  log.info("runtimeLayouts ->", runtimeLayouts);
+  ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted);
+  log.info("ReactDOM.render完成!");
+};
+if (isProdEnv) {
+  // 获取服务端菜单
+  request.get(`${serverHost}/!/amis-api/curd-page@menu`)
+    .then(data => {
+      routerConfigs[1].routes = data;
+      initApp();
+    });
+} else {
+  // 使用配置的菜单
+  initApp();
+}
