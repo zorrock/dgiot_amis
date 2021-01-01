@@ -4,7 +4,7 @@ import axios, { AxiosRequestConfig, Canceler, ResponseType } from "axios";
 import { notification } from 'antd';
 import { logger } from "@/utils/logger";
 import { axiosCreate, errorMsg } from "@/utils/request";
-import { hasValue } from "@/utils/utils";
+import { getUrlParam, hasValue } from "@/utils/utils";
 import { CSSProperties } from "react";
 
 const log = logger.getLogger("/src/utils/amis-render-options.tsx");
@@ -26,18 +26,17 @@ const axiosInstance = axiosCreate();
 // amis - 请求适配
 axiosInstance.interceptors.request.use(request => {
     log.info("全局请求拦截[开始] request -> ", request);
-    const path = request.url?.split('?')[0];
-    const querystring = request.url?.split('?')[1];
-    if (!querystring) return request;
-    const params = qs.parse(querystring ?? "");
-    if (!params) return request;
-    if (params.orderDir && params.orderBy && /(asc|desc)/.test(`${params.orderDir}`)) {
-      params.orderField = params.orderBy;
-      params.sort = params.orderDir;
+    const queryParams = getUrlParam(undefined, request.url);
+    if (!queryParams) return request;
+    // 适配 - 分页查询参数
+    const { orderDir, orderBy } = queryParams;
+    if (orderDir && orderBy && /(asc|desc)/.test(orderDir.toString())) {
+      queryParams.orderField = orderBy;
+      queryParams.sort = orderDir;
     }
-    request.url = `${path}?${qs.stringify(params)}`;
+    // 修改请求参数
+    request.url = `${request.url?.split("?")[0]}?${qs.stringify(queryParams)}`;
     log.info("全局请求拦截[结束] request -> ", request);
-    // 请求状态验证
     return request;
   },
 );
