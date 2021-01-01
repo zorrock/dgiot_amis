@@ -14,7 +14,6 @@
     "dev": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=development webpack-dev-server --config build/webpack.conf.ts --color --progress",
     "dev:analyzer": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=development ANALYZER=1 webpack-dev-server --config build/webpack.conf.ts",
     "build": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=production webpack --config build/webpack.conf.ts",
-    "build:start": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=production webpack --config build/webpack.conf.ts && cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' ts-node ./scripts/server-start.ts",
     "build:analyzer": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=production ANALYZER=1 webpack --config build/webpack.conf.ts",
     "build:oss": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' ENABLE_CDN=true NODE_ENV=production webpack --config build/webpack.conf.ts"
   },
