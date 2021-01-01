@@ -133,8 +133,6 @@ let config: Configuration = {
           "/amis/sdk/**/*.ttf",
           "/amis/sdk/**/*.woff",
           "/amis/sdk/**/*.woff2",
-          // "/amis/lib/**/*.css",
-          // "/amis/lib/**/*.svg",
           "/font-awesome/css",
           "/font-awesome/fonts",
         ].map(pathItem => {
