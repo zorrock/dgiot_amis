@@ -5,6 +5,7 @@ import { notification } from 'antd';
 import { logger } from "@/utils/logger";
 import { axiosCreate, errorMsg } from "@/utils/request";
 import { getUrlParam, hasValue } from "@/utils/utils";
+import { TypeEnum, variableTypeOf } from "@/utils/typeof";
 import { CSSProperties } from "react";
 
 const log = logger.getLogger("/src/utils/amis-render-options.tsx");
@@ -46,7 +47,7 @@ axiosInstance.interceptors.response.use(response => {
     log.info("全局响应拦截[开始] response -> ", response);
     const { status, data } = response;
     // 支持amis返回值
-    if (hasValue(data.status) && (hasValue(data.msg) || hasValue(data.data))) return response;
+    if (variableTypeOf(data.status) === TypeEnum.number && (variableTypeOf(data.msg) === TypeEnum.string || variableTypeOf(data.data) === TypeEnum.object)) return response;
     // 错误处理 - 500
     if (status >= 500) {
       response.status = 200;
