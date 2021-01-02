@@ -111,7 +111,7 @@ const routerConfigs: LayoutConfig[] = [
         name: "帮助文档",
         icon: "QuestionCircleOutlined",
         openOptions: {
-          url: "http://git.yyjzt.com/b2b-public/data-sync/wikis/home",
+          url: "https://baidu.gitee.io/amis/docs/index",
           target: "_blank",
           features: "directories=no, status=no, resizable=no, copyhistory=yes, width=800, height=400",
         },
