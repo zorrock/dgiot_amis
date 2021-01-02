@@ -47,7 +47,7 @@ axiosInstance.interceptors.response.use(response => {
     log.info("全局响应拦截[开始] response -> ", response);
     const { status, data } = response;
     // 支持amis返回值
-    if (variableTypeOf(data.status) === TypeEnum.number && (variableTypeOf(data.msg) === TypeEnum.string || variableTypeOf(data.data) === TypeEnum.object)) return response;
+    if (variableTypeOf(data.status) === TypeEnum.number && (variableTypeOf(data.msg) === TypeEnum.string || hasValue(data.data))) return response;
     // 错误处理 - 500
     if (status >= 500) {
       response.status = 200;
