@@ -29,6 +29,7 @@ pipeline {
     stage('构建server模块') {
       steps {
         sh 'cd server'
+        sh 'pwd'
         sh 'yarn run server-init'
       }
     }
