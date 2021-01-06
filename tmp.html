@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>${ENV, var="JOB_NAME"}-第${BUILD_NUMBER}次构建日志</title>
+</head>
+
+<body>
+<h3>${ENV, var="JOB_NAME"}-第${BUILD_NUMBER}次构建日志</h3>
+<table style="width: 100%;font-size: 14px;">
+  <tr>
+    <td>
+      <span style="color: #CC0000;">构建结果 - ${BUILD_STATUS}</span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <br/>
+      <b style="color: #0B610B;">构建信息</b>
+      <hr style="size: 2px;width: 100%;"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li>项目名称：${PROJECT_NAME}</li>
+        <li>构建编号：#${BUILD_NUMBER}</li>
+        <li>触发原因：${CAUSE}</li>
+        <li>构建状态：${BUILD_STATUS}</li>
+        <li>构建日志：<a href="${BUILD_URL}console">${BUILD_URL}console</a></li>
+        <li>构建Url：<a href="${BUILD_URL}">${BUILD_URL}</a></li>
+        <li>工作目录：<a href="${PROJECT_URL}ws">${PROJECT_URL}ws</a></li>
+        <li>项目Url：<a href="${PROJECT_URL}">${PROJECT_URL}</a></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b style="color: #0B610B; ">最近提交</b>
+      <hr style="size: 2px;width: 100%;"/>
+      <ul>
+        ${CHANGES_SINCE_LAST_SUCCESS, reverse=true, format="%c", changesFormat="
+        <li>%d [%a] %m</li>
+        "}
+      </ul>
+      详细提交: <a href="${PROJECT_URL}changes">${PROJECT_URL}changes</a>
+      <br/>
+    </td>
+  </tr>
+</table>
+<div style="margin-top: 24px;font-size: 10px;">本邮件由系统自动发出，请勿回复！</div>
+</body>
+</html>
