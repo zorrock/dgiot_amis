@@ -13,7 +13,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '8'))
     // 不允许同时执行 pipeline
     disableConcurrentBuilds()
-    //
+    // 跳过默认的git Checkout
     skipDefaultCheckout()
     // 设置 pipeline 运行的超时时间
     timeout(time: 8, unit: 'MINUTES')
@@ -33,6 +33,7 @@ pipeline {
   stages {
     stage('构建amis-admin') {
       steps {
+        checkout scm
         sh 'pwd'
         // sh 'yarn -v'
         // sh 'node -v'
