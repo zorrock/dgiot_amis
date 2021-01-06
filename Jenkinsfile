@@ -35,7 +35,8 @@ pipeline {
           sh 'pwd'
           sh 'yarn -v'
           sh 'node -v'
-          sh 'yarn install --prefer-offline'
+          sh './tmp.sh'
+          // sh 'yarn install --prefer-offline'
           // sh 'yarn cross-env TS_NODE_PROJECT="./build/webpack.tsconfig.json" ENABLE_CDN=true OSS_KEY="$Ali_OSS_KEY" OSS_SECRET="$Ali_OSS_SECRET" NODE_ENV=production webpack --config build/webpack.conf.ts'
         }
       }
