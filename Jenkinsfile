@@ -26,6 +26,12 @@ pipeline {
   // parameters {}
 
   stages {
+    stage('构建amis-admin') {
+      steps {
+        sh 'yarn run project-init'
+      }
+    }
+
     stage('构建server模块') {
       steps {
         sh 'pwd'
