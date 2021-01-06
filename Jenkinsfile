@@ -13,6 +13,8 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '8'))
     // 不允许同时执行 pipeline
     disableConcurrentBuilds()
+    //
+    skipDefaultCheckout()
     // 设置 pipeline 运行的超时时间
     timeout(time: 8, unit: 'MINUTES')
     // 在失败时, 重新尝试整个 pipeline 的指定次数
