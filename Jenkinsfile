@@ -31,23 +31,24 @@ pipeline {
   // parameters {}
 
   stages {
+    stage('git-clone') {
+      checkout scm
+    }
+
     stage('构建amis-admin') {
       steps {
-        checkout scm
-        sh 'pwd'
         sh 'yarn install --prefer-offline'
-        // sh 'yarn cross-env TS_NODE_PROJECT="./build/webpack.tsconfig.json" ENABLE_CDN=true OSS_KEY="$Ali_OSS_KEY" OSS_SECRET="$Ali_OSS_SECRET" NODE_ENV=production webpack --config build/webpack.conf.ts'
+        sh 'yarn cross-env TS_NODE_PROJECT="./build/webpack.tsconfig.json" ENABLE_CDN=true OSS_KEY="$Ali_OSS_KEY" OSS_SECRET="$Ali_OSS_SECRET" NODE_ENV=production webpack --config build/webpack.conf.ts'
       }
     }
 
-//     stage('构建server模块') {
-//       steps {
-//         dir('./server') {
-//           sh 'pwd'
-//           sh 'yarn install --prefer-offline'
-//         }
-//       }
-//     }
+    stage('构建server模块') {
+      steps {
+        dir('./server') {
+          sh 'yarn install --prefer-offline'
+        }
+      }
+    }
   }
 
   post {
