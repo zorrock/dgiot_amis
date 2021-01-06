@@ -59,7 +59,7 @@ pipeline {
     }
     failure {
       emailext
-        subject: '[Jenkins] ${currentBuild.fullDisplayName}',
+        subject: "[Jenkins] ${currentBuild.fullDisplayName}",
         body: '构建失败: ${env.BUILD_URL}',
         mimeType: 'text/html',
         to: 'lzw1000000@163.com',
@@ -69,10 +69,10 @@ pipeline {
     }
     success {
       emailext
-        subject: '[Jenkins] ${currentBuild.fullDisplayName}',
+        subject: "[Jenkins] ${currentBuild.fullDisplayName}",
         body: '构建成功: ${env.BUILD_URL}',
         mimeType: 'text/html',
-        to: 'lzw1000000@163.com',
+        to: 'lzw1000000@163.com,mlrsyz@vip.qq.com',
         replyTo: '1183409807@qq.com'
     }
   }
