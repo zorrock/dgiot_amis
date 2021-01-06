@@ -71,7 +71,7 @@ pipeline {
         emailext subject: "[Jenkins] ${currentBuild.fullDisplayName}",
         body: '构建成功: ${env.BUILD_URL}',
         mimeType: 'text/html',
-        to: 'lzw1000000@163.com,mlrsyz@vip.qq.com',
+        to: 'lzw1000000@163.com',
         replyTo: '1183409807@qq.com'
       }
     }
