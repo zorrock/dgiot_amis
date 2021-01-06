@@ -1,4 +1,4 @@
-import { ossSecretConfig } from './git-ignore.config';
+import { ossSecretConfig } from './secret.config';
 import dayjs from 'dayjs';
 
 const { ENABLE_CDN } = process.env;
