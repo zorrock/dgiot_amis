@@ -20,7 +20,7 @@ pipeline {
 
   triggers {
     // Jenkins 会检查新的源代码更新。如果存在更改, pipeline 就会被重新触发
-    pollSCM('*/5 * * * *')
+    pollSCM('H/5 * * * *')
   }
 
   // parameters {}
