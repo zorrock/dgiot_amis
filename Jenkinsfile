@@ -31,6 +31,7 @@ pipeline {
   stages {
     stage('构建amis-admin') {
       steps {
+        sh 'pwd'
         sh 'yarn run project-init'
         sh 'cross-env TS_NODE_PROJECT="./build/webpack.tsconfig.json" ENABLE_CDN=true OSS_KEY="$Ali_OSS_KEY" OSS_SECRET="$Ali_OSS_SECRET" NODE_ENV=production webpack --config build/webpack.conf.ts'
       }
