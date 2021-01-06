@@ -32,7 +32,9 @@ pipeline {
 
   stages {
     stage('git-clone') {
-      checkout scm
+      steps {
+        checkout scm
+      }
     }
 
     stage('构建amis-admin') {
