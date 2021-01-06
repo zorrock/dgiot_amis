@@ -58,7 +58,7 @@ pipeline {
       echo '项目构建完成'
     }
     failure {
-      emailext
+      mail
         subject: "[Jenkins] ${currentBuild.fullDisplayName}",
         body: '构建失败: ${env.BUILD_URL}',
         mimeType: 'text/html',
@@ -68,7 +68,7 @@ pipeline {
         ]
     }
     success {
-      emailext
+      mail
         subject: "[Jenkins] ${currentBuild.fullDisplayName}",
         body: '构建成功: ${env.BUILD_URL}',
         mimeType: 'text/html',
