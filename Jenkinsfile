@@ -6,9 +6,9 @@ pipeline {
     Ali_OSS_SECRET = credentials('Ali_OSS_SECRET')
   }
 
-  tools {
-    git "Git2.x"
-  }
+  // tools {
+  //   git "Git2.x"
+  // }
 
   options {
     // 保留最近历史构建记录的数量
