@@ -57,7 +57,10 @@ pipeline {
     stage('部署') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'MSVC_SSH_SECRET', keyFileVariable: 'id_rsa')]) {
-          sh 'ssh -i $id_rsa lizw@ssh.msvc.top -p 28822'
+          sh '''
+          ssh -i $id_rsa lizw@ssh.msvc.top -p 28822
+          ifconfig
+          '''
           sh 'ifconfig'
         }
       }
