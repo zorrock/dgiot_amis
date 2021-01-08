@@ -59,6 +59,7 @@ pipeline {
     always {
       echo '项目构建完成'
       emailext subject: "[Jenkins] ${currentBuild.fullDisplayName}",
+      body: "${SCRIPT,template='jenkins-email-01.html'}",
       mimeType: 'text/html',
       replyTo: '1183409807@qq.com',
       to: 'lzw1000000@163.com,mlrsyz@vip.qq.com'
