@@ -57,7 +57,10 @@ pipeline {
     stage('部署') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'MSVC_SSH_SECRET', keyFileVariable: 'pem', passphraseVariable: 'pwd', usernameVariable: 'user')]) {
-          sh '''ssh ${user}@ssh.msvc.top -p 28822 "echo 远程执行" '''
+          sh '''
+          ssh ${user}@ssh.msvc.top -p 28822
+          echo 远程执行
+          '''
         }
       }
     }
