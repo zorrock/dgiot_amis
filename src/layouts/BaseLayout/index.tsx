@@ -85,11 +85,11 @@ interface BaseLayoutProps extends LayoutPageComponentProps {
   /** 左侧区域样式 */
   globalHeaderRightStyle?: CSSProperties;
   /** 自定义左侧区域渲染逻辑 */
-  globalHeaderLeftRender?: (props: Omit<GlobalHeaderProps, 'leftRender'>, defaultLeftClassName: string, elementMap: Map<String, React.ReactNode>) => React.ReactNode;
+  globalHeaderLeftRender?: (props: Omit<GlobalHeaderProps, 'leftRender'>, className: string, elementMap: Map<String, React.ReactNode>) => React.ReactNode;
   /** 自定义中间动态宽度区域渲染逻辑 */
-  globalHeaderCentreRender?: (props: Omit<GlobalHeaderProps, 'centerRender'>, defaultCenterClassName: string, elementMap: Map<String, React.ReactNode>) => React.ReactNode;
+  globalHeaderCentreRender?: (props: Omit<GlobalHeaderProps, 'centerRender'>, className: string, elementMap: Map<String, React.ReactNode>) => React.ReactNode;
   /** 自定义右侧区域渲染逻辑 */
-  globalHeaderRightRender?: (props: Omit<GlobalHeaderProps, 'rightRender'>, defaultRightClassName: string, elementMap: Map<String, React.ReactNode>) => React.ReactNode;
+  globalHeaderRightRender?: (props: Omit<GlobalHeaderProps, 'rightRender'>, className: string, elementMap: Map<String, React.ReactNode>) => React.ReactNode;
   /** 自定义渲染逻辑 */
   globalHeaderRender?: (props: Omit<GlobalHeaderProps, 'headerRender'>) => React.ReactNode;
   // ----------------------------------------------------------------------------------- GlobalFooter 配置
