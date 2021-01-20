@@ -49,3 +49,4 @@ yarn run project-init
 yarn run dev
 ```
 
+> 建议使用`IntelliJ IDEA`或者`WebStorm`开发工具
