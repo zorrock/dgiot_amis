@@ -48,7 +48,7 @@ interface NestSideMenuLayoutProps extends BaseLayoutProps {
   footerClassName?: string;
   /** Footer容器样式 */
   footerStyle?: CSSProperties;
-// ----------------------------------------------------------------------------------- GlobalSide 配置
+  // ----------------------------------------------------------------------------------- GlobalSide 配置
   /** 系统logo图片(32 x 32) */
   globalSideLogo?: React.ReactNode | false;
   /** 点击系统logo事件 */
