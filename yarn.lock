@@ -1847,10 +1847,10 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.npm.taobao.org/alphanum-sort/download/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
-amis@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npm.taobao.org/amis/download/amis-1.1.0.tgz#3b0d627112c5fc05503b114e3d9894fccbf1393e"
-  integrity sha1-Ow1icRLF/AVQOxFOPZiU/MvxOT4=
+amis@1.0.19:
+  version "1.0.19"
+  resolved "https://registry.npm.taobao.org/amis/download/amis-1.0.19.tgz#8c1ce1cd780a643522f83e7d5540d28b6ee73ebe"
+  integrity sha1-jBzhzXgKZDUi+D59VUDSi27nPr4=
   dependencies:
     "@types/file-saver" "^2.0.1"
     "@types/papaparse" "^5.2.2"
@@ -1861,7 +1861,7 @@ amis@1.1.0:
     classnames "2.2.5"
     dom-helpers "^3.3.1"
     downshift "3.1.4"
-    echarts "^5.0.0"
+    echarts "^4.1.0"
     exceljs "^4.2.0"
     file-saver "^2.0.2"
     flv.js "1.5.0"
@@ -3913,13 +3913,12 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
 
-echarts@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.npm.taobao.org/echarts/download/echarts-5.0.1.tgz?cache=0&sync_timestamp=1610775960050&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fecharts%2Fdownload%2Fecharts-5.0.1.tgz#b999ff6f515b1aa851ed09576eaf89686b57ce97"
-  integrity sha1-uZn/b1FbGqhR7QlXbq+JaGtXzpc=
+echarts@^4.1.0:
+  version "4.9.0"
+  resolved "https://registry.npm.taobao.org/echarts/download/echarts-4.9.0.tgz?cache=0&sync_timestamp=1610775876900&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fecharts%2Fdownload%2Fecharts-4.9.0.tgz#a9b9baa03f03a2a731e6340c55befb57a9e1347d"
+  integrity sha1-qbm6oD8Doqcx5jQMVb77V6nhNH0=
   dependencies:
-    tslib "2.0.3"
-    zrender "5.0.3"
+    zrender "4.3.2"
 
 ee-first@1.1.1, ee-first@~1.1.1:
   version "1.1.1"
@@ -4898,7 +4897,7 @@ hex-color-regex@^1.1.0:
 
 history@4.7.2:
   version "4.7.2"
-  resolved "https://registry.npm.taobao.org/history/download/history-4.7.2.tgz#22b5c7f31633c5b8021c7f4a8a954ac139ee8d5b"
+  resolved "https://registry.npm.taobao.org/history/download/history-4.7.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhistory%2Fdownload%2Fhistory-4.7.2.tgz#22b5c7f31633c5b8021c7f4a8a954ac139ee8d5b"
   integrity sha1-IrXH8xYzxbgCHH9KipVKwTnujVs=
   dependencies:
     invariant "^2.2.1"
@@ -9756,15 +9755,15 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-tslib@2.0.3, tslib@^2.0.1, tslib@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.0.3.tgz?cache=0&sync_timestamp=1602286603545&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
-  integrity sha1-jgdBrEX8DCJuWKF7/D5kubxsphw=
-
 tslib@^1.10.0, tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.14.1.tgz?cache=0&sync_timestamp=1602287078861&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha1-zy04vcNKE0vK8QkcQfZhni9nLQA=
+
+tslib@^2.0.1, tslib@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.0.3.tgz?cache=0&sync_timestamp=1602286603545&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
+  integrity sha1-jgdBrEX8DCJuWKF7/D5kubxsphw=
 
 tty-browserify@0.0.0:
   version "0.0.0"
@@ -10461,9 +10460,7 @@ zip-stream@^4.0.4:
     compress-commons "^4.0.2"
     readable-stream "^3.6.0"
 
-zrender@5.0.3:
-  version "5.0.3"
-  resolved "https://registry.npm.taobao.org/zrender/download/zrender-5.0.3.tgz#5e04a55d36455067e4536c8ce9c25093f50f6b68"
-  integrity sha1-XgSlXTZFUGfkU2yM6cJQk/UPa2g=
-  dependencies:
-    tslib "2.0.3"
+zrender@4.3.2:
+  version "4.3.2"
+  resolved "https://registry.npm.taobao.org/zrender/download/zrender-4.3.2.tgz?cache=0&sync_timestamp=1610459054185&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fzrender%2Fdownload%2Fzrender-4.3.2.tgz#ec7432f9415c82c73584b6b7b8c47e1b016209c6"
+  integrity sha1-7HQy+UFcgsc1hLa3uMR+GwFiCcY=
