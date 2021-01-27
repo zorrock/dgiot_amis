@@ -274,6 +274,8 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
                 {this.getGlobalFooter()}
               </footer>
             }
+            {/* Amis UI 弹窗容器 */}
+            {this.getAmisModalContainer()}
           </section>
         </section>
       </section>
@@ -309,6 +311,24 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
     const routerLocation = menuToRouterLocation(routerMenu);
     if (!routerLocation) return;
     routerHistory.push(routerLocation);
+  }
+
+  protected getAmisModalContainer() {
+    return (
+      <div id="amis-modal-container" className="amis-scope" style={{ height: 0 }}>
+        {/*<div className="amis-routes-wrapper">*/}
+        {/*<div className="a-Toast-wrap a-Toast-wrap--topRight"/>*/}
+        {/*<div className="a-Page">*/}
+        {/*<div className="a-Page-content">*/}
+        {/*  <div className="a-Page-main">*/}
+        {/*    <div className="a-Page-toolbar"/>*/}
+        {/*    <div className="a-Page-body"/>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+        {/*</div>*/}
+        {/*</div>*/}
+      </div>
+    );
   }
 
   render() {

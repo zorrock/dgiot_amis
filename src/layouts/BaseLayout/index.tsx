@@ -617,6 +617,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       // 显示标签页
       if (activePageKey !== multiTabKey) {
         multiTab.lastActiveTime = new Date().getTime();
+        if (multiTab.pageType === "amis") window.currentAmisId = multiTab.mountedDomId;
         this.setState({ activePageKey: multiTabKey });
       }
       return;
