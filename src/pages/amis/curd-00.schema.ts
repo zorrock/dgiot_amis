@@ -95,11 +95,13 @@ function deleteDialog() {
 
 const schema = {
   type: "page",
+  name: "page",
   title: "",
   toolbar: [],
   body: [
     {
       type: "crud",
+      name: "crud",
       // --------------------------------------------------------------- 常规配置
       perPageAvailable: [10, 20, 50, 100],
       syncLocation: false,
