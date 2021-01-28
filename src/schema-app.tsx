@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import lodash from "lodash";
-import { Button, Result } from "antd";
+import { Button, message, Result } from "antd";
 import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 import { BlankLayout } from "@/layouts/BlankLayout";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
@@ -9,7 +9,6 @@ import { $rootMounted, initRootDiv } from '@/utils/amis-utils';
 import { getLocationHash, menuToRoute } from '@/utils/utils';
 import { logger } from '@/utils/logger';
 import { request } from '@/utils/request';
-import { serverHost } from '@/server-api';
 import { LayoutConfig, layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
 import { layoutSettings, routerConfigs } from './router-config';
 
@@ -190,11 +189,24 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   }
 }
 
-// ----------------------------------------------------------------------------------- 开始初始化应用
-// 初始化root div容器
-initRootDiv();
+// 获取当前登录用户信息
+const getCurrentUser = async () => {
+  if (!layoutSettings.currentUserApi) return;
+  const user = await request.get(layoutSettings.currentUserApi);
+  log.info("getCurrentUser -> ", user);
+  window.currentUser = user?.userInfo;
+  // window.securityContext = user;
+};
 
-const initApp = () => {
+// 加载服务端菜单数据
+const getMenus = async (): Promise<RouterConfig[] | undefined> => {
+  if (!layoutSettings.menuApi) return;
+  const menus = await request.get(layoutSettings.menuApi);
+  return menus.map((menu: any) => menuToRoute(menu));
+}
+
+// 初始化应用
+const initApp = (routerConfigs: LayoutConfig[]) => {
   // 跳转到默认地址或登录地址
   const locationHash = getLocationHash();
   const { loginPath, defaultPath } = layoutSettings;
@@ -206,20 +218,28 @@ const initApp = () => {
   }
   log.info("routerConfigs ->", routerConfigs);
   log.info("layoutSettings ->", layoutSettings);
-  window.appComponent = ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} routerConfigs={lodash.cloneDeep(routerConfigs)}/>, $rootMounted) as any;
+  window.appComponent = ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} routerConfigs={routerConfigs}/>, $rootMounted) as any;
   log.info("ReactDOM.render完成!");
 };
 
-
-if (isProdEnv) {
-  // 获取服务端菜单
-  request.get(`${serverHost}/!/amis-api/curd-page@menu`)
-    .then(data => {
-      routerConfigs[1].routes = data;
-      initApp();
-    });
-} else {
-  // 使用配置的菜单
-  initApp();
-  // window.appComponent.refreshMenu(() => log.info("菜单刷新成功")).then();
-}
+// ----------------------------------------------------------------------------------- 开始初始化应用
+// 初始化root div容器
+initRootDiv();
+// 应用初始化
+const routerConfigsCopy = lodash.cloneDeep(routerConfigs);
+getCurrentUser().then(() => {
+  // 用户已经登录
+  getMenus().then(routes => {
+    // 获取菜单成功
+    if (!routes) return;
+    routerConfigsCopy[1].routes = routes;
+  }).catch(reason => {
+    // 获取菜单失败
+    log.error("系统菜单加载失败 -> ", reason);
+    message.error("系统菜单加载失败!").then();
+  }).finally(() => initApp(routerConfigsCopy));
+}).catch(reason => {
+  log.info("用户未登录 -> ", reason);
+  // 当前用户未登录
+  initApp(routerConfigsCopy);
+});
