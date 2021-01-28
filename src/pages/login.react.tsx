@@ -44,22 +44,31 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
         // window.currentUser = { ...restProps, ...extInfo };
         // 获取登录用户角色权限信息
         if (layoutSettings.currentUserApi) {
-          request.get(layoutSettings.currentUserApi).then(securityContext => {
-            log.info("getCurrentUser -> ", securityContext);
-            const { userInfo, roles = [], permissions = [] } = securityContext;
-            const { extInfo = {}, ...restProps } = userInfo;
-            window.currentUser = { ...restProps, ...extInfo };
-            window.securityContext = new UserSecurityContext(userInfo, roles, permissions);
-          });
-          window.appComponent.refreshMenu(() => {
-            if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
-          }).then();
+          this.getCurrentUser(() => this.refreshMenu());
         } else {
-          window.appComponent.refreshMenu(() => {
-            if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
-          }).then();
+          this.refreshMenu();
         }
       }).finally(() => this.setState({ loading: false }));
+  }
+
+  protected getCurrentUser(callback?: () => void) {
+    if (!layoutSettings.currentUserApi) return;
+    request.get(layoutSettings.currentUserApi).then(securityContext => {
+      log.info("getCurrentUser -> ", securityContext);
+      const { userInfo, roles = [], permissions = [] } = securityContext;
+      const { extInfo = {}, ...restProps } = userInfo;
+      window.currentUser = { ...restProps, ...extInfo };
+      window.securityContext = new UserSecurityContext(userInfo, roles, permissions);
+    });
+    window.appComponent.refreshMenu(() => {
+      if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
+    }).then(callback);
+  }
+
+  protected refreshMenu() {
+    window.appComponent.refreshMenu(() => {
+      if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
+    }).then();
   }
 
   render() {
