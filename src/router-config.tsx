@@ -222,7 +222,7 @@ const routerConfigs: LayoutConfig[] = [
         ],
       },
     ],
-    401: "/blank/login",
+    // 401: "/blank/login",
     403: "/403.react.tsx",
     404: "/404.react.tsx",
   }
@@ -232,7 +232,7 @@ const layoutSettings: LayoutSettings = {
   menu: { defaultOpen: true },
   iconScriptUrl: "//at.alicdn.com/t/font_1326886_bbehrpsvyl.js",
   htmlTitleSuffix: "",
-  loginPath: "/blank/login",
+  // loginPath: "/blank/login",
   defaultPath: "/nest-side/curd/00",
   // loginApi: "/login",
   // currentUserApi: "/current_user",

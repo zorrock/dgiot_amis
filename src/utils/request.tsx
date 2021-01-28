@@ -108,7 +108,6 @@ axiosInstance.interceptors.response.use(
             {(validMessageList as any[]).map((item, index) => (<li key={index}>{item.filed}: {item.errorMessage}({item.code})</li>))}
           </ul>
         ),
-        duration: 100
       });
       return Promise.reject(error.response);
     } else if (message) {

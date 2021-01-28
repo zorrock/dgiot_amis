@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Button, Checkbox, Form, Input, Layout, message } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { request } from "@/utils/request";
-import { setStore } from "@/utils/store";
 import { routerHistory } from "@/utils/router";
-import { serverHost } from "@/server-api";
 import logo from "@/assets/images/logo.png";
+import { layoutSettings } from "@/router-config";
 import styles from "./login.react..less";
 
 
@@ -26,21 +25,22 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
 
   /** 登录请求 */
   protected login = (values: any) => {
+    if (!layoutSettings.loginApi) {
+      message.warn("未配置layoutSettings.loginApi").then();
+      return;
+    }
     this.setState({ loading: true });
-    request.post(`${serverHost}/!/amis-api/curd-page@login`, values)
-      .then(data => {
-        if (!data || !data.uid) {
-          message.error("用户名/密码错误").then();
+    request.post(layoutSettings.loginApi, values)
+      .then(({ success, userInfo, message }) => {
+        if (!success || !userInfo) {
+          message.error(message || "用户名/密码错误").then();
           return;
         }
-        window.currentUser = {
-          uid: data.uid,
-          loginName: data.username,
-          nickname: data.username,
-        };
-        setStore("currentUser", window.currentUser);
-        message.success("登录成功").then();
-        routerHistory.push({ hash: "/nest-side/curd/00" });
+        message.success(message || "登录成功").then();
+        const { extInfo = {}, ...restProps } = userInfo;
+        window.currentUser = { ...restProps, ...extInfo };
+        // window.securityContext = user;
+        if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
       })
       .finally(() => this.setState({ loading: false }));
   }
