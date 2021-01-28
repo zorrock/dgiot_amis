@@ -75,11 +75,6 @@ interface AppComponent {
 }
 
 interface Window {
-  // g_app: {
-  //   _store: any;
-  //   [propName: string]: any;
-  // };
-
   /** 当前登录用户信息 */
   currentUser?: UserInfo;
   /** 应用安全上下文 */
