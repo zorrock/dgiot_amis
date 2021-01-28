@@ -3,14 +3,6 @@ import { CopyrightCircleOutlined } from "@ant-design/icons";
 import { LayoutConfig, LayoutType } from '@/utils/router';
 import { SideFirstMenuMode } from "@/components/Layout/GlobalSide";
 
-const layoutSettings: LayoutSettings = {
-  menu: { defaultOpen: true },
-  iconScriptUrl: "//at.alicdn.com/t/font_1326886_bbehrpsvyl.js",
-  htmlTitleSuffix: "",
-  loginPath: "/blank/login",
-  defaultPath: "/nest-side/curd/00",
-};
-
 const routerConfigs: LayoutConfig[] = [
   // {
   //   path: "",                     // 匹配路径(支持path-to-regexp)
@@ -228,83 +220,6 @@ const routerConfigs: LayoutConfig[] = [
           { path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts" },
         ],
       },
-      // {
-      //   path: "/form6",
-      //   name: "表单6",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
-      //   ],
-      // }, {
-      //   path: "/form7",
-      //   name: "表单7",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
-      //   ],
-      // }, {
-      //   path: "/form8",
-      //   name: "表单8",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
-      //   ],
-      // },
-      // {
-      //   path: "/form9",
-      //   name: "表单9",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
-      //   ],
-      // },
-      // {
-      //   path: "/form10",
-      //   name: "表单10",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
-      //   ],
-      // },
-      // {
-      //   path: "/form11",
-      //   name: "表单11",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
-      //   ],
-      // },
-      // {
-      //   path: "/form12",
-      //   name: "表单12",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
-      //   ],
-      // }, {
-      //   path: "/form13",
-      //   name: "表单13",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
-      //   ],
-      // },
-      // {
-      //   path: "/form14",
-      //   name: "表单14",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
-      //   ],
-      // },
-      // {
-      //   path: "/form15",
-      //   name: "表单15",
-      //   icon: "ProfileOutlined",
-      //   routes: [
-      //     {path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts"},
-      //   ],
-      // },
     ],
     401: "/blank/login",
     403: "/403.react.tsx",
@@ -312,4 +227,12 @@ const routerConfigs: LayoutConfig[] = [
   }
 ];
 
-export { layoutSettings, routerConfigs };
+const layoutSettings: LayoutSettings = {
+  menu: { defaultOpen: true },
+  iconScriptUrl: "//at.alicdn.com/t/font_1326886_bbehrpsvyl.js",
+  htmlTitleSuffix: "",
+  loginPath: "/blank/login",
+  defaultPath: "/nest-side/curd/00",
+};
+
+export { routerConfigs, layoutSettings };

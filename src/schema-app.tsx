@@ -5,7 +5,7 @@ import { Button, Result } from "antd";
 import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 import { BlankLayout } from "@/layouts/BlankLayout";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
-import { $rootMounted, initAppPage } from '@/utils/amis-utils';
+import { $rootMounted, initRootDiv } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
 import { request } from '@/utils/request';
@@ -164,24 +164,38 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     }
     return "不支持的Layout";
   }
+
+  // /**
+  //  * 刷新菜单
+  //  */
+  // public async refreshMenu(callback?: () => void) {
+  //   const menus = await request.get(apiPath.LoginController.managerMenus);
+  //   const newRouterConfigs = lodash.cloneDeep(routerConfigs);
+  //   newRouterConfigs[1].routes = menus.map((menu: any) => menuToRoute(menu));
+  //   const runtimeLayouts = layoutToRuntime(newRouterConfigs);
+  //   this.setState({ runtimeLayouts }, callback);
+  // }
 }
 
 // ----------------------------------------------------------------------------------- 开始初始化应用
-initAppPage();
-// 跳转到默认地址或登录地址
-const locationHash = getLocationHash();
-const { loginPath, defaultPath } = layoutSettings;
-if (loginPath && !window.currentUser) {
-  routerHistory.push({ hash: loginPath });
-}
-if (lodash.trim(locationHash).length <= 0 && defaultPath) {
-  routerHistory.push({ hash: defaultPath });
-}
+// 初始化root div容器
+initRootDiv();
+
 const initApp = () => {
+  // 跳转到默认地址或登录地址
+  const locationHash = getLocationHash();
+  const { loginPath, defaultPath } = layoutSettings;
+  if (loginPath && !window.currentUser) {
+    routerHistory.push({ hash: loginPath });
+  }
+  if (lodash.trim(locationHash).length <= 0 && defaultPath) {
+    routerHistory.push({ hash: defaultPath });
+  }
+
   const runtimeLayouts = layoutToRuntime(routerConfigs);
   log.info("layoutSettings ->", layoutSettings);
   log.info("runtimeLayouts ->", runtimeLayouts);
-  ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted);
+  window.appComponent = ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted) as any;
   log.info("ReactDOM.render完成!");
 };
 if (isProdEnv) {

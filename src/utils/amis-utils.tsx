@@ -1,7 +1,8 @@
 import React from "react";
 import lodash from "lodash";
 import { SchemaObject } from "amis";
-import { RenderOptions, RootRenderProps } from "amis/src/factory";
+import { RenderOptions } from "amis/src/factory";
+import { RootRenderProps } from "amis/src/Root";
 import { amisRenderOptions } from './amis-render-options';
 import { logger } from './logger';
 
@@ -25,8 +26,8 @@ const rootMountedId = "app-root";
 /** 页面root挂载点dom对象 */
 let $rootMounted: HTMLElement = document.getElementById(rootMountedId)!;
 
-/** 初始化页面 */
-const initAppPage = function (): void {
+/** 初始化root div容器 */
+const initRootDiv = function (): void {
   if (!$rootMounted) {
     $rootMounted = document.createElement('div');
     $rootMounted.id = rootMountedId;
@@ -125,4 +126,4 @@ const loadReactPageByPath = async function (pagePath: string): Promise<ReactPage
     });
 }
 
-export { amis, rootMountedId, $rootMounted, initAppPage, amisRender, loadDynamicComponent, loadAmisPageByPath, loadReactPageByPath };
+export { amis, rootMountedId, $rootMounted, initRootDiv, amisRender, loadDynamicComponent, loadAmisPageByPath, loadReactPageByPath };

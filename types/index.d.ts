@@ -63,6 +63,14 @@ interface UserInfo {
   description?: string,
 }
 
+interface AppComponent {
+  /**
+   * 刷新菜单
+   * @param callback
+   */
+  refreshMenu(callback?: () => void): Promise<void>;
+}
+
 interface Window {
   // g_app: {
   //   _store: any;
@@ -71,6 +79,8 @@ interface Window {
 
   /** 当前登录用户信息 */
   currentUser?: UserInfo;
-  /** 当前显示的 Amis Mounted Dom Id */
+  /** 当前显示的amis页面div容器mounted dom id */
   currentAmisId: string;
+  /** 当前应用组件(React组件) */
+  appComponent: AppComponent;
 }
