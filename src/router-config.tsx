@@ -64,6 +64,7 @@ const routerConfigs: LayoutConfig[] = [
       globalFooterCopyright: <>Copyright <CopyrightCircleOutlined key="copyright"/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>,
       globalSideMenuWidth: 100,
       globalSideMenuMode: SideFirstMenuMode.AntdMenu,
+      sideMenuEnableSearchMenu: false,
     },
     routes: [
       // -------------------------------------------------------------------------

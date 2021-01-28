@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import lodash from "lodash";
-import { Button, message, Result } from "antd";
+import { Button, ConfigProvider, message, Result } from "antd";
+import antdZhCN from "antd/lib/locale/zh_CN";
+import { ConfigProviderProps } from "antd/es/config-provider";
 import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 import { BlankLayout } from "@/layouts/BlankLayout";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
@@ -15,6 +17,8 @@ import { layoutSettings, routerConfigs } from './router-config';
 const log = logger.getLogger("src/schema-app.tsx");
 
 interface ReactAppPageProps {
+  /** antd组件全局配置 */
+  antdConfig: ConfigProviderProps;
   /** 布局全局设置 */
   layoutSettings: LayoutSettings;
   /** Layout配置 */
@@ -102,48 +106,55 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   }
 
   protected getNestSideLayout(layoutMenuData: LayoutMenuData) {
-    const { layoutSettings: { menu, iconScriptUrl, htmlTitleSuffix } } = this.props;
+    const { antdConfig, layoutSettings: { menu, iconScriptUrl, htmlTitleSuffix } } = this.props;
     const { currentLayout, currentRouter, location, match } = this.state;
     return (
-      <NestSideMenuLayout
-        defaultOpen={menu.defaultOpen}
-        menuIconScriptUrl={iconScriptUrl}
-        htmlTitleSuffix={htmlTitleSuffix}
-        route={currentRouter!}
-        location={location!}
-        match={match!}
-        rootRoutes={currentLayout?.routes!}
-        layoutMenuData={layoutMenuData}
-        currentLayout={currentLayout}
-        {...currentLayout?.layoutProps}
-      />
+      <ConfigProvider {...antdConfig}>
+        <NestSideMenuLayout
+          defaultOpen={menu.defaultOpen}
+          menuIconScriptUrl={iconScriptUrl}
+          htmlTitleSuffix={htmlTitleSuffix}
+          route={currentRouter!}
+          location={location!}
+          match={match!}
+          rootRoutes={currentLayout?.routes!}
+          layoutMenuData={layoutMenuData}
+          currentLayout={currentLayout}
+          {...currentLayout?.layoutProps}
+        />
+      </ConfigProvider>
     );
   }
 
   protected getBlankLayout(layoutMenuData: LayoutMenuData) {
-    const { layoutSettings: { htmlTitleSuffix } } = this.props;
+    const { antdConfig, layoutSettings: { htmlTitleSuffix } } = this.props;
     const { currentLayout, currentRouter, location, match } = this.state;
     return (
-      <BlankLayout
-        htmlTitleSuffix={htmlTitleSuffix}
-        route={currentRouter!}
-        location={location!}
-        match={match!}
-        rootRoutes={currentLayout?.routes!}
-        layoutMenuData={layoutMenuData}
-        {...currentLayout?.layoutProps}
-      />
+      <ConfigProvider {...antdConfig}>
+        <BlankLayout
+          htmlTitleSuffix={htmlTitleSuffix}
+          route={currentRouter!}
+          location={location!}
+          match={match!}
+          rootRoutes={currentLayout?.routes!}
+          layoutMenuData={layoutMenuData}
+          {...currentLayout?.layoutProps}
+        />
+      </ConfigProvider>
     );
   }
 
   protected getNoFoundPage() {
+    const { antdConfig } = this.props;
     return (
-      <Result
-        status={"404"}
-        title="404"
-        subTitle={<div style={{ fontSize: 14, fontWeight: "bold" }}>抱歉，您访问的页面不存在。</div>}
-        extra={<Button type="primary" onClick={() => history.back()}>返回上一页</Button>}
-      />
+      <ConfigProvider {...antdConfig}>
+        <Result
+          status={"404"}
+          title="404"
+          subTitle={<div style={{ fontSize: 14, fontWeight: "bold" }}>抱歉，您访问的页面不存在。</div>}
+          extra={<Button type="primary" onClick={() => history.back()}>返回上一页</Button>}
+        />
+      </ConfigProvider>
     );
   }
 
@@ -218,7 +229,7 @@ const initApp = (routerConfigs: LayoutConfig[]) => {
   }
   log.info("routerConfigs ->", routerConfigs);
   log.info("layoutSettings ->", layoutSettings);
-  window.appComponent = ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} routerConfigs={routerConfigs}/>, $rootMounted) as any;
+  window.appComponent = ReactDOM.render(<ReactAppPage antdConfig={{ locale: antdZhCN }} layoutSettings={layoutSettings} routerConfigs={routerConfigs}/>, $rootMounted) as any;
   log.info("ReactDOM.render完成!");
 };
 

@@ -1,5 +1,6 @@
 import numeral from 'numeral';
 import dayjs, { OpUnitType } from 'dayjs';
+import 'dayjs/locale/zh-cn';
 
 // ------------------------------------------------------------------------------------------------- 数字相关
 // numeral -->  http://numeraljs.com/
@@ -43,7 +44,8 @@ const numberFormat = (num: number, format?: string) => {
 };
 
 // ------------------------------------------------------------------------------------------------- 时间相关
-// http://momentjs.cn/docs/#/use-it/
+// https://dayjs.fenxianglu.cn/
+dayjs.locale("zh-cn");
 
 const dateFormatArray = [
   'YYYY-MM-DD HH:mm:ss',
