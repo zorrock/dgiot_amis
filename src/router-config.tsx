@@ -233,6 +233,7 @@ const layoutSettings: LayoutSettings = {
   htmlTitleSuffix: "",
   loginPath: "/blank/login",
   defaultPath: "/nest-side/curd/00",
+  // menuApi: `${serverHost}/!/amis-api/curd-page@menu`,
 };
 
 export { routerConfigs, layoutSettings };

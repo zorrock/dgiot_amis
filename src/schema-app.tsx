@@ -6,7 +6,7 @@ import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 import { BlankLayout } from "@/layouts/BlankLayout";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { $rootMounted, initRootDiv } from '@/utils/amis-utils';
-import { getLocationHash } from '@/utils/utils';
+import { getLocationHash, menuToRoute } from '@/utils/utils';
 import { logger } from '@/utils/logger';
 import { request } from '@/utils/request';
 import { serverHost } from '@/server-api';
@@ -169,16 +169,25 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     return "不支持的Layout";
   }
 
-  // /**
-  //  * 刷新菜单
-  //  */
-  // public async refreshMenu(callback?: () => void) {
-  //   const menus = await request.get(layoutSettings);
-  //   const newRouterConfigs = lodash.cloneDeep(routerConfigs);
-  //   newRouterConfigs[1].routes = menus.map((menu: any) => menuToRoute(menu));
-  //   const runtimeLayouts = layoutToRuntime(newRouterConfigs);
-  //   this.setState({ runtimeLayouts }, callback);
-  // }
+  /**
+   * 刷新菜单
+   */
+  public async refreshMenu(callback?: () => void) {
+    if (!layoutSettings.menuApi) return;
+    const menus = await request.get(layoutSettings.menuApi);
+    const newRoutes = menus.map((menu: any) => menuToRoute(menu));
+    const newRouterConfigs = lodash.cloneDeep(routerConfigs);
+    let updated: boolean = false;
+    newRouterConfigs.forEach(layoutConfig => {
+      if (updated || layoutConfig.layout === LayoutType.Blank) return;
+      updated = true;
+      newRouterConfigs[1].routes = newRoutes;
+    });
+    if (updated) {
+      const runtimeLayouts = layoutToRuntime(newRouterConfigs);
+      this.setState({ runtimeLayouts }, callback);
+    }
+  }
 }
 
 // ----------------------------------------------------------------------------------- 开始初始化应用
@@ -200,6 +209,8 @@ const initApp = () => {
   window.appComponent = ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} routerConfigs={lodash.cloneDeep(routerConfigs)}/>, $rootMounted) as any;
   log.info("ReactDOM.render完成!");
 };
+
+
 if (isProdEnv) {
   // 获取服务端菜单
   request.get(`${serverHost}/!/amis-api/curd-page@menu`)
@@ -210,4 +221,5 @@ if (isProdEnv) {
 } else {
   // 使用配置的菜单
   initApp();
+  // window.appComponent.refreshMenu(() => log.info("菜单刷新成功")).then();
 }

@@ -73,4 +73,26 @@ const getLocationHash = (): string => {
   return hash.startsWith("#") ? hash.substr(1, hash.length) : "";
 }
 
-export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, getLocationHash };
+/**
+ * 菜单数据转换成路由配置
+ */
+const menuToRoute = (menu: MenuInfo): RouterConfig => {
+  const { name, icon, path, pagePath, hideMenu, hideChildrenMenu, extConfig, children } = menu;
+  let ext = {};
+  if (extConfig) {
+    try {
+      ext = JSON.parse(extConfig);
+    } catch (err) {
+      console.error("菜单扩展配置解析失败 -> ", menu);
+      ext = {};
+    }
+  }
+  const route: RouterConfig = { name, icon, path, pagePath, hideMenu: hideMenu !== 1, hideChildrenMenu: hideChildrenMenu !== 1, ...ext };
+  if (children) {
+    route.routes = [];
+    children.forEach(child => route.routes?.push(menuToRoute(child)));
+  }
+  return route;
+}
+
+export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, getLocationHash, menuToRoute };

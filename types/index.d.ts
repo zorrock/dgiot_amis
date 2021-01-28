@@ -61,6 +61,25 @@ interface UserInfo {
   readonly description?: string,
 }
 
+interface MenuInfo {
+  /** 菜单名称 */
+  name: string;
+  /** 菜单图标 */
+  icon?: string;
+  /** 菜单路径 */
+  path: string;
+  /** 页面路径 */
+  pagePath?: string;
+  /** 隐藏当前菜单和子菜单，0:隐藏，1:显示 */
+  hideMenu: number;
+  /** 隐藏子菜单，0:隐藏，1:显示 */
+  hideChildrenMenu: number;
+  /** 菜单扩展配置 */
+  extConfig?: string;
+  /** 子菜单 */
+  children?: MenuInfo[];
+}
+
 interface SecurityContext extends UserPermission {
   /** 用户信息 */
   readonly userInfo: UserInfo;
