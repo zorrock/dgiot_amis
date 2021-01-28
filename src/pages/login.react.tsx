@@ -6,7 +6,10 @@ import { routerHistory } from "@/utils/router";
 import logo from "@/assets/images/logo.png";
 import { layoutSettings } from "@/router-config";
 import styles from "./login.react..less";
+import { UserSecurityContext } from "@/utils/utils";
+import { logger } from "@/utils/logger";
 
+const log = logger.getLogger("src/pages/login.react.tsx");
 
 interface LoginPageProps {
 }
@@ -37,12 +40,26 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
           return;
         }
         message.success(message || "登录成功").then();
-        const { extInfo = {}, ...restProps } = userInfo;
-        window.currentUser = { ...restProps, ...extInfo };
-        // window.securityContext = user;
-        if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
-      })
-      .finally(() => this.setState({ loading: false }));
+        // const { extInfo = {}, ...restProps } = userInfo;
+        // window.currentUser = { ...restProps, ...extInfo };
+        // 获取登录用户角色权限信息
+        if (layoutSettings.currentUserApi) {
+          request.get(layoutSettings.currentUserApi).then(securityContext => {
+            log.info("getCurrentUser -> ", securityContext);
+            const { userInfo, roles = [], permissions = [] } = securityContext;
+            const { extInfo = {}, ...restProps } = userInfo;
+            window.currentUser = { ...restProps, ...extInfo };
+            window.securityContext = new UserSecurityContext(userInfo, roles, permissions);
+          });
+          window.appComponent.refreshMenu(() => {
+            if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
+          }).then();
+        } else {
+          window.appComponent.refreshMenu(() => {
+            if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
+          }).then();
+        }
+      }).finally(() => this.setState({ loading: false }));
   }
 
   render() {

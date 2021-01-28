@@ -8,6 +8,10 @@ interface UserPermission {
   hasPermissions: (...permissions: string[]) => boolean;
   /** 是否拥有指定角色 */
   hasRoles: (...roles: string[]) => boolean;
+  /** 是否拥有指定任意一个权限 */
+  hasAnyPermissions: (...permissions: string[]) => boolean;
+  /** 是否拥有指定任意一个角色 */
+  hasAnyRoles: (...roles: string[]) => boolean;
 }
 
 /** 路径变量 */

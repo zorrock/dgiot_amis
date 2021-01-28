@@ -95,4 +95,58 @@ const menuToRoute = (menu: MenuInfo): RouterConfig => {
   return route;
 }
 
-export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, getLocationHash, menuToRoute };
+class UserSecurityContext implements SecurityContext {
+  readonly permissions: string[];
+  readonly roles: string[];
+  readonly userInfo: UserInfo;
+
+  constructor(permissions: string[], roles: string[], userInfo: UserInfo) {
+    this.permissions = permissions;
+    this.roles = roles;
+    this.userInfo = userInfo;
+  }
+
+  hasPermissions(...permissions: string[]): boolean {
+    return UserSecurityContext.hasAll(this.permissions, ...permissions);
+  }
+
+  hasRoles(...roles: string[]): boolean {
+    return UserSecurityContext.hasAll(this.roles, ...roles);
+  }
+
+  hasAnyPermissions(...permissions: string[]): boolean {
+    return UserSecurityContext.hasAny(this.permissions, ...permissions);
+  }
+
+  hasAnyRoles(...roles: string[]): boolean {
+    return UserSecurityContext.hasAny(this.roles, ...roles);
+  }
+
+  public static hasAll(source: string[], ...target: string[]): boolean {
+    if (!target || target.length <= 0) return true;
+    if (!source || source.length <= 0) return false;
+    let flag = true;
+    target.forEach(item => {
+      if (!flag) return;
+      if (source.indexOf(item) < 0) {
+        flag = false;
+      }
+    });
+    return flag;
+  }
+
+  public static hasAny(source: string[], ...target: string[]) {
+    if (!target || target.length <= 0) return true;
+    if (!source || source.length <= 0) return false;
+    let flag = false;
+    target.forEach(item => {
+      if (flag) return;
+      if (source.indexOf(item) >= 0) {
+        flag = true;
+      }
+    });
+    return flag;
+  }
+}
+
+export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, getLocationHash, menuToRoute, UserSecurityContext };

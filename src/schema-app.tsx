@@ -8,7 +8,7 @@ import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 import { BlankLayout } from "@/layouts/BlankLayout";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { $rootMounted, initRootDiv } from '@/utils/amis-utils';
-import { getLocationHash, menuToRoute } from '@/utils/utils';
+import { getLocationHash, menuToRoute, UserSecurityContext } from '@/utils/utils';
 import { logger } from '@/utils/logger';
 import { request } from '@/utils/request';
 import { LayoutConfig, layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
@@ -203,10 +203,12 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 // 获取当前登录用户信息
 const getCurrentUser = async () => {
   if (!layoutSettings.currentUserApi) return;
-  const user = await request.get(layoutSettings.currentUserApi);
-  log.info("getCurrentUser -> ", user);
-  window.currentUser = user?.userInfo;
-  // window.securityContext = user;
+  const securityContext = await request.get(layoutSettings.currentUserApi);
+  log.info("getCurrentUser -> ", securityContext);
+  const { userInfo, roles = [], permissions = [] } = securityContext;
+  const { extInfo = {}, ...restProps } = userInfo;
+  window.currentUser = { ...restProps, ...extInfo };
+  window.securityContext = new UserSecurityContext(userInfo, roles, permissions);
 };
 
 // 加载服务端菜单数据
