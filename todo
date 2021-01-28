@@ -25,8 +25,8 @@
 [OK] 24.NestSideMenuLayout无法关闭所有页签问题
 [OK] 25.NestSideMenuLayout页签栏“更多菜单”事件
 [OK] 26.修改当前页amis代码
-[  ] 28.NestSideMenuLayout自动隐藏一级菜单
-[  ] 27.把所有Amis页面应用挂载到Window全局对象下
+[NO] 28.NestSideMenuLayout自动隐藏一级菜单
+[OK] 27.把所有Amis页面应用挂载到Window全局对象下
 [OK] 28.系统登录页面
 
 

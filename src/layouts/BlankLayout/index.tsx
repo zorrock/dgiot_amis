@@ -34,6 +34,8 @@ interface BlankLayoutState {
   pageType: TabPageType;
   /** 是否显示编辑代码对话框 */
   showEditCodeModal: boolean;
+  /** amis页面应用对象名称 */
+  amisPageName?: string;
 }
 
 class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
@@ -179,11 +181,15 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
   // -----------------------------------------------------------------------------------
 
   protected showPage() {
-    const { currentLocationKey } = this.state;
+    const { currentLocationKey, amisPageName } = this.state;
     const { location, layoutMenuData: { currentMenu } } = this.props;
     if (!currentMenu) {
       if (currentLocationKey) {
         this.setState({ loading: false, currentLocationKey: undefined, mountedDomId: undefined });
+      }
+      // 在Window全局对象下删除已经关闭了的Amis页面应用
+      if (amisPageName) {
+        delete window.amisPages[amisPageName];
       }
       return;
     }
@@ -197,15 +203,29 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
       { loading: true, currentLocationKey: locationKey, mountedDomId, pageType, showEditCodeModal: false },
       async () => {
         let component: any;
+        let newAmisPageName: string | undefined;
         if (pageType === "react") {
           // react 组件
           component = await loadReactPageByPath(pagePath!);
         } else if (pageType === "amis") {
           // amis 组件
           component = await loadAmisPageByPath(pagePath!);
-          amisRender(mountedDomId, component.schema);
+          const amisPage = amisRender(mountedDomId, component.schema);
+          newAmisPageName = component.amisPageName;
+          // 把Amis页面应用挂载到Window全局对象下
+          if (amisPage && newAmisPageName && variableTypeOf(newAmisPageName) === TypeEnum.string) {
+            if (!window.amisPages) window.amisPages = {};
+            if (window.amisPages[newAmisPageName]) {
+              log.warn(`window.amisPages.${newAmisPageName}值被覆盖 | pagePath -> `, pagePath);
+            }
+            window.amisPages[newAmisPageName] = amisPage;
+          }
         }
-        this.setState({ loading: false, component });
+        // 在Window全局对象下删除已经关闭了的Amis页面应用
+        if (amisPageName && amisPageName !== newAmisPageName) {
+          delete window.amisPages[amisPageName];
+        }
+        this.setState({ loading: false, component, amisPageName: newAmisPageName });
       }
     );
   }

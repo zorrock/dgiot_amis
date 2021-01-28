@@ -525,6 +525,13 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   /** 页面内容 */
   protected getPageContent() {
     const { multiTabs, activePageKey } = this.state;
+    // 在Window全局对象下删除已经关闭了的Amis页面应用
+    const delArr = lodash.keys(window.amisPages).filter(amisPageName => multiTabs.findIndex(tab => amisPageName === tab.amisPageName) < 0);
+    delArr.forEach(amisPageName => {
+      delete window.amisPages[amisPageName];
+      // window.amisPages[amisPageName] = undefined as any;
+    });
+    // 多页签渲染
     if (!multiTabs || multiTabs.length <= 0) return <div/>;
     return (
       <Tabs
@@ -648,7 +655,16 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         } else if (newMultiTab.pageType === "amis") {
           // amis 组件
           newMultiTab.component = await loadAmisPageByPath(pagePath!);
-          amisRender(newMultiTab.mountedDomId, newMultiTab.component.schema);
+          const amisPage = amisRender(newMultiTab.mountedDomId, newMultiTab.component.schema);
+          newMultiTab.amisPageName = newMultiTab.component.amisPageName;
+          // 把Amis页面应用挂载到Window全局对象下
+          if (amisPage && newMultiTab.amisPageName && variableTypeOf(newMultiTab.amisPageName) === TypeEnum.string) {
+            if (!window.amisPages) window.amisPages = {};
+            if (window.amisPages[newMultiTab.amisPageName]) {
+              log.warn(`window.amisPages.${newMultiTab.amisPageName}值被覆盖 | pagePath -> `, pagePath);
+            }
+            window.amisPages[newMultiTab.amisPageName] = amisPage;
+          }
         }
         if (newMultiTab.loading) {
           newMultiTab.loading = false;

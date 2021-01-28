@@ -1,9 +1,10 @@
-// import { PageSchema } from "amis";
 import classnames from "classnames";
 import { FormClassName } from "@/amis-types";
 import { serverHost } from "@/server-api";
 import { enum2object } from "@/utils/enum";
 import { orderTypeMapper, payStatusMapper, payTypeMapper, statusMapper } from "./enum-data";
+
+const amisPageName = "curd";
 
 // 详情对话框
 function detailsDialog() {
@@ -191,4 +192,4 @@ const schema = {
   ],
 };
 
-export { schema }
+export { schema, amisPageName }

@@ -157,6 +157,8 @@ interface MultiTabItem {
   pageType: TabPageType;
   /** 组件内容 */
   component?: any;
+  /** amis页面应用对象名称 */
+  amisPageName?: string;
 }
 
 /** 全局Layout菜单数据 */
