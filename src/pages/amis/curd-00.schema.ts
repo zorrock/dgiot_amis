@@ -102,9 +102,9 @@ const schema = {
       // --------------------------------------------------------------- 常规配置
       perPageAvailable: [10, 20, 50, 100],
       syncLocation: false,
-      keepItemSelectionOnPageChange: true,
-      // multiple: true,
-      labelTpl: "${orderCode}",
+      multiple: true,
+      keepItemSelectionOnPageChange: false,
+      // labelTpl: "${orderCode}",
       draggable: true,
       hideQuickSaveBtn: false,
       autoJumpToTopOnPagerChange: false,
