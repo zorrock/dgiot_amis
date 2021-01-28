@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { Button, Checkbox, Form, Input, Layout, message } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { request } from "@/utils/request";
-import { routerHistory } from "@/utils/router";
+// import { routerHistory } from "@/utils/router";
 import logo from "@/assets/images/logo.png";
 import { layoutSettings } from "@/router-config";
 import styles from "./login.react..less";
-import { UserSecurityContext } from "@/utils/utils";
-import { logger } from "@/utils/logger";
+// import { logger } from "@/utils/logger";
 
-const log = logger.getLogger("src/pages/login.react.tsx");
+// const log = logger.getLogger("src/pages/login.react.tsx");
 
 interface LoginPageProps {
 }
@@ -43,33 +42,33 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
         // const { extInfo = {}, ...restProps } = userInfo;
         // window.currentUser = { ...restProps, ...extInfo };
         // 获取登录用户角色权限信息
-        if (layoutSettings.currentUserApi) {
-          this.getCurrentUser(() => this.refreshMenu());
-        } else {
-          this.refreshMenu();
-        }
+        // if (layoutSettings.currentUserApi) {
+        //   this.getCurrentUser(() => this.refreshMenu());
+        // } else {
+        //   this.refreshMenu();
+        // }
       }).finally(() => this.setState({ loading: false }));
   }
 
-  protected getCurrentUser(callback?: () => void) {
-    if (!layoutSettings.currentUserApi) return;
-    request.get(layoutSettings.currentUserApi).then(securityContext => {
-      log.info("getCurrentUser -> ", securityContext);
-      const { userInfo, roles = [], permissions = [] } = securityContext;
-      const { extInfo = {}, ...restProps } = userInfo;
-      window.currentUser = { ...restProps, ...extInfo };
-      window.securityContext = new UserSecurityContext(userInfo, roles, permissions);
-    });
-    window.appComponent.refreshMenu(() => {
-      if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
-    }).then(callback);
-  }
+  // protected getCurrentUser(callback?: () => void) {
+  //   if (!layoutSettings.currentUserApi) return;
+  //   request.get(layoutSettings.currentUserApi).then(securityContext => {
+  //     log.info("getCurrentUser -> ", securityContext);
+  //     const { userInfo, roles = [], permissions = [] } = securityContext;
+  //     const { extInfo = {}, ...restProps } = userInfo;
+  //     window.currentUser = { ...restProps, ...extInfo };
+  //     window.securityContext = new UserSecurityContext(userInfo, roles, permissions);
+  //   });
+  //   window.appComponent.refreshMenu(() => {
+  //     if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
+  //   }).then(callback);
+  // }
 
-  protected refreshMenu() {
-    window.appComponent.refreshMenu(() => {
-      if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
-    }).then();
-  }
+  // protected refreshMenu() {
+  //   window.appComponent.refreshMenu(() => {
+  //     if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
+  //   }).then();
+  // }
 
   render() {
     const { loading } = this.state;

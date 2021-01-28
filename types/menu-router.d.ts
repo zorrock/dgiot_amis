@@ -1,17 +1,17 @@
 /** 用户权限 */
 interface UserPermission {
-  /** 权限列表 */
-  readonly permissions: string[];
   /** 角色列表 */
   readonly roles: string[];
-  /** 是否拥有指定权限 */
-  hasPermissions: (...permissions: string[]) => boolean;
+  /** 权限列表 */
+  readonly permissions: string[];
   /** 是否拥有指定角色 */
   hasRoles: (...roles: string[]) => boolean;
-  /** 是否拥有指定任意一个权限 */
-  hasAnyPermissions: (...permissions: string[]) => boolean;
+  /** 是否拥有指定权限 */
+  hasPermissions: (...permissions: string[]) => boolean;
   /** 是否拥有指定任意一个角色 */
   hasAnyRoles: (...roles: string[]) => boolean;
+  /** 是否拥有指定任意一个权限 */
+  hasAnyPermissions: (...permissions: string[]) => boolean;
 }
 
 /** 路径变量 */

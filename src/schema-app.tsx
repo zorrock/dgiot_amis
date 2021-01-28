@@ -8,10 +8,10 @@ import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 import { BlankLayout } from "@/layouts/BlankLayout";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { $rootMounted, initRootDiv } from '@/utils/amis-utils';
-import { getLocationHash, menuToRoute, UserSecurityContext } from '@/utils/utils';
+import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
-import { request } from '@/utils/request';
 import { LayoutConfig, layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
+import { getCurrentUser, getMenus } from "@/utils/login-service";
 import { layoutSettings, routerConfigs } from './router-config';
 
 const log = logger.getLogger("src/schema-app.tsx");
@@ -183,40 +183,13 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
    * 刷新菜单
    */
   public async refreshMenu(callback?: () => void) {
-    if (!layoutSettings.menuApi) return;
-    const menus = await request.get(layoutSettings.menuApi);
-    const newRoutes = menus.map((menu: any) => menuToRoute(menu));
-    const newRouterConfigs = lodash.cloneDeep(routerConfigs);
-    let updated: boolean = false;
-    newRouterConfigs.forEach(layoutConfig => {
-      if (updated || layoutConfig.layout === LayoutType.Blank) return;
-      updated = true;
-      newRouterConfigs[1].routes = newRoutes;
-    });
-    if (updated) {
-      const runtimeLayouts = layoutToRuntime(newRouterConfigs);
-      this.setState({ runtimeLayouts }, callback);
-    }
+    const newRouterConfigs = await getMenus(lodash.cloneDeep(routerConfigs), layoutSettings.menuApi!);
+    if (!newRouterConfigs) return;
+    const runtimeLayouts = layoutToRuntime(newRouterConfigs);
+    this.setState({ runtimeLayouts }, callback);
   }
 }
 
-// 获取当前登录用户信息
-const getCurrentUser = async () => {
-  if (!layoutSettings.currentUserApi) return;
-  const securityContext = await request.get(layoutSettings.currentUserApi);
-  log.info("getCurrentUser -> ", securityContext);
-  const { userInfo, roles = [], permissions = [] } = securityContext;
-  const { extInfo = {}, ...restProps } = userInfo;
-  window.currentUser = { ...restProps, ...extInfo };
-  window.securityContext = new UserSecurityContext(userInfo, roles, permissions);
-};
-
-// 加载服务端菜单数据
-const getMenus = async (): Promise<RouterConfig[] | undefined> => {
-  if (!layoutSettings.menuApi) return;
-  const menus = await request.get(layoutSettings.menuApi);
-  return menus.map((menu: any) => menuToRoute(menu));
-}
 
 // 初始化应用
 const initApp = (routerConfigs: LayoutConfig[]) => {
@@ -240,13 +213,9 @@ const initApp = (routerConfigs: LayoutConfig[]) => {
 initRootDiv();
 // 应用初始化
 const routerConfigsCopy = lodash.cloneDeep(routerConfigs);
-getCurrentUser().then(() => {
+getCurrentUser(layoutSettings.currentUserApi!).then(() => {
   // 用户已经登录
-  getMenus().then(routes => {
-    // 获取菜单成功
-    if (!routes) return;
-    routerConfigsCopy[1].routes = routes;
-  }).catch(reason => {
+  getMenus(routerConfigsCopy, layoutSettings.menuApi!).catch(reason => {
     // 获取菜单失败
     log.error("系统菜单加载失败 -> ", reason);
     message.error("系统菜单加载失败!").then();
