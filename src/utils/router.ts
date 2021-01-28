@@ -6,7 +6,11 @@ import memoizeOne from "memoize-one";
 import isEqual from "lodash.isequal";
 import { BlankLayoutProps } from "@/layouts/BlankLayout";
 import { NestSideMenuLayoutProps } from "@/layouts/NestSideMenuLayout";
-import { getUrlParam, hasValue, noValue } from "@/utils/utils";
+import { getUrlParam, hasValue, noValue } from "./utils";
+import { logger } from "./logger";
+import { TypeEnum, variableTypeOf } from "@/utils/typeof";
+
+const log = logger.getLogger("src/utils/router.ts");
 
 /** 布局类型 */
 enum LayoutType {
@@ -159,11 +163,25 @@ const joinPath = (path: string, childPath: string): string => {
 }
 
 // 递归转换 RouterConfig -> RuntimeRouter
-const routerToRuntime = (rootPath: string, current: RouterConfig, parent?: RuntimeRouter): RuntimeRouter => {
+const routerToRuntime = (rootPath: string, current: RouterConfig, parent?: RuntimeRouter): RuntimeRouter | undefined => {
   const {
     path, pathVariable, querystring, exact, pagePath, openOptions, icon, name, pageTitle, defaultOpen, breadcrumbName,
     hideBreadcrumb, groupName, hideMenu, hideChildrenMenu, state, authority, routes: childRoutes, ...props
   } = current;
+  // 菜单权限控制
+  let flag: boolean = true;
+  if (authority) {
+    if (variableTypeOf(authority) === TypeEnum.string) {
+      flag = !!window.securityContext && window.securityContext.hasPermissions(authority as any);
+    } else if (variableTypeOf(authority) === TypeEnum.array) {
+      flag = !!window.securityContext && window.securityContext.hasPermissions(authority as any);
+    } else if (authority instanceof Function) {
+      flag = !!window.securityContext && authority(window.securityContext);
+    } else {
+      log.error("authority类型错误 -> ", current);
+    }
+  }
+  if (!flag) return;
   // 默认值处理
   current.path = parent ? joinPath(parent.path, path) : joinPath(rootPath, path);
   current.pathVariable = pathVariable ?? {};
@@ -201,7 +219,8 @@ const routerToRuntime = (rootPath: string, current: RouterConfig, parent?: Runti
   // 递归调用
   if (childRoutes && childRoutes.length > 0) {
     childRoutes.forEach(childRoute => {
-      runtimeRouter.routes?.push(routerToRuntime(rootPath, childRoute, runtimeRouter));
+      const tmpRoute = routerToRuntime(rootPath, childRoute, runtimeRouter)
+      if (tmpRoute) runtimeRouter.routes?.push(tmpRoute);
     });
   }
   return runtimeRouter;
@@ -214,7 +233,10 @@ const layoutToRuntime = (routerConfigs: LayoutConfig[]): RuntimeLayoutConfig[] =
     const { path: rootPath, routes } = routerConfig;
     if (!routes || routes.length <= 0) return;
     const runtimeRouters: RuntimeRouter[] = [];
-    routes.forEach(currentRoute => runtimeRouters.push(routerToRuntime(rootPath, currentRoute)));
+    routes.forEach(currentRoute => {
+      const tmpRoute = routerToRuntime(rootPath, currentRoute);
+      if (tmpRoute) runtimeRouters.push(tmpRoute);
+    });
     routerConfig.routes = runtimeRouters;
   });
   return routerConfigs as RuntimeLayoutConfig[];
@@ -378,7 +400,7 @@ const locationHashMatchInner = (layoutSettings: LayoutSettings, locationHash: st
     matchParams = matchFuc(locationHash);
   } else if (matched.matchedLayout && matched.matchedLayout["404"] && locationHash !== matched.matchedLayout.path) {
     // 404页面路由处理
-    matched.matchedRouter = routerToRuntime("/", { path: locationHash, pagePath: matched.matchedLayout["404"], name: "404-页面不存在" });
+    matched.matchedRouter = routerToRuntime("/", { path: locationHash, pagePath: matched.matchedLayout["404"], name: "404-页面不存在" })!;
     currentMenu = routerToMenu(menuSettings, matched.matchedRouter);
   }
   const matchInfo: RouteMatchParams = {
