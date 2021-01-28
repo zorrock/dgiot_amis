@@ -10,7 +10,7 @@ import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
 import { request } from '@/utils/request';
 import { serverHost } from '@/server-api';
-import { layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
+import { LayoutConfig, layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
 import { layoutSettings, routerConfigs } from './router-config';
 
 const log = logger.getLogger("src/schema-app.tsx");
@@ -18,11 +18,13 @@ const log = logger.getLogger("src/schema-app.tsx");
 interface ReactAppPageProps {
   /** 布局全局设置 */
   layoutSettings: LayoutSettings;
-  /** 运行时路由 */
-  runtimeLayouts: RuntimeLayoutConfig[];
+  /** Layout配置 */
+  routerConfigs: LayoutConfig[];
 }
 
 interface ReactAppPageState {
+  /** 运行时路由 */
+  runtimeLayouts: RuntimeLayoutConfig[];
   /** 页面路径 */
   locationHash: string;
   /** 当前Layout */
@@ -43,15 +45,16 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
   constructor(props: ReactAppPageProps) {
     super(props);
+    const runtimeLayouts = layoutToRuntime(props.routerConfigs);
     const initLocationHash = getLocationHash();
-    const matched = locationHashMatch(props.layoutSettings, initLocationHash, props.runtimeLayouts);
+    const matched = locationHashMatch(props.layoutSettings, initLocationHash, runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
     const currentMenu = matched?.currentMenu;
     const rootMenus = matched?.rootMenus;
     const location = matched?.location;
     const match = matched?.match;
-    this.state = { locationHash: initLocationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match };
+    this.state = { runtimeLayouts, locationHash: initLocationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match };
     log.info("initState ->", this.state);
   }
 
@@ -67,7 +70,8 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
   /** Location Hash更新事件 */
   onLocationHashChange = (event: HashChangeEvent) => {
-    const { runtimeLayouts, layoutSettings } = this.props;
+    const { layoutSettings } = this.props;
+    const { runtimeLayouts } = this.state;
     const locationHash = getLocationHash();
     // 跳转到默认地址或登录地址 - 全局跳转
     const { loginPath, defaultPath } = layoutSettings;
@@ -169,7 +173,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   //  * 刷新菜单
   //  */
   // public async refreshMenu(callback?: () => void) {
-  //   const menus = await request.get(apiPath.LoginController.managerMenus);
+  //   const menus = await request.get(layoutSettings);
   //   const newRouterConfigs = lodash.cloneDeep(routerConfigs);
   //   newRouterConfigs[1].routes = menus.map((menu: any) => menuToRoute(menu));
   //   const runtimeLayouts = layoutToRuntime(newRouterConfigs);
@@ -191,11 +195,9 @@ const initApp = () => {
   if (lodash.trim(locationHash).length <= 0 && defaultPath) {
     routerHistory.push({ hash: defaultPath });
   }
-
-  const runtimeLayouts = layoutToRuntime(routerConfigs);
+  log.info("routerConfigs ->", routerConfigs);
   log.info("layoutSettings ->", layoutSettings);
-  log.info("runtimeLayouts ->", runtimeLayouts);
-  window.appComponent = ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} runtimeLayouts={runtimeLayouts}/>, $rootMounted) as any;
+  window.appComponent = ReactDOM.render(<ReactAppPage layoutSettings={layoutSettings} routerConfigs={lodash.cloneDeep(routerConfigs)}/>, $rootMounted) as any;
   log.info("ReactDOM.render完成!");
 };
 if (isProdEnv) {

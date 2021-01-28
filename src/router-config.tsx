@@ -61,7 +61,7 @@ const routerConfigs: LayoutConfig[] = [
     layoutProps: {
       hideGlobalHeader: true,
       hideGlobalFooter: false,
-      globalFooterCopyright: <>Copyright <CopyrightCircleOutlined/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>,
+      globalFooterCopyright: <>Copyright <CopyrightCircleOutlined key="copyright"/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>,
       globalSideMenuWidth: 100,
       globalSideMenuMode: SideFirstMenuMode.AntdMenu,
     },

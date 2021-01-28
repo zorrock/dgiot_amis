@@ -315,7 +315,7 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
 
   protected getAmisModalContainer() {
     return (
-      <div id="amis-modal-container" className="amis-scope" style={{ height: 0 }}>
+      <div id="amis-modal-container" key="amis-modal-container" className="amis-scope" style={{ height: 0 }}>
         {/*<div className="amis-routes-wrapper">*/}
         {/*<div className="a-Toast-wrap a-Toast-wrap--topRight"/>*/}
         {/*<div className="a-Page">*/}
