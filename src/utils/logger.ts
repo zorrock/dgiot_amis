@@ -49,7 +49,7 @@ let innerConfig: InnerConfig = {
 }
 // 当前允许的日志级别
 const allowedLevel: Level[] = [];
-debugger
+
 // 刷新当前允许的日志级别
 function refreshAllowedLevel(): void {
   const { level } = innerConfig;
