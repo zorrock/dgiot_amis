@@ -1,7 +1,10 @@
 import React from 'react';
+import classNames from "classnames";
 import { CopyrightCircleOutlined } from "@ant-design/icons";
 import { LayoutConfig, LayoutType } from '@/utils/router';
 import { SideFirstMenuMode } from "@/components/Layout/GlobalSide";
+import { ActionKey, UserAvatar } from "@/components/UserAvatar";
+import { userLogout } from "@/service/login-service";
 
 const routerConfigs: LayoutConfig[] = [
   // {
@@ -59,7 +62,34 @@ const routerConfigs: LayoutConfig[] = [
     path: "/nest-side",
     layout: LayoutType.NestSide,
     layoutProps: {
-      hideGlobalHeader: true,
+      hideGlobalHeader: false,
+      globalHeaderRightRender: (props, className, elementMap) => {
+        const currentUser = window.currentUser;
+        elementMap.set("avatar", (
+          <UserAvatar
+            key="avatar"
+            avatarSrc={currentUser?.avatar}
+            nickname={currentUser?.nickname}
+            onMenuClick={key => {
+              switch (key) {
+                case ActionKey.PersonalCenter:
+                  break;
+                case ActionKey.PersonalSettings:
+                  break;
+                case ActionKey.Logout:
+                  userLogout(layoutSettings.logoutApi!, layoutSettings.loginPath!);
+                  break;
+              }
+            }}
+          />
+        ));
+        const { rightClassName, rightStyle = {} } = props;
+        return (
+          <div className={classNames(className, rightClassName)} style={rightStyle}>
+            {[...elementMap.values()]}
+          </div>
+        );
+      },
       hideGlobalFooter: false,
       globalFooterCopyright: <>Copyright <CopyrightCircleOutlined key="copyright"/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>,
       globalSideMenuWidth: 100,
@@ -232,7 +262,7 @@ const layoutSettings: LayoutSettings = {
   menu: { defaultOpen: true },
   iconScriptUrl: "//at.alicdn.com/t/font_1326886_bbehrpsvyl.js",
   htmlTitleSuffix: "",
-  // loginPath: "/blank/login",
+  loginPath: "/blank/login",
   defaultPath: "/nest-side/curd/00",
   // loginApi: "/login",
   // logoutApi: "/logout",

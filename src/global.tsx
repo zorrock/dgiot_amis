@@ -21,4 +21,9 @@ setConfig({
   moduleNameRegExp: /src\/schema-app\.tsx/,
 });
 
+// 模拟登录用户
+if (!window.currentUser) {
+  window.currentUser = { uid: "001", loginName: "lzw", nickname: "李志伟" };
+}
+
 log.info("global.tsx加载完成")
