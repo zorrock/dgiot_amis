@@ -11,7 +11,7 @@ import { $rootMounted, initRootDiv } from '@/utils/amis-utils';
 import { getLocationHash } from '@/utils/utils';
 import { logger } from '@/utils/logger';
 import { LayoutConfig, layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
-import { getCurrentUser, getMenus } from "@/utils/login-service";
+import { getCurrentUser, getMenus } from "@/service/login-service";
 import { layoutSettings, routerConfigs } from './router-config';
 
 const log = logger.getLogger("src/schema-app.tsx");
@@ -183,13 +183,13 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
    * 刷新菜单
    */
   public async refreshMenu(callback?: () => void) {
-    const newRouterConfigs = await getMenus(lodash.cloneDeep(routerConfigs), layoutSettings.menuApi!);
+    const routerConfigsCopy = lodash.cloneDeep(routerConfigs);
+    const newRouterConfigs = await getMenus(routerConfigsCopy, layoutSettings.menuApi!);
     if (!newRouterConfigs) return;
     const runtimeLayouts = layoutToRuntime(newRouterConfigs);
     this.setState({ runtimeLayouts }, callback);
   }
 }
-
 
 // 初始化应用
 const initApp = (routerConfigs: LayoutConfig[]) => {

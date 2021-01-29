@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Checkbox, Form, Input, Layout, message } from "antd";
+import { Button, Checkbox, Form, Input, Layout } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { request } from "@/utils/request";
-// import { routerHistory } from "@/utils/router";
 import logo from "@/assets/images/logo.png";
 import { layoutSettings } from "@/router-config";
 import styles from "./login.react..less";
-// import { logger } from "@/utils/logger";
-
-// const log = logger.getLogger("src/pages/login.react.tsx");
+import { userLogin } from "@/service/login-service";
 
 interface LoginPageProps {
 }
@@ -27,48 +23,15 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
 
   /** 登录请求 */
   protected login = (values: any) => {
-    if (!layoutSettings.loginApi) {
-      message.warn("未配置layoutSettings.loginApi").then();
-      return;
-    }
-    this.setState({ loading: true });
-    request.post(layoutSettings.loginApi, values)
-      .then(({ success, userInfo, message }) => {
-        if (!success || !userInfo) {
-          message.error(message || "用户名/密码错误").then();
-          return;
-        }
-        message.success(message || "登录成功").then();
-        // const { extInfo = {}, ...restProps } = userInfo;
-        // window.currentUser = { ...restProps, ...extInfo };
-        // 获取登录用户角色权限信息
-        // if (layoutSettings.currentUserApi) {
-        //   this.getCurrentUser(() => this.refreshMenu());
-        // } else {
-        //   this.refreshMenu();
-        // }
-      }).finally(() => this.setState({ loading: false }));
+    userLogin(
+      values,
+      layoutSettings.loginApi!,
+      layoutSettings.currentUserApi!,
+      layoutSettings.defaultPath!,
+      () => this.setState({ loading: true }),
+      () => this.setState({ loading: false })
+    );
   }
-
-  // protected getCurrentUser(callback?: () => void) {
-  //   if (!layoutSettings.currentUserApi) return;
-  //   request.get(layoutSettings.currentUserApi).then(securityContext => {
-  //     log.info("getCurrentUser -> ", securityContext);
-  //     const { userInfo, roles = [], permissions = [] } = securityContext;
-  //     const { extInfo = {}, ...restProps } = userInfo;
-  //     window.currentUser = { ...restProps, ...extInfo };
-  //     window.securityContext = new UserSecurityContext(userInfo, roles, permissions);
-  //   });
-  //   window.appComponent.refreshMenu(() => {
-  //     if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
-  //   }).then(callback);
-  // }
-
-  // protected refreshMenu() {
-  //   window.appComponent.refreshMenu(() => {
-  //     if (layoutSettings.defaultPath) routerHistory.push({ hash: layoutSettings.defaultPath });
-  //   }).then();
-  // }
 
   render() {
     const { loading } = this.state;

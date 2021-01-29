@@ -1,66 +1,10 @@
 import { message } from "antd";
 import { request } from "@/utils/request";
 import { logger } from "@/utils/logger";
-import { LayoutConfig, LayoutType } from "@/utils/router";
+import { LayoutConfig, LayoutType, routerHistory } from "@/utils/router";
+import { UserSecurityContext } from "@/utils/security";
 
 const log = logger.getLogger("src/utils/login-service.ts");
-
-/**
- * 用户权限信息
- */
-class UserSecurityContext implements SecurityContext {
-  readonly userInfo: UserInfo;
-  readonly roles: string[];
-  readonly permissions: string[];
-
-  constructor(permissions: string[], roles: string[], userInfo: UserInfo) {
-    this.permissions = permissions;
-    this.roles = roles;
-    this.userInfo = userInfo;
-  }
-
-  hasRoles(...roles: string[]): boolean {
-    return UserSecurityContext.hasAll(this.roles, ...roles);
-  }
-
-  hasPermissions(...permissions: string[]): boolean {
-    return UserSecurityContext.hasAll(this.permissions, ...permissions);
-  }
-
-  hasAnyRoles(...roles: string[]): boolean {
-    return UserSecurityContext.hasAny(this.roles, ...roles);
-  }
-
-  hasAnyPermissions(...permissions: string[]): boolean {
-    return UserSecurityContext.hasAny(this.permissions, ...permissions);
-  }
-
-  public static hasAll(source: string[], ...target: string[]): boolean {
-    if (!target || target.length <= 0) return true;
-    if (!source || source.length <= 0) return false;
-    let flag = true;
-    target.forEach(item => {
-      if (!flag) return;
-      if (source.indexOf(item) < 0) {
-        flag = false;
-      }
-    });
-    return flag;
-  }
-
-  public static hasAny(source: string[], ...target: string[]) {
-    if (!target || target.length <= 0) return true;
-    if (!source || source.length <= 0) return false;
-    let flag = false;
-    target.forEach(item => {
-      if (flag) return;
-      if (source.indexOf(item) >= 0) {
-        flag = true;
-      }
-    });
-    return flag;
-  }
-}
 
 /**
  * 菜单数据转换成路由配置
@@ -117,13 +61,25 @@ const getMenus = async (routerConfigs: LayoutConfig[], menuApi: string): Promise
 /**
  * 用户登录
  */
-const userLogin = (loginApi?: string) => {
+const userLogin = (loginData: any, loginApi: string, currentUserApi: string, defaultPath: string, onStart?: () => void, onFinally?: () => void) => {
   if (!loginApi) {
     message.warn("未配置layoutSettings.loginApi").then();
     return;
   }
-
-
+  if (onStart instanceof Function) onStart();
+  request.post(loginApi, loginData)
+    .then(({ success, userInfo, message }) => {
+      if (!success || !userInfo) {
+        message.error(message || "用户名/密码错误").then();
+        return;
+      }
+      message.success(message || "登录成功").then();
+      getCurrentUser(currentUserApi).then(() => {
+        window.appComponent.refreshMenu(() => {
+          if (defaultPath) routerHistory.push({ hash: defaultPath });
+        }).then();
+      });
+    }).finally(onFinally);
 };
 
-export { UserSecurityContext, menuToRoute, getCurrentUser, getMenus, userLogin }
+export { getCurrentUser, getMenus, userLogin }
