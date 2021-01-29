@@ -235,6 +235,7 @@ const layoutSettings: LayoutSettings = {
   // loginPath: "/blank/login",
   defaultPath: "/nest-side/curd/00",
   // loginApi: "/login",
+  // logoutApi: "/logout",
   // currentUserApi: "/current_user",
   // menuApi: `${serverHost}/!/amis-api/curd-page@menu`,
 };

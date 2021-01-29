@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { message } from "antd";
 import { request } from "@/utils/request";
 import { logger } from "@/utils/logger";
@@ -61,7 +62,7 @@ const getMenus = async (routerConfigs: LayoutConfig[], menuApi: string): Promise
 /**
  * 用户登录
  */
-const userLogin = (loginData: any, loginApi: string, currentUserApi: string, defaultPath: string, onStart?: () => void, onFinally?: () => void) => {
+const userLogin = (loginData: any, loginApi: string, currentUserApi: string, defaultPath: string, onStart?: () => void, onFinally?: () => void): void => {
   if (!loginApi) {
     message.warn("未配置layoutSettings.loginApi").then();
     return;
@@ -82,4 +83,21 @@ const userLogin = (loginData: any, loginApi: string, currentUserApi: string, def
     }).finally(onFinally);
 };
 
-export { getCurrentUser, getMenus, userLogin }
+/**
+ * 退出登录
+ */
+const userLogout = (logoutApi: string, loginPath: string): void => {
+  window.currentUser = undefined;
+  window.securityContext = undefined;
+  const finallyFuc = () => {
+    Cookies.remove("authorization");
+    if (loginPath) routerHistory.push({ hash: loginPath });
+  };
+  if (logoutApi) {
+    request.get(logoutApi).finally(finallyFuc);
+  } else {
+    finallyFuc();
+  }
+}
+
+export { getCurrentUser, getMenus, userLogin, userLogout }

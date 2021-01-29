@@ -4,6 +4,10 @@ html {
   font-size: 0.925rem;
 }
 
+.amis-scope .monaco-inputbox > .wrapper {
+  padding: 0;
+}
+
 .amis-scope .a-Table-content {
   overflow-y: hidden;
 }

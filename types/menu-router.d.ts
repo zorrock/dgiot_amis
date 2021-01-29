@@ -215,6 +215,8 @@ interface LayoutSettings {
   defaultPath?: string;
   /** 登录API接口地址 */
   loginApi?: string;
+  /** 登出API接口地址 */
+  logoutApi?: string;
   /** 获取当前登录用户信息API */
   currentUserApi?: string;
   /** 获取菜单数据API接口地址 */
