@@ -1,5 +1,5 @@
 import { noValue } from './utils';
-import { logger } from './logger';
+import { logger } from '@/utils/logger';
 
 const log = logger.getLogger("src/utils/message-observe.ts");
 

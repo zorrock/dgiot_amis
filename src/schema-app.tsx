@@ -13,6 +13,7 @@ import { logger } from '@/utils/logger';
 import { LayoutConfig, layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
 import { getCurrentUser, getMenus } from "@/service/login-service";
 import { layoutSettings, routerConfigs } from './router-config';
+import './global';
 
 const log = logger.getLogger("src/schema-app.tsx");
 

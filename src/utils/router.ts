@@ -7,7 +7,7 @@ import isEqual from "lodash.isequal";
 import { BlankLayoutProps } from "@/layouts/BlankLayout";
 import { NestSideMenuLayoutProps } from "@/layouts/NestSideMenuLayout";
 import { getUrlParam, hasValue, noValue } from "./utils";
-import { logger } from "./logger";
+import { logger } from '@/utils/logger';
 import { TypeEnum, variableTypeOf } from "@/utils/typeof";
 
 const log = logger.getLogger("src/utils/router.ts");

@@ -41,7 +41,6 @@ axiosInstance.interceptors.request.use(request => {
     return request;
   },
 );
-
 // amis - 响应适配
 axiosInstance.interceptors.response.use(response => {
     log.info("全局响应拦截[开始] response -> ", response);

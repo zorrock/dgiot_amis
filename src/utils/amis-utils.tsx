@@ -4,7 +4,7 @@ import { SchemaObject } from "amis";
 import { RenderOptions } from "amis/src/factory";
 import { RootRenderProps } from "amis/src/Root";
 import { amisRenderOptions } from './amis-render-options';
-import { logger } from './logger';
+import { logger } from '@/utils/logger';
 
 const log = logger.getLogger("src/utils/amis-utils.tsx");
 

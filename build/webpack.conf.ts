@@ -41,7 +41,6 @@ let copyToClipboard = false;
 
 let config: Configuration = {
   entry: {
-    global: `${srcPath}/global`,
     schemaApp: `${srcPath}/schema-app`,
   },
   module: {
@@ -424,7 +423,7 @@ const options: HtmlWebpackPlugin.Options = {
   title: settings.defaultTitle ?? "webpack4.x",
   favicon: faviconPath,
   appVersion: settings.appVersion,
-  chunks: ["manifest", ...chunks, "global", "schemaApp"],
+  chunks: ["manifest", ...chunks, "schemaApp"],
   urlPrefix: enableCDN ? cdnPublicPath : "/",
   isDevMode,
   ...base64Images,

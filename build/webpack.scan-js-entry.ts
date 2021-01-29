@@ -63,7 +63,7 @@ const scanJsEntry = (config: Configuration, srcPath: string, distPath: string, c
       title: settings.defaultTitle ?? "webpack4.x",
       favicon: faviconPath,
       appVersion: settings.appVersion,
-      chunks: ["manifest", ...chunks, "global", entryKey],
+      chunks: ["manifest", ...chunks, entryKey],
       urlPrefix: enableCDN ? cdnPublicPath : '/',
       isDevMode,
       ...base64Images,
