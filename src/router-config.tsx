@@ -62,7 +62,7 @@ const routerConfigs: LayoutConfig[] = [
     path: "/nest-side",
     layout: LayoutType.NestSide,
     layoutProps: {
-      hideGlobalHeader: false,
+      hideGlobalHeader: true,
       globalHeaderRightRender: (props, className, elementMap) => {
         const currentUser = window.currentUser;
         elementMap.set("avatar", (

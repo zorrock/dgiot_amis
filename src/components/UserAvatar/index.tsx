@@ -73,7 +73,7 @@ class UserAvatar extends React.Component<UserAvatarProps, UserAvatarState> {
         mode="inline"
         theme="dark"
         inlineCollapsed={true}
-        openKeys={["avatar"]}
+        // openKeys={["avatar"]}
         onClick={info => {
           if (!(onMenuClick instanceof Function)) return;
           onMenuClick(info.key as any);
