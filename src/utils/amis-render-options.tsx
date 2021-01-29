@@ -8,7 +8,7 @@ import { getUrlParam, hasValue } from "@/utils/utils";
 import { TypeEnum, variableTypeOf } from "@/utils/typeof";
 import { CSSProperties } from "react";
 
-const log = logger.getLogger("/src/utils/amis-render-options.tsx");
+const log = logger.getLogger("src/utils/amis-render-options.tsx");
 
 interface RequestConfig extends AxiosRequestConfig {
   cancelExecutor?: (cancel: Canceler) => void;

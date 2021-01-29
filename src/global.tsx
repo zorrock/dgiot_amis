@@ -14,11 +14,11 @@ moment.locale('zh-cn');
 const log = logger.getLogger("src/global.tsx");
 
 // 全局日志配置
-// src/schema-app.tsx
-// src/layouts/BaseLayout/index.tsx
 setConfig({
   level: 'log',
-  moduleNameRegExp: /^src\/service\//,
+  // moduleNameRegExp: /.*/,
+  // moduleNameRegExp: /^src\/schema-app|src\/utils\/|src\/service\/.*/,
+  moduleNameRegExp: /src\/schema-app\.tsx/,
 });
 
 log.info("global.tsx加载完成")
