@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { CopyrightCircleOutlined } from "@ant-design/icons";
 import { LayoutConfig, LayoutType } from '@/utils/router';
 import { SideFirstMenuMode } from "@/components/Layout/GlobalSide";
-import { ActionKey, UserAvatar } from "@/components/UserAvatar";
+import { ActionKey, AvatarMode, UserAvatar } from "@/components/UserAvatar";
 import { userLogout } from "@/service/login-service";
 
 const routerConfigs: LayoutConfig[] = [
@@ -68,6 +68,7 @@ const routerConfigs: LayoutConfig[] = [
         elementMap.set("avatar", (
           <UserAvatar
             key="avatar"
+            mode={AvatarMode.Horizontal}
             avatarSrc={currentUser?.avatar}
             nickname={currentUser?.nickname}
             onMenuClick={key => {
@@ -94,6 +95,34 @@ const routerConfigs: LayoutConfig[] = [
       globalFooterCopyright: <>Copyright <CopyrightCircleOutlined key="copyright"/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>,
       globalSideMenuWidth: 100,
       globalSideMenuMode: SideFirstMenuMode.AntdMenu,
+      globalSideBottomRender: (props, className, elementMap) => {
+        const currentUser = window.currentUser;
+        elementMap.set("avatar", (
+          <UserAvatar
+            key="avatar"
+            mode={AvatarMode.Vertical}
+            avatarSrc={currentUser?.avatar}
+            nickname={currentUser?.nickname}
+            onMenuClick={key => {
+              switch (key) {
+                case ActionKey.PersonalCenter:
+                  break;
+                case ActionKey.PersonalSettings:
+                  break;
+                case ActionKey.Logout:
+                  userLogout(layoutSettings.logoutApi!, layoutSettings.loginPath!);
+                  break;
+              }
+            }}
+          />
+        ));
+        const { bottomClassName, bottomStyle = {} } = props;
+        return (
+          <div className={classNames(className, bottomClassName)} style={bottomStyle}>
+            {[...elementMap.values()]}
+          </div>
+        );
+      },
       sideMenuEnableSearchMenu: false,
     },
     routes: [
