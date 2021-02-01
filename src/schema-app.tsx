@@ -168,7 +168,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
       return this.getNoFoundPage();
     }
     // 跳转到登录地址 - 路由跳转
-    if (currentLayout && currentLayout["401"] && !window.currentUser && location?.hash !== currentLayout["401"]) {
+    if (currentLayout && currentLayout["401"] && !window.currentUser && location?.path !== currentLayout["401"]) {
       routerHistory.push({ hash: currentLayout["401"] });
       return <div/>;
     }

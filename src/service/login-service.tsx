@@ -21,7 +21,7 @@ const menuToRoute = (menu: MenuInfo): RouterConfig => {
       ext = {};
     }
   }
-  const route: RouterConfig = { name, icon, path, pagePath, hideMenu: hideMenu !== 1, hideChildrenMenu: hideChildrenMenu !== 1, ...ext };
+  const route: RouterConfig = { name, icon, path, pagePath, hideMenu: hideMenu !== 0, hideChildrenMenu: hideChildrenMenu !== 0, ...ext };
   if (children) {
     route.routes = [];
     children.forEach(child => route.routes?.push(menuToRoute(child)));

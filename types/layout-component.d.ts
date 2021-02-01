@@ -27,3 +27,15 @@ interface LayoutPageComponentProps {
   // /** */
   // staticContext?: object;
 }
+
+// /** html页面Location信息 */
+// interface PageLocation {
+//   /** url的path部分 */
+//   pathname: string;
+//   /** url的querystring部分(以"?"前缀开始) */
+//   search: string;
+//   /** url的hash部分(#号后面部分) */
+//   hash: string;
+//   /** url的querystring解析结果(一个对象) */
+//   query: QueryString;
+// }

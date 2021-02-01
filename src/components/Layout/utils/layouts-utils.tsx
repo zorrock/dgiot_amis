@@ -175,8 +175,8 @@ const getFirstMenu = (menu: RuntimeMenuItem): RuntimeMenuItem => {
 
 /** 路由转换成字符串 */
 const routerLocationToStr = (routerLocation: RouterLocation): string => {
-  const { hash, state } = routerLocation;
-  return `${hash ?? ""}|${stableStringify(state)}`;
+  const { path, state } = routerLocation;
+  return `${path ?? ""}|${stableStringify(state)}`;
 };
 
 /** 菜单转换成RouterLocation */
@@ -185,7 +185,7 @@ const menuToRouterLocation = (menu: RuntimeMenuItem): RouterLocation | undefined
   if (!runtimeRouter) return;
   return {
     // search: lodash.keys(runtimeRouter.querystring).length > 0 ? `?${qs.stringify(runtimeRouter.querystring)}` : "",
-    hash: runtimeRouter.path,
+    path: runtimeRouter.path,
     // query: runtimeRouter.querystring,
     state: runtimeRouter.state,
   };

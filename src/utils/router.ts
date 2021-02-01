@@ -382,7 +382,7 @@ const locationHashMatchInner = (layoutSettings: LayoutSettings, locationHash: st
   matched.matchedLayout.routes.forEach(route => rootMenus.push(routerToMenu(menuSettings, route)));
   const location: RouterLocation = {
     state: routerHistory.getLocationState(locationHash),
-    hash: locationHash,
+    path: locationHash,
     // search: window.location.search ?? "",
     // query: getUrlParam(),
   };

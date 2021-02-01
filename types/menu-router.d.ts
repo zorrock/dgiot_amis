@@ -25,13 +25,11 @@ type RouterState = { [name: string]: any };
 
 /** Router对应的Location信息 */
 interface RouterLocation {
-  // /** url的path部分 */
-  // pathname: string;
-  // /** url的querystring部分(以"?"前缀开始) */
+  /** 路由页面路径 */
+  path: string;
+  // /** 路由的querystring部分(以"?"前缀开始) */
   // search: string;
-  /** url的hash部分(#号后面部分) */
-  hash: string;
-  // /** url的querystring解析结果(一个对象) */
+  // /** 路由的querystring解析结果(一个对象) */
   // query: QueryString;
   /** router.push 传入的 state */
   state?: RouterState;
@@ -90,7 +88,7 @@ interface RouterConfig {
 
 /** 运行时路由 */
 interface RuntimeRouter extends RouterConfig {
-  /** 当前路由全路径 */
+  /** 当前路由全路径(包含queryString部分) */
   path: string;
   /** 路由 路径中有变量时，配置的路径变量对象 */
   pathVariable: PathVariable;
