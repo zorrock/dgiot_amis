@@ -16,8 +16,12 @@ interface UserPermission {
 
 /** 路径变量 */
 type PathVariable = { [path: string]: string | number | boolean };
+
 /** url querystring 部分 */
-type QueryString = { [param: string]: string };
+interface QueryString {
+  [key: string]: undefined | string | string[] | QueryString | QueryString[];
+}
+
 /** 路由权限配置 */
 type RouterAuthorityConfig = string | string[] | ((userPermissionInfo: UserPermission) => boolean);
 /** 路由状态 */
@@ -25,12 +29,14 @@ type RouterState = { [name: string]: any };
 
 /** Router对应的Location信息 */
 interface RouterLocation {
+  /** html页面url的hash部分(#号后面部分) */
+  hash: string;
   /** 路由页面路径 */
   path: string;
-  // /** 路由的querystring部分(以"?"前缀开始) */
-  // search: string;
+  // /** 路由的querystring部分(无"?"前缀) */
+  // search?: string;
   // /** 路由的querystring解析结果(一个对象) */
-  // query: QueryString;
+  // query?: QueryString;
   /** router.push 传入的 state */
   state?: RouterState;
 }
@@ -88,7 +94,7 @@ interface RouterConfig {
 
 /** 运行时路由 */
 interface RuntimeRouter extends RouterConfig {
-  /** 当前路由全路径(包含queryString部分) */
+  /** 当前路由路径 */
   path: string;
   /** 路由 路径中有变量时，配置的路径变量对象 */
   pathVariable: PathVariable;

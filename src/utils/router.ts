@@ -271,22 +271,22 @@ const routerToMenu = (menuSettings: RouterMenuSettings, runtimeRouter: RuntimeRo
 // const routerToMenu = memoizeOne(routerToMenuInner, isEqual);
 
 // 路由匹配
-const routerMatch = (locationHash: string, runtimeRouter: RuntimeRouter): RuntimeRouter | undefined => {
-  if (noValue(locationHash) || noValue(runtimeRouter)) return;
+const routerMatch = (pathHash: string, runtimeRouter: RuntimeRouter): RuntimeRouter | undefined => {
+  if (noValue(pathHash) || noValue(runtimeRouter)) return;
   // 存在子路由 - 递归匹配
   if (runtimeRouter.routes && runtimeRouter.routes.length > 0) {
     let matchRuntimeRouter: RuntimeRouter | undefined;
     runtimeRouter.routes.forEach(route => {
       if (matchRuntimeRouter) return;
       // 递归匹配
-      matchRuntimeRouter = routerMatch(locationHash, route);
+      matchRuntimeRouter = routerMatch(pathHash, route);
     });
     if (matchRuntimeRouter) return matchRuntimeRouter;
   }
   // 路径匹配
-  if (runtimeRouter.exact && runtimeRouter.path === locationHash) {
+  if (runtimeRouter.exact && runtimeRouter.path === pathHash) {
     return runtimeRouter;
-  } else if (pathToRegexp(runtimeRouter.path).test(locationHash)) {
+  } else if (pathToRegexp(runtimeRouter.path).test(pathHash)) {
     return runtimeRouter;
   }
   return;
@@ -298,15 +298,15 @@ interface LayoutMatchResult {
 }
 
 /** Layout匹配(递归) */
-const layoutMatchInner = (locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LayoutMatchResult | undefined => {
-  if (!runtimeLayouts || noValue(locationHash) || runtimeLayouts.length <= 0) return;
+const layoutMatchInner = (pathHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LayoutMatchResult | undefined => {
+  if (!runtimeLayouts || noValue(pathHash) || runtimeLayouts.length <= 0) return;
   let matchedFirstLayout: RuntimeLayoutConfig | undefined = undefined;
   let matchedLayout: RuntimeLayoutConfig | undefined;
   let matchedRouter: RuntimeRouter | undefined = undefined;
   runtimeLayouts.forEach(runtimeLayout => {
     if (matchedLayout) return;
     const { path, routes } = runtimeLayout;
-    if (!pathToRegexp(path, undefined, { end: false }).test(locationHash)) {
+    if (!pathToRegexp(path, undefined, { end: false }).test(pathHash)) {
       return;
     }
     matchedFirstLayout = runtimeLayout;
@@ -315,7 +315,7 @@ const layoutMatchInner = (locationHash: string, runtimeLayouts: RuntimeLayoutCon
     }
     routes.forEach(route => {
       if (matchedRouter) return;
-      matchedRouter = routerMatch(locationHash, route);
+      matchedRouter = routerMatch(pathHash, route);
     });
     if (matchedRouter) {
       matchedLayout = runtimeLayout;
@@ -357,25 +357,17 @@ interface LocationHashMatchResult {
   currentMenu?: RuntimeMenuItem;
   /** 当前根菜单(一级菜单) */
   rootMenus?: RuntimeMenuItem[];
-  /** location */
-  location?: RouterLocation;
   /** 路由匹配参数 */
   match?: RouteMatchParams;
 }
 
 /** 页面路径匹配路由菜单等信息 */
-const locationHashMatchInner = (layoutSettings: LayoutSettings, locationHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LocationHashMatchResult | undefined => {
+const locationHashMatchInner = (layoutSettings: LayoutSettings, pathHash: string, runtimeLayouts: RuntimeLayoutConfig[]): LocationHashMatchResult | undefined => {
   const { menu: menuSettings } = layoutSettings;
-  const matched = layoutMatch(locationHash, runtimeLayouts);
+  const matched = layoutMatch(pathHash, runtimeLayouts);
   if (!matched) return;
   const rootMenus: RuntimeMenuItem[] = [];
   matched.matchedLayout.routes.forEach(route => rootMenus.push(routerToMenu(menuSettings, route)));
-  const location: RouterLocation = {
-    state: routerHistory.getLocationState(locationHash),
-    path: locationHash,
-    // search: window.location.search ?? "",
-    // query: getUrlParam(),
-  };
   let currentMenu: RuntimeMenuItem | undefined = undefined;
   let matchParams: Match<RouteMatchParams["params"]> | undefined;
   if (matched.matchedRouter) {
@@ -384,19 +376,19 @@ const locationHashMatchInner = (layoutSettings: LayoutSettings, locationHash: st
       currentMenu = findMenu(matched.matchedRouter!, rootMenu);
     });
     const matchFuc = match<RouteMatchParams["params"]>(matched.matchedRouter.path);
-    matchParams = matchFuc(locationHash);
-  } else if (matched.matchedLayout && matched.matchedLayout["404"] && locationHash !== matched.matchedLayout.path) {
+    matchParams = matchFuc(pathHash);
+  } else if (matched.matchedLayout && matched.matchedLayout["404"] && pathHash !== matched.matchedLayout.path) {
     // 404页面路由处理
-    matched.matchedRouter = routerToRuntime("/", { path: locationHash, pagePath: matched.matchedLayout["404"], name: "404-页面不存在" })!;
+    matched.matchedRouter = routerToRuntime("/", { path: pathHash, pagePath: matched.matchedLayout["404"], name: "404-页面不存在" })!;
     currentMenu = routerToMenu(menuSettings, matched.matchedRouter);
   }
   const matchInfo: RouteMatchParams = {
-    isExact: matched.matchedRouter?.path === locationHash,
+    isExact: matched.matchedRouter?.path === pathHash,
     path: window.location.pathname,
     url: window.location.href,
     params: (matchParams ? (matchParams.params ?? {}) : {}),
   };
-  return { currentLayout: matched.matchedLayout, currentRouter: matched.matchedRouter, currentMenu, rootMenus, location, match: matchInfo };
+  return { currentLayout: matched.matchedLayout, currentRouter: matched.matchedRouter, currentMenu, rootMenus, match: matchInfo };
 }
 
 /**

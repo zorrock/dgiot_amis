@@ -8,7 +8,7 @@ import { getLayoutMenuData } from "@/components/Layout/utils/menu-data";
 import { BlankLayout } from "@/layouts/BlankLayout";
 import { NestSideMenuLayout } from '@/layouts/NestSideMenuLayout';
 import { $rootMounted, initRootDiv } from '@/utils/amis-utils';
-import { getLocationHash } from '@/utils/utils';
+import { getPageLocation, getRouterLocation } from '@/utils/utils';
 import { logger } from '@/utils/logger';
 import { LayoutConfig, layoutToRuntime, LayoutType, locationHashMatch, routerHistory, RuntimeLayoutConfig } from "@/utils/router";
 import { getCurrentUser, getMenus } from "@/service/login-service";
@@ -29,8 +29,10 @@ interface ReactAppPageProps {
 interface ReactAppPageState {
   /** 运行时路由 */
   runtimeLayouts: RuntimeLayoutConfig[];
-  /** 页面路径 */
-  locationHash: string;
+  /** PageLocation */
+  pageLocation: PageLocation;
+  /** RouterLocation */
+  routerLocation: RouterLocation;
   /** 当前Layout */
   currentLayout?: RuntimeLayoutConfig;
   /** 当前Router */
@@ -39,8 +41,6 @@ interface ReactAppPageState {
   currentMenu?: RuntimeMenuItem;
   /** 当前根菜单(一级菜单) */
   rootMenus?: RuntimeMenuItem[];
-  /** location */
-  location?: RouterLocation;
   /** 路由匹配参数 */
   match?: RouteMatchParams;
 }
@@ -49,16 +49,16 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
   constructor(props: ReactAppPageProps) {
     super(props);
-    const initLocationHash = getLocationHash();
+    const pageLocation = getPageLocation();
+    const routerLocation = getRouterLocation();
     const runtimeLayouts = layoutToRuntime(props.routerConfigs);
     const matched = locationHashMatch(props.layoutSettings, initLocationHash, runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
     const currentMenu = matched?.currentMenu;
     const rootMenus = matched?.rootMenus;
-    const location = matched?.location;
     const match = matched?.match;
-    this.state = { runtimeLayouts, locationHash: initLocationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match };
+    this.state = { runtimeLayouts, pageLocation, routerLocation, currentLayout, currentRouter, currentMenu, rootMenus, match };
     log.info("initState ->", this.state);
   }
 
@@ -76,7 +76,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   onLocationHashChange = (event: HashChangeEvent) => {
     const { layoutSettings } = this.props;
     const { runtimeLayouts } = this.state;
-    const locationHash = getLocationHash();
+    const locationHash = getRouterLocation();
     // 跳转到默认地址或登录地址 - 全局跳转
     const { loginPath, defaultPath } = layoutSettings;
     if (loginPath && !window.currentUser && locationHash !== loginPath) {
@@ -102,14 +102,14 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
       routerHistory.push({ path: currentLayout["401"] });
       return;
     }
-    this.setState({ locationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match })
+    this.setState({ currentPageHash: locationHash, currentLayout, currentRouter, currentMenu, rootMenus, routerLocation: location, match })
     log.info("newState ->", this.state);
   }
 
   // 侧边栏二级菜单页面
   protected getNestSideLayout(layoutMenuData: LayoutMenuData) {
     const { antdConfig, layoutSettings: { menu, iconScriptUrl, htmlTitleSuffix } } = this.props;
-    const { currentLayout, currentRouter, location, match } = this.state;
+    const { currentLayout, currentRouter, routerLocation, match } = this.state;
     return (
       <ConfigProvider {...antdConfig}>
         <NestSideMenuLayout
@@ -117,7 +117,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
           menuIconScriptUrl={iconScriptUrl}
           htmlTitleSuffix={htmlTitleSuffix}
           route={currentRouter!}
-          location={location!}
+          location={routerLocation!}
           match={match!}
           rootRoutes={currentLayout?.routes!}
           layoutMenuData={layoutMenuData}
@@ -131,13 +131,13 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   // 空白布局页面
   protected getBlankLayout(layoutMenuData: LayoutMenuData) {
     const { antdConfig, layoutSettings: { htmlTitleSuffix } } = this.props;
-    const { currentLayout, currentRouter, location, match } = this.state;
+    const { currentLayout, currentRouter, routerLocation, match } = this.state;
     return (
       <ConfigProvider {...antdConfig}>
         <BlankLayout
           htmlTitleSuffix={htmlTitleSuffix}
           route={currentRouter!}
-          location={location!}
+          location={routerLocation!}
           match={match!}
           rootRoutes={currentLayout?.routes!}
           layoutMenuData={layoutMenuData}
@@ -163,16 +163,16 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   }
 
   render() {
-    const { currentLayout, currentMenu, rootMenus, location } = this.state;
+    const { currentLayout, currentMenu, rootMenus, routerLocation } = this.state;
     if (!currentLayout) {
       return this.getNoFoundPage();
     }
     // 跳转到登录地址 - 路由跳转
-    if (currentLayout && currentLayout["401"] && !window.currentUser && location?.path !== currentLayout["401"]) {
+    if (currentLayout && currentLayout["401"] && !window.currentUser && routerLocation?.path !== currentLayout["401"]) {
       routerHistory.push({ path: currentLayout["401"] });
       return <div/>;
     }
-    const layoutMenuData = getLayoutMenuData({ location: location!, rootMenus: rootMenus!, currentMenu: currentMenu! });
+    const layoutMenuData = getLayoutMenuData({ location: routerLocation!, rootMenus: rootMenus!, currentMenu: currentMenu! });
     log.info("layoutMenuData ->", layoutMenuData);
     if (currentLayout.layout === LayoutType.Blank) {
       return this.getBlankLayout(layoutMenuData);
@@ -198,12 +198,12 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 // 初始化应用
 const initApp = (routerConfigs: LayoutConfig[]) => {
   // 跳转到默认地址或登录地址
-  const locationHash = getLocationHash();
+  const routerLocation = getRouterLocation();
   const { loginPath, defaultPath } = layoutSettings;
   if (loginPath && !window.currentUser) {
     routerHistory.push({ path: loginPath });
   }
-  if (lodash.trim(locationHash).length <= 0 && defaultPath) {
+  if (lodash.trim(routerLocation.path).length <= 0 && defaultPath) {
     routerHistory.push({ path: defaultPath });
   }
   log.info("routerConfigs ->", routerConfigs);

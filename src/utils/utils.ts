@@ -62,11 +62,31 @@ const getUrlParam = (paramName?: string, url?: string): any => {
 }
 
 /**
- * 获取Location的Hash值
+ * 获取 PageLocation
  */
-const getLocationHash = (): string => {
-  const hash = lodash.trim(document.location.hash);
-  return hash.startsWith("#") ? hash.substr(1, hash.length) : "";
+const getPageLocation = (): PageLocation => {
+  const pathname = document.location.pathname;
+  let search = document.location.search || "";
+  search = search.startsWith("?") ? search.substr(1, search.length) : "";
+  let hash = document.location.hash || "";
+  hash = hash.startsWith("#") ? hash.substr(1, hash.length) : "";
+  const query = parse(search);
+  return { pathname, search, hash, query };
 }
 
-export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, getLocationHash };
+/**
+ * 获取 RouterLocation
+ */
+const getRouterLocation = (): RouterLocation => {
+  let hash = lodash.trim(document.location.hash);
+  hash = hash.startsWith("#") ? hash.substr(1, hash.length) : "";
+  const arr = hash.split("?");
+  const path = arr && arr.length >= 1 ? arr[0] : "";
+  // const searchStr = arr && arr.length >= 2 ? arr[1] : "";
+  // const searchExists = lodash.trim(searchStr).length > 0;
+  // const search = searchExists ? searchStr : undefined;
+  // const query = searchExists ? parse(searchStr) : undefined;
+  return { hash, path, /*search, query*/ };
+}
+
+export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, getPageLocation, getRouterLocation };
