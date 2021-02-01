@@ -16,9 +16,7 @@ const hasPropertyIn = (o: object, name: string): boolean => lodash.hasIn(o, name
  * @param stateName state属性名
  */
 const getPropOrStateValue = <T>(propName: string, props: object, state: object, stateName?: string): T => {
-  if (lodash.hasIn(props, propName)) {
-    return props[propName] as T;
-  }
+  if (lodash.hasIn(props, propName)) return props[propName] as T;
   return state[stateName ?? propName] as T;
 };
 
@@ -44,9 +42,7 @@ const noValue = (value: any): boolean => {
  * @param force undefined、null 强制转换成空字符串
  */
 const getStrValue = (value: any, force?: boolean): string | undefined | null => {
-  if (!force && (value === undefined || value === null)) {
-    return value;
-  }
+  if (!force && (value === undefined || value === null)) return value;
   return hasValue(value) ? `${value}` : '';
 };
 
@@ -62,7 +58,7 @@ const getUrlParam = (paramName?: string, url?: string): any => {
   if (idx === -1) return undefined;
   const urlParams = parse(str.substring(idx + 1, hashIdx !== -1 ? hashIdx : undefined)) || {};
   if (paramName) return urlParams[paramName];
-  return urlParams
+  return urlParams;
 }
 
 /**
