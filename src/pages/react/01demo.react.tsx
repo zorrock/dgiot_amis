@@ -27,7 +27,7 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
         <Button type={"primary"} onClick={event => {
           this.setState({ loading: !loading, count: (count + 1) });
           routerHistory.push({
-            hash: "/nest-side/curd/01",
+            path: "/nest-side/curd/01",
             query: { a: `${count}` },
             // state: {count: (count + 1)},
           });

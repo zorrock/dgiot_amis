@@ -689,7 +689,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     multiTabs.splice(delIndex, 1);
     if (multiTabs.length <= 0) {
       // 关闭所有页签
-      routerHistory.push({ hash: currentLayout.path });
+      routerHistory.push({ path: currentLayout.path });
       return;
     }
     const array = lodash.sortBy(multiTabs, (tabTmp) => {
@@ -727,7 +727,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         break;
       case "closeAll":
         multiTabs.length = 0;
-        routerHistory.push({ hash: currentLayout.path });
+        routerHistory.push({ path: currentLayout.path });
         return;
     }
     this.setState({ multiTabs: newMultiTabs });

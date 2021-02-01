@@ -49,8 +49,8 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 
   constructor(props: ReactAppPageProps) {
     super(props);
-    const runtimeLayouts = layoutToRuntime(props.routerConfigs);
     const initLocationHash = getLocationHash();
+    const runtimeLayouts = layoutToRuntime(props.routerConfigs);
     const matched = locationHashMatch(props.layoutSettings, initLocationHash, runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
@@ -80,11 +80,11 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     // 跳转到默认地址或登录地址 - 全局跳转
     const { loginPath, defaultPath } = layoutSettings;
     if (loginPath && !window.currentUser && locationHash !== loginPath) {
-      routerHistory.push({ hash: loginPath });
+      routerHistory.push({ path: loginPath });
       return;
     }
     if (lodash.trim(locationHash).length <= 0 && defaultPath && locationHash !== defaultPath) {
-      routerHistory.push({ hash: defaultPath });
+      routerHistory.push({ path: defaultPath });
       return;
     }
     // 路由菜单匹配
@@ -99,7 +99,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     log.info("locationHash ->", locationHash);
     // 跳转到登录地址 - 路由跳转
     if (currentLayout && currentLayout["401"] && !window.currentUser && locationHash !== currentLayout["401"]) {
-      routerHistory.push({ hash: currentLayout["401"] });
+      routerHistory.push({ path: currentLayout["401"] });
       return;
     }
     this.setState({ locationHash, currentLayout, currentRouter, currentMenu, rootMenus, location, match })
@@ -169,7 +169,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     }
     // 跳转到登录地址 - 路由跳转
     if (currentLayout && currentLayout["401"] && !window.currentUser && location?.path !== currentLayout["401"]) {
-      routerHistory.push({ hash: currentLayout["401"] });
+      routerHistory.push({ path: currentLayout["401"] });
       return <div/>;
     }
     const layoutMenuData = getLayoutMenuData({ location: location!, rootMenus: rootMenus!, currentMenu: currentMenu! });
@@ -201,10 +201,10 @@ const initApp = (routerConfigs: LayoutConfig[]) => {
   const locationHash = getLocationHash();
   const { loginPath, defaultPath } = layoutSettings;
   if (loginPath && !window.currentUser) {
-    routerHistory.push({ hash: loginPath });
+    routerHistory.push({ path: loginPath });
   }
   if (lodash.trim(locationHash).length <= 0 && defaultPath) {
-    routerHistory.push({ hash: defaultPath });
+    routerHistory.push({ path: defaultPath });
   }
   log.info("routerConfigs ->", routerConfigs);
   log.info("layoutSettings ->", layoutSettings);

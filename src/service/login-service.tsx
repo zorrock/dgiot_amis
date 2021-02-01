@@ -77,7 +77,7 @@ const userLogin = (loginData: any, loginApi: string, currentUserApi: string, def
       message.success(message || "登录成功").then();
       getCurrentUser(currentUserApi).then(() => {
         window.appComponent.refreshMenu(() => {
-          if (defaultPath) routerHistory.push({ hash: defaultPath });
+          if (defaultPath) routerHistory.push({ path: defaultPath });
         }).then();
       });
     }).finally(onFinally);
@@ -91,7 +91,7 @@ const userLogout = (logoutApi: string, loginPath: string): void => {
   window.securityContext = undefined;
   const finallyFuc = () => {
     Cookies.remove("authorization");
-    if (loginPath) routerHistory.push({ hash: loginPath });
+    if (loginPath) routerHistory.push({ path: loginPath });
   };
   if (logoutApi) {
     request.get(logoutApi).finally(finallyFuc);

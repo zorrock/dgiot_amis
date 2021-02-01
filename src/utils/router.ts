@@ -69,9 +69,9 @@ type RuntimeLayoutConfig = RuntimeNestSideLayoutConfig | RuntimeBlankLayoutConfi
 type LocationState = RouterLocation['state'];
 
 interface Router {
-  /** url的hash部分(#号后面部分) */
-  hash: string;
-  /** url的querystring解析结果(一个对象) */
+  /** 路由页面路径 */
+  path: string;
+  /** 路由的querystring解析结果(一个对象) */
   query?: QueryString;
   /** router.push 传入的 state */
   state?: RouterState;
@@ -79,13 +79,6 @@ interface Router {
 
 /** 路由跳转工具类 */
 class RouterHistory {
-  private static getHash(hash: string): string | undefined {
-    hash = lodash.trim(hash);
-    if (!hash || hash.length <= 0) return;
-    if (hash.startsWith("#")) hash = hash.substring(1);
-    return hash;
-  }
-
   /**
    * 全局路由的状态数据
    * <pre>
@@ -103,22 +96,20 @@ class RouterHistory {
    */
   public push(router: Router): void {
     let { state } = router;
-    const { hash, query = {} } = router;
-    const path = RouterHistory.getHash(hash) ?? "";
+    const { path = "", query = {} } = router;
     const queryString = query ? qs.stringify(query) : "";
-    if (lodash.trim(path).length<=0 && lodash.trim(queryString).length<=0) return;
+    if (lodash.trim(path).length <= 0 && lodash.trim(queryString).length <= 0) return;
     if (!state) state = this.routerLocationStateMap.get(path) ?? {};
     this.routerLocationStateMap.set(path, state);
-    window.location.hash = lodash.trim(queryString).length>0 ? `#${path}?${queryString}`: `#${path}`;
+    window.location.hash = lodash.trim(queryString).length > 0 ? `#${path}?${queryString}` : `#${path}`;
   }
 
   /**
    * 替换页面状态值
-   * @param hash  页面路径
+   * @param path  页面路径
    * @param state 页面的状态值
    */
-  public replaceState(hash: string, state: LocationState = {}): void {
-    const path = RouterHistory.getHash(hash);
+  public replaceState(path: string, state: LocationState = {}): void {
     if (!path) return;
     const oldState = this.routerLocationStateMap.get(path);
     if (!oldState) return;
@@ -127,10 +118,9 @@ class RouterHistory {
 
   /**
    * 获取页面状态
-   * @param hash 页面路径
+   * @param path 页面路径
    */
-  public getLocationState(hash: string): LocationState {
-    const path = RouterHistory.getHash(hash);
+  public getLocationState(path: string): LocationState {
     if (!path) return;
     return this.routerLocationStateMap.get(path) ?? {};
   }
