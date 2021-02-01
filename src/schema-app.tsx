@@ -106,6 +106,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     log.info("newState ->", this.state);
   }
 
+  // 侧边栏二级菜单页面
   protected getNestSideLayout(layoutMenuData: LayoutMenuData) {
     const { antdConfig, layoutSettings: { menu, iconScriptUrl, htmlTitleSuffix } } = this.props;
     const { currentLayout, currentRouter, location, match } = this.state;
@@ -127,6 +128,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     );
   }
 
+  // 空白布局页面
   protected getBlankLayout(layoutMenuData: LayoutMenuData) {
     const { antdConfig, layoutSettings: { htmlTitleSuffix } } = this.props;
     const { currentLayout, currentRouter, location, match } = this.state;
@@ -145,6 +147,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     );
   }
 
+  // 404页面
   protected getNoFoundPage() {
     const { antdConfig } = this.props;
     return (

@@ -2,7 +2,6 @@ import React, { CSSProperties } from 'react';
 import lodash from "lodash";
 import classNames from 'classnames';
 import { Menu } from 'antd';
-import qs from "qs";
 import baseX from "base-x";
 import stableStringify from "fast-json-stable-stringify";
 import AntdIcon, { AntdIconFont, createIconFontCN } from '@/components/AntdIcon';
@@ -176,8 +175,8 @@ const getFirstMenu = (menu: RuntimeMenuItem): RuntimeMenuItem => {
 
 /** 路由转换成字符串 */
 const routerLocationToStr = (routerLocation: RouterLocation): string => {
-  const { pathname, hash, query, state } = routerLocation;
-  return `${pathname ?? ""}|${stableStringify(query ?? {})}|${hash ?? ""}|${stableStringify(state)}`;
+  const { hash, state } = routerLocation;
+  return `${hash ?? ""}|${stableStringify(state)}`;
 };
 
 /** 菜单转换成RouterLocation */
@@ -185,10 +184,9 @@ const menuToRouterLocation = (menu: RuntimeMenuItem): RouterLocation | undefined
   const { runtimeRouter } = menu;
   if (!runtimeRouter) return;
   return {
-    pathname: window.location.pathname,
-    search: lodash.keys(runtimeRouter.querystring).length > 0 ? `?${qs.stringify(runtimeRouter.querystring)}` : "",
+    // search: lodash.keys(runtimeRouter.querystring).length > 0 ? `?${qs.stringify(runtimeRouter.querystring)}` : "",
     hash: runtimeRouter.path,
-    query: runtimeRouter.querystring,
+    // query: runtimeRouter.querystring,
     state: runtimeRouter.state,
   };
 };

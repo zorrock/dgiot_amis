@@ -6,15 +6,15 @@ import { AntdMenuClickParam, AntdMenuProps, AntdMenuSelectInfo } from '../layout
 import styles from './SideFirstMenu.less';
 
 interface SideFirstMenuSelectParam extends AntdMenuSelectInfo {
-  /** 当前url path */
-  currentPath: string;
+  // /** 当前url path */
+  // currentPath: string;
   /** 当前菜单数据 */
   menuData: RuntimeMenuItem;
 }
 
 interface SideFirstMenuClickParam extends AntdMenuClickParam {
-  /** 当前url path */
-  currentPath: string;
+  // /** 当前url path */
+  // currentPath: string;
   /** 当前菜单数据 */
   menuData: RuntimeMenuItem;
 }
@@ -100,13 +100,13 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
         onSelect={(param) => {
           if (onMenuSelect instanceof Function) {
             // @ts-ignore
-            onMenuSelect({ ...param, currentPath: layoutMenuData.currentPath, menuData: param.item.props['data-menu'] });
+            onMenuSelect({ ...param, menuData: param.item.props['data-menu'] });
           }
         }}
         onClick={(param) => {
           if (onMenuClick instanceof Function) {
             // @ts-ignore
-            onMenuClick({ ...param, currentPath: layoutMenuData.currentPath, menuData: param.item.props['data-menu'] });
+            onMenuClick({ ...param, menuData: param.item.props['data-menu'] });
           }
         }}
         {...menuProps}
@@ -161,15 +161,14 @@ class SideFirstMenu extends React.Component<SideFirstMenuProps, SideFirstMenuSta
               const keyPath = menu.parentKeys ?? [];
               const item = event.target as React.ReactInstance;
               const domEvent = event;
-              const currentPath = layoutMenuData.currentPath;
               const menuData = menu;
               if (!active && onMenuSelect instanceof Function) {
                 let selectedKeysTmp = selectedProps.selectedKeys ?? selectedProps.defaultSelectedKeys ?? [];
                 selectedKeysTmp = selectedKeysTmp.filter((keyTmp) => keyTmp !== menu.menuKey);
-                onMenuSelect({ key, keyPath, item, domEvent, selectedKeys: selectedKeysTmp, currentPath, menuData });
+                onMenuSelect({ key, keyPath, item, domEvent, selectedKeys: selectedKeysTmp, menuData });
               }
               if (onMenuClick instanceof Function) {
-                onMenuClick({ key, keyPath, item, domEvent, currentPath, menuData });
+                onMenuClick({ key, keyPath, item, domEvent, menuData });
               }
             }}
           >

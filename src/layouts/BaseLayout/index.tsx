@@ -369,7 +369,6 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     const currentFirstMenu = getCurrentFirstMenu(layoutMenuData);
     if (!currentFirstMenu) return undefined;
     const searchValue = sideMenuSearchValueMap.get(currentFirstMenu.menuKey) || '';
-    const currentPath = layoutMenuData.currentPath;
     const menuData = currentFirstMenu;
     // 选中的菜单
     const defaultSelectedKeys: string[] = [layoutMenuData.showCurrentMenu.menuKey];
@@ -410,7 +409,6 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         searchClassName={this.props.sideMenuSearchClassName}
         searchStyle={this.props.sideMenuSearchStyle}
         searchProps={this.props.sideMenuSearchProps}
-        currentPath={currentPath}
         menuData={getSideMenuData(menuData, searchValue)}
         menuIconScriptUrl={this.props.menuIconScriptUrl}
         menuTheme={this.props.sideMenuTheme}
@@ -615,7 +613,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
 
   /** 新增或显示标签页 */
   protected addOrShowTabPage() {
-    const { location, layoutMenuData: { currentPath, currentMenu } } = this.props;
+    const { location, layoutMenuData: { currentMenu } } = this.props;
     if (!currentMenu) return;
     const { activePageKey, multiTabs } = this.state;
     const multiTabKey = base62Encode(routerLocationToStr(location));
@@ -635,7 +633,6 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       mountedDomId: lodash.uniqueId('amisId-'),
       menuItem: currentMenu,
       multiTabKey,
-      currentPath: currentPath,
       location: location,
       isHomePage: false,
       lastActiveTime: new Date().getTime(),

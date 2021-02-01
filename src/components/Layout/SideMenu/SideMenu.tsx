@@ -31,8 +31,8 @@ interface SideMenuProps {
   /** 自定义搜索输入框属性 */
   searchProps?: AntdInputSearchProps;
   // ----------------------------------------------------------------------------------- Menu 配置
-  /** 当前url path */
-  currentPath: string;
+  // /** 当前url path */
+  // currentPath: string;
   /** 菜单数据 */
   menuData?: RuntimeMenuItem;
   /** 自定义菜单图标字体 - iconfont.cn项目在线生成的js(地址: https://www.iconfont.cn/) */
@@ -139,36 +139,15 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState> {
    */
   public getSecondMenu() {
     const {
-      menuCollapsed,
-      currentPath,
-      menuData,
-      menuIconScriptUrl,
-      menuTheme,
-      defaultSelectedKeys,
-      selectedKeys,
-      defaultOpenKeys,
-      openKeys,
-      menuItemRender,
-      menuFolderRender,
-      menuItemGroupRender,
-      onMenuSelect,
-      onMenuClick,
-      onMenuOpenChange,
-      onSubMenuTitleClick,
-      menuClassName,
-      menuStyle,
-      menuItemClassName,
-      menuItemStyle,
-      menuProps,
-      beautifyScrollbar = true,
-      autoHideScrollbar = true,
+      menuCollapsed, menuData, menuIconScriptUrl, menuTheme, defaultSelectedKeys, selectedKeys, defaultOpenKeys, openKeys,
+      menuItemRender, menuFolderRender, menuItemGroupRender, onMenuSelect, onMenuClick, onMenuOpenChange, onSubMenuTitleClick,
+      menuClassName, menuStyle, menuItemClassName, menuItemStyle, menuProps, beautifyScrollbar = true, autoHideScrollbar = true,
       scrollbarClassName,
     } = this.props;
     const secondMenu = (
       <SideSecondMenu
         menuCollapsed={menuCollapsed}
         key="secondMenu"
-        currentPath={currentPath}
         menuData={menuData}
         menuIconScriptUrl={menuIconScriptUrl}
         menuTheme={menuTheme}

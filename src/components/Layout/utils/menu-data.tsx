@@ -75,7 +75,7 @@ interface GetLayoutMenuDataParams {
 
 /** 获取菜单数据 */
 const getLayoutMenuData = (params: GetLayoutMenuDataParams): LayoutMenuData => {
-  const { location, rootMenus, currentMenu } = params;
+  const { rootMenus, currentMenu } = params;
   // 拍平的菜单数据
   const flattenMenuMap = new Map<string, RuntimeMenuItem>();
   rootMenus.forEach(rootMenu => {
@@ -90,8 +90,6 @@ const getLayoutMenuData = (params: GetLayoutMenuDataParams): LayoutMenuData => {
     const showRootMenu = filterMenuData(rootMenu);
     if (showRootMenu) showRootMenus.push(showRootMenu);
   });
-  // 当前访问Url地址
-  const currentPath = location.pathname ?? '/';
   // 当前访问页面对应的显示菜单(显示逻辑对应关系)
   let showCurrentMenu: RuntimeMenuItem | undefined = (currentMenu && !currentMenu.isHide) ? currentMenu : undefined;
   if (!showCurrentMenu && currentMenu && currentMenu.parentKeys && currentMenu.parentKeys.length > 0) {
@@ -101,7 +99,7 @@ const getLayoutMenuData = (params: GetLayoutMenuDataParams): LayoutMenuData => {
       showCurrentMenu = getMenuItemByKey(flattenMenuMap, key);
     });
   }
-  return { rootMenus, showRootMenus, flattenMenuMap, flattenMenu, currentPath, currentMenu, showCurrentMenu };
+  return { rootMenus, showRootMenus, flattenMenuMap, flattenMenu, currentMenu, showCurrentMenu };
 }
 
 export { GetLayoutMenuDataParams, getLayoutMenuData };

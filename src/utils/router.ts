@@ -6,7 +6,7 @@ import memoizeOne from "memoize-one";
 import isEqual from "lodash.isequal";
 import { BlankLayoutProps } from "@/layouts/BlankLayout";
 import { NestSideMenuLayoutProps } from "@/layouts/NestSideMenuLayout";
-import { getUrlParam, hasValue, noValue } from "./utils";
+import { hasValue, noValue } from "./utils";
 import { logger } from '@/utils/logger';
 import { TypeEnum, variableTypeOf } from "@/utils/typeof";
 
@@ -103,15 +103,13 @@ class RouterHistory {
    */
   public push(router: Router): void {
     let { state } = router;
-    const { hash, query } = router;
-    const path = RouterHistory.getHash(hash);
-    if (!path) return;
+    const { hash, query = {} } = router;
+    const path = RouterHistory.getHash(hash) ?? "";
+    const queryString = query ? qs.stringify(query) : "";
+    if (lodash.trim(path).length<=0 && lodash.trim(queryString).length<=0) return;
     if (!state) state = this.routerLocationStateMap.get(path) ?? {};
     this.routerLocationStateMap.set(path, state);
-    if (lodash.keys(query).length > 0) {
-      window.location.search = `?${qs.stringify(query ?? {})}`;
-    }
-    window.location.hash = `#${path}`;
+    window.location.hash = lodash.trim(queryString).length>0 ? `#${path}?${queryString}`: `#${path}`;
   }
 
   /**
@@ -385,9 +383,8 @@ const locationHashMatchInner = (layoutSettings: LayoutSettings, locationHash: st
   const location: RouterLocation = {
     state: routerHistory.getLocationState(locationHash),
     hash: locationHash,
-    pathname: window.location.pathname,
-    search: window.location.search ?? "",
-    query: getUrlParam(),
+    // search: window.location.search ?? "",
+    // query: getUrlParam(),
   };
   let currentMenu: RuntimeMenuItem | undefined = undefined;
   let matchParams: Match<RouteMatchParams["params"]> | undefined;

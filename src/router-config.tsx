@@ -296,7 +296,7 @@ const layoutSettings: LayoutSettings = {
   // loginApi: "/login",
   // logoutApi: "/logout",
   // currentUserApi: "/current_user",
-  // menuApi: `${serverHost}/!/amis-api/curd-page@menu`,
+  // menuApi: "/menus",
 };
 
 export { routerConfigs, layoutSettings };

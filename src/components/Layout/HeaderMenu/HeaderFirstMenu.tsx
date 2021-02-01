@@ -6,15 +6,15 @@ import { getAntdMenuItems } from '../utils/layouts-utils';
 import styles from './HeaderFirstMenu.less';
 
 interface HeaderFirstMenuSelectParam extends AntdMenuSelectInfo {
-  /** 当前url path */
-  currentPath: string;
+  // /** 当前url path */
+  // currentPath: string;
   /** 当前菜单数据 */
   menuData: RuntimeMenuItem;
 }
 
 interface HeaderFirstMenuClickParam extends AntdMenuClickParam {
-  /** 当前url path */
-  currentPath: string;
+  // /** 当前url path */
+  // currentPath: string;
   /** 当前菜单数据 */
   menuData: RuntimeMenuItem;
 }
@@ -88,13 +88,13 @@ class HeaderFirstMenu extends React.Component<HeaderFirstMenuProps, HeaderFirstM
         onSelect={(param) => {
           if (onMenuSelect instanceof Function) {
             // @ts-ignore
-            onMenuSelect({ ...param, currentPath: layoutMenuData.currentPath, menuData: param.item.props['data-menu'] });
+            onMenuSelect({ ...param, menuData: param.item.props['data-menu'] });
           }
         }}
         onClick={(param) => {
           if (onMenuClick instanceof Function) {
             // @ts-ignore
-            onMenuClick({ ...param, currentPath: layoutMenuData.currentPath, menuData: param.item.props['data-menu'] });
+            onMenuClick({ ...param, menuData: param.item.props['data-menu'] });
           }
         }}
         {...menuProps}

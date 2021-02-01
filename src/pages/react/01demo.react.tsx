@@ -28,7 +28,7 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
           this.setState({ loading: !loading, count: (count + 1) });
           routerHistory.push({
             hash: "/nest-side/curd/01",
-            // query: {},
+            query: { a: `${count}` },
             // state: {count: (count + 1)},
           });
         }}>点击{count}</Button>

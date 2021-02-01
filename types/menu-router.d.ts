@@ -25,14 +25,14 @@ type RouterState = { [name: string]: any };
 
 /** Router对应的Location信息 */
 interface RouterLocation {
-  /** url的path部分 */
-  pathname: string;
-  /** url的querystring部分(以"?"前缀开始) */
-  search: string;
+  // /** url的path部分 */
+  // pathname: string;
+  // /** url的querystring部分(以"?"前缀开始) */
+  // search: string;
   /** url的hash部分(#号后面部分) */
   hash: string;
-  /** url的querystring解析结果(一个对象) */
-  query: QueryString;
+  // /** url的querystring解析结果(一个对象) */
+  // query: QueryString;
   /** router.push 传入的 state */
   state?: RouterState;
 }
@@ -145,8 +145,8 @@ interface MultiTabItem {
   menuItem: RuntimeMenuItem;
   /** 路由页签项唯一Key */
   multiTabKey: string;
-  /** 当前url路径 */
-  currentPath: string;
+  // /** 当前url路径 */
+  // currentPath: string;
   /** 当前页面location状态 */
   location: RouterLocation;
   /** 是否是首页 */
@@ -185,12 +185,12 @@ interface LayoutMenuData {
    * </pre>
    */
   flattenMenu: { [path: string]: RuntimeMenuItem };
-  /** 当前访问Url地址 */
-  currentPath: string;
   /** 当前访问页面对应的菜单 */
   currentMenu?: RuntimeMenuItem;
   /** 当前访问页面对应的显示菜单(显示逻辑对应关系) */
   showCurrentMenu?: RuntimeMenuItem;
+  // /** 当前访问Url地址 */
+  // currentPath: string;
 }
 
 /** 路由菜单设置 */

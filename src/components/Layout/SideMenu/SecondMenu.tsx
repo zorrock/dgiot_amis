@@ -22,15 +22,15 @@ interface SideSecondMenuClickParam extends AntdMenuClickParam {
 interface SideSecondMenuOpenChangeParam {
   /** 当前 openKeys */
   openKeys: string[];
-  /** 当前url path */
-  currentPath: string;
+  // /** 当前url path */
+  // currentPath: string;
 }
 
 interface TitleEventEntityParam {
   key: string;
   domEvent: Event;
-  /** 当前url path */
-  currentPath: string;
+  // /** 当前url path */
+  // currentPath: string;
   /** 当前菜单数据 */
   menuData: RuntimeMenuItem;
 }
@@ -38,8 +38,8 @@ interface TitleEventEntityParam {
 interface SideSecondMenuProps {
   /** 菜单折叠状态(true:已折叠) */
   menuCollapsed: boolean;
-  /** 当前url path */
-  currentPath: string;
+  // /** 当前url path */
+  // currentPath: string;
   /** 菜单数据 */
   menuData?: RuntimeMenuItem;
   /** 自定义菜单图标字体 - iconfont.cn项目在线生成的js(地址: https://www.iconfont.cn/) */
@@ -85,7 +85,7 @@ interface SideSecondMenuState {
 
 class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenuState> {
   protected getMenuNode(menus?: RuntimeMenuItem[]): React.ReactNode[] {
-    const { currentPath, menuIconScriptUrl, menuItemRender, menuFolderRender, menuItemGroupRender, onSubMenuTitleClick } = this.props;
+    const { menuIconScriptUrl, menuItemRender, menuFolderRender, menuItemGroupRender, onSubMenuTitleClick } = this.props;
     const nodes: React.ReactNode[] = [];
     if (!menus || menus.length <= 0) return nodes;
     // 处理菜单 Map<groupName, RuntimeMenuItem[]>
@@ -113,7 +113,7 @@ class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenu
               key={menu.menuKey}
               title={menuFolderRender instanceof Function ? menuFolderRender(menu, icon) : this.defaultMenuFolderRender(menu, icon)}
               onTitleClick={(eventParams) => {
-                if (onSubMenuTitleClick instanceof Function) onSubMenuTitleClick({ ...eventParams, currentPath, menuData: menu });
+                if (onSubMenuTitleClick instanceof Function) onSubMenuTitleClick({ ...eventParams, menuData: menu });
               }}
             >
               {this.getMenuNode(menu.children)}
@@ -163,20 +163,8 @@ class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenu
 
   public render() {
     const {
-      menuCollapsed,
-      currentPath,
-      menuData,
-      menuTheme,
-      defaultSelectedKeys,
-      selectedKeys,
-      defaultOpenKeys,
-      openKeys,
-      onMenuSelect,
-      onMenuClick,
-      onMenuOpenChange,
-      menuClassName,
-      menuStyle = {},
-      menuProps,
+      menuCollapsed, menuData, menuTheme, defaultSelectedKeys, selectedKeys, defaultOpenKeys, openKeys,
+      onMenuSelect, onMenuClick, onMenuOpenChange, menuClassName, menuStyle = {}, menuProps,
     } = this.props;
     if (!menuData) return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>;
     // 展开keys和选择keys处理
@@ -200,17 +188,17 @@ class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenu
         onSelect={(eventParams) => {
           if (onMenuSelect instanceof Function) {
             // @ts-ignore
-            onMenuSelect({ ...eventParams, currentPath, menuData: eventParams.item.props['data-menu'] });
+            onMenuSelect({ ...eventParams, menuData: eventParams.item.props['data-menu'] });
           }
         }}
         onClick={(eventParams) => {
           if (onMenuClick instanceof Function) {
             // @ts-ignore
-            onMenuClick({ ...eventParams, currentPath, menuData: eventParams.item.props['data-menu'] });
+            onMenuClick({ ...eventParams, menuData: eventParams.item.props['data-menu'] });
           }
         }}
         onOpenChange={(eventParams) => {
-          if (onMenuOpenChange instanceof Function) onMenuOpenChange({ openKeys: eventParams as string[], currentPath });
+          if (onMenuOpenChange instanceof Function) onMenuOpenChange({ openKeys: eventParams as string[] });
         }}
         {...menuProps}
       >
