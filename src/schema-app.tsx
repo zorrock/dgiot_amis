@@ -52,7 +52,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     const pageLocation = getPageLocation();
     const routerLocation = getRouterLocation();
     const runtimeLayouts = layoutToRuntime(props.routerConfigs);
-    const matched = locationHashMatch(props.layoutSettings, initLocationHash, runtimeLayouts);
+    const matched = locationHashMatch(props.layoutSettings, routerLocation.path, runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
     const currentMenu = matched?.currentMenu;
