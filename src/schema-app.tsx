@@ -76,33 +76,34 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   onLocationHashChange = (event: HashChangeEvent) => {
     const { layoutSettings } = this.props;
     const { runtimeLayouts } = this.state;
-    const locationHash = getRouterLocation();
+    const pageLocation = getPageLocation();
+    const routerLocation = getRouterLocation();
+    const pathHash = routerLocation.path;
     // 跳转到默认地址或登录地址 - 全局跳转
     const { loginPath, defaultPath } = layoutSettings;
-    if (loginPath && !window.currentUser && locationHash !== loginPath) {
+    if (loginPath && !window.currentUser && pathHash !== loginPath) {
       routerHistory.push({ path: loginPath });
       return;
     }
-    if (lodash.trim(locationHash).length <= 0 && defaultPath && locationHash !== defaultPath) {
+    if (lodash.trim(pathHash).length <= 0 && defaultPath && pathHash !== defaultPath) {
       routerHistory.push({ path: defaultPath });
       return;
     }
     // 路由菜单匹配
-    const matched = locationHashMatch(layoutSettings, locationHash, runtimeLayouts);
+    const matched = locationHashMatch(layoutSettings, pathHash, runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
     const currentMenu = matched?.currentMenu;
     const rootMenus = matched?.rootMenus;
-    const location = matched?.location;
     const match = matched?.match;
     log.info("event ->", event.newURL);
-    log.info("locationHash ->", locationHash);
+    log.info("routerLocation ->", routerLocation);
     // 跳转到登录地址 - 路由跳转
-    if (currentLayout && currentLayout["401"] && !window.currentUser && locationHash !== currentLayout["401"]) {
+    if (currentLayout && currentLayout["401"] && !window.currentUser && pathHash !== currentLayout["401"]) {
       routerHistory.push({ path: currentLayout["401"] });
       return;
     }
-    this.setState({ currentPageHash: locationHash, currentLayout, currentRouter, currentMenu, rootMenus, routerLocation: location, match })
+    this.setState({ pageLocation, routerLocation, currentLayout, currentRouter, currentMenu, rootMenus, match })
     log.info("newState ->", this.state);
   }
 

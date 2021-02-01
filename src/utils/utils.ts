@@ -86,7 +86,7 @@ const getRouterLocation = (): RouterLocation => {
   // const searchExists = lodash.trim(searchStr).length > 0;
   // const search = searchExists ? searchStr : undefined;
   // const query = searchExists ? parse(searchStr) : undefined;
-  return { hash, path, /*search, query*/ };
+  return { path, /*search, query*/ };
 }
 
 export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, getPageLocation, getRouterLocation };

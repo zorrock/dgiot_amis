@@ -29,8 +29,6 @@ type RouterState = { [name: string]: any };
 
 /** Router对应的Location信息 */
 interface RouterLocation {
-  /** html页面url的hash部分(#号后面部分) */
-  hash: string;
   /** 路由页面路径 */
   path: string;
   // /** 路由的querystring部分(无"?"前缀) */
