@@ -73,11 +73,11 @@ class UserAvatar extends React.Component<UserAvatarProps, UserAvatarState> {
         mode="inline"
         theme="dark"
         inlineCollapsed={true}
-        // openKeys={["avatar"]}
         onClick={info => {
           if (!(onMenuClick instanceof Function)) return;
           onMenuClick(info.key as any);
         }}
+        // openKeys={["avatar"]}
       >
         <Menu.SubMenu
           key="avatar"
@@ -86,9 +86,9 @@ class UserAvatar extends React.Component<UserAvatarProps, UserAvatarState> {
           popupOffset={[1, 0]}
           popupClassName={styles.menuItem}
         >
-          <Menu.Item key={ActionKey.PersonalCenter}>个人中心</Menu.Item>
-          <Menu.Item key={ActionKey.PersonalSettings}>个人设置</Menu.Item>
-          <Menu.Item key={ActionKey.Logout}>退出登录</Menu.Item>
+          <Menu.Item key={ActionKey.PersonalCenter} icon={<UserOutlined/>}>个人中心</Menu.Item>
+          <Menu.Item key={ActionKey.PersonalSettings} icon={<SettingOutlined/>}>个人设置</Menu.Item>
+          <Menu.Item key={ActionKey.Logout} icon={<LogoutOutlined/>}>退出登录</Menu.Item>
           <Menu.Divider className={styles.divider}/>
           <Menu.Item key="nickname" disabled={true}>{nickname}</Menu.Item>
         </Menu.SubMenu>
