@@ -104,7 +104,7 @@ interface RouterConfig {
 interface RuntimeRouter extends RouterConfig {
   /** 当前路由路径 */
   path: string;
-  /** 路由路径中有变量时，配置的路径变量对象 TODO 未使用 */
+  /** 路由路径中有变量时，配置的路径变量对象 */
   pathVariable: PathVariable;
   /** 设置路由路径的queryString部分 */
   querystring: QueryString;
