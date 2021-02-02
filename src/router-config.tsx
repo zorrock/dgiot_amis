@@ -168,6 +168,15 @@ const routerConfigs: LayoutConfig[] = [
           features: "directories=no, status=no, resizable=no, copyhistory=yes, width=800, height=400",
         },
       },
+      {
+        path: "/menu",
+        name: "菜单设置",
+        icon: "TableOutlined",
+        routes: [
+          { path: "/00", name: "路径参数", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts", querystring: { param: "value123" } },
+          { path: "/:01", name: "路径变量", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts", pathVariable: { "01": "p01" } },
+        ]
+      },
       // -------------------------------------------------------------------------
       // 通用组件
       {

@@ -31,10 +31,10 @@ type RouterState = { [name: string]: any };
 interface RouterLocation {
   /** 路由页面路径 */
   path: string;
-  // /** 路由的querystring部分(无"?"前缀) */
-  // search?: string;
-  // /** 路由的querystring解析结果(一个对象) */
-  // query?: QueryString;
+  /** 路由的querystring部分(无"?"前缀) */
+  search?: string;
+  /** 路由的querystring解析结果(一个对象) */
+  query?: QueryString;
   /** router.push 传入的 state */
   state?: RouterState;
 }

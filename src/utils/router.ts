@@ -293,7 +293,9 @@ const routerMatch = (pathHash: string, runtimeRouter: RuntimeRouter): RuntimeRou
 }
 
 interface LayoutMatchResult {
+  /** 匹配的布局配置 */
   matchedLayout: RuntimeLayoutConfig;
+  /** 匹配的路由 */
   matchedRouter?: RuntimeRouter;
 }
 
@@ -384,9 +386,8 @@ const locationHashMatchInner = (layoutSettings: LayoutSettings, pathHash: string
   }
   const matchInfo: RouteMatchParams = {
     isExact: matched.matchedRouter?.path === pathHash,
-    path: window.location.pathname,
-    url: window.location.href,
-    params: (matchParams ? (matchParams.params ?? {}) : {}),
+    path: pathHash,
+    params: matchParams ? (matchParams.params ?? {}) : {},
   };
   return { currentLayout: matched.matchedLayout, currentRouter: matched.matchedRouter, currentMenu, rootMenus, match: matchInfo };
 }

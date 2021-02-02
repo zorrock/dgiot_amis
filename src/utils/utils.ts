@@ -82,11 +82,11 @@ const getRouterLocation = (): RouterLocation => {
   hash = hash.startsWith("#") ? hash.substr(1, hash.length) : "";
   const arr = hash.split("?");
   const path = arr && arr.length >= 1 ? arr[0] : "";
-  // const searchStr = arr && arr.length >= 2 ? arr[1] : "";
-  // const searchExists = lodash.trim(searchStr).length > 0;
-  // const search = searchExists ? searchStr : undefined;
-  // const query = searchExists ? parse(searchStr) : undefined;
-  return { path, /*search, query*/ };
+  const searchStr = arr && arr.length >= 2 ? arr[1] : "";
+  const searchExists = lodash.trim(searchStr).length > 0;
+  const search = searchExists ? searchStr : undefined;
+  const query = searchExists ? parse(searchStr) : undefined;
+  return { path, search, query };
 }
 
 export { hasPropertyIn, getPropOrStateValue, noValue, hasValue, getStrValue, getUrlParam, getPageLocation, getRouterLocation };

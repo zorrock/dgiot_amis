@@ -1,4 +1,5 @@
 import React, { CSSProperties } from 'react';
+import qs from "qs";
 import lodash from "lodash";
 import classNames from 'classnames';
 import { Menu } from 'antd';
@@ -184,9 +185,9 @@ const menuToRouterLocation = (menu: RuntimeMenuItem): RouterLocation | undefined
   const { runtimeRouter } = menu;
   if (!runtimeRouter) return;
   return {
-    // search: lodash.keys(runtimeRouter.querystring).length > 0 ? `?${qs.stringify(runtimeRouter.querystring)}` : "",
     path: runtimeRouter.path,
-    // query: runtimeRouter.querystring,
+    search: lodash.keys(runtimeRouter.querystring).length > 0 ? `?${qs.stringify(runtimeRouter.querystring)}` : "",
+    query: runtimeRouter.querystring,
     state: runtimeRouter.state,
   };
 };

@@ -4,10 +4,8 @@ interface RouteMatchParams {
   params: { [param: string]: string };
   /** 是否是严格匹配 */
   isExact: boolean;
-  /** URL path 字符串 */
+  /** 路由页面路径 */
   path: string;
-  /** URL 字符串 */
-  url: string;
 }
 
 /** 布局页面组件基础属性 */
