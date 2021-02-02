@@ -6,7 +6,7 @@ import { logger } from "@/utils/logger";
 import { BaseLayout, BaseLayoutProps, BaseLayoutState, DefaultSideMenuTopRender } from "@/layouts/BaseLayout";
 import { AntdMenuProps } from "@/components/Layout/layout-types";
 import { GlobalSide, GlobalSideProps, SideFirstMenuClickParam, SideFirstMenuMode, SideFirstMenuSelectParam } from "@/components/Layout/GlobalSide";
-import { getCurrentFirstMenu, getCurrentFirstMenuKey, getFirstMenu, getFirstShowMenu, getMenuItemByKey, menuToRouterLocation } from "@/components/Layout/utils/layouts-utils";
+import { getCurrentFirstMenu, getCurrentFirstMenuKey, getFirstMenu, getFirstShowMenu, getMenuItemByKey, menuToRouter } from "@/components/Layout/utils/layouts-utils";
 import styles from './index.less';
 import { HeaderFirstMenuSelectParam } from "@/components/Layout/HeaderMenu";
 import { routerHistory } from "@/utils/router";
@@ -308,9 +308,9 @@ class NestSideMenuLayout extends BaseLayout<NestSideMenuLayoutProps, NestSideMen
     // 获取默认的第一个 RouterMenuItem
     if (!routerMenu) routerMenu = getFirstShowMenu(menuData) || getFirstMenu(menuData);
     // console.log("headerMenuOnMenuSelect ", routerMenu, location);
-    const routerLocation = menuToRouterLocation(routerMenu);
-    if (!routerLocation) return;
-    routerHistory.push(routerLocation);
+    const router = menuToRouter(routerMenu);
+    if (!router) return;
+    routerHistory.push(router);
   }
 
   protected getAmisModalContainer() {

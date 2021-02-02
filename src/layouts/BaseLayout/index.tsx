@@ -22,7 +22,7 @@ import {
   getHtmlTitle,
   getPageType,
   getSideMenuData,
-  menuToRouterLocation,
+  menuToRouter,
   routerLocationToStr
 } from "@/components/Layout/utils/layouts-utils";
 import { SideMenu, SideMenuProps, SideSecondMenuClickParam, SideSecondMenuOpenChangeParam, SideSecondMenuSelectParam } from "@/components/Layout/SideMenu";
@@ -596,9 +596,9 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       window.open(options.url, options.target, options.features, options.replace);
       return;
     }
-    const routerLocation = menuToRouterLocation(menuData);
-    if (!routerLocation) return;
-    routerHistory.push(routerLocation);
+    const router = menuToRouter(menuData);
+    if (!router) return;
+    routerHistory.push(router);
   }
 
   /** 二级菜单展开/折叠事件 */

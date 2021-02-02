@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
-import qs from "qs";
 import lodash from "lodash";
 import classNames from 'classnames';
+import { compile } from 'path-to-regexp';
 import { Menu } from 'antd';
 import baseX from "base-x";
 import stableStringify from "fast-json-stable-stringify";
@@ -181,12 +181,12 @@ const routerLocationToStr = (routerLocation: RouterLocation): string => {
 };
 
 /** 菜单转换成RouterLocation */
-const menuToRouterLocation = (menu: RuntimeMenuItem): RouterLocation | undefined => {
+const menuToRouter = (menu: RuntimeMenuItem): Router | undefined => {
   const { runtimeRouter } = menu;
   if (!runtimeRouter) return;
+  const toPath = compile(runtimeRouter.path);
   return {
-    path: runtimeRouter.path,
-    search: lodash.keys(runtimeRouter.querystring).length > 0 ? `?${qs.stringify(runtimeRouter.querystring)}` : "",
+    path: toPath(runtimeRouter.pathVariable ?? {}),
     query: runtimeRouter.querystring,
     state: runtimeRouter.state,
   };
@@ -329,7 +329,7 @@ export {
   getFirstShowMenu,
   routerLocationToStr,
   getFirstMenu,
-  menuToRouterLocation,
+  menuToRouter,
   base62Encode,
   getPageType,
   getHtmlTitle,

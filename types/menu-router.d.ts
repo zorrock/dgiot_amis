@@ -39,6 +39,16 @@ interface RouterLocation {
   state?: RouterState;
 }
 
+/** 页面路由跳转参数Router */
+interface Router {
+  /** 路由页面路径 */
+  path: string;
+  /** 路由的querystring解析结果(一个对象) */
+  query?: QueryString;
+  /** router.push 传入的 state */
+  state?: RouterState;
+}
+
 /** 路由配置 */
 interface RouterConfig {
   /** 路由路径(支持path-to-regexp) */
@@ -96,7 +106,7 @@ interface RuntimeRouter extends RouterConfig {
   path: string;
   /** 路由路径中有变量时，配置的路径变量对象 TODO 未使用 */
   pathVariable: PathVariable;
-  /** 设置路由路径的queryString部分 TODO 未使用 */
+  /** 设置路由路径的queryString部分 */
   querystring: QueryString;
   /** 表示是否严格匹配，即location是否和path完全一致 */
   exact: boolean;

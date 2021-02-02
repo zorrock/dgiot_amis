@@ -68,15 +68,6 @@ type RuntimeLayoutConfig = RuntimeNestSideLayoutConfig | RuntimeBlankLayoutConfi
 // Location状态数据
 type LocationState = RouterLocation['state'];
 
-interface Router {
-  /** 路由页面路径 */
-  path: string;
-  /** 路由的querystring解析结果(一个对象) */
-  query?: QueryString;
-  /** router.push 传入的 state */
-  state?: RouterState;
-}
-
 /** 路由跳转工具类 */
 class RouterHistory {
   /**
