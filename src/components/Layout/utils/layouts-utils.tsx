@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { compile } from 'path-to-regexp';
 import { Menu } from 'antd';
 import baseX from "base-x";
-import stableStringify from "fast-json-stable-stringify";
 import AntdIcon, { AntdIconFont, createIconFontCN } from '@/components/AntdIcon';
 import styles from '../GlobalSide/SideFirstMenu.less';
 
@@ -176,8 +175,8 @@ const getFirstMenu = (menu: RuntimeMenuItem): RuntimeMenuItem => {
 
 /** 路由转换成字符串 */
 const routerLocationToStr = (routerLocation: RouterLocation): string => {
-  const { path, state } = routerLocation;
-  return `${path ?? ""}|${stableStringify(state)}`;
+  const { path } = routerLocation;
+  return path ?? "";
 };
 
 /** 菜单转换成RouterLocation */
