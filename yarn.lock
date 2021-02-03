@@ -1835,11 +1835,12 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.npm.taobao.org/alphanum-sort/download/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
-amis@1.1.4-beta.5:
-  version "1.1.4-beta.5"
-  resolved "https://registry.npm.taobao.org/amis/download/amis-1.1.4-beta.5.tgz#e2b1a2466dc9c7570be356fb07f28664339b29a0"
-  integrity sha1-4rGiRm3Jx1cL41b7B/KGZDObKaA=
+amis@1.1.4-beta.6:
+  version "1.1.4-beta.6"
+  resolved "https://registry.npm.taobao.org/amis/download/amis-1.1.4-beta.6.tgz#ab49666edd4e1fe232ee67d1d223bc8d0adaf597"
+  integrity sha1-q0lmbt1OH+Iy7mfR0iO8jQra9Zc=
   dependencies:
+    ansi-to-react "^6.1.4"
     async "2.6.0"
     attr-accept "2.2.2"
     blueimp-canvastoblob "2.1.0"
@@ -1865,7 +1866,6 @@ amis@1.1.4-beta.5:
     moment "^2.19.3"
     monaco-editor "0.21.2"
     papaparse "^5.3.0"
-    path-to-regexp "^6.2.0"
     prop-types "^15.6.1"
     qrcode.react "^0.8.0"
     qs "6.5.1"
@@ -1879,8 +1879,6 @@ amis@1.1.4-beta.5:
     react-input-range "1.3.0"
     react-json-tree "0.13.0"
     react-overlays "0.8.3"
-    react-progress-2 "^4.4.2"
-    react-select "1.2.1"
     react-textarea-autosize "5.1.0"
     react-transition-group "2.9.0"
     react-visibility-sensor "3.11.0"
@@ -1890,6 +1888,11 @@ amis@1.1.4-beta.5:
     tslib "^1.10.0"
     uncontrollable "7.0.2"
     video-react "0.14.1"
+
+anser@^1.4.1:
+  version "1.4.10"
+  resolved "https://registry.npm.taobao.org/anser/download/anser-1.4.10.tgz?cache=0&sync_timestamp=1605101432316&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fanser%2Fdownload%2Fanser-1.4.10.tgz#befa3eddf282684bd03b63dcda3927aef8c2e35b"
+  integrity sha1-vvo+3fKCaEvQO2Pc2jknrvjC41s=
 
 ansi-colors@^3.0.0:
   version "3.2.4"
@@ -1941,6 +1944,14 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   integrity sha1-7dgDYornHATIWuegkG7a00tkiTc=
   dependencies:
     color-convert "^2.0.1"
+
+ansi-to-react@^6.1.4:
+  version "6.1.4"
+  resolved "https://registry.npm.taobao.org/ansi-to-react/download/ansi-to-react-6.1.4.tgz#689180945525de037871e20553117fd575b5950c"
+  integrity sha1-aJGAlFUl3gN4ceIFUxF/1XW1lQw=
+  dependencies:
+    anser "^1.4.1"
+    escape-carriage "^1.3.0"
 
 antd@^4.11.2:
   version "4.11.2"
@@ -2882,7 +2893,7 @@ classnames@2.2.5:
   resolved "https://registry.npm.taobao.org/classnames/download/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
   integrity sha1-+zgB1FNGdknvNgPH1hoCvRKb3m0=
 
-classnames@2.x, classnames@^2.2.1, classnames@^2.2.3, classnames@^2.2.4, classnames@^2.2.5, classnames@^2.2.6:
+classnames@2.x, classnames@^2.2.1, classnames@^2.2.3, classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.npm.taobao.org/classnames/download/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha1-Q5Nb/90pHzJtrQogUwmzjQD2UM4=
@@ -4070,6 +4081,11 @@ escalade@^3.1.0, escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npm.taobao.org/escalade/download/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
   integrity sha1-2M/ccACWXFoBdLSoLqpcBVJ0LkA=
+
+escape-carriage@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.npm.taobao.org/escape-carriage/download/escape-carriage-1.3.0.tgz#71006b2d4da8cb6828686addafcb094239c742f3"
+  integrity sha1-cQBrLU2oy2goaGrdr8sJQjnHQvM=
 
 escape-html@^1.0.3, escape-html@~1.0.3:
   version "1.0.3"
@@ -8399,13 +8415,6 @@ react-helmet@^6.1.0:
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
-react-input-autosize@^2.1.2:
-  version "2.2.2"
-  resolved "https://registry.npm.taobao.org/react-input-autosize/download/react-input-autosize-2.2.2.tgz#fcaa7020568ec206bc04be36f4eb68e647c4d8c2"
-  integrity sha1-/KpwIFaOwga8BL429Oto5kfE2MI=
-  dependencies:
-    prop-types "^15.5.8"
-
 react-input-range@1.3.0:
   version "1.3.0"
   resolved "https://registry.npm.taobao.org/react-input-range/download/react-input-range-1.3.0.tgz#f96d001631ab817417f1e26d8f9f9684b4827f59"
@@ -8449,20 +8458,6 @@ react-overlays@0.8.3:
     prop-types-extra "^1.0.1"
     react-transition-group "^2.2.0"
     warning "^3.0.0"
-
-react-progress-2@^4.4.2:
-  version "4.4.3"
-  resolved "https://registry.npm.taobao.org/react-progress-2/download/react-progress-2-4.4.3.tgz#bcdf97c99aac73ebcf5061f05ec1ba39b547ea58"
-  integrity sha1-vN+XyZqsc+vPUGHwXsG6ObVH6lg=
-
-react-select@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.npm.taobao.org/react-select/download/react-select-1.2.1.tgz?cache=0&sync_timestamp=1606116510669&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-select%2Fdownload%2Freact-select-1.2.1.tgz#a2fe58a569eb14dcaa6543816260b97e538120d1"
-  integrity sha1-ov5YpWnrFNyqZUOBYmC5flOBINE=
-  dependencies:
-    classnames "^2.2.4"
-    prop-types "^15.5.8"
-    react-input-autosize "^2.1.2"
 
 react-side-effect@^2.1.0:
   version "2.1.1"

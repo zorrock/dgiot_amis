@@ -40,7 +40,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-helmet": "^6.1.0",
-    "amis": "1.1.4-beta.5",
+    "amis": "1.1.4-beta.6",
     "antd": "^4.11.2",
     "@ant-design/icons": "^4.4.0",
     "simplebar": "^5.3.0",
