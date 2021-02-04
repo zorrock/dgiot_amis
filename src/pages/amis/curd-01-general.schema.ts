@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { FormClassName } from "@/amis-types";
-import { serverHost } from "@/server-api";
+import { serverHost } from "@/api/server-api";
 import { enum2object } from "@/utils/enum";
 import { orderTypeMapper, payStatusMapper, payTypeMapper, statusMapper } from "./enum-data";
 

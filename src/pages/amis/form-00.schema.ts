@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { FormClassName, WidthClassName } from "@/amis-types";
-import { serverHost } from "@/server-api";
+import { serverHost } from "@/api/server-api";
 import { statusMapper } from "./enum-data";
 
 // const api = {
