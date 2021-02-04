@@ -97,11 +97,6 @@ let config: Configuration = {
     new CopyWebpackPlugin({
       patterns: [
         { from: publicPath, to: "./public" },
-        {
-          from: path.join(nodeModulesPath, "monaco-editor/min/vs/base/browser/ui/codicons/codicon/codicon.ttf"),
-          to: "./public/amis/sdk/thirds/monaco-editor/min/vs/base/browser/ui/codicons/codicon/codicon.ttf",
-          toType: "file",
-        },
         ...[
           // react 相关
           "/react/umd/react.profiling.min.js",
@@ -149,9 +144,7 @@ let config: Configuration = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     modules: [srcPath, nodeModulesPath],
-    alias: {
-      "@": srcPath,
-    },
+    alias: { "@": srcPath },
   },
   externals: {
     react: "window.React",

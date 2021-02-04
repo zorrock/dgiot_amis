@@ -138,6 +138,7 @@ const routerConfigs: LayoutConfig[] = [
           { path: "/03", name: "内嵌微博", icon: "WeiboOutlined", pagePath: "https://weibo.com/" },
           { path: "/04", name: "内嵌百度", icon: "WeiboOutlined", pagePath: "https://www.baidu.com/" },
           { path: "/05", name: "React页面", icon: "BulbOutlined", pagePath: "/react/01demo.react.tsx" },
+          { path: "/06", name: "Html页面", icon: "BulbOutlined", pagePath: "/pages/html/index.html" },
         ],
       },
       {
@@ -189,108 +190,17 @@ const routerConfigs: LayoutConfig[] = [
         path: "/help",
         name: "帮助文档",
         icon: "QuestionCircleOutlined",
+        openOptions: { url: "https://baidu.gitee.io/amis/docs/index" },
+      },
+      {
+        path: "/help2",
+        name: "帮助文档2",
+        icon: "QuestionCircleOutlined",
         openOptions: {
           url: "https://baidu.gitee.io/amis/docs/index",
           target: "_blank",
           features: "directories=no, status=no, resizable=no, copyhistory=yes, width=800, height=400",
         },
-      },
-      // -------------------------------------------------------------------------
-
-
-      // 页面布局
-      {
-        path: '/layout',
-        name: '页面布局',
-        icon: 'LayoutOutlined',
-        routes: [{ path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts' }],
-      },
-      // 数据录入
-      {
-        path: '/data_entry',
-        name: '数据录入',
-        icon: 'FormOutlined',
-        routes: [{ path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts' }],
-      },
-      // 数据展示
-      {
-        path: '/data_display',
-        name: '数据展示',
-        icon: 'ProfileOutlined',
-        routes: [
-          {
-            path: '/detail',
-            name: '数据详情',
-            icon: 'ContainerOutlined',
-            routes: [
-              { path: '/detail_table', name: '详情表格', pagePath: '/amis/empty-page.schema.ts' },
-              { path: '/detail_modal', name: '对话框详情表格', pagePath: '/amis/empty-page.schema.ts' },
-            ],
-          },
-          {
-            path: '/table',
-            name: 'Table表格',
-            icon: 'TableOutlined',
-            routes: [
-              { path: '/data_table_base', name: '数据表格(基本)', pagePath: '/amis/empty-page.schema.ts' },
-              { path: '/data_table_data', name: '数据表格(数据)', pagePath: '/amis/form-03-dialog.schema.ts' },
-            ],
-          },
-        ],
-      },
-      // 反馈组件
-      {
-        path: '/feedback',
-        name: '反馈组件',
-        icon: 'SmileOutlined',
-        routes: [{ path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts' }],
-      },
-      // 其他组件
-      {
-        path: '/component/other',
-        name: '其他组件',
-        icon: 'EllipsisOutlined',
-        routes: [{ path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts' }],
-      },
-      {
-        path: "/form1",
-        name: "表单1",
-        icon: "TableOutlined",
-        routes: [
-          { path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts" },
-        ],
-      },
-      {
-        path: "/form2",
-        name: "表单2",
-        icon: "LayoutOutlined",
-        routes: [
-          { path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts" },
-        ],
-      },
-      {
-        path: "/form3",
-        name: "表单3",
-        icon: "SmileOutlined",
-        routes: [
-          { path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts" },
-        ],
-      },
-      {
-        path: "/form4",
-        name: "表单4",
-        icon: "ProfileOutlined",
-        routes: [
-          { path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts" },
-        ],
-      },
-      {
-        path: "/form5",
-        name: "表单5",
-        icon: "ProfileOutlined",
-        routes: [
-          { path: "/00", name: "简单表单", pagePath: "/amis/form-00.schema.ts" },
-        ],
       },
     ],
     // 401: "/blank/login",
