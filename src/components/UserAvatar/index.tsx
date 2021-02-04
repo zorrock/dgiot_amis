@@ -77,7 +77,7 @@ class UserAvatar extends React.Component<UserAvatarProps, UserAvatarState> {
           if (!(onMenuClick instanceof Function)) return;
           onMenuClick(info.key as any);
         }}
-        openKeys={["avatar"]}
+        // openKeys={["avatar"]}
       >
         <Menu.SubMenu
           key="avatar"
