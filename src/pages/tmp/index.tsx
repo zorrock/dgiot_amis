@@ -23,7 +23,7 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
     const { loading } = this.state;
     return (
       <div>
-        <button onClick={event => this.setState({ loading: !loading })}>点击</button>
+        <button onClick={() => this.setState({ loading: !loading })}>点击</button>
         {loading && "加载中..."}
         <br/>
       </div>
