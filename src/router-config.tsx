@@ -137,6 +137,7 @@ const routerConfigs: LayoutConfig[] = [
           { path: "/02", name: "新浪微博", icon: "LinkOutlined", openOptions: { url: "https://weibo.com/" } },
           { path: "/03", name: "内嵌微博", icon: "WeiboOutlined", pagePath: "https://weibo.com/" },
           { path: "/04", name: "内嵌百度", icon: "WeiboOutlined", pagePath: "https://www.baidu.com/" },
+          { path: "/05", name: "React页面", icon: "BulbOutlined", pagePath: "/react/01demo.react.tsx" },
         ],
       },
       {
@@ -151,12 +152,38 @@ const routerConfigs: LayoutConfig[] = [
         ],
       },
       {
-        path: "/react",
-        name: "React页面",
-        icon: "BulbOutlined",
+        path: "/menu",
+        name: "菜单设置",
+        icon: "MenuOutlined",
         routes: [
-          { path: "/00", name: "ReactDemo页面", icon: "BulbOutlined", pagePath: "/react/01demo.react.tsx" },
-        ],
+          { path: "/00", name: "路径参数", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts", querystring: { param: "value123" } },
+          { path: "/:01", name: "路径变量", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts", pathVariable: { "01": "p01" } },
+          {
+            path: '/03', name: '二级菜单', icon: 'PictureOutlined',
+            routes: [
+              { path: '/01', name: '三级菜单01', pagePath: '/amis/empty-page.schema.ts' },
+              {
+                path: '/02', name: '三级菜单02', defaultOpen: false,
+                routes: [
+                  { path: '/01', name: '四级菜单01', pagePath: '/amis/empty-page.schema.ts' },
+                  { path: '/02', name: '四级菜单02', pagePath: '/amis/empty-page.schema.ts' },
+                ],
+              },
+              { path: '/03', name: '三级菜单03', pagePath: '/amis/empty-page.schema.ts' },
+            ]
+          },
+          {
+            path: '/04', name: '二级菜单-分组', icon: 'PictureOutlined',
+            routes: [
+              { path: '/01', name: '三级菜单01', groupName: "分组A", pagePath: '/amis/empty-page.schema.ts' },
+              { path: '/02', name: '三级菜单02', groupName: "分组A", pagePath: '/amis/empty-page.schema.ts' },
+              { path: '/03', name: '三级菜单03', groupName: "分组B", pagePath: '/amis/empty-page.schema.ts' },
+              { path: '/04', name: '三级菜单04', groupName: "分组B", pagePath: '/amis/empty-page.schema.ts' },
+              { path: '/05', name: '三级菜单05', groupName: "分组C", pagePath: '/amis/empty-page.schema.ts' },
+              { path: '/06', name: '三级菜单06', groupName: "分组C", pagePath: '/amis/empty-page.schema.ts' },
+            ]
+          },
+        ]
       },
       {
         path: "/help",
@@ -168,33 +195,9 @@ const routerConfigs: LayoutConfig[] = [
           features: "directories=no, status=no, resizable=no, copyhistory=yes, width=800, height=400",
         },
       },
-      {
-        path: "/menu",
-        name: "菜单设置",
-        icon: "TableOutlined",
-        routes: [
-          { path: "/00", name: "路径参数", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts", querystring: { param: "value123" } },
-          { path: "/:01", name: "路径变量", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts", pathVariable: { "01": "p01" } },
-        ]
-      },
       // -------------------------------------------------------------------------
-      // 通用组件
-      {
-        path: '/general',
-        name: '通用组件',
-        icon: 'AppstoreOutlined',
-        routes: [
-          { path: '/icon', name: 'AntdIcon(图标)', icon: 'PictureOutlined', pagePath: '/amis/curd-00.schema.ts' },
-          { path: '/toolbar', name: 'ToolBar(工具栏)', icon: 'ToolOutlined', pagePath: '/amis/curd-00.schema.ts' },
-        ],
-      },
-      // 导航组件
-      {
-        path: '/navigation',
-        name: '导航组件',
-        icon: 'MenuOutlined',
-        routes: [{ path: '/001', name: '空白页', icon: 'PictureOutlined', pagePath: '/amis/empty-page.schema.ts' }],
-      },
+
+
       // 页面布局
       {
         path: '/layout',
