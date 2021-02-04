@@ -87,13 +87,14 @@ const getLayoutMenuData = (params: GetLayoutMenuDataParams): LayoutMenuData => {
   // 过滤隐藏的菜单
   const showRootMenus: RuntimeMenuItem[] = [];
   rootMenus.forEach(rootMenu => {
+    // const showRootMenu = filterMenuData(lodash.cloneDeep(rootMenu));
     const showRootMenu = filterMenuData(rootMenu);
     if (showRootMenu) showRootMenus.push(showRootMenu);
   });
   // 当前访问页面对应的显示菜单(显示逻辑对应关系)
   let showCurrentMenu: RuntimeMenuItem | undefined = (currentMenu && !currentMenu.isHide) ? currentMenu : undefined;
   if (!showCurrentMenu && currentMenu && currentMenu.parentKeys && currentMenu.parentKeys.length > 0) {
-    const parentKeys = currentMenu.parentKeys.reverse();
+    const parentKeys = [...currentMenu.parentKeys].reverse();
     parentKeys.forEach(key => {
       if (showCurrentMenu) return;
       showCurrentMenu = getMenuItemByKey(flattenMenuMap, key);

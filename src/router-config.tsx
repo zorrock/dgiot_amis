@@ -158,7 +158,10 @@ const routerConfigs: LayoutConfig[] = [
         name: "菜单设置",
         icon: "MenuOutlined",
         routes: [
-          { path: "/00", name: "路径参数", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts", querystring: { param: "value123" } },
+          {
+            path: "/00", name: "路径参数", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts", querystring: { param: "value123" }, hideChildrenMenu: true,
+            routes: [{ path: '/detail', name: '详情页面', pagePath: '/amis/detail-01.schema.ts', hideMenu: true }]
+          },
           { path: "/:01", name: "路径变量", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts", pathVariable: { "01": "p01" } },
           {
             path: '/03', name: '二级菜单', icon: 'PictureOutlined',
