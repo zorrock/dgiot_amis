@@ -622,7 +622,21 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       // 显示标签页
       if (activePageKey !== multiTabKey) {
         multiTab.lastActiveTime = new Date().getTime();
-        if (multiTab.pageType === "amis") window.currentAmisId = multiTab.mountedDomId;
+        if (multiTab.pageType === "react") {
+          // TODO 重新加载react组件
+        } else if (multiTab.pageType === "amis") {
+          window.currentAmisId = multiTab.mountedDomId;
+          if (multiTab.amisPageName && window.amisPages[multiTab.amisPageName]) {
+            console.log("amisPageName --> ", window.amisPages[multiTab.amisPageName]);
+            // debugger
+            if (window.amisPages[multiTab.amisPageName].getComponentByName("page")) {
+              if (!window[multiTab.amisPageName]) window[multiTab.amisPageName] = {};
+              window[multiTab.amisPageName].orderId = "1021292181646446593";
+              // window.amisPages[multiTab.amisPageName].getComponentByName("page").forceUpdate();
+              window.amisPages[multiTab.amisPageName].getComponentByName("page").reloadTarget("form", { orderId: "1021292181646446593" });
+            }
+          }
+        }
         this.setState({ activePageKey: multiTabKey });
       }
       return;
@@ -652,7 +666,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         } else if (newMultiTab.pageType === "amis") {
           // amis 组件
           newMultiTab.component = await loadAmisPageByPath(pagePath!);
-          const amisPage = amisRender(newMultiTab.mountedDomId, newMultiTab.component.schema);
+          // TODO ????
+          const amisPage = amisRender(newMultiTab.mountedDomId, newMultiTab.component.schema, { data: { orderId: "1021292181646446593", time: newMultiTab.lastActiveTime } });
           newMultiTab.amisPageName = newMultiTab.component.amisPageName;
           // 把Amis页面应用挂载到Window全局对象下
           if (amisPage && newMultiTab.amisPageName && variableTypeOf(newMultiTab.amisPageName) === TypeEnum.string) {
