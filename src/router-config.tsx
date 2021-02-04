@@ -139,6 +139,7 @@ const routerConfigs: LayoutConfig[] = [
           { path: "/04", name: "内嵌百度", icon: "WeiboOutlined", pagePath: "https://www.baidu.com/" },
           { path: "/05", name: "React页面", icon: "BulbOutlined", pagePath: "/react/01demo.react.tsx" },
           { path: "/06", name: "Html页面", icon: "BulbOutlined", pagePath: "/pages/html/index.html" },
+          { path: "/07", name: "TS(JS)页面", icon: "BulbOutlined", pagePath: "/pages/typescript/index.html" },
         ],
       },
       {
