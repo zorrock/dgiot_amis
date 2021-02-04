@@ -374,7 +374,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     const defaultSelectedKeys: string[] = [layoutMenuData.showCurrentMenu.menuKey];
     const selectedKeys: string[] = [layoutMenuData.showCurrentMenu.menuKey];
     // 保存当前二级菜单
-    sideMenuSelectedKeysMap.set(currentFirstMenu.menuKey, { menuKey: layoutMenuData.currentMenu.menuKey, location });
+    if (!layoutMenuData.currentMenu.isHide) sideMenuSelectedKeysMap.set(currentFirstMenu.menuKey, { menuKey: layoutMenuData.currentMenu.menuKey, location });
     // 展开的菜单
     let defaultOpenKeys: string[] | undefined;
     let openKeys: string[] | undefined;
