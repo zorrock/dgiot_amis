@@ -3,9 +3,9 @@ import { FormClassName, WidthClassName } from "@/amis-types";
 import { serverHost } from "@/server-api";
 import { statusMapper } from "./enum-data";
 
-const api = {
-  api_1: "https://houtai.baidu.com/api/mock2/options/chainedOptions?waitSeconds=1&parentId=$parentId&level=$level&maxLevel=4",
-};
+// const api = {
+//   api_1: "https://houtai.baidu.com/api/mock2/options/chainedOptions?waitSeconds=1&parentId=$parentId&level=$level&maxLevel=4",
+// };
 
 const treeData = [
   {
@@ -69,7 +69,7 @@ const schema = {
         { type: "tag", name: "f29", label: "标签选择器", options: statusMapper },
         { type: "color", name: "f9", label: "颜色选择", inputClassName: WidthClassName.width13x },
         { type: "city", name: "f8", label: "城市选择" },
-        { type: "chained-select", name: "f5", label: "级联下拉", source: api.api_1, value: "a,b" },
+        // { type: "chained-select", name: "f5", label: "级联下拉", source: api.api_1, value: "a,b" },
         { type: "picker", name: "f23", label: "对话框选择", options: statusMapper, inputClassName: WidthClassName.width13x },
         { type: "tree", name: "f33", label: "树形选择", options: treeData },
         { type: "file", name: "f17", label: "上传文件", reciever: `${serverHost}/!/amis-api/curd-page@uploadFile` },
