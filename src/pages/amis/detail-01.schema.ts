@@ -18,10 +18,7 @@ const schema = {
       wrapWithPanel: false,
       mode: "inline",
       className: classnames(FormClassName.label4x),
-      debug: true,
-      // data: {
-      //   orderId: "1021652540551041025"
-      // },
+      // debug: true,
       initApi: {
         method: "get",
         url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,

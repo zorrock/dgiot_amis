@@ -626,16 +626,16 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           // TODO 重新加载react组件
         } else if (multiTab.pageType === "amis") {
           window.currentAmisId = multiTab.mountedDomId;
-          if (multiTab.amisPageName && window.amisPages[multiTab.amisPageName]) {
-            console.log("amisPageName --> ", window.amisPages[multiTab.amisPageName]);
-            // debugger
-            if (window.amisPages[multiTab.amisPageName].getComponentByName("page")) {
-              if (!window[multiTab.amisPageName]) window[multiTab.amisPageName] = {};
-              window[multiTab.amisPageName].orderId = "1021292181646446593";
-              // window.amisPages[multiTab.amisPageName].getComponentByName("page").forceUpdate();
-              window.amisPages[multiTab.amisPageName].getComponentByName("page").reloadTarget("form", { orderId: "1021292181646446593" });
-            }
-          }
+          // TODO 重新加载amis组件
+          // if (multiTab.amisPageName && window.amisPages[multiTab.amisPageName]) {
+          //   console.log("amisPageName --> ", window.amisPages[multiTab.amisPageName]);
+          //   if (window.amisPages[multiTab.amisPageName].getComponentByName("page")) {
+          //     if (!window[multiTab.amisPageName]) window[multiTab.amisPageName] = {};
+          //     window[multiTab.amisPageName].orderId = "1021292181646446593";
+          //     // window.amisPages[multiTab.amisPageName].getComponentByName("page").forceUpdate();
+          //     window.amisPages[multiTab.amisPageName].getComponentByName("page").reloadTarget("form", { orderId: "1021292181646446593" });
+          //   }
+          // }
         }
         this.setState({ activePageKey: multiTabKey });
       }
