@@ -641,19 +641,16 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       if (activePageKey !== multiTabKey) {
         multiTab.lastActiveTime = new Date().getTime();
         if (multiTab.pageType === "react") {
-          // TODO 重新加载react组件
         } else if (multiTab.pageType === "amis") {
           window.currentAmisId = multiTab.mountedDomId;
-          // TODO 重新加载amis组件
-          // if (multiTab.amisPageName && window.amisPages[multiTab.amisPageName]) {
-          //   console.log("amisPageName --> ", window.amisPages[multiTab.amisPageName]);
-          //   if (window.amisPages[multiTab.amisPageName].getComponentByName("page")) {
-          //     if (!window[multiTab.amisPageName]) window[multiTab.amisPageName] = {};
-          //     window[multiTab.amisPageName].orderId = "1021292181646446593";
-          //     // window.amisPages[multiTab.amisPageName].getComponentByName("page").forceUpdate();
-          //     window.amisPages[multiTab.amisPageName].getComponentByName("page").reloadTarget("form", { orderId: "1021292181646446593" });
-          //   }
-          // }
+          // 重新加载amis组件
+          if (multiTab.amisPageName && window.amisPages && window.amisPages[multiTab.amisPageName]) {
+            const component = multiTab.component as AmisPage;
+            const globalData: AmisPageGlobalData = { menuItem: multiTab.menuItem, location: multiTab.location, match: multiTab.match };
+            let shouldPageUpdate = false;
+            if (component.shouldPageUpdate instanceof Function) shouldPageUpdate = component.shouldPageUpdate(globalData);
+            if (shouldPageUpdate) window.amisPages[multiTab.amisPageName] = amisRender(multiTab.mountedDomId, component.schema, { data: globalData });
+          }
         }
         this.setState({ activePageKey: multiTabKey });
       }
@@ -684,10 +681,13 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           newMultiTab.component = await loadReactPageByPath(pagePath!);
         } else if (newMultiTab.pageType === "amis") {
           // amis 组件
-          newMultiTab.component = await loadAmisPageByPath(pagePath!);
-          // TODO ????
-          const amisPage = amisRender(newMultiTab.mountedDomId, newMultiTab.component.schema, { data: { orderId: "1021292181646446593", time: newMultiTab.lastActiveTime } });
-          newMultiTab.amisPageName = newMultiTab.component.amisPageName;
+          const component = await loadAmisPageByPath(pagePath!);
+          newMultiTab.component = component;
+          newMultiTab.amisPageName = component.amisPageName;
+          // 初始化全局数据
+          const globalData: AmisPageGlobalData = { menuItem: newMultiTab.menuItem, location: newMultiTab.location, match: newMultiTab.match };
+          if (component.initGlobalData instanceof Function) component.initGlobalData(globalData);
+          const amisPage = amisRender(newMultiTab.mountedDomId, component.schema, { data: globalData });
           // 把Amis页面应用挂载到Window全局对象下
           if (amisPage && newMultiTab.amisPageName && variableTypeOf(newMultiTab.amisPageName) === TypeEnum.string) {
             if (!window.amisPages) window.amisPages = {};

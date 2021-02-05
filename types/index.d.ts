@@ -16,9 +16,31 @@ declare module 'omit.js';
 /** 是否是生产环境 */
 declare const isProdEnv: boolean;
 
+/** AmisPage 全局数据 */
+interface AmisPageGlobalData {
+  /** 路由菜单项 */
+  menuItem: RuntimeMenuItem;
+  /** 当前页面location状态 */
+  location: RouterLocation;
+  /** 路由匹配参数 */
+  match: RouteMatchParams;
+}
+
 interface AmisPage {
-  /** amis schema 对象 */
+  /** amis json schema */
   schema: any;
+  /** 页面组件名称 */
+  amisPageName?: string;
+  /**
+   * 初始化全局数据
+   * @param globalData 全局数据
+   */
+  initGlobalData?: (initGlobalData: AmisPageGlobalData) => void;
+  /**
+   * 是否需要更新页面
+   * @param nextGlobalData 全局数据
+   */
+  shouldPageUpdate?: (nextGlobalData: AmisPageGlobalData) => boolean;
 }
 
 interface ReactPage {

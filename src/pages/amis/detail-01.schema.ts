@@ -6,6 +6,24 @@ import { FormClassName } from "@/amis-types";
 
 const amisPageName = "detail";
 
+let globalData: AmisPageGlobalData | undefined;
+
+const initGlobalData: AmisPage["initGlobalData"] = initGlobalData => {
+  globalData = initGlobalData;
+  console.log("initGlobalData -> ", initGlobalData);
+}
+
+const shouldPageUpdate: AmisPage["shouldPageUpdate"] = nextGlobalData => {
+  console.log("nextGlobalData -> ", nextGlobalData);
+  const { location: { query } } = nextGlobalData;
+  let flag = true;
+  if (globalData?.location?.query && query && globalData?.location?.query.orderId === query.orderId) {
+    flag = false;
+  }
+  globalData = nextGlobalData;
+  return flag;
+}
+
 const schema = {
   type: "page",
   name: "page",
@@ -21,7 +39,7 @@ const schema = {
       // debug: true,
       initApi: {
         method: "get",
-        url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,
+        url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$location.query.orderId`,
         // url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId`,
         // data: {
         //   orderId: window[amisPageName]?.orderId ?? "1021652540551041025"
@@ -46,4 +64,5 @@ const schema = {
   ],
 };
 
-export { schema, amisPageName }
+
+export { schema, amisPageName, initGlobalData, shouldPageUpdate }

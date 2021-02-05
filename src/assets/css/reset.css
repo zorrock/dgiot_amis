@@ -1,8 +1,8 @@
 /* --------------------------------------------------------------------------------------------------------------------- 修改amis默认样式 */
 
-html {
-  font-size: 0.925rem;
-}
+/*html {*/
+/*  font-size: 0.925rem;*/
+/*}*/
 
 .amis-scope .monaco-inputbox > .wrapper {
   padding: 0;
@@ -371,217 +371,223 @@ html {
 /* --------------------------------------------------------------------------------------------------------------------- Form表单输入组件样式 */
 
 /*-- label宽度为2rem --*/
-.form-label-2x .a-Form-item .a-Form-label {
+.form-label-2x .a-Form-item .a-Form-label, .form-label-2x .a-Form-label {
   width: 2rem;
   text-align: right;
 }
 
 /*-- label宽度为4rem --*/
-.form-label-4x .a-Form-item .a-Form-label {
+.form-label-4x .a-Form-item .a-Form-label, .form-label-4x .a-Form-label {
   width: 4rem;
   text-align: right;
 }
 
 /*-- label宽度为6rem --*/
-.form-label-6x .a-Form-item .a-Form-label {
+.form-label-6x .a-Form-item .a-Form-label, .form-label-6x .a-Form-label {
   width: 6rem;
   text-align: right;
 }
 
 /*-- label宽度为8rem --*/
-.form-label-8x .a-Form-item .a-Form-label {
+.form-label-8x .a-Form-item .a-Form-label, .form-label-8x .a-Form-label {
   width: 8rem;
   text-align: right;
 }
 
 /*-- label宽度为10rem --*/
-.form-label-10x .a-Form-item .a-Form-label {
+.form-label-10x .a-Form-item .a-Form-label, .form-label-10x .a-Form-label {
   width: 10rem;
   text-align: right;
 }
 
 /*-- input宽度为10rem --*/
-.form-input-10x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-10x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-10x .a-Form-value .a-Form-control:not(.a-Button) {
   min-width: 10rem;
   width: 10rem;
 }
 
 /*-- input宽度为12rem --*/
-.form-input-12x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-12x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-12x .a-Form-value .a-Form-control:not(.a-Button) {
   min-width: 12rem;
   width: 12rem;
 }
 
 /*-- input宽度为10rem --*/
-.form-input-14x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-14x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-14x .a-Form-value .a-Form-control:not(.a-Button) {
   min-width: 14rem;
   width: 14rem;
 }
 
 /*-- input宽度为16rem --*/
-.form-input-16x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-16x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-16x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 16rem;
 }
 
 /*-- input宽度为18rem --*/
-.form-input-18x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-18x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-18x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 18rem;
 }
 
 /*-- input宽度为20rem --*/
-.form-input-20x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-20x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-20x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 20rem;
 }
 
 /*-- input宽度为22rem --*/
-.form-input-22x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-22x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-22x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 22rem;
 }
 
 /*-- input宽度为24rem --*/
-.form-input-24x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-24x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-24x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 24rem;
 }
 
 /*-- input宽度为26rem --*/
-.form-input-26x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-26x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-26x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 26rem;
 }
 
 /*-- input宽度为28rem --*/
-.form-input-28x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-28x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-28x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 28rem;
 }
 
 /*-- input宽度为30rem --*/
-.form-input-30x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-30x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-30x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 30rem;
 }
 
 /*-- input宽度为32rem --*/
-.form-input-32x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.form-input-32x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .form-input-32x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 32rem;
 }
 
 /*-- flex label宽度为2rem --*/
-.flex-form-label-2x .a-Form-item .a-Form-label {
+.flex-form-label-2x .a-Form-item .a-Form-label, .flex-form-label-2x .a-Form-label {
   flex-basis: 2rem;
   max-width: 2rem;
 }
 
 /*-- flex label宽度为3rem --*/
-.flex-form-label-3x .a-Form-item .a-Form-label {
+.flex-form-label-3x .a-Form-item .a-Form-label, .flex-form-label-3x .a-Form-label {
   flex-basis: 3rem;
   max-width: 3rem;
 }
 
 /*-- flex label宽度为4rem --*/
-.flex-form-label-4x .a-Form-item .a-Form-label {
+.flex-form-label-4x .a-Form-item .a-Form-label, .flex-form-label-4x .a-Form-label {
   flex-basis: 4rem;
   max-width: 4rem;
 }
 
 /*-- flex label宽度为5rem --*/
-.flex-form-label-5x .a-Form-item .a-Form-label {
+.flex-form-label-5x .a-Form-item .a-Form-label, .flex-form-label-5x .a-Form-label {
   flex-basis: 5rem;
   max-width: 5rem;
 }
 
 /*-- flex label宽度为6rem --*/
-.flex-form-label-6x .a-Form-item .a-Form-label {
+.flex-form-label-6x .a-Form-item .a-Form-label, .flex-form-label-6x .a-Form-label {
   flex-basis: 6rem;
   max-width: 6rem;
 }
 
 /*-- flex label宽度为7rem --*/
-.flex-form-label-6x .a-Form-item .a-Form-label {
+.flex-form-label-6x .a-Form-item .a-Form-label, .flex-form-label-6x .a-Form-label {
   flex-basis: 7rem;
   max-width: 7rem;
 }
 
 /*-- flex label宽度为8rem --*/
-.flex-form-label-8x .a-Form-item .a-Form-label {
+.flex-form-label-8x .a-Form-item .a-Form-label, .flex-form-label-8x .a-Form-label {
   flex-basis: 8rem;
   max-width: 8rem;
 }
 
 /*-- flex label宽度为9rem --*/
-.flex-form-label-9x .a-Form-item .a-Form-label {
+.flex-form-label-9x .a-Form-item .a-Form-label, .flex-form-label-9x .a-Form-label {
   flex-basis: 9rem;
   max-width: 9rem;
 }
 
 /*-- flex label宽度为10rem --*/
-.flex-form-label-10x .a-Form-item .a-Form-label {
+.flex-form-label-10x .a-Form-item .a-Form-label, .flex-form-label-10x .a-Form-label {
   flex-basis: 10rem;
   max-width: 10rem;
 }
 
+/*-- flex label宽度为12rem --*/
+.flex-form-label-11x .a-Form-item .a-Form-label, .flex-form-label-11x .a-Form-item .a-Form-label, .flex-form-label-11x .a-Form-label {
+  flex-basis: 11rem;
+  max-width: 11rem;
+}
+
 /*-- input宽度为10rem --*/
-.flex-form-input-10x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-10x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-10x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 10rem;
 }
 
 /*-- input宽度为12rem --*/
-.flex-form-input-12x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-12x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-12x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 12rem;
 }
 
 /*-- input宽度为14rem --*/
-.flex-form-input-14x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-14x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-14x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 14rem;
 }
 
 /*-- input宽度为16rem --*/
-.flex-form-input-16x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-16x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-16x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 16rem;
 }
 
 /*-- input宽度为18rem --*/
-.flex-form-input-18x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-18x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-18x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 18rem;
 }
 
 /*-- input宽度为20rem --*/
-.flex-form-input-20x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-20x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-20x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 20rem;
 }
 
 /*-- input宽度为22rem --*/
-.flex-form-input-22x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-22x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-22x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 22rem;
 }
 
 /*-- input宽度为24rem --*/
-.flex-form-input-24x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-24x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-24x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 24rem;
 }
 
 /*-- input宽度为26rem --*/
-.flex-form-input-26x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-26x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-26x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 26rem;
 }
 
 /*-- input宽度为28rem --*/
-.flex-form-input-28x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-28x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-28x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 28rem;
 }
 
 /*-- input宽度为30rem --*/
-.flex-form-input-30x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-30x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-30x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 30rem;
 }
 
 /*-- input宽度为32rem --*/
-.flex-form-input-32x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button) {
+.flex-form-input-32x .a-Form-item .a-Form-value .a-Form-control:not(.a-Button), .flex-form-input-32x .a-Form-value .a-Form-control:not(.a-Button) {
   width: 32rem;
 }
 
-.form-item-height-2_5x .a-Form-item {
+.form-item-height-2_5x .a-Form-item, .form-item-height-2_5x {
   height: 2.5rem;
 }
 
-.form-item-height-3_5x .a-Form-item {
+.form-item-height-3_5x .a-Form-item, .form-item-height-3_5x {
   height: 3.5rem;
 }
 
