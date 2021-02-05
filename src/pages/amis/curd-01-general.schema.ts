@@ -128,8 +128,9 @@ const schema = {
       primaryField: "orderId",
       columns: [
         { name: "index", label: "序号", width: 50, type: "tpl", tpl: "<%= (this.__super.pageNo - 1) * this.__super.pageSize + this.index + 1 %>" },
-        { name: "orderCode", label: "订单编号", type: "link", body: "${orderCode}", href: "#/nest-side/menu/00/detail?orderCode=${orderCode}", sortable: true },
-        { name: "orderCode", label: "订单编号2", type: "link", body: "${orderCode}", href: "#/nest-side/menu/00/${orderCode}", sortable: true },
+        { name: "orderId", label: "订单编号", type: "link", body: "${orderId}", href: "#/nest-side/menu/00/detail?orderCode=${orderCode}", sortable: true },
+        { name: "orderCode", label: "详情", type: "link", body: "查看详情", href: "#/nest-side/menu/00/${orderCode}", sortable: true },
+        { name: "orderCode", label: "详情2", type: "link", body: "查看详情2", href: "#/nest-side/menu/00/react/detail?orderId=${orderId}", sortable: true },
         { name: "status", label: "订单状态", sortable: true, type: "mapping", map: enum2object(statusMapper), },
         { name: "shipName", label: "收货人姓名", sortable: true },
         { name: "shipMobile", label: "手机号", sortable: true },

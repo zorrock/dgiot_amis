@@ -226,6 +226,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     this.addOrShowTabPage();
   }
 
+  componentWillUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any) {
+    this.updateMultiTab(nextProps, nextState);
+  }
+
   componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot?: any) {
     this.addOrShowTabPage();
   }
@@ -509,7 +513,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
               <SimpleBarReact className={classNames(styles.simpleBar)} autoHide={true}>
                 {
                   tab.pageType === "react" ?
-                    (tab.component?.default ? <tab.component.default/> : <div/>) :
+                    (tab.component?.default ? <tab.component.default key={tab.multiTabKey} menuItem={tab.menuItem} location={tab.location} match={tab.match}/> : <div/>) :
                     <div id={mountedDomId} key={mountedDomId} className={styles.pageContent}/>
                 }
               </SimpleBarReact>
@@ -611,9 +615,23 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     this.setState({ sideMenuOpenKeysMap: sideMenuOpenKeysMap.set(currentFirstMenu.menuKey, param.openKeys) });
   }
 
+  /** 更新多页签数据 */
+  protected updateMultiTab(nextProps: Readonly<P>, nextState: Readonly<S>) {
+    const { location, match, layoutMenuData: { currentMenu } } = nextProps;
+    if (!currentMenu) return;
+    const { multiTabs } = nextState;
+    const multiTabKey = base62Encode(routerLocationToStr(location));
+    const multiTab = multiTabs.find(tab => tab.multiTabKey === multiTabKey);
+    if (multiTab) {
+      multiTab.menuItem = currentMenu;
+      multiTab.location = location;
+      multiTab.match = match;
+    }
+  }
+
   /** 新增或显示标签页 */
   protected addOrShowTabPage() {
-    const { location, layoutMenuData: { currentMenu } } = this.props;
+    const { location, match, layoutMenuData: { currentMenu } } = this.props;
     if (!currentMenu) return;
     const { activePageKey, multiTabs } = this.state;
     const multiTabKey = base62Encode(routerLocationToStr(location));
@@ -647,7 +665,8 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
       mountedDomId: lodash.uniqueId('amisId-'),
       menuItem: currentMenu,
       multiTabKey,
-      location: location,
+      location,
+      match,
       isHomePage: false,
       lastActiveTime: new Date().getTime(),
       showClose: true,

@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { Button, Card } from 'antd';
 import { routerHistory } from "@/utils/router";
 
-interface DemoPageProps {
-  match?: any;
-  param: any;
+interface DemoPageProps extends ReactPageComponentProps {
 }
 
 interface DemoPageState {
@@ -19,8 +17,7 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
   };
 
   render() {
-    const { param } = this.props;
-    // console.log("param", param);
+    const { location, match } = this.props;
     const { loading, count } = this.state;
     return (
       <Card style={{ margin: "16px" }}>
@@ -35,7 +32,10 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
         <br/>
         {loading && "加载中..."}
         <br/>
-        {JSON.stringify(param)}
+        {JSON.stringify(location)}
+        <br/>
+        <br/>
+        {JSON.stringify(match)}
       </Card>
     );
   }

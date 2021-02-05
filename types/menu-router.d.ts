@@ -161,6 +161,8 @@ interface MultiTabItem {
   // currentPath: string;
   /** 当前页面location状态 */
   location: RouterLocation;
+  /** 路由匹配参数 */
+  match: RouteMatchParams;
   /** 是否是首页 */
   isHomePage: boolean;
   /** 最后一次活动时间(时间戳) */
