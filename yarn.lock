@@ -1746,10 +1746,10 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.npm.taobao.org/alphanum-sort/download/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
-amis@^1.1.4-beta.6:
-  version "1.1.4-beta.6"
-  resolved "https://registry.npm.taobao.org/amis/download/amis-1.1.4-beta.6.tgz#ab49666edd4e1fe232ee67d1d223bc8d0adaf597"
-  integrity sha1-q0lmbt1OH+Iy7mfR0iO8jQra9Zc=
+amis@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npm.taobao.org/amis/download/amis-1.1.4.tgz?cache=0&sync_timestamp=1612520984468&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Famis%2Fdownload%2Famis-1.1.4.tgz#27261ba572ff926ad94a5ed7df94531f598b05d3"
+  integrity sha1-JyYbpXL/kmrZSl7X35RTH1mLBdM=
   dependencies:
     ansi-to-react "^6.1.4"
     async "2.6.0"
