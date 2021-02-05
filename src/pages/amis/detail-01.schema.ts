@@ -10,17 +10,16 @@ let globalData: AmisPageGlobalData | undefined;
 
 const initGlobalData: AmisPage["initGlobalData"] = initGlobalData => {
   globalData = initGlobalData;
-  console.log("initGlobalData -> ", initGlobalData);
 }
 
 const shouldPageUpdate: AmisPage["shouldPageUpdate"] = nextGlobalData => {
-  console.log("nextGlobalData -> ", nextGlobalData);
   const { location: { query } } = nextGlobalData;
   let flag = true;
   if (globalData?.location?.query && query && globalData?.location?.query.orderId === query.orderId) {
     flag = false;
   }
   globalData = nextGlobalData;
+  console.log("####################### flag -> ", flag);
   return flag;
 }
 

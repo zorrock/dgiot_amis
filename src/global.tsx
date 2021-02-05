@@ -16,9 +16,9 @@ const log = logger.getLogger("src/global.tsx");
 // 全局日志配置
 setConfig({
   level: 'log',
-  moduleNameRegExp: /.*/,
+  // moduleNameRegExp: /.*/,
   // moduleNameRegExp: /^src\/schema-app|src\/utils\/|src\/service\/.*/,
-  // moduleNameRegExp: /src\/schema-app\.tsx/,
+  moduleNameRegExp: /src\/schema-app\.tsx/,
 });
 
 // 模拟登录用户
