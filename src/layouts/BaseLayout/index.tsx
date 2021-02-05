@@ -649,7 +649,10 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
             const globalData: AmisPageGlobalData = { menuItem: multiTab.menuItem, location: multiTab.location, match: multiTab.match };
             let shouldPageUpdate = false;
             if (component.shouldPageUpdate instanceof Function) shouldPageUpdate = component.shouldPageUpdate(globalData);
-            if (shouldPageUpdate) window.amisPages[multiTab.amisPageName] = amisRender(multiTab.mountedDomId, component.schema, { data: globalData });
+            if (shouldPageUpdate) {
+              const amisPage = amisRender(multiTab.mountedDomId, component.schema, { data: globalData });
+              if (amisPage) window.amisPages[multiTab.amisPageName] = amisPage;
+            }
           }
         }
         this.setState({ activePageKey: multiTabKey });
