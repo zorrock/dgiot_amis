@@ -26,4 +26,4 @@ if (!window.currentUser) {
   window.currentUser = { uid: "001", loginName: "lzw", nickname: "李志伟" };
 }
 
-log.info("global.tsx加载完成")
+log.info("global.tsx加载完成");
