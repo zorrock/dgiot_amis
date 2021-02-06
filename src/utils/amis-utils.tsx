@@ -43,7 +43,7 @@ const initRootDiv = function (): void {
  * @param options     amis选项
  */
 const amisRender = function (mountedId: string, schema: SchemaObject, props: RootRenderProps = {}, options: RenderOptions = {}): AmisApp {
-  const ops = { ...amisRenderOptions, ...options };
+  const ops = { ...amisRenderOptions, ...options } as RenderOptions;
   return amis.embed(`#${mountedId}`, schema, props, ops);
 }
 

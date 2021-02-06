@@ -1,0 +1,58 @@
+@import "./amis-class-name";
+
+:global {
+  /* --------------------------------------------------------------------------------------------------------------------- 修改amis默认样式 */
+  //html {
+  //  font-size: 0.925rem;
+  //}
+
+  .@{amisScope} .monaco-inputbox > .wrapper {
+    padding: 0;
+  }
+
+  .@{amisScope} .@{tableContent} {
+    overflow-y: hidden;
+  }
+
+  .@{amisScope} .@{pageBody} {
+    padding-top: 0.5rem;
+  }
+
+  .@{amisScope} .@{button} {
+    line-height: 1.5;
+  }
+
+  .@{amisScope} .@{button}.@{button_xs} {
+    font-size: 0.6rem;
+  }
+
+  .@{amisScope} .@{checkbox_checkbox} > i {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .@{amisScope} .@{checkbox_full}.@{checkbox_checkbox} input:checked + i:before {
+    width: 0.7rem;
+    height: 0.3rem;
+  }
+
+  .@{amisScope} .@{crudPageSwitch} .@{select} {
+    height: 1.875rem;
+    min-height: 1.875rem;
+    line-height: 1.4285714286;
+  }
+
+  .@{amisScope} .@{crudPageSwitch} .@{select} .@{selectValueWrap} {
+    top: -0.0625rem;
+  }
+
+  .@{amisScope} .@{crudPageSwitch} .@{select} .@{selectArrow} > svg {
+    top: 0.125em;
+  }
+
+  /* --------------------------------------------------------------------------------------------------------------------- 修改antd默认样式 */
+
+  .ant-notification.ant-notification-topRight {
+    z-index: 9999;
+  }
+}

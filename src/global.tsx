@@ -1,13 +1,12 @@
 import moment from 'moment';
 // import 'font-awesome/css/font-awesome.css';
 // import 'amis/lib/themes/default.css';
-// import 'amis/lib/themes/cxd.css';
-import '@/assets/css/reset.css';
-import 'rc-tabs/assets/index.css';
-import 'simplebar/src/simplebar.css';
 // import 'antd/dist/antd.css';
-// import 'antd/dist/antd.dark.css';
 // import 'antd/dist/antd.compact.css';
+import '@/assets/css/amis-reset.less';
+import '@/assets/css/global-class.less';
+import '@/assets/css/amis-class.less';
+import 'simplebar/src/simplebar.css';
 import { logger, setConfig } from '@/utils/logger';
 
 moment.locale('zh-cn');
