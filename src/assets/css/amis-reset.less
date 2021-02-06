@@ -1,42 +1,7 @@
 @import "./amis-class-name";
 
-:root {
-  // 参考 @import "~amis/scss/_properties.scss";
-  --fontSizeBase: 13px;
-  --fontSizeMd: 14px;
-  --fontSizeLg: 18px;
-  --fontSizeXl: 22px;
-  --fontSizeSm: 12px;
-  --fontSizeXs: 11px;
-
-  --gap-xs: 3px;
-  --gap-sm: 8px;
-  --gap-base: 12px;
-  --gap-md: 16px;
-  --gap-lg: 26px;
-
-  --Form-input-height: 28px;
-
-  //--Form-input-lineHeight: 1.4285714286;
-  //--Button-height: var(--Form-input-height);
-  //--Button-lineHeight: var(--Form-input-lineHeight);
-  --Button--lg-height: 32px;
-  //--Button--lg-lineHeight: 24 / 20;
-  //--Button--md-height: var(--Button-height);
-  //--Button--md-lineHeight: 1;
-  --Button--sm-height: 26px;
-  //--Button--sm-lineHeight: 18 / 12;
-  --Button--xs-height: 22px;
-  //--Button--xs-lineHeight: 18 / 11;
-
-  --Calendar-btn-height: 24px;
-
-  --TableCell-height: 38px;
-}
-
 :global {
   /* --------------------------------------------------------------------------------------------------------------------- 修改amis默认样式 */
-
   //html {
   //  font-size: 0.925rem;
   //}
@@ -54,36 +19,36 @@
   }
 
   .@{amisScope} .@{button} {
-    line-height: 1;
+    line-height: 1.5;
   }
 
-  //.@{amisScope} .@{button}.@{button_xs} {
-  //  font-size: 0.6rem;
-  //}
-  //
-  //.@{amisScope} .@{checkbox_checkbox} > i {
-  //  width: 1.1rem;
-  //  height: 1.1rem;
-  //}
-  //
-  //.@{amisScope} .@{checkbox_full}.@{checkbox_checkbox} input:checked + i:before {
-  //  width: 0.7rem;
-  //  height: 0.3rem;
-  //}
-  //
-  //.@{amisScope} .@{crudPageSwitch} .@{select} {
-  //  height: 1.875rem;
-  //  min-height: 1.875rem;
-  //  line-height: 1.4285714286;
-  //}
-  //
-  //.@{amisScope} .@{crudPageSwitch} .@{select} .@{selectValueWrap} {
-  //  top: -0.0625rem;
-  //}
-  //
-  //.@{amisScope} .@{crudPageSwitch} .@{select} .@{selectArrow} > svg {
-  //  top: 0.125em;
-  //}
+  .@{amisScope} .@{button}.@{button_xs} {
+    font-size: 0.6rem;
+  }
+
+  .@{amisScope} .@{checkbox_checkbox} > i {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .@{amisScope} .@{checkbox_full}.@{checkbox_checkbox} input:checked + i:before {
+    width: 0.7rem;
+    height: 0.3rem;
+  }
+
+  .@{amisScope} .@{crudPageSwitch} .@{select} {
+    height: 1.875rem;
+    min-height: 1.875rem;
+    line-height: 1.4285714286;
+  }
+
+  .@{amisScope} .@{crudPageSwitch} .@{select} .@{selectValueWrap} {
+    top: -0.0625rem;
+  }
+
+  .@{amisScope} .@{crudPageSwitch} .@{select} .@{selectArrow} > svg {
+    top: 0.125em;
+  }
 
   /* --------------------------------------------------------------------------------------------------------------------- 修改antd默认样式 */
 

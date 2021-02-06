@@ -82,7 +82,7 @@ axiosInstance.interceptors.response.use(response => {
 
 const amisRenderOptions: RenderOptions = {
   /** 主题配置(default（默认主题）、cxd（云舍）和dark（暗黑）、antd) */
-  theme: "antd",
+  theme: "default",
   /** 默认为 "global"，决定 store 是否为全局共用的，如果想单占一个 store，请设置不同的值 */
   session: "global",
   /** 发送http请求 */
