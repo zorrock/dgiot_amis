@@ -20,6 +20,8 @@ function detailsDialog() {
       actions: [{ type: "button", label: "关闭", level: "primary", actionType: "close" }],
       body: {
         type: "form",
+        // mode: "inline",
+        className: classnames(FormClassName.label5x),
         initApi: {
           method: "get",
           url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,
@@ -46,7 +48,7 @@ function editDialog() {
     size: "xs",
     actionType: "dialog",
     dialog: {
-      size: "md",
+      size: "xs",
       title: "编辑",
       data: {
         "&": "$$",
@@ -55,6 +57,8 @@ function editDialog() {
       },
       body: {
         type: "form",
+        // mode: "inline",
+        className: classnames(FormClassName.flex_label5x),
         // initApi: {
         //   method: "get",
         //   url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,
@@ -70,7 +74,7 @@ function editDialog() {
           { type: "text", name: "shipName", label: "收货人" },
           { type: "text", name: "shipName2", label: "收货人2" },
           { type: "text", name: "shipMobile", label: "手机号" },
-          { type: "text", name: "shipAddr", label: "地址" },
+          { type: "textarea", name: "shipAddr", label: "地址" },
         ]
       }
     }

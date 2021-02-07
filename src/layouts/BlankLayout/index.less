@@ -1,3 +1,5 @@
+@import "../../assets/css/amis-class-name";
+
 /* --------------------------------------------------------------------------------------------------------------------- Spin组件自定义样式 */
 .spinWrapper {
   height: 100%;
@@ -42,20 +44,20 @@
 
 .editCodeDrawer {
   :global {
-    .amis-scope {
+    .@{amisScope} {
       overflow-y: hidden;
+
+      .@{amisRoutesWrapper}, .@{pagePage}, .@{pageBody}, .@{panel}, .@{panelBody}, .@{panelForm}, .@{form}, .@{formItem} {
+        background-color: #ffffff;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
     }
 
-    .amis-scope, .amis-routes-wrapper, .a-Page, .a-Page-body, .a-Panel, .a-Panel--form, .a-Panel-body, .a-Form, .a-Form-item {
-      background-color: #ffffff;
-      height: 100%;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      border: none;
-    }
-
-    .a-EditorControl {
+    .@{editorControl} {
       height: 100% !important;
       min-height: unset !important;
       max-height: unset !important;

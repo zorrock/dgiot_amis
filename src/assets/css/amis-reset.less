@@ -15,6 +15,9 @@
   --gap-md: 16px;
   --gap-lg: 26px;
 
+  //--Form-item-gap: 14px;
+  --Panel-bodyPadding: 12px;
+
   --Form-input-paddingX: 8px;
   --Form-input-height: 28px;
 
@@ -48,6 +51,10 @@
   --TableCell-paddingY: 8px;
   --TableCell-paddingX: 8px;
   --TableCell-height: 38px;
+
+  --Pagination-height: 24px;
+  --Pagination-minWidth: 24px;
+  --Pagination-padding: auto 4px;
 }
 
 :global {
@@ -107,19 +114,19 @@
     line-height: 1;
   }
 
-  //.@{amisScope} .@{crudPageSwitch} .@{select} {
-  //  height: 1.875rem;
-  //  min-height: 1.875rem;
-  //  line-height: 1.4285714286;
-  //}
-  //
-  //.@{amisScope} .@{crudPageSwitch} .@{select} .@{selectValueWrap} {
-  //  top: -0.0625rem;
-  //}
-  //
-  //.@{amisScope} .@{crudPageSwitch} .@{select} .@{selectArrow} > svg {
-  //  top: 0.125em;
-  //}
+  .@{amisScope} .@{crudPageSwitch} .@{select} {
+    height: 26px;
+    min-height: 26px;
+  }
+
+  .@{amisScope} .@{crudPageSwitch} .@{select} .@{selectValueWrap} {
+    top: -1px;
+  }
+
+  .button.toggle.left.codicon.codicon-find-collapsed:focus, .button.toggle.left.codicon.codicon-find-expanded:focus {
+    outline: #007fd4 solid 1px;
+    outline-offset: -1px;
+  }
 
   /* --------------------------------------------------------------------------------------------------------------------- 修改antd默认样式 */
 

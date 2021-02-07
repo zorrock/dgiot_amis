@@ -91,12 +91,20 @@ enum PageClassName {
 enum FormClassName {
   /** label宽度为2rem */
   label2x = "form-label-2x",
+  /** label宽度为3rem */
+  label3x = "form-label-3x",
   /** label宽度为4rem */
   label4x = "form-label-4x",
+  /** label宽度为5rem */
+  label5x = "form-label-5x",
   /** label宽度为6rem */
   label6x = "form-label-6x",
+  /** label宽度为7rem */
+  label7x = "form-label-7x",
   /** label宽度为8rem */
   label8x = "form-label-8x",
+  /** label宽度为9rem */
+  label9x = "form-label-9x",
   /** label宽度为10rem */
   label10x = "form-label-10x",
 
