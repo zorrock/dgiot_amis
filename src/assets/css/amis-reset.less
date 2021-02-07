@@ -15,6 +15,7 @@
   --gap-md: 16px;
   --gap-lg: 26px;
 
+  --Form-input-paddingX: 8px;
   --Form-input-height: 28px;
 
   //--Form-input-lineHeight: 1.4285714286;
@@ -29,8 +30,23 @@
   --Button--xs-height: 22px;
   //--Button--xs-lineHeight: 18 / 11;
 
+  --Switch-height: 20px;
+  --Switch-width: 44px;
+
+  --Checkbox-size: 16px;
+
+  --ListControl-fontSize: 12px;
+  --ListControl-item-paddingX: 8px;
+  --ListControl-item-paddingY: 4px;
+
   --Calendar-btn-height: 24px;
 
+  --InputRange-slider-height: 20px;
+  --InputRange-slider-width: 16px;
+  --InputRange-track-height: 8px;
+
+  --TableCell-paddingY: 8px;
+  --TableCell-paddingX: 8px;
   --TableCell-height: 38px;
 }
 
@@ -57,20 +73,40 @@
     line-height: 1;
   }
 
-  //.@{amisScope} .@{button}.@{button_xs} {
-  //  font-size: 0.6rem;
-  //}
-  //
-  //.@{amisScope} .@{checkbox_checkbox} > i {
-  //  width: 1.1rem;
-  //  height: 1.1rem;
-  //}
-  //
-  //.@{amisScope} .@{checkbox_full}.@{checkbox_checkbox} input:checked + i:before {
-  //  width: 0.7rem;
-  //  height: 0.3rem;
-  //}
-  //
+  .@{amisScope} .@{listControlItem}:hover:active:before, .@{amisScope} .@{listControlItem}.is-active:before {
+    width: 12px;
+    height: 12px;
+  }
+
+  .@{amisScope} .@{imageControlAddBtn} {
+    width: 112px;
+    height: 112px;
+  }
+
+  .@{amisScope} .@{fileControlSelectBtn} {
+    width: 112px;
+  }
+
+  .@{amisScope} .@{inputRangeSlider}:before {
+    line-height: 16px;
+  }
+
+  .@{amisScope} .@{rangeControl} .@{inputRangeInput} {
+    right: 1.625rem;
+    top: 16px;
+    height: 24px;
+
+    > input {
+      border-width: 1px;
+      border: var(--Form-input-borderWidth) solid var(--Form-input-borderColor);
+      border-radius: var(--Form-input-borderRadius);
+    }
+  }
+
+  .@{amisScope} .@{ratingControl} {
+    line-height: 1;
+  }
+
   //.@{amisScope} .@{crudPageSwitch} .@{select} {
   //  height: 1.875rem;
   //  min-height: 1.875rem;
