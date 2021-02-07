@@ -140,6 +140,7 @@ const routerConfigs: LayoutConfig[] = [
           { path: "/05", name: "React页面", icon: "BulbOutlined", pagePath: "/react/01demo.react.tsx" },
           { path: "/06", name: "Html页面", icon: "BulbOutlined", pagePath: "/pages/html/index.html" },
           { path: "/07", name: "TS(JS)页面", icon: "BulbOutlined", pagePath: "/pages/typescript/index.html" },
+          { path: "/08", name: "Chart图标", icon: "BulbOutlined", pagePath: "/amis/chart-00.schema.ts" },
         ],
       },
       {
