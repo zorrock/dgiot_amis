@@ -72,6 +72,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
         </Helmet>
         {(!isProdEnv || true) && this.getEditCodeButton()}
         {this.getPage()}
+        <div id="amis-modal-container" key="amis-modal-container" className="amis-scope" style={{ height: 0 }} />
       </>
     );
   }
