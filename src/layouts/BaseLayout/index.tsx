@@ -327,11 +327,12 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
   /** 全局页头 */
   protected getGlobalHeader() {
     const {
-      globalHeaderLeftClassName, globalHeaderLeftStyle, globalHeaderCentreClassName, globalHeaderCentreStyle, globalHeaderRightClassName,
-      globalHeaderRightStyle, globalHeaderLeftRender, globalHeaderCentreRender, globalHeaderRightRender, globalHeaderRender,
+      layoutMenuData, globalHeaderLeftClassName, globalHeaderLeftStyle, globalHeaderCentreClassName, globalHeaderCentreStyle,
+      globalHeaderRightClassName, globalHeaderRightStyle, globalHeaderLeftRender, globalHeaderCentreRender, globalHeaderRightRender, globalHeaderRender,
     } = this.props;
     return (
       <GlobalHeader
+        layoutMenuData={layoutMenuData}
         leftClassName={globalHeaderLeftClassName}
         leftStyle={globalHeaderLeftStyle}
         centerClassName={globalHeaderCentreClassName}

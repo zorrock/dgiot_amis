@@ -66,7 +66,12 @@ type RuntimeLayoutConfig = RuntimeNestSideLayoutConfig | RuntimeBlankLayoutConfi
 // -----------------------------------------------------------------------------------
 
 // Location状态数据
-type LocationState = RouterLocation['state'];
+interface LocationState {
+  /** 路由的querystring解析结果(一个对象) */
+  query: QueryString;
+  /** router.push 传入的 state */
+  state: RouterState;
+}
 
 /** 路由跳转工具类 */
 class RouterHistory {
@@ -76,7 +81,7 @@ class RouterHistory {
    *   Map<Location.hash, state>
    * </pre>
    */
-  private routerLocationStateMap = new Map<string, LocationState>();
+  private locationStateMap = new Map<string, LocationState>();
 
   constructor() {
   }
@@ -86,34 +91,36 @@ class RouterHistory {
    * @param router 路由地址
    */
   public push(router: Router): void {
-    let { state } = router;
     const { path = "", query = {} } = router;
     const queryString = query ? qs.stringify(query) : "";
+    let { state } = router;
     if (lodash.trim(path).length <= 0 && lodash.trim(queryString).length <= 0) return;
-    if (!state) state = this.routerLocationStateMap.get(path) ?? {};
-    this.routerLocationStateMap.set(path, state);
+    if (!state) state = this.locationStateMap.get(path) ?? {};
+    this.locationStateMap.set(path, { query, state });
     window.location.hash = lodash.trim(queryString).length > 0 ? `#${path}?${queryString}` : `#${path}`;
   }
 
   /**
    * 替换页面状态值
    * @param path  页面路径
+   * @param query 路由的querystring解析结果
    * @param state 页面的状态值
    */
-  public replaceState(path: string, state: LocationState = {}): void {
+  public replaceState(path: string, query?: QueryString, state?: RouterState): void {
     if (!path) return;
-    const oldState = this.routerLocationStateMap.get(path);
-    if (!oldState) return;
-    this.routerLocationStateMap.set(path, state);
+    const locationState = this.locationStateMap.get(path) ?? { query: {}, state: {} };
+    if (query) locationState.query = query;
+    if (state) locationState.state = state;
+    this.locationStateMap.set(path, locationState);
   }
 
   /**
    * 获取页面状态
    * @param path 页面路径
    */
-  public getLocationState(path: string): LocationState {
+  public getLocationState(path: string): LocationState | undefined {
     if (!path) return;
-    return this.routerLocationStateMap.get(path) ?? {};
+    return this.locationStateMap.get(path);
   }
 }
 

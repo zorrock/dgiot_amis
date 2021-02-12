@@ -3,12 +3,12 @@
 [OK] 3. 404页面不存在
 [OK] 4. LayoutType.Blank
 [OK] 5. 支持iframe
-[  ] 6. RouterConfig.path 支持path-to-regexp 测试
-[  ] 7. RouterConfig.pathVariable 测试
-[  ] 8. RouterConfig.querystring 测试
+[OK] 6. RouterConfig.path 支持path-to-regexp 测试
+[OK] 7. RouterConfig.pathVariable 测试
+[OK] 8. RouterConfig.querystring 测试
 [  ] 9. RouterConfig.exact 测试
-[  ] 10.RouterConfig.redirect 测试
-[  ] 11.RouterConfig.icon 测试
+[NO] 10.RouterConfig.redirect 测试
+[OK] 11.RouterConfig.icon 测试
 [  ] 12.RouterConfig.defaultOpen 测试
 [  ] 13.RouterConfig.breadcrumbName 测试
 [  ] 14.RouterConfig.groupName 测试
@@ -32,6 +32,6 @@
 [NO] 28.NestSideMenuLayout自动隐藏一级菜单
 [OK] 27.把所有Amis页面应用挂载到Window全局对象下
 [OK] 28.系统登录页面
-[  ] 29.增加面包屑导航组件(Layout需要)
+[OK] 29.增加面包屑导航组件(Layout需要)
 
 

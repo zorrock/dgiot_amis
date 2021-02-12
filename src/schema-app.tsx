@@ -52,6 +52,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     const pageLocation = getPageLocation();
     const routerLocation = getRouterLocation();
     const runtimeLayouts = layoutToRuntime(props.routerConfigs);
+    routerHistory.replaceState(routerLocation.path, routerLocation.query);
     const matched = locationHashMatch(props.layoutSettings, routerLocation.path, runtimeLayouts);
     const currentLayout = matched?.currentLayout;
     const currentRouter = matched?.currentRouter;
@@ -78,6 +79,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
     const { runtimeLayouts } = this.state;
     const pageLocation = getPageLocation();
     const routerLocation = getRouterLocation();
+    routerHistory.replaceState(routerLocation.path, routerLocation.query);
     const pathHash = routerLocation.path;
     // 跳转到默认地址或登录地址 - 全局跳转
     const { loginPath, defaultPath } = layoutSettings;
@@ -200,6 +202,7 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
 const initApp = (routerConfigs: LayoutConfig[]) => {
   // 跳转到默认地址或登录地址
   const routerLocation = getRouterLocation();
+  routerHistory.replaceState(routerLocation.path, routerLocation.query);
   const { loginPath, defaultPath } = layoutSettings;
   if (loginPath && !window.currentUser) {
     routerHistory.push({ path: loginPath });

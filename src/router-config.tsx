@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { CopyrightCircleOutlined } from "@ant-design/icons";
 import { LayoutConfig, LayoutType } from '@/utils/router';
 import { SideFirstMenuMode } from "@/components/Layout/GlobalSide";
+import { BreadcrumbNav } from "@/components/Layout/BreadcrumbNav";
 import { ActionKey, AvatarMode, UserAvatar } from "@/components/UserAvatar";
 import { userLogout } from "@/service/login-service";
 
@@ -63,6 +64,17 @@ const routerConfigs: LayoutConfig[] = [
     layout: LayoutType.NestSide,
     layoutProps: {
       hideGlobalHeader: false,
+      globalHeaderLeftRender: (props, className, elementMap) => {
+        const { layoutMenuData } = props;
+        // elementMap.set("blank", <span key="blank" style={{ display: "inline-block", width: 8 }}/>);
+        elementMap.set("breadcrumb", <BreadcrumbNav key="breadcrumb" style={{ marginLeft: 8 }} layoutMenuData={layoutMenuData}/>);
+        const { rightClassName, rightStyle = {} } = props;
+        return (
+          <div className={classNames(className, rightClassName)} style={rightStyle}>
+            {[...elementMap.values()]}
+          </div>
+        );
+      },
       globalHeaderRightRender: (props, className, elementMap) => {
         const currentUser = window.currentUser;
         elementMap.set("avatar", (

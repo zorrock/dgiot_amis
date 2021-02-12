@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { compile } from 'path-to-regexp';
 import { Menu } from 'antd';
 import baseX from "base-x";
+import { routerHistory } from "@/utils/router";
 import AntdIcon, { AntdIconFont, createIconFontCN } from '@/components/AntdIcon';
 import styles from '../GlobalSide/SideFirstMenu.less';
 
@@ -184,10 +185,12 @@ const menuToRouter = (menu: RuntimeMenuItem): Router | undefined => {
   const { runtimeRouter } = menu;
   if (!runtimeRouter) return;
   const toPath = compile(runtimeRouter.path);
+  const path = toPath(runtimeRouter.pathVariable ?? {});
+  const locationState = routerHistory.getLocationState(path);
   return {
-    path: toPath(runtimeRouter.pathVariable ?? {}),
-    query: runtimeRouter.querystring,
-    state: runtimeRouter.state,
+    path,
+    query: locationState ? locationState.query : runtimeRouter.querystring,
+    state: locationState ? locationState.state : runtimeRouter.state,
   };
 };
 

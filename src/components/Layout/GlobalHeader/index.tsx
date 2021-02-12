@@ -3,6 +3,8 @@ import { getCenterNode, getLeftNode, getRightNode } from '../utils/flex-horizont
 import styles from './index.less';
 
 interface GlobalHeaderProps {
+  /** 当前Layout菜单数据 */
+  layoutMenuData: LayoutMenuData;
   // ----------------------------------------------------------------------------------- 自定义渲染逻辑
   /** 左侧区域class样式 */
   leftClassName?: string;
