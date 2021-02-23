@@ -66,7 +66,6 @@ const routerConfigs: LayoutConfig[] = [
       hideGlobalHeader: false,
       globalHeaderLeftRender: (props, className, elementMap) => {
         const { layoutMenuData } = props;
-        // elementMap.set("blank", <span key="blank" style={{ display: "inline-block", width: 8 }}/>);
         elementMap.set("breadcrumb", <BreadcrumbNav key="breadcrumb" style={{ marginLeft: 8 }} layoutMenuData={layoutMenuData}/>);
         const { rightClassName, rightStyle = {} } = props;
         return (
@@ -107,34 +106,6 @@ const routerConfigs: LayoutConfig[] = [
       globalFooterCopyright: <>Copyright <CopyrightCircleOutlined key="copyright"/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>,
       globalSideMenuWidth: 100,
       globalSideMenuMode: SideFirstMenuMode.AntdMenu,
-      globalSideBottomRender: (props, className, elementMap) => {
-        const currentUser = window.currentUser;
-        elementMap.set("avatar", (
-          <UserAvatar
-            key="avatar"
-            mode={AvatarMode.Vertical}
-            avatarSrc={currentUser?.avatar}
-            nickname={currentUser?.nickname}
-            onMenuClick={key => {
-              switch (key) {
-                case ActionKey.PersonalCenter:
-                  break;
-                case ActionKey.PersonalSettings:
-                  break;
-                case ActionKey.Logout:
-                  userLogout(layoutSettings.logoutApi!, layoutSettings.loginPath!);
-                  break;
-              }
-            }}
-          />
-        ));
-        const { bottomClassName, bottomStyle = {} } = props;
-        return (
-          <div className={classNames(className, bottomClassName)} style={bottomStyle}>
-            {[...elementMap.values()]}
-          </div>
-        );
-      },
       sideMenuEnableSearchMenu: false,
     },
     routes: [

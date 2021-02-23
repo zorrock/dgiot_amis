@@ -192,7 +192,10 @@ class ReactAppPage extends Component<ReactAppPageProps, ReactAppPageState> {
   public async refreshMenu(callback?: () => void) {
     const routerConfigsCopy = lodash.cloneDeep(routerConfigs);
     const newRouterConfigs = await getMenus(routerConfigsCopy, layoutSettings.menuApi!);
-    if (!newRouterConfigs) return;
+    if (!newRouterConfigs) {
+      if (callback instanceof Function) callback();
+      return;
+    }
     const runtimeLayouts = layoutToRuntime(newRouterConfigs);
     this.setState({ runtimeLayouts }, callback);
   }
@@ -206,8 +209,7 @@ const initApp = (routerConfigs: LayoutConfig[]) => {
   const { loginPath, defaultPath } = layoutSettings;
   if (loginPath && !window.currentUser) {
     routerHistory.push({ path: loginPath });
-  }
-  if (lodash.trim(routerLocation.path).length <= 0 && defaultPath) {
+  } else if (lodash.trim(routerLocation.path).length <= 0 && defaultPath) {
     routerHistory.push({ path: defaultPath });
   }
   log.info("routerConfigs ->", routerConfigs);

@@ -226,8 +226,9 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     this.addOrShowTabPage();
   }
 
-  componentWillUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any) {
+  shouldComponentUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
     this.updateMultiTab(nextProps, nextState);
+    return true;
   }
 
   componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot?: any) {
@@ -651,8 +652,11 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
             let shouldPageUpdate = false;
             if (component.shouldPageUpdate instanceof Function) shouldPageUpdate = component.shouldPageUpdate(globalData);
             if (shouldPageUpdate) {
+              const usePageDidUpdate = component.pageDidUpdate instanceof Function;
+              if (!usePageDidUpdate) amisRender(multiTab.mountedDomId, { type: "page", body: "" });
               const amisPage = amisRender(multiTab.mountedDomId, component.schema, { data: globalData });
               if (amisPage) window.amisPages[multiTab.amisPageName] = amisPage;
+              if (usePageDidUpdate && component.pageDidUpdate) component.pageDidUpdate(window.amisPages[multiTab.amisPageName]);
             }
           }
         }

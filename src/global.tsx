@@ -17,12 +17,8 @@ setConfig({
   level: 'log',
   // moduleNameRegExp: /.*/,
   // moduleNameRegExp: /^src\/schema-app|src\/utils\/|src\/service\/.*/,
-  moduleNameRegExp: /src\/schema-app\.tsx/,
+  // moduleNameRegExp: /src\/schema-app\.tsx/,
+  moduleNameRegExp: /src\/utils\/amis-render-options\.tsx/,
 });
-
-// 模拟登录用户
-if (!window.currentUser) {
-  window.currentUser = { uid: "001", loginName: "lzw", nickname: "李志伟" };
-}
 
 log.info("global.tsx加载完成");
