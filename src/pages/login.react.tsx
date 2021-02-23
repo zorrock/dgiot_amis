@@ -3,8 +3,8 @@ import { Button, Checkbox, Form, Input, Layout } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import logo from "@/assets/images/logo.png";
 import { layoutSettings } from "@/router-config";
-import styles from "./login.react..less";
 import { userLogin } from "@/service/login-service";
+import styles from "./login.react.less";
 
 interface LoginPageProps {
 }
