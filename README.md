@@ -18,8 +18,15 @@ amis-admin 是基于百度的 [amis](https://github.com/baidu/amis) 低代码框
 
 线上预览地址: [http://amis-admin.msvc.top/](http://amis-admin.msvc.top/) (admin/123456)
 
+系统截图
 
+![登录](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/login.png)
 
+![查询列表](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/curd.png)
+
+![表单](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/detail-form.png)
+
+![系统演示](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/%E7%B3%BB%E7%BB%9F%E6%BC%94%E7%A4%BA.gif)
 
 #### 快速开始
 
@@ -72,6 +79,9 @@ yarn run project-init
 yarn run dev
 ```
 
-使用谷歌浏览器打开: http://127.0.0.1:8000/schema-app.html
+1. 使用谷歌浏览器打开: http://127.0.0.1:8000/schema-app.html
+2. 页面代码都在`/src/pages`文件夹中，一个页面就是一个文件
+3. 菜单配置在`/src/router-config.tsx`文件中定义
+
 
 > 建议使用`IntelliJ IDEA`或者`WebStorm`开发工具
