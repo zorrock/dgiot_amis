@@ -222,8 +222,8 @@ const initApp = (routerConfigs: LayoutConfig[]) => {
 // 初始化root div容器
 initRootDiv();
 // 应用初始化
-const routerConfigsCopy = lodash.cloneDeep(routerConfigs);
 getCurrentUser(layoutSettings.currentUserApi!).then(() => {
+  const routerConfigsCopy = lodash.cloneDeep(routerConfigs);
   // 用户已经登录
   getMenus(routerConfigsCopy, layoutSettings.menuApi!).catch(reason => {
     // 获取菜单失败
@@ -233,5 +233,6 @@ getCurrentUser(layoutSettings.currentUserApi!).then(() => {
 }).catch(reason => {
   log.info("用户未登录 -> ", reason);
   // 当前用户未登录
+  const routerConfigsCopy = lodash.cloneDeep(routerConfigs);
   initApp(routerConfigsCopy);
 });
