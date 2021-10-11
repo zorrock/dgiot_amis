@@ -55,7 +55,7 @@ const settings: Settings = {
     },
   },
   needAnalyzer: !!ANALYZER,
-  defaultTitle: "Amis Admin",
+  defaultTitle: "Dgiot Amis",
   define: {
     isProdEnv: NODE_ENV === "production",
     enableCDN: enableCDN,

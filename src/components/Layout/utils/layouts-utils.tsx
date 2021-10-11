@@ -219,7 +219,7 @@ const getPageType = (runtimeRouter: RuntimeRouter): TabPageType => {
  * @param htmlTitleSuffix html页面title后缀
  */
 const getHtmlTitle = (route: RuntimeRouter, htmlTitleSuffix?: string): string => {
-  let title = 'Amis Admin';
+  let title = 'Dgiot Amis';
   const { pageTitle } = route;
   if (pageTitle) {
     if (pageTitle && htmlTitleSuffix) {

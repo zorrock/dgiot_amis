@@ -42,7 +42,7 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
           {/*logo*/}
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "96px 0 8px 0" }}>
             <img src={logo} style={{ marginRight: 8, width: 48 }} alt="logo"/>
-            <span style={{ fontSize: 32, fontWeight: "bold" }}>Amis Admin</span>
+            <span style={{ fontSize: 32, fontWeight: "bold" }}>Dgiot Amis</span>
           </div>
           <div style={{ width: "100%", textAlign: "center", color: "rgba(0, 0, 0, 0.45)", marginBottom: 40 }}>
             Amis 是一个低代码前端框架，可以减少页面开发工作量，极大提升效率
