@@ -1,3 +1,4 @@
+//https://www.jianshu.com/p/2b409dfc8f75
 {
   "defaultSeverity": "error",
   "extend": [ "tslint-config-prettier" ], // 继承 tslint-config-prettier
@@ -8,11 +9,12 @@
     "no-unused-expression": true
   },
   "rules": {
+    "interface-name" : false,
+    "promise-function-async" : false,
     "typedef": {
       "options": [ "property-declaration" ]
     },
     "class-name": true,
-    "interface-name": true,
     "variable-name": {
       "options": [ "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case" ]
     },
@@ -20,8 +22,7 @@
     "no-var-requires": true,
     "no-any": false,
     "no-string-literal": true,
-    "await-promise": true,
-    "promise-function-async": true
+    "await-promise": true
   },
   "rulesDirectory": []
 }

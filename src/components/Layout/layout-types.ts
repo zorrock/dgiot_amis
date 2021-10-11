@@ -9,19 +9,19 @@ import { PageHeaderProps } from 'antd/es/page-header';
 
 // antd/es/menu MenuProps['onClick'] MenuClickEventHandler 函数参数
 interface AntdMenuClickParam {
-  key: React.Key;
-  keyPath: React.Key[];
-  item: React.ReactInstance;
-  domEvent: React.MouseEvent<HTMLElement>;
+    key: React.Key;
+    keyPath: React.Key[];
+    item: React.ReactInstance;
+    domEvent: React.MouseEvent<HTMLElement>;
 }
 
 // antd/es/menu MenuProps['onSelect'] SelectEventHandler 函数参数
 interface AntdMenuSelectInfo {
-  key: React.Key;
-  keyPath: React.Key[];
-  item: React.ReactInstance;
-  domEvent: React.MouseEvent<HTMLElement>;
-  selectedKeys?: React.Key[];
+    key: React.Key;
+    keyPath: React.Key[];
+    item: React.ReactInstance;
+    domEvent: React.MouseEvent<HTMLElement>;
+    selectedKeys?: React.Key[];
 }
 
 // antd/es/tag TagType
@@ -49,14 +49,14 @@ type AntdPageHeaderProps = PageHeaderProps;
 type MoreButtonEventKey = 'closeLeft' | 'closeRight' | 'closeOther' | 'closeAll';
 
 export {
-  AntdMenuClickParam,
-  AntdTagType,
-  AntdMenuProps,
-  AntdMenuSelectInfo,
-  AntdMenuTheme,
-  AntdInputSearchProps,
-  AntdSiderProps,
-  AntdBreadcrumbProps,
-  AntdPageHeaderProps,
-  MoreButtonEventKey,
+    AntdMenuClickParam,
+    AntdTagType,
+    AntdMenuProps,
+    AntdMenuSelectInfo,
+    AntdMenuTheme,
+    AntdInputSearchProps,
+    AntdSiderProps,
+    AntdBreadcrumbProps,
+    AntdPageHeaderProps,
+    MoreButtonEventKey
 };
