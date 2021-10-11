@@ -29,13 +29,13 @@ const srcPath = path.resolve(settings.rootPath, "./src");
 // pages文件夹绝对路径
 // const pagesPath = path.resolve(rootPath, `${pathPrefix}/src/pages`);
 // public文件夹绝对路径
-const publicPath = path.resolve(settings.rootPath, "./public");
+const publicPath = path.resolve(settings.rootPath, "./dgiot_amis/public");
 // node_modules文件夹绝对路径
 const nodeModulesPath = path.resolve(settings.rootPath, "./node_modules");
 // 打包输出目录绝对路径
 const distPath = path.resolve(settings.rootPath, "./dist");
 // 网站图标绝对路径
-const faviconPath = path.resolve(settings.rootPath, "./public/images/favicon.png");
+const faviconPath = path.resolve(settings.rootPath, "./dgiot_amis/public/images/favicon.png");
 // 访问地址复制到剪切板(只干一次)
 let copyToClipboard = false;
 
@@ -96,7 +96,7 @@ let config: Configuration = {
     new DefinePlugin({ ...settings.define }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: publicPath, to: "./public" },
+        { from: publicPath, to: "./dgiot_amis/public" },
         ...[
           // react 相关
           "/react/umd/react.profiling.min.js",
@@ -133,7 +133,7 @@ let config: Configuration = {
           return {
             from: `${slash(nodeModulesPath)}${pathItem}`,
             transformPath: (targetPath: string, absolutePath: string) => {
-              return `./public${slash(absolutePath).substr(slash(nodeModulesPath).length)}`;
+              return `./dgiot_amis/public${slash(absolutePath).substr(slash(nodeModulesPath).length)}`;
             },
           };
         }),
@@ -227,7 +227,7 @@ if (isDevMode) {
       host: settings.devServer.host,
       port: settings.devServer.port,
       contentBase: `${settings.rootPath}/index.html`,
-      // publicPath: "/",
+      publicPath: "/dgiot_amis/",
       historyApiFallback: true,
       overlay: true,
       hot: true,
@@ -250,8 +250,8 @@ if (isDevMode) {
             clipboardy.writeSync(`http://127.0.0.1:${settings.devServer.port}/`);
             const messages = [
               "  App running at:",
-              `  - Local:   ${chalk.cyan(`http://127.0.0.1:${settings.devServer.port}/`)} (copied to clipboard)`,
-              `  - Network: ${chalk.cyan(`http://${ip.address("public", "ipv4")}:${settings.devServer.port}/`)}`
+              `  - Local:   ${chalk.cyan(`http://127.0.0.1:${settings.devServer.port}/dgiot_amis/schema-app.html`)} (copied to clipboard)`,
+              `  - Network: ${chalk.cyan(`http://${ip.address("public", "ipv4")}:${settings.devServer.port}/dgiot_amis/schema-app.html`)}`
             ];
             console.log(messages.join("\n"));
           },
@@ -271,7 +271,7 @@ if (!isDevMode) {
       path: distPath,
       filename: "[name].[chunkhash].bundle.js",
       chunkFilename: "[name].[chunkhash].chunk.js",
-      publicPath: enableCDN ? cdnPublicPath : "/",
+      publicPath: enableCDN ? cdnPublicPath : "/dgiot_amis/",
     },
     mode: "production",
     module: {
@@ -420,7 +420,7 @@ const options: HtmlWebpackPlugin.Options = {
   favicon: faviconPath,
   appVersion: settings.appVersion,
   chunks: ["manifest", ...chunks, "schemaApp"],
-  urlPrefix: enableCDN ? cdnPublicPath : "/",
+  urlPrefix: enableCDN ? cdnPublicPath : "/dgiot_amis/",
   isDevMode,
   ...base64Images,
 };
