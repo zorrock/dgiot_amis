@@ -10,7 +10,7 @@ steps:
     image: docker:git
     commands:
       - echo "### $DRONE_GIT_HTTP_URL -> $DRONE_BRANCH"
-      - git clone http://172.18.1.1:13000/lizw/amis-admin.git ./
+      - git clone http://172.18.1.1:13000/lizw/dgiot_amis.git ./
       - git checkout master
       # - git clone $DRONE_GIT_HTTP_URL ./
       # - git checkout $DRONE_BRANCH
@@ -43,7 +43,7 @@ steps:
       password:
         from_secret: harbor_password
       registry: '172.18.1.1:15000'
-      repo: '172.18.1.1:15000/node-service/amis-admin'
+      repo: '172.18.1.1:15000/node-service/dgiot_amis'
       insecure: true
       debug: true
       dockerfile: ./Dockerfile
@@ -65,15 +65,15 @@ steps:
       command_timeout: 300s
       script:
         - echo "------------------< 停止容器 >------------------"
-        - docker stop amis-admin
+        - docker stop dgiot_amis
         - echo "------------------< 删除容器 >------------------"
-        - docker rm -v amis-admin
+        - docker rm -v dgiot_amis
         - echo "------------------< 删除旧镜像 >------------------"
-        - docker rmi 172.18.1.1:15000/node-service/amis-admin:0.0.1-SNAPSHOT
+        - docker rmi 172.18.1.1:15000/node-service/dgiot_amis:0.0.1-SNAPSHOT
         - echo "------------------< 拉取新镜像 >------------------"
-        - docker pull 172.18.1.1:15000/node-service/amis-admin:0.0.1-SNAPSHOT
+        - docker pull 172.18.1.1:15000/node-service/dgiot_amis:0.0.1-SNAPSHOT
         - echo "------------------< 运行新镜像 >------------------"
-        - docker run --name amis-admin -d -p 19081:9066 172.18.1.1:15000/node-service/amis-admin:0.0.1-SNAPSHOT
+        - docker run --name dgiot_amis -d -p 19081:9066 172.18.1.1:15000/node-service/dgiot_amis:0.0.1-SNAPSHOT
         - exit
 
   - name: 发送通知[Email]

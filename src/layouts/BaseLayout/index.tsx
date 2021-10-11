@@ -242,7 +242,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     const { route, htmlTitleSuffix, layoutMenuData: { currentMenu } } = this.props;
     return (
       <Helmet>
-        <title>{currentMenu ? getHtmlTitle(route, htmlTitleSuffix) : (htmlTitleSuffix || "Amis-Admin")}</title>
+        <title>{currentMenu ? getHtmlTitle(route, htmlTitleSuffix) : (htmlTitleSuffix || "dgiot_amis")}</title>
       </Helmet>
     );
   }
@@ -265,6 +265,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           type: "form",
           name: "form",
           title: "",
+          // @ts-ignore
           controls: [{ type: "editor", language: "json", name: "code", label: false, disabled: false }],
           actions: [],
         },
@@ -467,7 +468,11 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
         overlay={
           <Menu
             onClick={(event) => {
-              if (onClickMoreButton instanceof Function) onClickMoreButton(event, event.key as MoreButtonEventKey);
+
+              if (onClickMoreButton instanceof Function) { // @ts-ignore
+                onClickMoreButton(event, event.key as MoreButtonEventKey);
+              }
+              // @ts-ignore
               this.onClickMoreButton(event, event.key as MoreButtonEventKey)
             }}
           >
@@ -652,10 +657,12 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
             let shouldPageUpdate = false;
             if (component.shouldPageUpdate instanceof Function) shouldPageUpdate = component.shouldPageUpdate(globalData);
             if (shouldPageUpdate) {
+              // @ts-ignore
               const usePageDidUpdate = component.pageDidUpdate instanceof Function;
               if (!usePageDidUpdate) amisRender(multiTab.mountedDomId, { type: "page", body: "" });
               const amisPage = amisRender(multiTab.mountedDomId, component.schema, { data: globalData });
               if (amisPage) window.amisPages[multiTab.amisPageName] = amisPage;
+              // @ts-ignore
               if (usePageDidUpdate && component.pageDidUpdate) component.pageDidUpdate(window.amisPages[multiTab.amisPageName]);
             }
           }

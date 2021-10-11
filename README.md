@@ -1,6 +1,6 @@
 #### 项目介绍
 
-amis-admin 是基于百度的 [amis](https://github.com/baidu/amis) 低代码框架开发的管理后台前端项目，旨在提供低门槛、高效率、开箱即用的管理后台前端项目。
+dgiot_amis 是基于百度的 [amis](https://github.com/baidu/amis) 低代码框架开发的管理后台前端项目，旨在提供低门槛、高效率、开箱即用的管理后台前端项目。
 
 ##### 1.本项目的应用范围和人群
 1. 企业内部运营后端项目，功能较为简单的管理后台
@@ -16,17 +16,17 @@ amis-admin 是基于百度的 [amis](https://github.com/baidu/amis) 低代码框
 
 ##### 3.效果预览
 
-线上预览地址: [http://amis-admin.msvc.top/](http://amis-admin.msvc.top/) (admin/123456)
+线上预览地址: [http://dgiot_amis.msvc.top/](http://dgiot_amis.msvc.top/) (admin/123456)
 
 系统截图
 
-![登录](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/login.png)
+![登录](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/dgiot_amis/screenshot/login.png)
 
-![查询列表](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/curd.png)
+![查询列表](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/dgiot_amis/screenshot/curd.png)
 
-![表单](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/detail-form.png)
+![表单](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/dgiot_amis/screenshot/detail-form.png)
 
-![系统演示](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/%E7%B3%BB%E7%BB%9F%E6%BC%94%E7%A4%BA.gif)
+![系统演示](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/dgiot_amis/screenshot/%E7%B3%BB%E7%BB%9F%E6%BC%94%E7%A4%BA.gif)
 
 #### 快速开始
 
@@ -72,7 +72,7 @@ tsc -v
 ##### 4.初始化 & 开发
 
 ```shell
-cd ./amis-admin
+cd ./dgiot_amis
 // 初始化
 yarn run project-init
 // 开发
