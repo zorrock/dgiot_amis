@@ -695,7 +695,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
           // react 组件
           newMultiTab.component = await loadReactPageByPath(pagePath!);
         } else if (newMultiTab.pageType === "amis") {
-          // amis 组件
+          // Dgiot Amis组件
           const component = await loadAmisPageByPath(pagePath!);
           newMultiTab.component = component;
           newMultiTab.amisPageName = component.amisPageName;

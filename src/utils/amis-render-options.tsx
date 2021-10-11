@@ -25,7 +25,7 @@ export interface FetcherConfig {
 }
 
 const axiosInstance = axiosCreate();
-// amis - 请求适配
+// Dgiot Amis- 请求适配
 axiosInstance.interceptors.request.use(request => {
     log.info("全局请求拦截[开始] request -> ", request);
     const queryParams = getUrlParam(undefined, request.url);
@@ -42,7 +42,7 @@ axiosInstance.interceptors.request.use(request => {
     return request;
   },
 );
-// amis - 响应适配
+// Dgiot Amis- 响应适配
 axiosInstance.interceptors.response.use(response => {
     log.info("全局响应拦截[开始] response -> ", response);
     const { status, data } = response;

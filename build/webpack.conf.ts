@@ -113,7 +113,7 @@ let config: Configuration = {
           isDevMode ? "/antd/dist/antd.css" : "/antd/dist/antd.min.css",
           isDevMode ? "/antd/dist/antd.compact.css" : "/antd/dist/antd.compact.min.css",
           isDevMode ? "/antd/dist/antd.dark.css" : "/antd/dist/antd.dark.min.css",
-          // amis 相关
+          // Dgiot Amis相关
           "/amis/sdk/**/*.css",
           "/amis/sdk/**/*.js",
           "/amis/sdk/**/*.svg",

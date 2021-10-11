@@ -45,7 +45,9 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
             <span style={{ fontSize: 32, fontWeight: "bold" }}>Dgiot Amis</span>
           </div>
           <div style={{ width: "100%", textAlign: "center", color: "rgba(0, 0, 0, 0.45)", marginBottom: 40 }}>
-            Amis 是一个低代码前端框架，可以减少页面开发工作量，极大提升效率
+            dgiot物联网开源平台代码 dgiot_amis  低代码前端框架
+            <br/>
+            <h4>它使用 JSON 配置来生成页面，可以节省页面开发工作量，极大提升开发前端页面的效率</h4>
           </div>
           {/*登录表单*/}
           <Form name="loginForm" className={styles.loginForm} size={"large"} onFinish={this.login} initialValues={{ remember: true }}>

@@ -209,7 +209,7 @@ class BlankLayout extends React.Component<BlankLayoutProps, BlankLayoutState> {
           // react 组件
           component = await loadReactPageByPath(pagePath!);
         } else if (pageType === "amis") {
-          // amis 组件
+          // Dgiot Amis组件
           component = await loadAmisPageByPath(pagePath!);
           const amisPage = amisRender(mountedDomId, component.schema);
           newAmisPageName = component.amisPageName;

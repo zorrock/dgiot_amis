@@ -27,7 +27,7 @@ interface AmisPageGlobalData {
 }
 
 interface AmisPage {
-  /** amis json schema */
+  /** Dgiot Amisjson schema */
   schema: any;
   /** 页面组件名称 */
   amisPageName?: string;
