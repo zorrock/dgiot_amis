@@ -18,6 +18,7 @@ module.exports = {
     "@babel/preset-typescript",
   ],
   plugins: [
+    // https://blog.csdn.net/weixin_30949361/article/details/102300061
     ["@babel/plugin-transform-runtime", {corejs: {version: 3, proposals: true}}],
     "@babel/plugin-transform-object-assign",
     ["@babel/plugin-proposal-decorators", {legacy: true}],

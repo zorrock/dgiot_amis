@@ -1,4 +1,5 @@
 //https://www.jianshu.com/p/2b409dfc8f75
+//https://www.jianshu.com/p/df14afcfdb03
 {
   "defaultSeverity": "error",
   "extend": [ "tslint-config-prettier" ], // 继承 tslint-config-prettier

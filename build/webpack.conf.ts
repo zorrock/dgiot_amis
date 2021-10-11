@@ -260,6 +260,7 @@ if (isDevMode) {
       new HotModuleReplacementPlugin(),
     ],
   };
+  // @ts-ignore
   config = WebpackMerge(config, devConfig);
 }
 
@@ -301,6 +302,7 @@ if (!isDevMode) {
     },
     plugins: [
       new HashedModuleIdsPlugin(),
+      // @ts-ignore
       new MiniCssExtractPlugin({
         filename: "[name].[hash].css",
         chunkFilename: "[name].[hash].css",
@@ -390,6 +392,7 @@ if (!isDevMode) {
       },
     },
   };
+  // @ts-ignore
   config = WebpackMerge(config, prodConfig);
 }
 
