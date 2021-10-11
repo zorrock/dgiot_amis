@@ -96,7 +96,7 @@ let config: Configuration = {
     new DefinePlugin({ ...settings.define }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: publicPath, to: "./dgiot_amis/public" },
+        { from: publicPath, to: "./public" },
         ...[
           // react 相关
           "/react/umd/react.profiling.min.js",
@@ -133,7 +133,7 @@ let config: Configuration = {
           return {
             from: `${slash(nodeModulesPath)}${pathItem}`,
             transformPath: (targetPath: string, absolutePath: string) => {
-              return `./dgiot_amis/public${slash(absolutePath).substr(slash(nodeModulesPath).length)}`;
+              return `./public${slash(absolutePath).substr(slash(nodeModulesPath).length)}`;
             },
           };
         }),
