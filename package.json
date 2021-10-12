@@ -20,7 +20,8 @@
     "style": "run-s style:**",
     "style:prettier": "prettier --write \"src/**/*.ts\"",
     "style:lint": "tslint -p tsconfig.json -c tslint.json",
-    "push": "git pull && git add . && git cz && git push origin master"
+    "push": "git pull && yarn genlog && git add . && git cz && git push origin master",
+    "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "scripts-bak": {
     "ncu-u": "ncu -u"
@@ -34,8 +35,10 @@
     "big.js": "^6.0.3",
     "classnames": "^2.2.6",
     "commitizen": "^4.2.4",
+    "conventional-changelog-cli": "^2.1.1",
     "copy-to-clipboard": "^3.3.1",
     "crypto-js": "^4.0.0",
+    "cz-conventional-changelog": "^3.3.0",
     "dayjs": "^1.10.4",
     "fast-json-stable-stringify": "^2.1.0",
     "font-awesome": "^4.7.0",

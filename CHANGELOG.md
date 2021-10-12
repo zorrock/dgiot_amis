@@ -1,0 +1,42 @@
+## 0.0.1 (2021-10-12)
+
+
+### Bug Fixes
+
+* **buid:** solve problems with build packaging ([cf1be1c](https://github.com/dgiot/dgiot_amis/commit/cf1be1cd8ee10a48c4ab93fba8aadbc2b7fe735b))
+
+
+### Features
+
+* **build:** compile and deploy the secondary directory problem ([e170ff4](https://github.com/dgiot/dgiot_amis/commit/e170ff40db949a0f861b73dda7c4d823cb70d90e))
+* **views:** style ([572d1f0](https://github.com/dgiot/dgiot_amis/commit/572d1f041d9b07c3ba4ede6e6a83b0f2892d6339))
+
+
+### Performance Improvements
+
+* **api:** serverHost ([b125ce1](https://github.com/dgiot/dgiot_amis/commit/b125ce12f9405cd0d39126eb343907ba6a192f88))
+* **describe:** update project introduction ([4bbe12c](https://github.com/dgiot/dgiot_amis/commit/4bbe12cdf5e03b0fc6a3945df33127024bd2d076))
+
+
+
+## 0.0.1 (2021-10-12)
+
+
+### Bug Fixes
+
+* **buid:** solve problems with build packaging ([cf1be1c](https://github.com/dgiot/dgiot_amis/commit/cf1be1cd8ee10a48c4ab93fba8aadbc2b7fe735b))
+
+
+### Features
+
+* **build:** compile and deploy the secondary directory problem ([e170ff4](https://github.com/dgiot/dgiot_amis/commit/e170ff40db949a0f861b73dda7c4d823cb70d90e))
+* **views:** style ([572d1f0](https://github.com/dgiot/dgiot_amis/commit/572d1f041d9b07c3ba4ede6e6a83b0f2892d6339))
+
+
+### Performance Improvements
+
+* **api:** serverHost ([b125ce1](https://github.com/dgiot/dgiot_amis/commit/b125ce12f9405cd0d39126eb343907ba6a192f88))
+* **describe:** update project introduction ([4bbe12c](https://github.com/dgiot/dgiot_amis/commit/4bbe12cdf5e03b0fc6a3945df33127024bd2d076))
+
+
+
