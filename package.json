@@ -20,8 +20,9 @@
     "style": "run-s style:**",
     "style:prettier": "prettier --write \"src/**/*.ts\"",
     "style:lint": "tslint -p tsconfig.json -c tslint.json",
-    "push": "git pull && yarn genlog && git add . && git cz && git push origin master",
-    "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "push": "git pull && yarn genlog && git add . && git cz && git push origin master && exit",
+    "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "tag": "node src/utils/tag/index.ts"
   },
   "scripts-bak": {
     "ncu-u": "ncu -u"
