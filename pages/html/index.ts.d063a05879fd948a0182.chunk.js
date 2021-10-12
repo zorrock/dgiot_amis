@@ -5,6 +5,6 @@
  *  version : 0.0.2 
  *  description : dgiot_amis 脚手架 
  *  author: h7ml(h7ml@qq.com) 
- *  time:Tue Oct 12 2021 14:17:18 GMT+0000 (Coordinated Universal Time)
+ *  time:Tue Oct 12 2021 14:17:57 GMT+0000 (Coordinated Universal Time)
  */
 (window.webpackJsonp=window.webpackJsonp||[]).push([[20],{u33f:function(o,n){console.log("# --------------------------------------------\x3e 加载完成")}},[["u33f",1]]]);
