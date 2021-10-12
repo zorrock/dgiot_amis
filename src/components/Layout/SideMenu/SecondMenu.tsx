@@ -67,7 +67,7 @@ interface SideSecondMenuProps {
   /** 菜单SubMenu展开/关闭的事件(用于保存菜单展开状态) */
   onMenuOpenChange?: (param: SideSecondMenuOpenChangeParam) => void;
   /** 点击子菜单(SubMenu)标题的事件 */
-  onSubMenuTitleClick?: (param: TitleEventEntityParam) => void;
+  onSubMenuTitleClick?: (param: { menuData: RuntimeMenuItem; domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>; key: string }) => void;
   /** 自定义菜单class样式 */
   menuClassName?: string;
   /** 自定义菜单样式 */
@@ -182,6 +182,7 @@ class SideSecondMenu extends React.Component<SideSecondMenuProps, SideSecondMenu
         multiple={false}
         theme={menuTheme ?? 'light'}
         inlineIndent={17}
+        // @ts-ignore
         collapsedWidth={48}
         siderCollapsed={menuCollapsed}
         // inlineCollapsed={menuCollapsed}

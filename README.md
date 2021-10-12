@@ -20,14 +20,13 @@ dgiot_amis 是基于百度的 [amis](https://github.com/baidu/amis) 低代码框
 
 系统截图
 
-![登录](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/dgiot_amis/screenshot/login.png)
+![登录](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/login.png)
 
-![查询列表](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/dgiot_amis/screenshot/curd.png)
+![查询列表](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/curd.png)
 
-![表单](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/dgiot_amis/screenshot/detail-form.png)
+![表单](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/detail-form.png)
 
-![系统演示](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/dgiot_amis/screenshot/%E7%B3%BB%E7%BB%9F%E6%BC%94%E7%A4%BA.gif)
-
+![系统演示](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/%E7%B3%BB%E7%BB%9F%E6%BC%94%E7%A4%BA.gif)
 #### 快速开始
 
 ##### 1.安装Node.js(建议12.x版本)

@@ -3,7 +3,7 @@ import { ProxyConfigMap } from 'webpack-dev-server';
 import { enableCDN } from './oss.config';
 
 const { NODE_ENV, ANALYZER } = process.env;
-
+const pkg = require('../package.json')
 interface Settings {
     /** 打包版本号 */
     appVersion: string | number;
@@ -13,7 +13,7 @@ interface Settings {
     mode: 'development' | 'production';
     /** dev服务配置 */
     devServer: {
-        openPage: 'dgiot_amis/schema-app.html';
+        openPage: string;
         /** 绑定IP */
         host: '127.0.0.1' | '0.0.0.0';
         /** devServer 端口 */
@@ -31,6 +31,8 @@ interface Settings {
     define: {
         [name: string]: any;
     };
+  dateTime:any,
+  webpackBanner:string
 }
 
 // webpack全局配置
@@ -67,7 +69,10 @@ const settings: Settings = {
     define: {
         isProdEnv: NODE_ENV === 'production',
         enableCDN: enableCDN
-    }
+    },
+  dateTime: new Date(),
+  webpackBanner:
+    `build: 杭州数蛙科技有限公司 \n copyright: dgiot \n project : ${pkg.name} \n version : ${pkg.version} \n description : ${pkg.description} \n author: ${pkg.author} \n time:`,
 };
 
 export { settings };

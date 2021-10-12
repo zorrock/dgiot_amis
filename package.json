@@ -4,7 +4,7 @@
   "private": false,
   "description": "dgiot_amis 脚手架",
   "license": "MIT",
-  "author": "h7ml@qq.com",
+  "author": "h7ml(h7ml@qq.com)",
   "scripts": {
     "ncu": "ncu",
     "global-init": "yarn global add typescript && yarn global add npm-check-updates",
@@ -29,6 +29,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
     "amis": "^1.2.3",
+    "ant-design-vue": "^1.7.8",
     "antd": "^4.16.13",
     "axios": "^0.21.1",
     "base-x": "^3.0.8",
@@ -40,6 +41,7 @@
     "crypto-js": "^4.0.0",
     "cz-conventional-changelog": "^3.3.0",
     "dayjs": "^1.10.4",
+    "element-ui": "^2.15.6",
     "fast-json-stable-stringify": "^2.1.0",
     "font-awesome": "^4.7.0",
     "immutable": "^4.0.0-rc.12",
@@ -47,6 +49,7 @@
     "lodash": "^4.17.20",
     "lodash.isequal": "^4.5.0",
     "memoize-one": "^5.1.1",
+    "mockjs": "^1.1.0",
     "numeral": "^2.0.6",
     "path-to-regexp": "^6.2.0",
     "prettier": "^2.4.1",
@@ -56,9 +59,9 @@
     "react-helmet": "^6.1.0",
     "shelljs": "^0.8.4",
     "simplebar": "^5.3.0",
-    "simplebar-react": "^2.3.0"
+    "simplebar-react": "^2.3.0",
+    "vue": "^2.6.11"
   },
-  "dependencies-bak": {},
   "devDependencies": {
     "@babel/core": "^7.12.17",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
@@ -139,6 +142,7 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.4.3",
     "url-loader": "^4.1.1",
+    "validate-commit-msg": "^2.14.0",
     "webpack": "^4.44.2",
     "webpack-bundle-analyzer": "^3.9.0",
     "webpack-cli": "^3.3.12",

@@ -6,7 +6,7 @@ import slash from "slash";
 import ip from "ip";
 import clipboardy from "clipboardy";
 import lodash from "lodash";
-import { Configuration, DefinePlugin, HashedModuleIdsPlugin, HotModuleReplacementPlugin, Options } from "webpack";
+import { Configuration, DefinePlugin, HashedModuleIdsPlugin, HotModuleReplacementPlugin, Options,BannerPlugin } from "webpack";
 import WebpackMerge from "webpack-merge";
 import WebpackBar from "webpackbar";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
@@ -128,7 +128,15 @@ let config: Configuration = {
                     '/amis/sdk/**/*.woff',
                     '/amis/sdk/**/*.woff2',
                     '/font-awesome/css',
-                    '/font-awesome/fonts'
+                    '/font-awesome/fonts',
+                    //  vue 相关
+                    isDevMode ? '/vue/dist/vue.js' : '/vue/dist/vue.min.js',
+                    //  element-ui相关 https://element.eleme.cn/#/zh-CN/component/installation
+                    '/element-ui/lib/index.js',
+                    '/element-ui/lib/theme-chalk/index.css',
+                    // ant-design-vue 相关 // https://www.antdv.com/docs/vue/introduce-cn/
+                    isDevMode ? '/ant-design-vue/dist/antd.css' : '/ant-design-vue/dist/antd.min.css',
+                    isDevMode ? '/ant-design-vue/dist/antd.js' : '/ant-design-vue/dist/antd.min.js'
                 ].map((pathItem) => {
                     return {
                         from: `${slash(nodeModulesPath)}${pathItem}`,
@@ -151,6 +159,7 @@ let config: Configuration = {
         'react-dom': 'window.ReactDOM',
         moment: 'moment',
         antd: 'antd',
+        // vue: 'window.vue',
         // "@ant-design/icons": "AntDesignIcons", // 不起作用
         amis: { commonjs: 'amisRequire', amd: 'amisRequire', root: 'amisRequire' }
         // amis: "amisRequire",
@@ -268,6 +277,9 @@ if (isDevMode) {
                     }
                 }
             }),
+          new BannerPlugin({
+            banner:`${settings.webpackBanner}${settings.dateTime}`
+          }),
             new HotModuleReplacementPlugin()
         ]
     };
@@ -277,7 +289,7 @@ if (isDevMode) {
 
 // 生产模式
 if (!isDevMode) {
-    const prodConfig: Configuration = {
+  const prodConfig: Configuration = {
         output: {
             path: distPath,
             filename: '[name].[chunkhash].bundle.js',
@@ -324,6 +336,10 @@ if (!isDevMode) {
             new MiniCssExtractPlugin({
                 filename: '[name].[hash].css',
                 chunkFilename: '[name].[hash].css'
+            }),
+          // @ts-ignore
+            new BannerPlugin({
+              banner:`${settings.webpackBanner}${settings.dateTime}`
             }),
             new CleanWebpackPlugin({})
         ],

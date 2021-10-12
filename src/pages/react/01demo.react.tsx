@@ -1,41 +1,86 @@
 import React, { Component } from "react";
-import { Button, Card } from 'antd';
-import { routerHistory } from "@/utils/router";
-
+import { Card, Table} from 'antd';
+import { request } from '@/utils/request';
+import {iotapi} from "@/pages/amis/server-api";
+// antd 文档 https://ant.design/components/table-cn/
+// react 生命周期 https://react.docschina.org/docs/react-component.html
 interface DemoPageProps extends ReactPageComponentProps {
 }
 
 interface DemoPageState {
   loading: boolean;
   count: number;
+  dataSource: any;
+  columns: any
 }
+
 
 class DemoPage extends Component<DemoPageProps, DemoPageState> {
   state: DemoPageState = {
     loading: true,
-    count: 0
+    count: 0,
+    dataSource:[],
+    columns: [
+      {
+        title: '设备id',
+        dataIndex: 'objectId',
+        key:'objectId'
+      },
+      {
+        title: '设备名称',
+        dataIndex: 'name',
+        key:'name'
+      },
+      {
+        title: '设备地址',
+        dataIndex: 'devaddr',
+        key:'devaddr'
+      },
+      {
+        title: 'ip地址',
+        dataIndex: 'ip',
+      },
+      {
+        title: '设备状态',
+        dataIndex: 'status',
+      },
+      {
+        title: '更新时间',
+        dataIndex: 'updatedAt',
+      },
+    ],
   };
-
+  componentDidMount() {
+    this.getData();
+  }
+  // componentDidUpdate(prevProps: Readonly<ReactPageProps>, prevState: Readonly<ReactPageState>, snapshot?: any) {
+  //   this.getData();
+  // }
+  protected getData() {
+    const params = {
+      "limit":	20,
+      "skip":	0,
+      "order":	'-createdAt',
+      "include":	'product,name',
+      "where"	:{"product":{"$ne":null},"name":{"$ne":null,"$exists":true}}
+    }
+    const headers = {'sessionToken':'r:a960ac8d97f46ef14313607e1042bffa'}
+    this.setState({ loading: true })
+    request.get(`${iotapi}/iotapi/classes/Device`, { params,headers })
+      .then(
+        res =>{
+          this.setState({ loading: false })
+          this.setState({ dataSource:res.results})
+        }
+      ).finally(()=>
+        this.setState({ loading: false })
+        );
+  }
   render() {
-    const { location, match } = this.props;
-    const { loading, count } = this.state;
+    const { dataSource,loading,columns} = this.state;
     return (
-      <Card style={{ margin: "16px" }}>
-        <Button type={"primary"} onClick={event => {
-          this.setState({ loading: !loading, count: (count + 1) });
-          routerHistory.push({
-            path: "/nest-side/curd/01",
-            query: { a: `${count}` },
-            // state: {count: (count + 1)},
-          });
-        }}>点击{count}</Button>
-        <br/>
-        {loading && "加载中..."}
-        <br/>
-        {JSON.stringify(location)}
-        <br/>
-        <br/>
-        {JSON.stringify(match)}
+      <Card bordered={false}>
+        <Table loading={loading} dataSource={dataSource} columns={columns} />;
       </Card>
     );
   }

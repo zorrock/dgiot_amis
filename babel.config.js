@@ -20,9 +20,11 @@ module.exports = {
   plugins: [
     // https://blog.csdn.net/weixin_30949361/article/details/102300061
     ["@babel/plugin-transform-runtime", {corejs: {version: 3, proposals: true}}],
-    "@babel/plugin-transform-object-assign",
+    ["@babel/plugin-proposal-private-methods", { "loose": true }],
     ["@babel/plugin-proposal-decorators", {legacy: true}],
     ["@babel/plugin-proposal-class-properties", {loose: true}],
+    ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
+    "@babel/plugin-transform-object-assign",
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-proposal-optional-chaining",
     "@babel/plugin-proposal-nullish-coalescing-operator"
