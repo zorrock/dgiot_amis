@@ -16,13 +16,12 @@
     "build": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=production webpack --config build/webpack.conf.ts",
     "build:analyzer": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=production ANALYZER=1 webpack --config build/webpack.conf.ts",
     "build:oss": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' ENABLE_CDN=true OSS_KEY='' OSS_SECRET='' NODE_ENV=production webpack --config build/webpack.conf.ts",
-    "release": "standard-version",
+    "release": "standard-version && node src/utils/release/index.js",
     "style": "run-s style:**",
     "style:prettier": "prettier --write \"src/**/*.ts\"",
     "style:lint": "tslint -p tsconfig.json -c tslint.json",
     "push": "git pull && yarn genlog && git add . && git cz && git push origin master && exit",
-    "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "tag": "node src/utils/tag/index.ts"
+    "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "scripts-bak": {
     "ncu-u": "ncu -u"
@@ -55,6 +54,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-helmet": "^6.1.0",
+    "shelljs": "^0.8.4",
     "simplebar": "^5.3.0",
     "simplebar-react": "^2.3.0"
   },
