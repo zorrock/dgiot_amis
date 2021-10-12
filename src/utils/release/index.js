@@ -8,7 +8,6 @@ const pkg = require('../../../package.json');
 function release() {
     shell.exec(`git tag v${pkg.version}`);
     shell.exec(`git push origin v${pkg.version}`);
-    shell.exec(1);
 }
 
 release();

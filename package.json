@@ -16,7 +16,7 @@
     "build": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=production webpack --config build/webpack.conf.ts",
     "build:analyzer": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' NODE_ENV=production ANALYZER=1 webpack --config build/webpack.conf.ts",
     "build:oss": "cross-env TS_NODE_PROJECT='./build/webpack.tsconfig.json' ENABLE_CDN=true OSS_KEY='' OSS_SECRET='' NODE_ENV=production webpack --config build/webpack.conf.ts",
-    "release": "standard-version && node src/utils/release/index.js",
+    "release": "node src/utils/release/index.js && standard-version && exit",
     "style": "run-s style:**",
     "style:prettier": "prettier --write \"src/**/*.ts\"",
     "style:lint": "tslint -p tsconfig.json -c tslint.json",
