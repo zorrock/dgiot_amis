@@ -1421,10 +1421,10 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
   integrity sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==
 
-"@types/numeral@0.0.29":
-  version "0.0.29"
-  resolved "https://registry.yarnpkg.com/@types/numeral/-/numeral-0.0.29.tgz#4f227c5eaf5c8049ae301484b4101ba0a8db97ba"
-  integrity sha512-uf5Rlq4FWJhaz4GSplEcenC40hTINy+efewZXULqXrSdddibcN2yPKQBjQ8K5kXk12Wnu6GdjB1/P5ovJso6Vg==
+"@types/numeral@0.0.30":
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/@types/numeral/-/numeral-0.0.30.tgz#887c51ceedcd544302a9a6c42a374bac12c0eee2"
+  integrity sha512-3ulaJGbiwUZBAdinX1XV0xeoSI5E6ugtKFwg7Yp7j4SQ/qZ6PmLVJazEPDFZgJ56qA7oSUa2kKVPfg4gjbDkMA==
 
 "@types/optimize-css-assets-webpack-plugin@5.0.4":
   version "5.0.4"
