@@ -64,7 +64,7 @@ yarn install
 yarn run dev
 ```
 
-1. 使用谷歌浏览器打开: http://127.0.0.1:8000/schema-app.html
+1. 使用谷歌浏览器打开: http://127.0.0.1:8000
 2. 页面代码都在`/src/pages`文件夹中，一个页面就是一个文件
 3. 菜单配置在`/src/router-config.tsx`文件中定义
 

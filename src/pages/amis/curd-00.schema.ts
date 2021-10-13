@@ -24,7 +24,7 @@ function detailsDialog() {
                 className: classnames(FormClassName.label5x),
                 initApi: {
                     method: 'get',
-                    url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`
+                    url: `${serverHost}/iotapi/amis-api/curd-page@getDetail?orderId=$orderId`
                 },
                 controls: [
                     { type: 'static', name: 'orderId', label: '订单ID' },
@@ -61,11 +61,11 @@ function editDialog() {
                 className: classnames(FormClassName.flex_label5x),
                 // initApi: {
                 //   method: "get",
-                //   url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$orderId`,
+                //   url: `${serverHost}/iotapi/amis-api/curd-page@getDetail?orderId=$orderId`,
                 // },
                 api: {
                     method: 'put',
-                    url: `${serverHost}/!/amis-api/curd-page@mockUpdate?orderId=$orderId`
+                    url: `${serverHost}/iotapi/amis-api/curd-page@mockUpdate?orderId=$orderId`
                 },
                 controls: [
                     { type: 'text', name: 'orderId', label: '订单ID' },
@@ -91,7 +91,7 @@ function deleteDialog() {
         actionType: 'ajax',
         api: {
             method: 'delete',
-            url: `${serverHost}/!/amis-api/curd-page@mockDelete?orderId=$orderId`
+            url: `${serverHost}/iotapi/amis-api/curd-page@mockDelete?orderId=$orderId`
         },
         confirmText: '您确认要删除订单:${orderCode}?'
     };
@@ -120,7 +120,7 @@ const schema = {
             // --------------------------------------------------------------- 请求数据配置
             api: {
                 method: 'get',
-                url: `${serverHost}/!/amis-api/curd-page@curdQuery`
+                url: `${serverHost}/iotapi/amis-api/curd-page@curdQuery`
             },
             defaultParams: { pageNo: 1, pageSize: 10 },
             pageField: 'pageNo',

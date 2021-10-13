@@ -33,7 +33,7 @@
       ]
     },
     "no-var-keyword": true,
-    "no-var-requires": true,
+    "no-var-requires": false,
     "no-any": false,
     "no-string-literal": true,
     "await-promise": true

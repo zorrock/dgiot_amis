@@ -21,7 +21,7 @@ const schema = {
             // debug: true,
             initApi: {
                 method: 'get',
-                url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$match.params.detail2`
+                url: `${serverHost}/iotapi/amis-api/curd-page@getDetail?orderId=$match.params.detail2`
             },
             controls: [
                 { type: 'static', name: 'orderId', label: '订单ID' },

@@ -151,6 +151,7 @@ class WebpackAliyunOss {
         }
       }
     } catch (err) {
+      // @ts-ignore
       console.log(`failed to upload to ali oss: ${err.name}-${err.code}: ${err.message}`.red);
     }
     verbose && this.filesIgnored.length && console.log('files ignored'.blue, this.filesIgnored);

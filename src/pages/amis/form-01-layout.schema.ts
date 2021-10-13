@@ -25,7 +25,7 @@ const schema = {
             ],
             api: {
                 method: 'post',
-                url: `${serverHost}/!/amis-api/curd-page@mockSubmit`
+                url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
             }
         },
         { type: 'divider' },
@@ -54,7 +54,7 @@ const schema = {
             ],
             api: {
                 method: 'post',
-                url: `${serverHost}/!/amis-api/curd-page@mockSubmit`
+                url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
             }
         },
         { type: 'divider' },
@@ -89,7 +89,7 @@ const schema = {
             ],
             api: {
                 method: 'post',
-                url: `${serverHost}/!/amis-api/curd-page@mockSubmit`
+                url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
             }
         },
         { type: 'divider' },
@@ -134,7 +134,7 @@ const schema = {
             ],
             api: {
                 method: 'post',
-                url: `${serverHost}/!/amis-api/curd-page@mockSubmit`
+                url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
             }
         },
         { type: 'divider' }
