@@ -1,5 +1,26 @@
 #### 项目介绍
-
+<p align="center">
+  <img src="https://img.shields.io/github/commit-activity/m/dgiot/dgiot_amis" alt="ommit-activity">
+	<img src="https://badgen.net/badge/package/%40dgiot%2Fdgiot_amis/blue"
+	alt="package" maxretrytimes="3" class="m-1 transition-all duration-1000">
+	<img src="https://badgen.net/npm/v/@dgiot/dgiot_amis" alt="Npm Version"
+	maxretrytimes="3" class="m-1 transition-all duration-1000">
+	<img src="https://badgen.net/npm/node/@dgiot/dgiot_amis" alt="Node Version"
+	maxretrytimes="3" class="m-1 transition-all duration-1000">
+	<br>
+	<img src="https://badgen.net/jsdelivr/hits/npm/@dgiot/dgiot_amis"
+	alt="Jsdeliver Month Downloads" maxretrytimes="3" class="m-1 transition-all duration-1000">
+	<img src="https://badgen.net/packagephobia/install/@dgiot/dgiot_amis"
+	alt="Install Size" maxretrytimes="3" class="m-1 transition-all duration-1000">
+	<img src="https://badgen.net/npm/types/@dgiot/dgiot_amis" alt="Type Support"
+	maxretrytimes="3" class="m-1 transition-all duration-1000">
+	<br>
+	<img src="https://img.shields.io/librariesio/release/npm/@dgiot/dgiot_amis"
+	alt="Outdated Dep" maxretrytimes="3" class="m-1 transition-all duration-1000">
+	<img src="https://img.shields.io/snyk/vulnerabilities/npm/@dgiot/dgiot_amis"
+	alt="Vulnerablities" maxretrytimes="3" class="m-1 transition-all duration-1000">
+  <a href="https://www.npmjs.com/package/@dgiot/dgiot_amis"><img src="https://img.shields.io/npm/l/@dgiot/dgiot_amis" alt="License"></a>
+<p>
 dgiot_amis 是基于百度的 [amis](https://github.com/baidu/amis) 低代码框架开发的管理后台前端项目，旨在提供低门槛、高效率、开箱即用的管理后台前端项目。
 
 ##### 1.本项目的应用范围和人群
@@ -16,31 +37,14 @@ dgiot_amis 是基于百度的 [amis](https://github.com/baidu/amis) 低代码框
 
 ##### 3.效果预览
 
-线上预览地址: [http://dgiot_amis.msvc.top/](http://dgiot_amis.msvc.top/) (admin/123456)
+线上预览地址: [https://prod.iotn2n.com/dgiot_amis](https://prod.iotn2n.com/dgiot_amis/) (dgiot_admin/dgiot_admin)
 
-系统截图
-
-![登录](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/login.png)
-
-![查询列表](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/curd.png)
-
-![表单](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/detail-form.png)
-
-![系统演示](https://cdn-static-resources.oss-cn-hangzhou.aliyuncs.com/amis-admin/screenshot/%E7%B3%BB%E7%BB%9F%E6%BC%94%E7%A4%BA.gif)
 #### 快速开始
 
 ##### 1.安装Node.js(建议12.x版本)
 
 下载地址: [https://nodejs.org/zh-cn/download/](https://nodejs.org/zh-cn/download/)
 
-```shell
-// 配置npm源
-npm config set registry https://registry.npm.taobao.org
-npm config set disturl https://npm.taobao.org/dist
-npm config set electron_mirror https://npm.taobao.org/mirrors/electron/
-npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
-npm config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs/
-```
 
 ##### 2.安装yarn
 
@@ -49,31 +53,13 @@ npm install -g yarn
 yarn -v
 ```
 
-```shell
-// 配置yarn源
-yarn config set registry https://registry.npm.taobao.org -g
-yarn config set disturl https://npm.taobao.org/dist -g
-yarn config set electron_mirror https://npm.taobao.org/mirrors/electron/ -g
-yarn config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/ -g
-yarn config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs/ -g
-yarn config set chromedriver_cdnurl https://cdn.npm.taobao.org/dist/chromedriver -g
-yarn config set operadriver_cdnurl https://cdn.npm.taobao.org/dist/operadriver -g
-yarn config set fse_binary_host_mirror https://npm.taobao.org/mirrors/fsevents -g
-```
-
-##### 3.安装TypeScript
-
-```shell
-yarn global add typescript
-tsc -v
-```
 
 ##### 4.初始化 & 开发
 
 ```shell
 cd ./dgiot_amis
 // 初始化
-yarn run project-init
+yarn install
 // 开发
 yarn run dev
 ```
