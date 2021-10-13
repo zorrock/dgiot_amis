@@ -13,7 +13,7 @@ const frontConfig = {
   // 前端资源文件地址
   dist: "./dist",
   // 默认首页
-  index: "schema-app.html",
+  index: "index.html",
   // 浏览器缓存时间
   maxAge: 1000 * 60 * 60 * 24 * 30,
   // maxAge: -1,

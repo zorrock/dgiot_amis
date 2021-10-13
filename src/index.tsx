@@ -15,7 +15,7 @@ import { getCurrentUser, getMenus } from '@/service/login-service';
 import { layoutSettings, routerConfigs } from './router-config';
 import './global';
 
-const log = logger.getLogger('src/schema-app.tsx');
+const log = logger.getLogger('src/index.tsx');
 
 interface ReactAppPageProps {
     /** antd组件全局配置 */

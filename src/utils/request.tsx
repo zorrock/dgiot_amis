@@ -1,7 +1,14 @@
 import React from 'react';
 import { notification } from "antd";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-
+const axiosSettings = {
+  // token在localStorage、sessionStorage、cookie存储的key的名称
+  tokenTableName:'dgiot_amis_token',
+  // token名称
+  tokenName:'sessionToken',
+  // 最长请求时间
+  requestTimeout: 1000 * 1 * 30,
+}
 // HTTP 状态码错误说明
 const errorMsg = {
   200: "服务器成功返回请求的数据。",
@@ -34,34 +41,42 @@ class Request {
   }
 
   public get(url: string, config?: AxiosRequestConfig) {
+    // @ts-ignore
     return this.axiosInstance.get(url, config).then(response => Request.transformResponse(response));
   }
 
   public delete(url: string, config?: AxiosRequestConfig) {
+    // @ts-ignore
     return this.axiosInstance.delete(url, config).then(response => Request.transformResponse(response));
   }
 
   public head(url: string, config?: AxiosRequestConfig) {
+    // @ts-ignore
     return this.axiosInstance.head(url, config).then(response => Request.transformResponse(response));
   }
 
   public options(url: string, config?: AxiosRequestConfig) {
+    // @ts-ignore
     return this.axiosInstance.options(url, config).then(response => Request.transformResponse(response));
   }
 
   public post(url: string, data?: any, config?: AxiosRequestConfig) {
+    // @ts-ignore
     return this.axiosInstance.post(url, data, config).then(response => Request.transformResponse(response));
   }
 
   public put(url: string, data?: any, config?: AxiosRequestConfig) {
+    // @ts-ignore
     return this.axiosInstance.put(url, data, config).then(response => Request.transformResponse(response));
   }
 
   public patch(url: string, data?: any, config?: AxiosRequestConfig) {
+    // @ts-ignore
     return this.axiosInstance.patch(url, data, config).then(response => Request.transformResponse(response));
   }
 
   public request(config: AxiosRequestConfig) {
+    // @ts-ignore
     return this.axiosInstance.request(config).then(response => Request.transformResponse(response));
   }
 }
@@ -80,7 +95,11 @@ const axiosInstance = axiosCreate({
 
 // 全局请求拦截
 axiosInstance.interceptors.request.use(
-  request => request,
+  (request)=> {
+    // @ts-ignore
+    request.headers[`${axiosSettings.tokenName}`] = sessionStorage.getItem(`${axiosSettings.tokenTableName}`)
+    return request
+  },
   error => {
     notification.error({
       message: "请求发送失败",
@@ -89,7 +108,6 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   },
 );
-
 // 全局拦截配置
 axiosInstance.interceptors.response.use(
   response => response,

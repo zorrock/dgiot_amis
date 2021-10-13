@@ -200,9 +200,9 @@ const layoutSettings: LayoutSettings = {
   htmlTitleSuffix: "",
   loginPath: "/blank/login",
   defaultPath: "/nest-side/curd/00",
-  loginApi: "/!/amis-api/curd-page@login",
+  loginApi: "/iotapi/login",
   // logoutApi: "/logout",
-  currentUserApi: "/!/amis-api/curd-page@currentUser",
+  currentUserApi: "/iotapi/amis-api/curd-page@currentUser",
   // menuApi: "/menus",
 };
 

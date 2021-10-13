@@ -40,8 +40,8 @@ const schema = {
             // debug: true,
             initApi: {
                 method: 'get',
-                url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId=$location.query.orderId`
-                // url: `${serverHost}/!/amis-api/curd-page@getDetail?orderId`,
+                url: `${serverHost}/iotapi/amis-api/curd-page@getDetail?orderId=$location.query.orderId`
+                // url: `${serverHost}/iotapi/amis-api/curd-page@getDetail?orderId`,
                 // data: {
                 //   orderId: window[amisPageName]?.orderId ?? "1021652540551041025"
                 // }

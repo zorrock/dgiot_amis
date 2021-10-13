@@ -41,7 +41,7 @@ let copyToClipboard = false;
 
 let config: Configuration = {
     entry: {
-        schemaApp: `${srcPath}/schema-app`
+        schemaApp: `${srcPath}/index`
     },
     module: {
         // noParse: content => {},
@@ -241,7 +241,7 @@ if (isDevMode) {
         devServer: {
             host: settings.devServer.host,
             port: settings.devServer.port,
-            contentBase: `${settings.rootPath}/index.html`,
+            contentBase: `${settings.rootPath}`,
             publicPath: '/dgiot_amis/',
             historyApiFallback: true,
             overlay: true,
@@ -263,14 +263,14 @@ if (isDevMode) {
                             return;
                         }
                         copyToClipboard = true;
-                        clipboardy.writeSync(`http://127.0.0.1:${settings.devServer.port}/`);
+                        clipboardy.writeSync(`http://127.0.0.1:${settings.devServer.port}/${settings.devServer.openPage}`);
                         const messages = [
                             '  App running at:',
                             `  - Local:   ${chalk.cyan(
-                                `http://127.0.0.1:${settings.devServer.port}/dgiot_amis/schema-app.html`
+                                `http://127.0.0.1:${settings.devServer.port}/${settings.devServer.openPage}`
                             )} (copied to clipboard)`,
                             `  - Network: ${chalk.cyan(
-                                `http://${ip.address('public', 'ipv4')}:${settings.devServer.port}/dgiot_amis/schema-app.html`
+                                `http://${ip.address('public', 'ipv4')}:${settings.devServer.port}/${settings.devServer.openPage}`
                             )}`
                         ];
                         console.log(messages.join('\n'));
@@ -449,7 +449,7 @@ scanJsEntry(config, srcPath, distPath, chunks, faviconPath, base64Images);
 // schema-app 支持
 const options: HtmlWebpackPlugin.Options = {
     template: `${srcPath}/template.ejs`,
-    filename: `${distPath}/schema-app.html`,
+    filename: `${distPath}/index.html`,
     minify: false,
     title: settings.defaultTitle ?? 'webpack4.x',
     favicon: faviconPath,

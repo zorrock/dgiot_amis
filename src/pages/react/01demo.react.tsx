@@ -64,9 +64,8 @@ class DemoPage extends Component<DemoPageProps, DemoPageState> {
       "include":	'product,name',
       "where"	:{"product":{"$ne":null},"name":{"$ne":null,"$exists":true}}
     }
-    const headers = {'sessionToken':'r:a960ac8d97f46ef14313607e1042bffa'}
     this.setState({ loading: true })
-    request.get(`${iotapi}/iotapi/classes/Device`, { params,headers })
+    request.get(`${iotapi}/iotapi/classes/Device`, { params })
       .then(
         res =>{
           this.setState({ loading: false })
