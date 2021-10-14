@@ -103,7 +103,7 @@
     "@types/optimize-css-assets-webpack-plugin": "5.0.4",
     "@types/react": "16.14.16",
     "@types/react-dom": "16.9.14",
-    "@types/react-helmet": "6.1.3",
+    "@types/react-helmet": "6.1.4",
     "@types/slash": "3.0.0",
     "@types/terser-webpack-plugin": "4.2.2",
     "@types/webpack": "4.41.31",
