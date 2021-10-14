@@ -139,7 +139,8 @@ const userLogin = (loginData: any, loginApi: string, securityContext: any, defau
       message.success(msg || "登录成功").then();
       if (securityContext) {
         // 登录成功之后 存下token
-        sessionStorage.setItem('dgiot_amis_token',sessionToken)
+        // https://github.com/js-cookie/js-cookie#basic-usage
+        Cookies.set("authorization",sessionToken, );
         getCurrentUser(securityContext).then(() => {
           window.appComponent.refreshMenu(() => {
             if (defaultPath) routerHistory.push({ path: defaultPath });
@@ -159,7 +160,6 @@ const userLogout = (logoutApi: string, loginPath: string): void => {
   window.securityContext = undefined;
   const finallyFuc = () => {
     Cookies.remove("authorization");
-    sessionStorage.setItem('dgiot_amis_token','')
     if (loginPath) routerHistory.push({ path: loginPath });
   };
   if (logoutApi) {

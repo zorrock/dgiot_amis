@@ -1,13 +1,19 @@
 import React from 'react';
 import { notification } from "antd";
+import Cookies from "js-cookie";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 const axiosSettings = {
   // token在localStorage、sessionStorage、cookie存储的key的名称
-  tokenTableName:'dgiot_amis_token',
+  tokenTableName:'authorization',
   // token名称
   tokenName:'sessionToken',
   // 最长请求时间
   requestTimeout: 1000 * 1 * 30,
+  // 不经过cookie校验的路由,目前只写了首页
+  routingWhitelist:['blank/login','/'],
+  // 不经过cookie校验的接口,目前只写了登录接口
+  // http://prod.iotn2n.com/swagger/
+  cookieWhitelist:['login'],
 }
 // HTTP 状态码错误说明
 const errorMsg = {
@@ -96,8 +102,10 @@ const axiosInstance = axiosCreate({
 // 全局请求拦截
 axiosInstance.interceptors.request.use(
   (request)=> {
+    const {hash} = location
+    console.log(axiosSettings.routingWhitelist.indexOf(hash))
     // @ts-ignore
-    request.headers[`${axiosSettings.tokenName}`] = sessionStorage.getItem(`${axiosSettings.tokenTableName}`)
+    request.headers[`${axiosSettings.tokenName}`] = Cookies.get(`${axiosSettings.tokenTableName}`)
     return request
   },
   error => {
