@@ -32,7 +32,7 @@ class ReactPage extends Component<ReactPageProps, ReactPageState> {
     const orderId = query?.orderId;
     if (orderId === this.state.orderId) return;
     this.setState({ loading: true, orderId });
-    request.get(`${serverHost}/iotapi/amis-api/curd-page@getDetail`, { params: { orderId } })
+    request.get(`${serverHost}/iotapi/curd-page@getDetail`, { params: { orderId } })
       .then(orderData => this.setState({ orderData }))
       .finally(() => this.setState({ loading: false }));
   }

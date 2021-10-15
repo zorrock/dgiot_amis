@@ -604,6 +604,7 @@ class BaseLayout<P extends BaseLayoutProps, S extends BaseLayoutState> extends R
     // 点击菜单打开新页面
     if (menuData?.runtimeRouter?.openOptions?.url) {
       const options = menuData.runtimeRouter.openOptions;
+      // @ts-ignore
       window.open(options.url, options.target, options.features, options.replace);
       return;
     }

@@ -34,7 +34,7 @@ const schema = {
                             size: 'lg',
                             source: {
                                 method: 'get',
-                                url: `${serverHost}/iotapi/amis-api/curd-page@curdQuery`
+                                url: `${serverHost}/iotapi/curd-page@curdQuery`
                             },
                             // options: [{orderCode: "220180723160152530001", shipName: "黄婷", shipMobile: "15527807874"}],
                             multiple: true,
@@ -51,7 +51,7 @@ const schema = {
                     ],
                     api: {
                         method: 'post',
-                        url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
+                        url: `${serverHost}/iotapi/curd-page@mockSubmit`
                     }
                 }
             }
@@ -82,7 +82,7 @@ const schema = {
                     ],
                     api: {
                         method: 'post',
-                        url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
+                        url: `${serverHost}/iotapi/curd-page@mockSubmit`
                     }
                 }
             }
@@ -158,7 +158,7 @@ const schema = {
                                             keepItemSelectionOnPageChange: true,
                                             api: {
                                                 method: 'get',
-                                                url: `${serverHost}/iotapi/amis-api/curd-page@curdQuery`
+                                                url: `${serverHost}/iotapi/curd-page@curdQuery`
                                             },
                                             defaultParams: { pageNo: 1, pageSize: 10 },
                                             pageField: 'pageNo',
@@ -246,7 +246,7 @@ const schema = {
                     ],
                     api: {
                         method: 'post',
-                        url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
+                        url: `${serverHost}/iotapi/curd-page@mockSubmit`
                     }
                 }
             }
@@ -325,7 +325,7 @@ const schema = {
                                                     embed: true,
                                                     source: {
                                                         method: 'get',
-                                                        url: `${serverHost}/iotapi/amis-api/curd-page@curdQuery`
+                                                        url: `${serverHost}/iotapi/curd-page@curdQuery`
                                                     },
                                                     multiple: true,
                                                     valueField: 'orderId',
@@ -359,7 +359,7 @@ const schema = {
                     ],
                     api: {
                         method: 'post',
-                        url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
+                        url: `${serverHost}/iotapi/curd-page@mockSubmit`
                     }
                 }
             }
@@ -415,7 +415,7 @@ const schema = {
                     ],
                     api: {
                         method: 'post',
-                        url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
+                        url: `${serverHost}/iotapi/curd-page@mockSubmit`
                     }
                 }
             }
@@ -444,7 +444,7 @@ const schema = {
                     ],
                     api: {
                         method: 'post',
-                        url: `${serverHost}/iotapi/amis-api/curd-page@serverVerify`
+                        url: `${serverHost}/iotapi/curd-page@serverVerify`
                     }
                 }
             }

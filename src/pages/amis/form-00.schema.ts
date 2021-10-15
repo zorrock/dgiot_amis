@@ -72,15 +72,15 @@ const schema = {
                 // { type: "chained-select", name: "f5", label: "级联下拉", source: api.api_1, value: "a,b" },
                 { type: 'picker', name: 'f23', label: '对话框选择', options: statusMapper, inputClassName: WidthClassName.width13x },
                 { type: 'tree', name: 'f33', label: '树形选择', options: treeData },
-                { type: 'file', name: 'f17', label: '上传文件', reciever: `${serverHost}/iotapi/amis-api/curd-page@uploadFile` },
-                { type: 'image', name: 'f18', label: '上传图片', reciever: `${serverHost}/iotapi/amis-api/curd-page@uploadFile` },
+                { type: 'file', name: 'f17', label: '上传文件', reciever: `${serverHost}/iotapi/curd-page@uploadFile` },
+                { type: 'image', name: 'f18', label: '上传图片', reciever: `${serverHost}/iotapi/curd-page@uploadFile` },
                 { type: 'rating', name: 'f25', label: '评分' },
                 { type: 'range', name: 'f26', label: '滑动输入' },
                 { type: 'submit', label: '提交', level: 'primary' }
             ],
             api: {
                 method: 'post',
-                url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
+                url: `${serverHost}/iotapi/curd-page@mockSubmit`
             }
         },
         { type: 'divider' },
@@ -126,7 +126,7 @@ const schema = {
             ],
             api: {
                 method: 'post',
-                url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
+                url: `${serverHost}/iotapi/curd-page@mockSubmit`
             }
         },
         { type: 'divider' },
@@ -159,7 +159,7 @@ const schema = {
             ],
             api: {
                 method: 'post',
-                url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
+                url: `${serverHost}/iotapi/curd-page@mockSubmit`
             }
         },
         { type: 'divider' },

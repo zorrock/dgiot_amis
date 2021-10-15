@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import { FormClassName } from '@/amis-types';
 import { enum2object } from '@/utils/enum';
-import { orderTypeMapper, payStatusMapper, payTypeMapper, statusMapper } from './enum-data';
-import { serverHost } from './server-api';
+import { statusMapper } from '../../enum-data';
+import { serverHost } from '../../server-api';
 
 const amisPageName = 'curd';
 
@@ -24,7 +24,7 @@ function detailsDialog() {
                 className: classnames(FormClassName.label5x),
                 initApi: {
                     method: 'get',
-                    url: `${serverHost}/iotapi/curd-page@getDetail?orderId=$orderId`
+                    url: `${serverHost}/iotapi/classes/Device`
                 },
                 controls: [
                     { type: 'static', name: 'orderId', label: '订单ID' },
@@ -65,16 +65,14 @@ function editDialog() {
                 // },
                 api: {
                     method: 'put',
-                    url: `${serverHost}/iotapi/curd-page@mockUpdate?orderId=$orderId`
+                    url: `${serverHost}/iotapi/classes/Device`
                 },
                 controls: [
-                    { type: 'text', name: 'orderId', label: '订单ID' },
-                    { type: 'text', name: 'orderCode', label: '订单编号' },
-                    { type: 'select', name: 'status', label: '订单状态', options: statusMapper },
-                    { type: 'text', name: 'shipName', label: '收货人' },
-                    { type: 'text', name: 'shipName2', label: '收货人2' },
-                    { type: 'text', name: 'shipMobile', label: '手机号' },
-                    { type: 'textarea', name: 'shipAddr', label: '地址' }
+                    { type: 'text', name: 'name', label: '设备名称' },
+                    { type: 'text', name: 'devaddr', label: '设备地址' },
+                    { type: 'select', name: 'objectId', label: '设备id' },
+                    { type: 'text', name: 'createdAt', label: '创建时间' },
+                    { type: 'text', name: 'isEnable', label: '启用设备状态' }
                 ]
             }
         }
@@ -91,7 +89,7 @@ function deleteDialog() {
         actionType: 'ajax',
         api: {
             method: 'delete',
-            url: `${serverHost}/iotapi/curd-page@mockDelete?orderId=$orderId`
+            url: `${serverHost}/iotapi/classes/Device`
         },
         confirmText: '您确认要删除订单:${orderCode}?'
     };
@@ -120,13 +118,14 @@ const schema = {
             // --------------------------------------------------------------- 请求数据配置
             api: {
                 method: 'get',
-                url: `${serverHost}/iotapi/curd-page@curdQuery`
+                url: `${serverHost}/iotapi/classes/Device`
             },
-            defaultParams: { pageNo: 1, pageSize: 10 },
-            pageField: 'pageNo',
-            perPageField: 'pageSize',
-            // interval: 3000,
-            // silentPolling: true,
+            // defaultParams: { limit: 20, skip: 0 ,order:'-createdAt',where: {'product':{"$ne":null},"name":{"$ne":null,"$exists":true}}},
+            defaultParams: { limit: 20, skip: 0, order: '-createdAt' },
+            pageField: 'skip',
+            perPageField: 'limit',
+            interval: 3000,
+            silentPolling: true,
             // --------------------------------------------------------------- 查询条件表单配置
             // 条件过滤表单
             filterTogglable: true,
@@ -137,47 +136,9 @@ const schema = {
                 submitOnChange: false,
                 // submitText: "查询",
                 controls: [
-                    { type: 'text', label: '订单编号', name: 'orderCode', placeholder: '通过关键字搜索', clearable: true, size: 'md' },
-                    { type: 'text', label: '手机号', name: 'shipMobile', placeholder: '通过关键字搜索', clearable: true, size: 'md' },
-                    {
-                        type: 'select',
-                        label: '订单状态',
-                        name: 'status',
-                        placeholder: '通过关键字搜索',
-                        clearable: true,
-                        size: 'md',
-                        options: statusMapper,
-                        submitOnChange: true
-                    },
-                    { type: 'html', html: '<br />' },
-                    {
-                        type: 'select',
-                        label: '支付状态',
-                        name: 'payType',
-                        placeholder: '请选择',
-                        clearable: true,
-                        size: 'md',
-                        options: payStatusMapper,
-                        submitOnChange: true
-                    },
-                    {
-                        type: 'datetime',
-                        label: '开始时间',
-                        name: 'createAtStart',
-                        placeholder: '选择时间',
-                        format: 'x',
-                        clearable: true,
-                        size: 'md'
-                    },
-                    {
-                        type: 'datetime',
-                        label: '结束时间',
-                        name: 'createAtEnd',
-                        placeholder: '选择时间',
-                        format: 'x',
-                        clearable: true,
-                        size: 'md'
-                    },
+                    { type: 'text', label: '设备名称', name: 'name', placeholder: '通过关键字搜索', clearable: true, size: 'md' },
+                    { type: 'text', label: '设备地址', name: 'devaddr', placeholder: '通过关键字搜索', clearable: true, size: 'md' },
+                    { type: 'text', label: '设备id', name: 'objectId', placeholder: '通过关键字搜索', clearable: true, size: 'md' },
                     // {type: "divider"},
                     { label: '查询', level: 'primary', type: 'submit', size: 'md' },
                     { label: '重置', type: 'reset' }
@@ -186,16 +147,11 @@ const schema = {
             // --------------------------------------------------------------- 表格列配置
             primaryField: 'orderId',
             columns: [
-                { name: 'orderCode', label: '订单编号', sortable: true },
-                { name: 'status', label: '订单状态', sortable: true, type: 'mapping', map: enum2object(statusMapper) },
-                { name: 'shipName', label: '收货人姓名', sortable: true },
-                { name: 'shipMobile', label: '手机号', sortable: true },
-                { name: 'orderType', label: '订单类型', sortable: true, type: 'mapping', map: enum2object(orderTypeMapper) },
-                { name: 'payStatus', label: '支付方式', sortable: true, type: 'mapping', map: enum2object(payTypeMapper) },
-                { name: 'payType', label: '支付状态', sortable: true, type: 'mapping', map: enum2object(payStatusMapper) },
-                { name: 'payTime', label: '支付时间', sortable: true },
-                { name: 'payAmount', label: '支付金额', sortable: true },
-                { name: 'createAt', label: '下单时间', sortable: true },
+                { name: 'name', label: '设备名称', sortable: true },
+                { name: 'devaddr', label: '设备地址', sortable: true },
+                { name: 'objectId', label: '设备id', sortable: true },
+                { name: 'createdAt', label: '创建时间', sortable: true },
+                { name: 'isEnable', label: '启用设备状态', sortable: true },
                 {
                     type: 'operation',
                     label: '操作',

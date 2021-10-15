@@ -38,6 +38,27 @@ const routerConfigs: LayoutConfig[] = [
   //   403: "",                      // 403无权访问页面
   //   404: "",                      // 404页面不存在
   // },
+  // {
+  //   path: "/",
+  //   layout: LayoutType.Blank,
+  //   layoutProps: {},
+  //   routes: [
+  //     { path: "/login", name: "用户登录", pagePath: "login.react.tsx" },
+  //     {
+  //       path: "/curd",
+  //       name: "CURD",
+  //       icon: "TableOutlined",
+  //       routes: [
+  //         { path: "/00", name: "通用CURD", pagePath: "/amis/curd-00.schema.ts" },
+  //         { path: "/01", name: "常规CURD", pagePath: "/amis/curd-01-general.schema.ts" },
+  //         { path: "/02", name: "空白页", pagePath: "/amis/empty-page.schema.ts" },
+  //         { path: "/03", name: "设备管理", pagePath: "/react/01demo.react.tsx" },
+  //         { path: "/04", name: "内嵌百度", pagePath: "https://www.baidu.com/" },
+  //       ],
+  //     },
+  //   ],
+  //   404: "/404.react.tsx",
+  // },
   {
     path: "/blank",
     layout: LayoutType.Blank,
@@ -60,7 +81,7 @@ const routerConfigs: LayoutConfig[] = [
     404: "/404.react.tsx",
   },
   {
-    path: "/nest-side",
+    path: "/",
     layout: LayoutType.NestSide,
     layoutProps: {
       hideGlobalHeader: false,
@@ -103,7 +124,7 @@ const routerConfigs: LayoutConfig[] = [
         );
       },
       hideGlobalFooter: false,
-      globalFooterCopyright: <>Copyright <CopyrightCircleOutlined key="copyright"/> 2020 武汉XX科技有限公司 鄂ICP备19029XXX号</>,
+      globalFooterCopyright: <>Copyright <CopyrightCircleOutlined key="copyright"/> 2021 杭州数蛙科技有限公司 浙ICP备20003309号-1</>,
       globalSideMenuWidth: 100,
       globalSideMenuMode: SideFirstMenuMode.AntdMenu,
       sideMenuEnableSearchMenu: false,
@@ -111,21 +132,34 @@ const routerConfigs: LayoutConfig[] = [
     routes: [
       // -------------------------------------------------------------------------
       {
-        path: "/curd",
-        name: "CURD",
-        icon: "TableOutlined",
+        path: "/dashboard",
+        name: "总控台",
+        icon: "HomeOutlined",
         routes: [
-          { path: "/00", name: "dashboard", icon: "WindowsOutlined", pagePath: "https://prod.iotn2n.com" },
-          { path: "/01", name: "通用CURD", icon: "TableOutlined", pagePath: "/amis/curd-00.schema.ts" },
-          { path: "/02", name: "常规CURD", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts" },
-          { path: "/03", name: "设备管理", icon: "BulbOutlined", pagePath: "/react/01demo.react.tsx" },
-          // { path: "/05", name: "TS(JS)页面", icon: "BulbOutlined", pagePath: "/pages/typescript/index.html" },
-          { path: "/06", name: "Chart图标", icon: "BulbOutlined", pagePath: "/amis/chart-00.schema.ts" }
+          // { path: "/00", name: "dashboard", icon: "WindowsOutlined", pagePath: "https://prod.iotn2n.com" },
+          { path: "/index", name: "总控台", icon: "DashboardOutlined", pagePath: "/amis/dgiot/dashboard/index.schema.ts" },
+          // { path: "/02", name: "常规CURD", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts" },
+          // { path: "/03", name: "设备管理", icon: "BulbOutlined", pagePath: "/react/01demo.react.tsx" },
+          // // { path: "/05", name: "TS(JS)页面", icon: "BulbOutlined", pagePath: "/pages/typescript/index.html" },
+          // { path: "/06", name: "Chart图标", icon: "BulbOutlined", pagePath: "/amis/chart-00.schema.ts" }
+        ],
+      },
+      {
+        path: "/device",
+        name: "设备云",
+        icon: "CodepenCircleOutlined",
+        routes: [
+          // { path: "/00", name: "dashboard", icon: "WindowsOutlined", pagePath: "https://prod.iotn2n.com" },
+          { path: "/index", name: "设备管理", icon: "TableOutlined", pagePath: "/amis/dgiot/device/index.schema.ts" },
+          // { path: "/02", name: "常规CURD", icon: "TableOutlined", pagePath: "/amis/curd-01-general.schema.ts" },
+          // { path: "/03", name: "设备管理", icon: "BulbOutlined", pagePath: "/react/01demo.react.tsx" },
+          // // { path: "/05", name: "TS(JS)页面", icon: "BulbOutlined", pagePath: "/pages/typescript/index.html" },
+          // { path: "/06", name: "Chart图标", icon: "BulbOutlined", pagePath: "/amis/chart-00.schema.ts" }
         ],
       },
       {
         path: "/form",
-        name: "表单",
+        name: "多租户",
         icon: "FormOutlined",
         routes: [
           { path: "/00", name: "所有表单类型", icon: "EditOutlined", pagePath: "/amis/form-00.schema.ts" },
@@ -136,7 +170,7 @@ const routerConfigs: LayoutConfig[] = [
       },
       {
         path: "/menu",
-        name: "菜单设置",
+        name: "云系统",
         icon: "MenuOutlined",
         routes: [
           {
@@ -199,10 +233,10 @@ const layoutSettings: LayoutSettings = {
   iconScriptUrl: "//at.alicdn.com/t/font_1326886_bbehrpsvyl.js",
   htmlTitleSuffix: "",
   loginPath: "/blank/login",
-  defaultPath: "/nest-side/curd/00",
+  defaultPath: "/dashboard/index",
   loginApi: "/iotapi/login",
   // logoutApi: "/logout",
-  currentUserApi: "/iotapi/amis-api/curd-page@currentUser",
+  currentUserApi: "/iotapi/curd-page@currentUser",
   // menuApi: "/menus",
 };
 

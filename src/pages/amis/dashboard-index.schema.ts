@@ -4,7 +4,7 @@ import { enum2object } from '@/utils/enum';
 import { orderTypeMapper, payStatusMapper, payTypeMapper, statusMapper } from './enum-data';
 import { serverHost } from './server-api';
 
-const amisPageName = 'curd';
+const amisPageName = 'dashboard';
 
 // 详情对话框
 function detailsDialog() {

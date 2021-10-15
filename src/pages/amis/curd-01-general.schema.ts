@@ -49,7 +49,7 @@ function editDialog() {
                 className: classnames(FormClassName.flex_label5x),
                 api: {
                     method: 'put',
-                    url: `${serverHost}/iotapi/amis-api/curd-page@mockUpdate?orderId=$orderId`
+                    url: `${serverHost}/iotapi/curd-page@mockUpdate?orderId=$orderId`
                 },
                 controls: [
                     { type: 'text', name: 'orderId', label: '订单ID', disabled: true },
@@ -74,7 +74,7 @@ function deleteDialog() {
         actionType: 'ajax',
         api: {
             method: 'delete',
-            url: `${serverHost}/iotapi/amis-api/curd-page@mockDelete?orderId=$orderId`
+            url: `${serverHost}/iotapi/curd-page@mockDelete?orderId=$orderId`
         },
         confirmText: '确认要删除订单:${orderCode}?'
     };
@@ -98,7 +98,7 @@ const schema = {
             // --------------------------------------------------------------- 请求数据配置
             api: {
                 method: 'get',
-                url: `${serverHost}/iotapi/amis-api/curd-page@curdQuery`
+                url: `${serverHost}/iotapi/curd-page@curdQuery`
             },
             defaultParams: { pageNo: 1, pageSize: 10 },
             pageField: 'pageNo',

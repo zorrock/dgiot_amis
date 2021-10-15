@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CSSProperties } from "react";
 import copy from "copy-to-clipboard";
 import qs from "qs";
@@ -8,7 +9,20 @@ import { logger } from "@/utils/logger";
 import { axiosCreate, errorMsg } from "@/utils/request";
 import { getUrlParam, hasValue } from "@/utils/utils";
 import { TypeEnum, variableTypeOf } from "@/utils/typeof";
-
+import Cookies from "js-cookie";
+const axiosSettings = {
+  // token在localStorage、sessionStorage、cookie存储的key的名称
+  tokenTableName:'authorization',
+  // token名称
+  tokenName:'sessionToken',
+  // 最长请求时间
+  requestTimeout: 1000 * 1 * 30,
+  // 不经过cookie校验的路由,目前只写了首页
+  routingWhitelist:['blank/login','/'],
+  // 不经过cookie校验的接口,目前只写了登录接口
+  // http://prod.iotn2n.com/swagger/
+  cookieWhitelist:['login'],
+}
 const log = logger.getLogger("src/utils/amis-render-options.tsx");
 
 interface RequestConfig extends AxiosRequestConfig {
@@ -36,7 +50,13 @@ axiosInstance.interceptors.request.use(request => {
       queryParams.orderField = orderBy;
       queryParams.sort = orderDir;
     }
+    // 设置 请求头
+    // @ts-ignore
+    request.headers[`${axiosSettings.tokenName}`] = Cookies.get(`${axiosSettings.tokenTableName}`)
+    // // 设置 accept
+    // request.headers['accept'] = 'application/json'
     // 修改请求参数
+    log.info("请求主体 》》",request)
     request.url = `${request.url?.split("?")[0]}?${qs.stringify(queryParams)}`;
     log.info("全局请求拦截[结束] request -> ", request);
     return request;
@@ -45,7 +65,7 @@ axiosInstance.interceptors.request.use(request => {
 // Dgiot Amis- 响应适配
 axiosInstance.interceptors.response.use(response => {
     log.info("全局响应拦截[开始] response -> ", response);
-    const { status, data } = response;
+    const { status, data,config } = response;
     if (status === 401) {
       // TODO 跳转到登录页面
       return response;
@@ -76,9 +96,16 @@ axiosInstance.interceptors.response.use(response => {
     const aimsData = { status: 0, msg: "", data: data };
     response.data = aimsData;
     // 适配 - 分页查询
-    const { records, total, searchCount, pages, rows, count, ...rest } = data;
-    if (hasValue(records) && hasValue(total) && hasValue(searchCount) && hasValue(pages) && !hasValue(rows) && !hasValue(count)) {
-      aimsData.data = { rows: records, count: total, searchCount, pages, ...rest };
+    // 适配iotapi
+    log.info("config.url -> ", config.url);
+    if(config.url.indexOf("iotapi") == -1){
+      const { records, total, searchCount, pages, rows, count, ...rest } = data;
+      if (hasValue(records) && hasValue(total) && hasValue(searchCount) && hasValue(pages) && !hasValue(rows) && !hasValue(count)) {
+        aimsData.data = { rows: records, count: total, searchCount, pages, ...rest };
+      }
+    }else{
+      log.error("全局响应拦截[结束] data -> ", data);
+      aimsData.data = { rows: data.results, count: data.results.length, searchCount:true, pages:100 };
     }
     log.info("全局响应拦截[结束] response -> ", response);
     return response;

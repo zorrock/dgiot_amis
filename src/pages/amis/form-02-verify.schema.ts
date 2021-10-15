@@ -144,7 +144,7 @@ const schema = {
             ],
             api: {
                 method: 'post',
-                url: `${serverHost}/iotapi/amis-api/curd-page@mockSubmit`
+                url: `${serverHost}/iotapi/curd-page@mockSubmit`
             }
         },
         { type: 'divider' },
@@ -183,7 +183,7 @@ const schema = {
             ],
             api: {
                 method: 'post',
-                url: `${serverHost}/iotapi/amis-api/curd-page@serverVerify`
+                url: `${serverHost}/iotapi/curd-page@serverVerify`
             }
         },
         { type: 'divider' }

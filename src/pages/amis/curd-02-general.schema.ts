@@ -22,7 +22,7 @@ const schema = {
             // --------------------------------------------------------------- 请求数据配置
             api: {
                 method: 'get',
-                url: `${serverHost}/iotapi/amis-api/curd-page@curdQuery`
+                url: `${serverHost}/iotapi/curd-page@curdQuery`
             },
             defaultParams: { pageNo: 1, pageSize: 10 },
             pageField: 'pageNo',
